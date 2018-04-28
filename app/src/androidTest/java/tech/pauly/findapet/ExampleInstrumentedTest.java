@@ -1,4 +1,4 @@
-package tech.pauly.find_a_pet;
+package tech.pauly.findapet;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
