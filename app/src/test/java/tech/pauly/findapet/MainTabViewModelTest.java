@@ -32,7 +32,7 @@ public class MainTabViewModelTest {
         MenuItem menuItem = mock(MenuItem.class);
         when(menuItem.getItemId()).thenReturn(0);
 
-        assertThat(subject.onNavigationItemSelectedListener.onNavigationItemSelected(menuItem)).isTrue();
+        assertThat(subject.onNavigationItemSelectedListener.onNavigationItemSelected(menuItem)).isFalse();
     }
 
     @Test

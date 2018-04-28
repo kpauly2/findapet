@@ -19,7 +19,7 @@ public class MainTabActivityTest {
     public void onClickDiscover_seeOnlyDiscover() {
         RobotUtils.clickView(R.id.navigation_discover);
 
-        RobotUtils.seesView(R.id.fragment_discover);
+        RobotUtils.seesView(R.id.fragment_shelters);
         RobotUtils.doesNotSeeView(R.id.fragment_shelters);
         RobotUtils.doesNotSeeView(R.id.fragment_favorites);
         RobotUtils.doesNotSeeView(R.id.fragment_settings);
