@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">find-a-pet</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">Find a Pet</string>
+    <string name="menu_discover">Discover</string>
+    <string name="menu_shelters">Shelters</string>
+    <string name="menu_favorites">Favorites</string>
+    <string name="menu_settings">Settings</string>
 </resources>
