@@ -4,7 +4,7 @@ import android.databinding.ObservableField;
 
 import javax.inject.Inject;
 
-import tech.pauly.findapet.repository.AnimalRepository;
+import tech.pauly.findapet.data.AnimalRepository;
 
 public class DiscoverViewModel {
 
@@ -19,7 +19,6 @@ public class DiscoverViewModel {
     }
 
     private void fetchAnimals() {
-        animalRepository.fetchAnimals().subscribe(animalListResponse -> tempOutput.set("got it"),
-                                                  Throwable::printStackTrace);
+        animalRepository.fetchAnimals().subscribe(animalListResponse -> tempOutput.set("got it"), Throwable::printStackTrace);
     }
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tech.pauly.findapet">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".dependencyinjection.PetApplication"
         android:allowBackup="false"

@@ -6,8 +6,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import io.reactivex.Observable;
-import tech.pauly.findapet.models.AnimalListResponse;
-import tech.pauly.findapet.repository.AnimalRepository;
+import tech.pauly.findapet.data.AnimalRepository;
+import tech.pauly.findapet.data.models.AnimalListResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
