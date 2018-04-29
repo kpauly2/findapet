@@ -5,16 +5,39 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/fragment_discover"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:elevation="0dp"
+        android:background="@color/purpleLightest">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <SearchView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/menu_discover"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:elevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:background="@drawable/shape_round_corners"/>
+
+        <View
+            android:id="@+id/purple"
+            android:layout_width="match_parent"
+            android:layout_height="94dp"
+            android:background="@color/purpleStandard"
+            android:elevation="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_discover"
+            android:elevation="10dp"
+            android:textColor="@color/textStandard"
+            android:layout_margin="@dimen/default_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/purple"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>
