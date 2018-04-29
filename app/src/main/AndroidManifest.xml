@@ -3,6 +3,7 @@
     package="tech.pauly.findapet">
 
     <application
+        android:name=".dependencyinjection.PetApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,7 +11,7 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainTabActivity"
+            android:name=".shared.MainTabActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

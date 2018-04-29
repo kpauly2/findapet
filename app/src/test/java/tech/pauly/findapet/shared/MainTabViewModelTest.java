@@ -1,4 +1,4 @@
-package tech.pauly.findapet;
+package tech.pauly.findapet.shared;
 
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
@@ -8,6 +8,14 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import tech.pauly.findapet.R;
+import tech.pauly.findapet.discover.DiscoverFragment;
+import tech.pauly.findapet.favorites.FavoritesFragment;
+import tech.pauly.findapet.settings.SettingsFragment;
+import tech.pauly.findapet.shared.MainTabActivity;
+import tech.pauly.findapet.shared.MainTabViewModel;
+import tech.pauly.findapet.shelters.SheltersFragment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

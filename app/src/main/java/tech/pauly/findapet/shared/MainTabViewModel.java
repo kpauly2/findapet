@@ -1,8 +1,14 @@
-package tech.pauly.findapet;
+package tech.pauly.findapet.shared;
 
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+
+import tech.pauly.findapet.R;
+import tech.pauly.findapet.settings.SettingsFragment;
+import tech.pauly.findapet.shelters.SheltersFragment;
+import tech.pauly.findapet.discover.DiscoverFragment;
+import tech.pauly.findapet.favorites.FavoritesFragment;
 
 public class MainTabViewModel {
 
