@@ -1,12 +1,16 @@
 package tech.pauly.findapet.discover;
 
+import android.databinding.ObservableField;
+
 import javax.inject.Inject;
 
 import tech.pauly.findapet.repository.AnimalRepository;
 
 public class DiscoverViewModel {
 
-    AnimalRepository animalRepository;
+    public ObservableField<String> tempOutput = new ObservableField<>("waiting");
+
+    private AnimalRepository animalRepository;
 
     @Inject
     public DiscoverViewModel(AnimalRepository animalRepository) {
@@ -15,6 +19,7 @@ public class DiscoverViewModel {
     }
 
     private void fetchAnimals() {
-        animalRepository.fetchAnimals();
+        animalRepository.fetchAnimals().subscribe(animalListResponse -> tempOutput.set("got it"),
+                                                  Throwable::printStackTrace);
     }
 }
