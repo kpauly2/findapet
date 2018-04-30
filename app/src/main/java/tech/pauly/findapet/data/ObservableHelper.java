@@ -10,7 +10,7 @@ public class ObservableHelper {
     private final Scheduler mainThreadScheduler;
 
     @Inject
-    public ObservableHelper(@IOScheduler Scheduler ioScheduler, @MainThreadScheduler Scheduler mainThreadScheduler) {
+    public ObservableHelper(@IoScheduler Scheduler ioScheduler, @MainThreadScheduler Scheduler mainThreadScheduler) {
         this.ioScheduler = ioScheduler;
         this.mainThreadScheduler = mainThreadScheduler;
     }

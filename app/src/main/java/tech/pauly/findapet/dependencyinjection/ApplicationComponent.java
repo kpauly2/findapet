@@ -7,11 +7,9 @@ import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 
 @Singleton
-@Component(modules = {
-        AndroidSupportInjectionModule.class,
-        AndroidViewModule.class,
-        DataModule.class
-        })
+@Component(modules = { AndroidSupportInjectionModule.class,
+                       AndroidViewModule.class,
+                       DataModule.class })
 public interface ApplicationComponent extends AndroidInjector<PetApplication> {
 
 }

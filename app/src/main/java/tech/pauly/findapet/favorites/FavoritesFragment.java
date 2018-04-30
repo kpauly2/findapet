@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import tech.pauly.findapet.R;
-import tech.pauly.findapet.databinding.FragmentDiscoverBinding;
 import tech.pauly.findapet.databinding.FragmentFavoritesBinding;
 
 public class FavoritesFragment extends Fragment {

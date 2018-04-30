@@ -11,7 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import tech.pauly.findapet.data.AnimalService;
-import tech.pauly.findapet.data.IOScheduler;
+import tech.pauly.findapet.data.IoScheduler;
 import tech.pauly.findapet.data.MainThreadScheduler;
 
 @Module
@@ -28,8 +28,8 @@ public class DataModule {
     }
 
     @Provides
-    @IOScheduler
-    Scheduler provideIOScheduler() {
+    @IoScheduler
+    Scheduler provideIoScheduler() {
         return Schedulers.io();
     }
 
