@@ -1,5 +1,7 @@
 # Find a Pet
-A pet adoption app using the Petfinder API being made in my free time, you can follow along on my [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2168363)
+A pet adoption app using the Petfinder API being made in my free time.
+
+You can follow along on my [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2168363)
 
 ## Goals
 - Friendly design and UX
@@ -25,10 +27,10 @@ A pet adoption app using the Petfinder API being made in my free time, you can f
 - Adobe XD
 
 ## Running the App
-Just download the source and build it in debug, should work fine. Once there's more working I'll be making actual deliverables.
+If you've got Android Studio, Just download the source and build it in debug, should work fine. Once there's more working I'll be making actual deliverables.
 
 ## Contribution
-Issues and PRs are welcome, just please be sure to search through the [Tracker](https://www.pivotaltracker.com/n/projects/2168363) to make sure the idea isn't already on the backlog.
+Issues are welcome, just please be sure to search through the [Tracker](https://www.pivotaltracker.com/n/projects/2168363) to make sure the idea isn't already on the backlog.
 
 ## Author
 Kevin Pauly - [website](http://www.pauly.tech)
