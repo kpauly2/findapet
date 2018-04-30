@@ -5,4 +5,6 @@
     <color name="purpleLight">#B6B8FD</color>
     <color name="purpleStandard">#797CDB</color>
     <color name="purpleDark">#5558A1</color>
+
+    <color name="textStandard">#303030</color>
 </resources>

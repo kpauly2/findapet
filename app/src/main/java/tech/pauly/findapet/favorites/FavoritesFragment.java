@@ -1,4 +1,4 @@
-package tech.pauly.findapet;
+package tech.pauly.findapet.favorites;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import tech.pauly.findapet.databinding.FragmentDiscoverBinding;
+import tech.pauly.findapet.R;
 import tech.pauly.findapet.databinding.FragmentFavoritesBinding;
 
 public class FavoritesFragment extends Fragment {

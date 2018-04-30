@@ -1,9 +1,12 @@
-package tech.pauly.findapet;
+package tech.pauly.findapet.shared;
 
 import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Rule;
 import org.junit.Test;
+
+import tech.pauly.findapet.R;
+import tech.pauly.findapet.utils.RobotUtils;
 
 public class MainTabActivityTest {
 

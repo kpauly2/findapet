@@ -1,4 +1,4 @@
-package tech.pauly.findapet;
+package tech.pauly.findapet.utils;
 
 import android.databinding.BindingAdapter;
 import android.support.annotation.IdRes;

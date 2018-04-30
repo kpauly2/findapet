@@ -46,6 +46,21 @@ dependencies {
     //Architecture Components
     implementation "android.arch.lifecycle:extensions:1.1.1"
 
+    //Dagger 2
+    implementation 'com.google.dagger:dagger:2.14.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
+    implementation 'com.google.dagger:dagger-android-support:2.14.1'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
+
+    //Rx
+    compile "io.reactivex.rxjava2:rxjava:2.1.13"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+
+    //Retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-simplexml:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
     //Unit Tests
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.11.0'
@@ -63,4 +78,6 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-contrib:3.0.0') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
+    androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
+    androidTestAnnotationProcessor 'com.google.dagger:dagger-android-processor:2.14.1'
 }

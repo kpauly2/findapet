@@ -1,4 +1,4 @@
-package tech.pauly.findapet;
+package tech.pauly.findapet.utils;
 
 import android.support.annotation.IdRes;
 import android.support.test.espresso.NoMatchingViewException;

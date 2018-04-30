@@ -1,4 +1,4 @@
-package tech.pauly.findapet;
+package tech.pauly.findapet.shelters;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import tech.pauly.findapet.R;
 import tech.pauly.findapet.databinding.FragmentSheltersBinding;
 
 public class SheltersFragment extends Fragment {
