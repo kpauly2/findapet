@@ -53,4 +53,64 @@ public class Animal {
 
     @Element
     private Contact contact;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getShelterId() {
+        return shelterId;
+    }
+
+    public String getShelterPetId() {
+        return shelterPetId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public AnimalType getType() {
+        return type;
+    }
+
+    public List<String> getBreedList() {
+        return breed;
+    }
+
+    public String getMix() {
+        return mix;
+    }
+
+    public Age getAge() {
+        return age;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public AnimalSize getSize() {
+        return size;
+    }
+
+    public List<Option> getOptions() {
+        return options;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
 }

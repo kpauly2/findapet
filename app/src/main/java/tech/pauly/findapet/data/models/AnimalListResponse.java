@@ -17,4 +17,8 @@ public class AnimalListResponse {
 
     @ElementList(name = "pets", entry = "pet")
     private List<Animal> animalList;
+
+    public List<Animal> getAnimalList() {
+        return animalList;
+    }
 }
