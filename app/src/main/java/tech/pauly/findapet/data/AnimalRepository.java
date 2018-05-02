@@ -18,7 +18,7 @@ public class AnimalRepository {
 
     public Observable<AnimalListResponse> fetchAnimals() {
         //TODO: remove hardcoded values in https://www.pivotaltracker.com/story/show/157157373 and https://www.pivotaltracker.com/story/show/157179681
-        return animalService.fetchAnimals("48335", "23bfea78dfb8bde56bbae16192cbe6d4")
+        return animalService.fetchAnimals("48335", "23bfea78dfb8bde56bbae16192cbe6d4", "cat")
                             .compose(observableHelper.applySchedulers());
     }
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="tech.pauly.findapet.discover.AnimalListItemViewModel" />
+
+        <import type="tech.pauly.findapet.utils.BindingAdapters" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardElevation="0dp"
+        app:custom_width="@{BindingAdapters.recyclerItemWidth}">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
+
+            <ImageView
+                android:id="@+id/animal_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/shape_animal_image"
+                android:contentDescription="@string/menu_shelters"
+                android:elevation="4dp"
+                app:custom_height="@{BindingAdapters.recyclerItemWidth}"
+                app:imageUrl="@{viewModel.imageUrl}"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/animal_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{viewModel.name}"
+                android:textAppearance="@style/FontLargeHeader"
+                android:textColor="@color/textDark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/animal_image"
+                tools:text="Mozart" />
+
+            <TextView
+                android:id="@+id/animal_age_breed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@{@string/age_breed(viewModel.age, viewModel.breeds)}"
+                android:textAppearance="@style/FontStrongBody"
+                android:textColor="@color/purpleStandard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/animal_name"
+                tools:text="Adult - Ragamuffin" />
+
+            <TextView
+                android:id="@+id/animal_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/animal_distance"
+                android:textAppearance="@style/FontSmall"
+                android:textColor="@color/textStandard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/animal_age_breed" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</layout>

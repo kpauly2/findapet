@@ -2,11 +2,12 @@ package tech.pauly.findapet.discover;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import io.reactivex.Observable;
 import tech.pauly.findapet.data.AnimalRepository;
@@ -24,6 +25,10 @@ public class DiscoverViewModelTest {
 
     @Mock
     private AnimalRepository animalRepository;
+
+    @Mock
+    private AnimalListAdapter animalListAdapter;
+
     private AnimalListResponse animalListResponse;
 
     @Before
@@ -35,13 +40,13 @@ public class DiscoverViewModelTest {
 
     @Test
     public void onCreate_fetchAnimals() {
-        new DiscoverViewModel(animalRepository);
+        new DiscoverViewModel(animalRepository, animalListAdapter);
 
         verify(animalRepository).fetchAnimals();
     }
 
     @Test
-    public void fetchAnimals_onNext_outputAnimalText() {
+    public void fetchAnimals_onNext_sendAnimalListToAdapter() {
         Animal animal = mock(Animal.class);
         when(animal.getName()).thenReturn("name");
         when(animal.getAge()).thenReturn(Age.Adult);
@@ -49,9 +54,11 @@ public class DiscoverViewModelTest {
         when(animal.getSize()).thenReturn(AnimalSize.M);
         when(animal.getId()).thenReturn(1);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
+        ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
 
-        DiscoverViewModel subject = new DiscoverViewModel(animalRepository);
+        new DiscoverViewModel(animalRepository, animalListAdapter);
 
-        assertThat(subject.tempOutput.get()).isEqualTo("ANIMALS:\nname\nAdult\nbreed\nM\n1\n\n");
+        verify(animalListAdapter).setAnimalItems(argumentCaptor.capture());
+        assertThat(argumentCaptor.getValue().get(0).name).isEqualTo("name");
     }
 }

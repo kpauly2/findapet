@@ -1,37 +1,40 @@
 package tech.pauly.findapet.discover;
 
-import android.databinding.ObservableField;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.models.Animal;
+import tech.pauly.findapet.data.models.AnimalListResponse;
 
 public class DiscoverViewModel {
 
-    public ObservableField<String> tempOutput = new ObservableField<>("waiting");
-
     private AnimalRepository animalRepository;
+    private AnimalListAdapter adapter;
 
     @Inject
-    public DiscoverViewModel(AnimalRepository animalRepository) {
+    public DiscoverViewModel(AnimalRepository animalRepository, AnimalListAdapter animalListAdapter) {
         this.animalRepository = animalRepository;
+        this.adapter = animalListAdapter;
+
         fetchAnimals();
     }
 
+    public AnimalListAdapter getAdapter() {
+        return adapter;
+    }
+
     private void fetchAnimals() {
-        animalRepository.fetchAnimals().subscribe(animalListResponse -> {
-            StringBuilder outputString = new StringBuilder("ANIMALS:\n");
-            for (Animal animal : animalListResponse.getAnimalList()) {
-                outputString.append(animal.getName()).append("\n")
-                            .append(animal.getAge()).append("\n");
-                if (animal.getBreedList().size() > 0) {
-                    outputString.append(animal.getBreedList().get(0)).append("\n");
-                }
-                outputString.append(animal.getSize()).append("\n")
-                            .append(animal.getId()).append("\n\n");
-            }
-            tempOutput.set(outputString.toString());
-        }, Throwable::printStackTrace);
+        animalRepository.fetchAnimals().subscribe(this::setupAnimalList, Throwable::printStackTrace);
+    }
+
+    private void setupAnimalList(AnimalListResponse animalListResponse) {
+        List<AnimalListItemViewModel> viewModelList = new ArrayList<>();
+        for (Animal animal : animalListResponse.getAnimalList()) {
+            viewModelList.add(new AnimalListItemViewModel(animal));
+        }
+        adapter.setAnimalItems(viewModelList);
     }
 }

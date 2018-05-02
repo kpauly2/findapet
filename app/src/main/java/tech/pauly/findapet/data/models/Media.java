@@ -10,4 +10,8 @@ public class Media {
 
     @ElementList(name = "photos", entry = "photo")
     private List<Photo> photoList;
+
+    public List<Photo> getPhotoList() {
+        return photoList;
+    }
 }

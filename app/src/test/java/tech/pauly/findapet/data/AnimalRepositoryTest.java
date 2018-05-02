@@ -29,7 +29,7 @@ public class AnimalRepositoryTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         animalListResponse = mock(AnimalListResponse.class);
-        when(animalService.fetchAnimals(anyString(), anyString())).thenReturn(Observable.just(animalListResponse));
+        when(animalService.fetchAnimals(anyString(), anyString(), anyString())).thenReturn(Observable.just(animalListResponse));
         when(observableHelper.applySchedulers()).thenReturn(observable -> observable);
 
         subject = new AnimalRepository(animalService, observableHelper);
