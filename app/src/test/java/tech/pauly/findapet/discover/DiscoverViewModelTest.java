@@ -15,6 +15,7 @@ import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalSize;
+import tech.pauly.findapet.data.models.Media;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -30,17 +31,19 @@ public class DiscoverViewModelTest {
     private AnimalListAdapter animalListAdapter;
 
     private AnimalListResponse animalListResponse;
+    private DiscoverViewModel subject;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         animalListResponse = mock(AnimalListResponse.class);
         when(animalRepository.fetchAnimals()).thenReturn(Observable.just(animalListResponse));
+        subject = new DiscoverViewModel(animalRepository, animalListAdapter);
     }
 
     @Test
-    public void onCreate_fetchAnimals() {
-        new DiscoverViewModel(animalRepository, animalListAdapter);
+    public void onResume_fetchAnimals() {
+        subject.fetchAnimals();
 
         verify(animalRepository).fetchAnimals();
     }
@@ -53,12 +56,14 @@ public class DiscoverViewModelTest {
         when(animal.getBreedList()).thenReturn(Collections.singletonList("breed"));
         when(animal.getSize()).thenReturn(AnimalSize.M);
         when(animal.getId()).thenReturn(1);
+        Media media = mock(Media.class);
+        when(animal.getMedia()).thenReturn(media);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
         ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
 
-        new DiscoverViewModel(animalRepository, animalListAdapter);
+        subject.fetchAnimals();
 
         verify(animalListAdapter).setAnimalItems(argumentCaptor.capture());
-        assertThat(argumentCaptor.getValue().get(0).name).isEqualTo("name");
+        assertThat(argumentCaptor.getValue().get(0).name.get()).isEqualTo("name");
     }
 }

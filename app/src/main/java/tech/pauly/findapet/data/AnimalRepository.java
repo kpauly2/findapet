@@ -11,7 +11,7 @@ public class AnimalRepository {
     private ObservableHelper observableHelper;
 
     @Inject
-    AnimalRepository(AnimalService animalService, ObservableHelper observableHelper) {
+    public AnimalRepository(AnimalService animalService, ObservableHelper observableHelper) {
         this.animalService = animalService;
         this.observableHelper = observableHelper;
     }

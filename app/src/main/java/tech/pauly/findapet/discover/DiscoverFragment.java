@@ -34,6 +34,7 @@ public class DiscoverFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         FragmentDiscoverBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_discover, container, false);
         binding.setViewModel(discoverViewModel);
+        getLifecycle().addObserver(discoverViewModel);
         return binding.getRoot();
     }
 }

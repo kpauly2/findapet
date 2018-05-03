@@ -24,6 +24,7 @@ public class PetApplication extends Application implements HasActivityInjector,
         super.onCreate();
 
         DaggerApplicationComponent.builder()
+                                  .applicationModule(new ApplicationModule(this))
                                   .build()
                                   .inject(this);
     }

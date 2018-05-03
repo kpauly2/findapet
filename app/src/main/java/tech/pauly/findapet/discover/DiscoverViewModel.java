@@ -1,5 +1,9 @@
 package tech.pauly.findapet.discover;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +13,7 @@ import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 
-public class DiscoverViewModel {
+public class DiscoverViewModel implements LifecycleObserver {
 
     private AnimalRepository animalRepository;
     private AnimalListAdapter adapter;
@@ -18,15 +22,14 @@ public class DiscoverViewModel {
     public DiscoverViewModel(AnimalRepository animalRepository, AnimalListAdapter animalListAdapter) {
         this.animalRepository = animalRepository;
         this.adapter = animalListAdapter;
-
-        fetchAnimals();
     }
 
     public AnimalListAdapter getAdapter() {
         return adapter;
     }
 
-    private void fetchAnimals() {
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    void fetchAnimals() {
         animalRepository.fetchAnimals().subscribe(this::setupAnimalList, Throwable::printStackTrace);
     }
 
