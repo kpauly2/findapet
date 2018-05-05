@@ -51,6 +51,10 @@ android {
             res.srcDir "src/androidTest/res"
         }
     }
+
+    testOptions {
+        animationsDisabled = true
+    }
 }
 
 project.afterEvaluate {

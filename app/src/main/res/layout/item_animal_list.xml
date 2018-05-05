@@ -31,7 +31,7 @@
                 android:layout_height="0dp"
                 android:background="@drawable/shape_animal_image"
                 android:contentDescription="@string/menu_shelters"
-                android:elevation="4dp"
+                android:elevation="2dp"
                 app:height="@{BindingAdapters.recyclerItemWidth}"
                 app:imageUrl="@{viewModel.imageUrl}"
                 app:layout_constraintTop_toTopOf="parent" />

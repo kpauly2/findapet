@@ -7,4 +7,12 @@
     <string name="descriptor_pet_image">Pet Image</string>
     <string name="age_breed" formatted="false">%s \u25CF %s</string>
     <string name="animal_distance">5 mi away</string>
+    <string name="tab_dog">DOGS</string>
+    <string name="tab_cat">CATS</string>
+    <string name="tab_smallfurry">SMALL &amp; FURRY</string>
+    <string name="tab_barnyard">BARNYARD</string>
+    <string name="tab_bird">BIRDS</string>
+    <string name="tab_horse">HORSES</string>
+    <string name="tab_rabbit">RABBITS</string>
+    <string name="tab_reptile">REPTILES</string>
 </resources>

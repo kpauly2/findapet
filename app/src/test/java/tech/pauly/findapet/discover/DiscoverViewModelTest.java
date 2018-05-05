@@ -15,9 +15,11 @@ import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalSize;
+import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.data.models.Media;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,7 +30,10 @@ public class DiscoverViewModelTest {
     private AnimalRepository animalRepository;
 
     @Mock
-    private AnimalListAdapter animalListAdapter;
+    private AnimalListAdapter listAdapter;
+
+    @Mock
+    private AnimalTypeViewPagerAdapter viewPagerAdapter;
 
     private AnimalListResponse animalListResponse;
     private DiscoverViewModel subject;
@@ -37,15 +42,8 @@ public class DiscoverViewModelTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         animalListResponse = mock(AnimalListResponse.class);
-        when(animalRepository.fetchAnimals()).thenReturn(Observable.just(animalListResponse));
-        subject = new DiscoverViewModel(animalRepository, animalListAdapter);
-    }
-
-    @Test
-    public void onResume_fetchAnimals() {
-        subject.fetchAnimals();
-
-        verify(animalRepository).fetchAnimals();
+        when(animalRepository.fetchAnimals(any(AnimalType.class))).thenReturn(Observable.just(animalListResponse));
+        subject = new DiscoverViewModel(animalRepository, viewPagerAdapter, listAdapter);
     }
 
     @Test
@@ -61,9 +59,17 @@ public class DiscoverViewModelTest {
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
         ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
 
-        subject.fetchAnimals();
+        subject.fetchAnimals(AnimalType.Cat);
 
-        verify(animalListAdapter).setAnimalItems(argumentCaptor.capture());
+        verify(listAdapter).setAnimalItems(argumentCaptor.capture());
         assertThat(argumentCaptor.getValue().get(0).name.get()).isEqualTo("name");
+    }
+
+    @Test
+    public void fetchAnimalsForNewPage_clearsItemsAndFetchesAnimalForNewPage() {
+        subject.fetchAnimalsForNewPage(0);
+
+        verify(listAdapter).clearItems();
+        assertThat(animalRepository.fetchAnimals(AnimalType.Dog));
     }
 }

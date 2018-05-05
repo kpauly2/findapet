@@ -1,5 +1,7 @@
 package tech.pauly.findapet.data.models;
 
+import android.support.annotation.Nullable;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -42,13 +44,13 @@ public class Animal {
     @ElementList(entry = "option")
     private List<Option> options;
 
-    @Element
+    @Element(required = false)
     private String description;
 
     @Element
     private String lastUpdate;
 
-    @Element
+    @Element(required = false)
     private Media media;
 
     @Element
@@ -62,6 +64,7 @@ public class Animal {
         return shelterId;
     }
 
+    @Nullable
     public String getShelterPetId() {
         return shelterPetId;
     }
@@ -98,6 +101,7 @@ public class Animal {
         return options;
     }
 
+    @Nullable
     public String getDescription() {
         return description;
     }
@@ -106,6 +110,7 @@ public class Animal {
         return lastUpdate;
     }
 
+    @Nullable
     public Media getMedia() {
         return media;
     }

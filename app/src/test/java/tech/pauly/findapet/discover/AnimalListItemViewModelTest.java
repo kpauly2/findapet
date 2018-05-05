@@ -79,6 +79,17 @@ public class AnimalListItemViewModelTest {
     }
 
     @Test
+    public void setPhoto_animalHasNullPhotos_doNotSetPhoto() {
+        Media media = mock(Media.class);
+        when(media.getPhotoList()).thenReturn(null);
+        when(animal.getMedia()).thenReturn(media);
+
+        AnimalListItemViewModel subject = new AnimalListItemViewModel(animal);
+
+        assertThat(subject.imageUrl.get()).isEqualTo("");
+    }
+
+    @Test
     public void setPhoto_animalDoesNotHaveXPhoto_doNotSetPhoto() {
         Photo photo = mock(Photo.class);
         when(photo.getUrl()).thenReturn("http://url.com");
@@ -86,6 +97,15 @@ public class AnimalListItemViewModelTest {
         Media media = mock(Media.class);
         when(media.getPhotoList()).thenReturn(Collections.singletonList(photo));
         when(animal.getMedia()).thenReturn(media);
+
+        AnimalListItemViewModel subject = new AnimalListItemViewModel(animal);
+
+        assertThat(subject.imageUrl.get()).isEqualTo("");
+    }
+
+    @Test
+    public void setPhoto_mediaIsNull_doNotSetPhoto() {
+        when(animal.getMedia()).thenReturn(null);
 
         AnimalListItemViewModel subject = new AnimalListItemViewModel(animal);
 
