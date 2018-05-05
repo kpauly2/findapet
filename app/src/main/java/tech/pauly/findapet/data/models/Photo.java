@@ -15,4 +15,16 @@ public class Photo {
 
     @Text
     private String url;
+
+    public String getId() {
+        return id;
+    }
+
+    public PhotoSize getSize() {
+        return size;
+    }
+
+    public String getUrl() {
+        return url;
+    }
 }

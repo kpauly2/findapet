@@ -8,5 +8,5 @@ import tech.pauly.findapet.data.models.AnimalListResponse;
 public interface AnimalService {
 
     @GET("pet.find")
-    Observable<AnimalListResponse> fetchAnimals(@Query("location") String location, @Query("key") String key);
+    Observable<AnimalListResponse> fetchAnimals(@Query("location") String location, @Query("key") String key, @Query("animal") String type);
 }

@@ -4,6 +4,23 @@
         <item name="colorPrimary">@color/purpleStandard</item>
         <item name="colorPrimaryDark">@color/purpleDark</item>
         <item name="colorAccent">@color/purpleVeryLight</item>
-        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="FontLargeHeader" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="FontStrongBody" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="FontSmall" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">11sp</item>
     </style>
 </resources>

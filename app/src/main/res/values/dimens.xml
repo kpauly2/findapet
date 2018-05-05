@@ -1,3 +1,5 @@
 <resources>
-    <dimen name="default_margin">16dp</dimen>
+    <dimen name="standard_margin">16dp</dimen>
+    <dimen name="half_margin">8dp</dimen>
+    <dimen name="large_margin">24dp</dimen>
 </resources>

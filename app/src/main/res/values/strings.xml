@@ -4,4 +4,7 @@
     <string name="menu_shelters">Shelters</string>
     <string name="menu_favorites">Favorites</string>
     <string name="menu_settings">Settings</string>
+    <string name="descriptor_pet_image">Pet Image</string>
+    <string name="age_breed" formatted="false">%s \u25CF %s</string>
+    <string name="animal_distance">5 mi away</string>
 </resources>
