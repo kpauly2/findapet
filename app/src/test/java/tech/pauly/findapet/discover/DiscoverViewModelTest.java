@@ -66,8 +66,8 @@ public class DiscoverViewModelTest {
     }
 
     @Test
-    public void pageChange_clearsItemsAndFetchesAnimalForNewPage() {
-        subject.pageChange(0);
+    public void fetchAnimalsForNewPage_clearsItemsAndFetchesAnimalForNewPage() {
+        subject.fetchAnimalsForNewPage(0);
 
         verify(listAdapter).clearItems();
         assertThat(animalRepository.fetchAnimals(AnimalType.Dog));

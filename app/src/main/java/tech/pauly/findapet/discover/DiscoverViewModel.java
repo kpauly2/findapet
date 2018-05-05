@@ -38,7 +38,7 @@ public class DiscoverViewModel implements LifecycleObserver {
         return viewPagerAdapter;
     }
 
-    public void pageChange(int position) {
+    public void fetchAnimalsForNewPage(int position) {
         listAdapter.clearItems();
         fetchAnimals(AnimalType.values()[position]);
     }

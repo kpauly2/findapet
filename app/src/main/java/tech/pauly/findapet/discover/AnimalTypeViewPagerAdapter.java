@@ -50,7 +50,7 @@ public class AnimalTypeViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 8;
+        return AnimalType.values().length;
     }
 
     @Override
