@@ -4,6 +4,7 @@ import android.support.test.espresso.idling.CountingIdlingResource;
 
 import io.reactivex.Observable;
 import tech.pauly.findapet.data.models.AnimalListResponse;
+import tech.pauly.findapet.data.models.AnimalType;
 
 public class FakeAnimalRepository extends AnimalRepository {
 
@@ -15,8 +16,8 @@ public class FakeAnimalRepository extends AnimalRepository {
     }
 
     @Override
-    public Observable<AnimalListResponse> fetchAnimals() {
+    public Observable<AnimalListResponse> fetchAnimals(AnimalType animalType) {
         countingIdlingResource.increment();
-        return super.fetchAnimals().doAfterTerminate(() -> countingIdlingResource.decrement());
+        return super.fetchAnimals(animalType).doAfterTerminate(() -> countingIdlingResource.decrement());
     }
 }

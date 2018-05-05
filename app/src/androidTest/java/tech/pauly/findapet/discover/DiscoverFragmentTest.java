@@ -1,6 +1,5 @@
 package tech.pauly.findapet.discover;
 
-import android.content.Intent;
 import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
@@ -12,13 +11,9 @@ import org.junit.Test;
 
 import javax.inject.Inject;
 
-import tech.pauly.findapet.R;
 import tech.pauly.findapet.shared.BaseEspressoTest;
 import tech.pauly.findapet.shared.MainTabActivity;
 import tech.pauly.findapet.utils.MockWebServerRule;
-import tech.pauly.findapet.utils.RobotUtils;
-
-import static tech.pauly.findapet.utils.MockWebServerRequestPatterns.FETCH_ANIMALS;
 
 public class DiscoverFragmentTest extends BaseEspressoTest {
 
@@ -31,9 +26,16 @@ public class DiscoverFragmentTest extends BaseEspressoTest {
     @Inject
     CountingIdlingResource idlingResource;
 
+    private DiscoverFragmentRobot.Hands hands;
+    private DiscoverFragmentRobot.Eyes eyes;
+    private DiscoverFragmentRobot.Dependencies dependencies;
+
     @Before
     public void setup() {
         getTestComponent().inject(this);
+        hands = new DiscoverFragmentRobot.Hands(intentsTestRule, getApplicationContext());
+        eyes = new DiscoverFragmentRobot.Eyes(getApplicationContext());
+        dependencies = new DiscoverFragmentRobot.Dependencies(serverRule);
         IdlingRegistry.getInstance().register(idlingResource);
     }
 
@@ -44,11 +46,21 @@ public class DiscoverFragmentTest extends BaseEspressoTest {
 
     @Test
     public void onLaunch_seesAnimalsFetchedFromNetwork() {
-        String expectedAgeBreedText = String.format(getApplicationContext().getResources().getString(R.string.age_breed), "Adult", "Domestic Short Hair / Tabby");
-        serverRule.getDispatcher().mockCall(FETCH_ANIMALS, "animal_list_response");
+        dependencies.setupDogResponse();
 
-        intentsTestRule.launchActivity(new Intent(getApplicationContext(), MainTabActivity.class));
+        hands.launchScreen();
 
-        RobotUtils.seesRecyclerViewWithItemWithTexts(R.id.animal_list_recycler_view, R.id.animal_item_card, "Saber", expectedAgeBreedText, "5 mi away");
+        eyes.seesDogs();
+    }
+
+    @Test
+    public void clickAnotherTab_seesNewAnimalList() {
+        dependencies.setupDogResponse();
+
+        hands.launchScreen();
+        dependencies.setupCatResponse();
+        hands.clickCatTab();
+
+        eyes.seesCats();
     }
 }

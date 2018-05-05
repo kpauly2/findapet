@@ -1,0 +1,1905 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<petfinder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://api.petfinder.com/schemas/0.9/petfinder.xsd">
+    <header>
+        <version>0.1</version>
+        <timestamp>2018-05-05T21:03:44Z</timestamp>
+        <status>
+            <code>100</code>
+            <message />
+        </status>
+    </header>
+    <lastOffset>25</lastOffset>
+    <pets>
+        <pet>
+            <id>41220545</id>
+            <shelterId>MI61</shelterId>
+            <shelterPetId />
+            <name>Bubba</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Pug</breed>
+                <breed>Beagle</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Young</age>
+            <sex>M</sex>
+            <size>S</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[Bubba was surrendered to Pug Luv because his owner did not have time for him.  He was neutered and has been brought up to date on Rabies, DHLLP, Bordetella, heart worm and fecal checked and a blood panel done.  He is good with children and other dogs.  He is house trained and loves children.
+
+If you are interested in adopting Bubba or any of the dogs currently with Pug Luv, go to michiganpugrescue.com, click on the Adopt/Foster tab on the left of the home page, download, print, complete and submit an Application for Adoption to begin the adoption process.
+
+All updates on Bubba will be posted to his web page at michiganpugrescue.com]]>
+            </description>
+            <lastUpdate>2018-03-20T18:20:19Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41220545/1/?bust=1521569979&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41220545/1/?bust=1521569979&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41220545/1/?bust=1521569979&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41220545/1/?bust=1521569979&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41220545/1/?bust=1521569979&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41220545/2/?bust=1521569980&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41220545/2/?bust=1521569980&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41220545/2/?bust=1521569980&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41220545/2/?bust=1521569980&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41220545/2/?bust=1521569980&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/41220545/3/?bust=1521569980&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/41220545/3/?bust=1521569980&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/41220545/3/?bust=1521569980&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/41220545/3/?bust=1521569980&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/41220545/3/?bust=1521569980&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>23927 Wesley</address1>
+                <address2 />
+                <city>Farmington</city>
+                <state>MI</state>
+                <zip>48335</zip>
+                <phone />
+                <fax />
+                <email>pugluv@michiganpugrescue.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>40986754</id>
+            <shelterId>MI61</shelterId>
+            <shelterPetId />
+            <name>Sally</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Pug</breed>
+                <breed>English Bulldog</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Adult</age>
+            <sex>F</sex>
+            <size>S</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[Sally was an owner surrender to a local shelter who contacted Michigan Pug Rescue to take her into the program.  She is 6 years old, potty trained, up to date of Rabies, DHLLP, Bordetella, heart worm testing and preventative, crate trained and has had a dental cleaning and some extractions.  When she arrived at the rescue she had Kennel Cough.  She has some allergies that are being treated with medicated baths and topical spray and she is extremely overweight.  She has been placed on a special diet to loose the weight.  The MPR Veterinarian believes she is a Pug/Bull Dog mix.  She gets along very well with other dogs and likes children.  She enjoys being outside with you and responds when called.  She is very sweet and will make a great addition to any home.
+
+All updates on Sally can be found on her home page at michiganpugrescue.com under the Browse Available Pugs tab.
+
+If you are interested in adopting Sally or any of the dogs currently residing with the rescue, go to michiganpugrescue.com, click on the Adopt/Foster tab on the left of the home page, download, print, complete and mail in an application for adoption to begin the adoption process.]]>
+            </description>
+            <lastUpdate>2018-02-18T23:51:26Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/40986754/1/?bust=1518997283&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/40986754/1/?bust=1518997283&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/40986754/1/?bust=1518997283&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/40986754/1/?bust=1518997283&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/40986754/1/?bust=1518997283&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/40986754/2/?bust=1518997298&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/40986754/2/?bust=1518997298&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/40986754/2/?bust=1518997298&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/40986754/2/?bust=1518997298&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/40986754/2/?bust=1518997298&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/40986754/3/?bust=1518997312&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/40986754/3/?bust=1518997312&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/40986754/3/?bust=1518997312&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/40986754/3/?bust=1518997312&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/40986754/3/?bust=1518997312&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/40986754/4/?bust=1522018207&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/40986754/4/?bust=1522018207&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/40986754/4/?bust=1522018207&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/40986754/4/?bust=1522018207&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/40986754/4/?bust=1522018207&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>23927 Wesley</address1>
+                <address2 />
+                <city>Farmington</city>
+                <state>MI</state>
+                <zip>48335</zip>
+                <phone />
+                <fax />
+                <email>shelter-MI61@petfinder.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>37993100</id>
+            <shelterId>MI61</shelterId>
+            <shelterPetId />
+            <name>Sophie</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Pug</breed>
+            </breeds>
+            <mix>no</mix>
+            <age>Adult</age>
+            <sex>F</sex>
+            <size>S</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[Sophie was an owner surrender because the family was unable to afford the care that was needed.   She is 7 years old, potty trained, up to date on her Rabies, DHLLP, Bordetella, heart worm, fecal and blood tests completed.  She was seen and examined by the Neurologist, an MRI was performed as well as a Spinal tap. Sophie suffers from a cyst on her spinal cord that is filled with fluid.  This has affected her ability to have full use of her hind legs.  The cyst is filled with fluid pressing on the spinal column.  This causes compression of the spinal cord resulting in weakness and at times fecal incontinence.   He has recommended surgery to correct the issue.  It is a 3.5 - 4.5 hour surgery involving pins and gluing of the spine will be used in this procedure.  The prognosis is guarded, but the doctor feels there is a good chance .at least part of her problem can be resolved.  Her surgery was scheduled for May 4th and there will be a 3-5 day hospitalization after the surgery.  Once she is brought home to her foster family she will be on an exercise routing and will enter a  weekly physical therapy program.  She will remain on Medical Hold until such time as she is released medically by both the Neurologist and her regular Veterinarian.
+
+Sophie has begun to show some weakness in her hind end again.  She saw the Neurologist on 2/14/18 after which she had several tests done including another MRI.  The MRI has been sent to the Radiologist for his interpretation.  After the Radiologist reports his findings a course of treatment will be determined.
+
+For all updates on Sophie's condition, go to michiganpugrescue.com, click on the Browse Available Pugs tab and click on Sophie's page.
+
+If you can assist with a donation to help with her medical bills it would be appreciated.
+
+If you are interested in adopting any of the Pugs currently residing with Pug Luv, go to michiganpugrescue.com and click on the Adopt/Foster tab to download, print, complete and mail in an Application for Adoption to begin the adoption process.]]>
+            </description>
+            <lastUpdate>2017-05-04T20:31:59Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/37993100/1/?bust=1522018156&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/37993100/1/?bust=1522018156&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/37993100/1/?bust=1522018156&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/37993100/1/?bust=1522018156&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/37993100/1/?bust=1522018156&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/37993100/2/?bust=1522018156&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/37993100/2/?bust=1522018156&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/37993100/2/?bust=1522018156&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/37993100/2/?bust=1522018156&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/37993100/2/?bust=1522018156&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/37993100/3/?bust=1493929921&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/37993100/3/?bust=1493929921&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/37993100/3/?bust=1493929921&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/37993100/3/?bust=1493929921&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/37993100/3/?bust=1493929921&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/37993100/4/?bust=1522018156&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/37993100/4/?bust=1522018156&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/37993100/4/?bust=1522018156&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/37993100/4/?bust=1522018156&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/37993100/4/?bust=1522018156&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>23927 Wesley</address1>
+                <address2 />
+                <city>Farmington</city>
+                <state>MI</state>
+                <zip>48335</zip>
+                <phone />
+                <fax />
+                <email>pugluv@michiganpugrescue.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>36939229</id>
+            <shelterId>MI61</shelterId>
+            <shelterPetId />
+            <name>Cappone</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Pug</breed>
+            </breeds>
+            <mix>no</mix>
+            <age>Adult</age>
+            <sex>M</sex>
+            <size>S</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[Cappone came to Pug Luv from a local shelter where he was turned in by his owner.  He has been brought up to date on his Rabies, DHLLP, Bordetella, heartworm, blood and fecal testing.  He has bilateral ear infections that are being treated, had a dental with 13 extractions and suffers from back issues.  The Pug Luv vet will determine if he needs to be seen by the Neurologist.  He is a happy boy and can be frisky.  He is house trained and loves attention.
+
+Capone now uses a wheelchair to get around outdoors or when he has extended periods of movement.
+
+For all updated on Cappone, go to our web site, michiganpugrescue.com, click on the Browse Available Pugs tab where you will find his web page.
+
+If you are interested in adopting Cappone or any of the Pugs residing with Pug Luv, click on the Adopt/Foster tab on our web site to download, print and complete an application for adoption to begin the adoption process.]]>
+            </description>
+            <lastUpdate>2016-12-09T22:50:32Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/36939229/1/?bust=1481323832&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/36939229/1/?bust=1481323832&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/36939229/1/?bust=1481323832&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/36939229/1/?bust=1481323832&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/36939229/1/?bust=1481323832&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/36939229/2/?bust=1481323833&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/36939229/2/?bust=1481323833&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/36939229/2/?bust=1481323833&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/36939229/2/?bust=1481323833&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/36939229/2/?bust=1481323833&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/36939229/3/?bust=1481323834&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/36939229/3/?bust=1481323834&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/36939229/3/?bust=1481323834&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/36939229/3/?bust=1481323834&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/36939229/3/?bust=1481323834&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>23927 Wesley</address1>
+                <address2 />
+                <city>Farmington</city>
+                <state>MI</state>
+                <zip>48335</zip>
+                <phone />
+                <fax />
+                <email>pugluv@michiganpugrescue.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41431557</id>
+            <shelterId>MI61</shelterId>
+            <shelterPetId />
+            <name>Peanut</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Pug</breed>
+                <breed>Beagle</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Adult</age>
+            <sex>M</sex>
+            <size>S</size>
+            <options>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[MEDICAL HOLD
+
+Peanut came to Pug Luv from a woman who had seen him available free to a good home.  She was concerned he would end up somewhere that he would not be cared for properly.  She was unable to keep him because of family issues.  He is 10 years old, housebroken, is being brought up to date on Rabies, DHLLP, Bordetella, heart worm, fecal and blood tests.  He has been diagnosed as diabetic and receives insulin injections twice daily.  He has not been neutered and needs his teeth cleaned but cannot have these procedures done until his blood sugar levels are under control. He also has cataracts forming on both eyes that will be addressed once all other issues are taken care of.
+
+For all updates on Peanut, go to michiganpugrescue.com, click on the Browse Available Pugs tab and click on Peanut.
+
+If you would like to assist with Peanut's medical bills all donations are appreciated.
+
+If you are interested in adopting Peanut or any of the dogs currently residing with Pug Luv go to michiganpugrescue.com download the Adoption/Foster Application under the Adopt/Foster tab on the left side of the home page.  Print out the application, complete it and mail it in.  This is what is required to begin the adoption process.]]>
+            </description>
+            <lastUpdate>2018-04-18T18:59:27Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41431557/1/?bust=1524077439&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41431557/1/?bust=1524077439&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41431557/1/?bust=1524077439&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41431557/1/?bust=1524077439&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41431557/1/?bust=1524077439&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41431557/2/?bust=1524077459&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41431557/2/?bust=1524077459&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41431557/2/?bust=1524077459&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41431557/2/?bust=1524077459&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41431557/2/?bust=1524077459&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/41431557/3/?bust=1524077480&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/41431557/3/?bust=1524077480&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/41431557/3/?bust=1524077480&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/41431557/3/?bust=1524077480&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/41431557/3/?bust=1524077480&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>23927 Wesley</address1>
+                <address2 />
+                <city>Farmington</city>
+                <state>MI</state>
+                <zip>48335</zip>
+                <phone />
+                <fax />
+                <email>pugluv@michiganpugrescue.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41431730</id>
+            <shelterId>MI61</shelterId>
+            <shelterPetId />
+            <name>Tonka</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Pug</breed>
+            </breeds>
+            <mix>no</mix>
+            <age>Adult</age>
+            <sex>M</sex>
+            <size>S</size>
+            <options>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[Tonka was surrendered by his owner along with his brother Dozier because his family did not have time for them.  He is 6 years old, house and crate trained, neutered, up to date on Rabies, DHLLP, brought up to date on Bordetella,  fecal, blood and heart worm testing, and will have his dental and extractions done.  He is good with children and other dogs, playful and likes to cuddle.  He would like to be adopted with his brother if possible.
+
+For all updates on Tonka go to michiganpugrescue.com click on the Browse Available Pugs page and click on Tonka.
+
+If you are interested in adopting Dozier or any of the other dogs currently residing with Pug Luv, go to michiganpugrescue.com, click on the Adopt/Foster tab on the left side of the home page, download, print, complete and mail in the Adoption Application to begin the adoption process.]]>
+            </description>
+            <lastUpdate>2018-04-18T19:34:32Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41431730/1/?bust=1524079875&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41431730/1/?bust=1524079875&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41431730/1/?bust=1524079875&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41431730/1/?bust=1524079875&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41431730/1/?bust=1524079875&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41431730/2/?bust=1524079890&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41431730/2/?bust=1524079890&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41431730/2/?bust=1524079890&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41431730/2/?bust=1524079890&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41431730/2/?bust=1524079890&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/41431730/3/?bust=1524079904&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/41431730/3/?bust=1524079904&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/41431730/3/?bust=1524079904&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/41431730/3/?bust=1524079904&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/41431730/3/?bust=1524079904&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/41431730/4/?bust=1524079917&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/41431730/4/?bust=1524079917&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/41431730/4/?bust=1524079917&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/41431730/4/?bust=1524079917&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/41431730/4/?bust=1524079917&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="5" size="pnt">http://photos.petfinder.com/photos/pets/41431730/5/?bust=1524079934&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="5" size="fpm">http://photos.petfinder.com/photos/pets/41431730/5/?bust=1524079934&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="5" size="x">http://photos.petfinder.com/photos/pets/41431730/5/?bust=1524079934&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="5" size="pn">http://photos.petfinder.com/photos/pets/41431730/5/?bust=1524079934&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="5" size="t">http://photos.petfinder.com/photos/pets/41431730/5/?bust=1524079934&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>23927 Wesley</address1>
+                <address2 />
+                <city>Farmington</city>
+                <state>MI</state>
+                <zip>48335</zip>
+                <phone />
+                <fax />
+                <email>pugluv@michiganpugrescue.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41431648</id>
+            <shelterId>MI61</shelterId>
+            <shelterPetId />
+            <name>Dozier</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Pug</breed>
+            </breeds>
+            <mix>no</mix>
+            <age>Adult</age>
+            <sex>M</sex>
+            <size>S</size>
+            <options>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[Dozier was surrendered by his owner along with his brother Tonka.  He is 7 years old, house and crate trained, neutered, up to date on Rabies, DHLLP, brought up to date on Bordetella,  fecal, blood and heart worm testing, and will have his dental and extractions done.  He is good with children and other dogs, playful and likes to cuddle.  He would like to be adopted with his brother if possible.
+
+For all updates on Dozier, go to michiganpugrescue.com, click on the Browse Available Pugs tab, click on Dozier.
+
+If you are interested in adopting Dozier or any of the other dogs currently residing with Pug Luv, go to michiganpugrescue.com, click on the Adopt/Foster tab on the left side of the home page, download, print, complete and mail in the Adoption Application to begin the adoption process.]]>
+            </description>
+            <lastUpdate>2018-04-18T19:21:20Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41431648/1/?bust=1524078921&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41431648/1/?bust=1524078921&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41431648/1/?bust=1524078921&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41431648/1/?bust=1524078921&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41431648/1/?bust=1524078921&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41431648/2/?bust=1524078934&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41431648/2/?bust=1524078934&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41431648/2/?bust=1524078934&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41431648/2/?bust=1524078934&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41431648/2/?bust=1524078934&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/41431648/3/?bust=1524078944&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/41431648/3/?bust=1524078944&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/41431648/3/?bust=1524078944&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/41431648/3/?bust=1524078944&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/41431648/3/?bust=1524078944&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/41431648/4/?bust=1524078953&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/41431648/4/?bust=1524078953&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/41431648/4/?bust=1524078953&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/41431648/4/?bust=1524078953&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/41431648/4/?bust=1524078953&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>23927 Wesley</address1>
+                <address2 />
+                <city>Farmington</city>
+                <state>MI</state>
+                <zip>48335</zip>
+                <phone />
+                <fax />
+                <email>pugluv@michiganpugrescue.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41234987</id>
+            <shelterId>MI61</shelterId>
+            <shelterPetId />
+            <name>Bette</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Pug</breed>
+            </breeds>
+            <mix>no</mix>
+            <age>Adult</age>
+            <sex>F</sex>
+            <size>S</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[Bette was an owner surrender to Pug Luv because her family did not have the time to spend with her and had recently moved to a place that did not allow pets.  She is 8 years old,  potty trained, spayed, been brought up to date on Rabies, DHLLP, Bordetella, heartworm, fecal and blood tested and had her teeth cleaned.  She is good with children and other dogs.
+
+If you are interested in adopting Lily or any of the Pugs currently with Pug Luv, go to michiganpugrescue.com, click on the Adopt/Foster tab on the left of the home page, download, print complete and submit your application to begin the adoption process.
+
+All updates on Lily and all of the Pugs are done on their web page at michiganpugrescue.com shown under the Browse Available Pugs tab.]]>
+            </description>
+            <lastUpdate>2018-03-22T15:18:14Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41234987/1/?bust=1521731524&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41234987/1/?bust=1521731524&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41234987/1/?bust=1521731524&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41234987/1/?bust=1521731524&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41234987/1/?bust=1521731524&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41234987/2/?bust=1521731550&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41234987/2/?bust=1521731550&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41234987/2/?bust=1521731550&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41234987/2/?bust=1521731550&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41234987/2/?bust=1521731550&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/41234987/3/?bust=1521731564&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/41234987/3/?bust=1521731564&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/41234987/3/?bust=1521731564&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/41234987/3/?bust=1521731564&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/41234987/3/?bust=1521731564&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/41234987/4/?bust=1521731571&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/41234987/4/?bust=1521731571&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/41234987/4/?bust=1521731571&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/41234987/4/?bust=1521731571&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/41234987/4/?bust=1521731571&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>23927 Wesley</address1>
+                <address2 />
+                <city>Farmington</city>
+                <state>MI</state>
+                <zip>48335</zip>
+                <phone />
+                <fax />
+                <email>pugluv@michiganpugrescue.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41045043</id>
+            <shelterId>OH94</shelterId>
+            <shelterPetId />
+            <name>Nikki</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Siberian Husky</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Adult</age>
+            <sex>F</sex>
+            <size>M</size>
+            <options>
+                <option>noKids</option>
+            </options>
+            <description>
+                <![CDATA[Meet Nikki!
+
+Nikki is a wonderful, sweet, sweet girl who's had a bit of a rough start to life. She is 9 years old, and is just a doll. She is very vocal, and special. Due to her rough start, Nikki can be very skittish for awhile while she warms up to her humans. She does take time and patience. Now that shes warmed up to her foster family, she loves to give some good Roo's and greet them! She loves her two husky foster siblings very much too! Because of her skittishness, a home with small children would not be the best fit for her. She would love a nice, quiet home to live out her life filled with love and patience. She is not cat tested. She does have congenital eye issues most likely since birth, that the Veterinarian does not seem concerned about. She has difficulty with depth perception, but has her vision and has no cataracts or signs of anything that would cause pain or disruption to her life. She just walks a little crooked on walks sometimes, especially if something moves fast and startles her.
+If you are looking for a dog you can create a special bond with, and love and cherish, Nikki is your girl. If you're interested in giving her her furever home, please fill out an adoption application at www.hhshr.com!]]>
+            </description>
+            <lastUpdate>2018-02-25T16:14:55Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41045043/1/?bust=1519574706&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41045043/1/?bust=1519574706&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41045043/1/?bust=1519574706&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41045043/1/?bust=1519574706&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41045043/1/?bust=1519574706&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41045043/2/?bust=1519574710&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41045043/2/?bust=1519574710&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41045043/2/?bust=1519574710&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41045043/2/?bust=1519574710&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41045043/2/?bust=1519574710&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>1</address1>
+                <address2 />
+                <city>Novi</city>
+                <state>MI</state>
+                <zip>48375</zip>
+                <phone> </phone>
+                <fax />
+                <email>HairyHoudiniHuskyRescue@gmail.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41492040</id>
+            <shelterId>MI915</shelterId>
+            <shelterPetId />
+            <name>Finley</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Schipperke</breed>
+            </breeds>
+            <mix>no</mix>
+            <age>Adult</age>
+            <sex>F</sex>
+            <size>S</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+            </options>
+            <description>
+                <![CDATA[Finley is a 10 pound, spayed female Schipperke born July 16, 2016.  She can be shy when first meeting people so a new owner with experience with the Schipperke breed would be a bonus!  Ideally, a perfect home would be where she has another Schipperke as a playmate.  She loves to play ball, play with the other foster dogs in her temporary home and run in her fenced area.  Finley lived with older children in her previous home so a new home with kids aged 12 and up would be fine!  Her adoption fee includes a crate, training literature, toys, collar, leash and name tag. If interested in Finley, please call 248.344.0181 (no emails!) and leave a message if we are not able to answer at that time. If the dog you are inquiring about is still available, your call will be returned. Thanks so much!]]>
+            </description>
+            <lastUpdate>2018-04-26T19:41:52Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41492040/1/?bust=1524772114&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41492040/1/?bust=1524772114&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41492040/1/?bust=1524772114&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41492040/1/?bust=1524772114&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41492040/1/?bust=1524772114&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41492040/2/?bust=1524772115&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41492040/2/?bust=1524772115&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41492040/2/?bust=1524772115&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41492040/2/?bust=1524772115&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41492040/2/?bust=1524772115&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/41492040/3/?bust=1524772116&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/41492040/3/?bust=1524772116&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/41492040/3/?bust=1524772116&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/41492040/3/?bust=1524772116&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/41492040/3/?bust=1524772116&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/41492040/4/?bust=1524772116&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/41492040/4/?bust=1524772116&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/41492040/4/?bust=1524772116&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/41492040/4/?bust=1524772116&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/41492040/4/?bust=1524772116&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="5" size="pnt">http://photos.petfinder.com/photos/pets/41492040/5/?bust=1524772117&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="5" size="fpm">http://photos.petfinder.com/photos/pets/41492040/5/?bust=1524772117&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="5" size="x">http://photos.petfinder.com/photos/pets/41492040/5/?bust=1524772117&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="5" size="pn">http://photos.petfinder.com/photos/pets/41492040/5/?bust=1524772117&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="5" size="t">http://photos.petfinder.com/photos/pets/41492040/5/?bust=1524772117&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="6" size="pnt">http://photos.petfinder.com/photos/pets/41492040/6/?bust=1524772118&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="6" size="fpm">http://photos.petfinder.com/photos/pets/41492040/6/?bust=1524772118&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="6" size="x">http://photos.petfinder.com/photos/pets/41492040/6/?bust=1524772118&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="6" size="pn">http://photos.petfinder.com/photos/pets/41492040/6/?bust=1524772118&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="6" size="t">http://photos.petfinder.com/photos/pets/41492040/6/?bust=1524772118&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1 />
+                <address2 />
+                <city>Novi</city>
+                <state>MI</state>
+                <zip>48375</zip>
+                <phone>(248) 344-0181 </phone>
+                <fax />
+                <email>Poodlez5@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41494043</id>
+            <shelterId>MI915</shelterId>
+            <shelterPetId />
+            <name>Sophie</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Miniature Pinscher</breed>
+            </breeds>
+            <mix>no</mix>
+            <age>Adult</age>
+            <sex>F</sex>
+            <size>S</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+            </options>
+            <description>
+                <![CDATA[Beautiful Sophie is a 6 year old, 9 pound spayed Miniature Pinscher.  She was very loved in her previous home but with a toddler and another baby on the way, she needed to find a new home.  Sophie would be okay with older children but not young children.  Her adoption fee includes a crate, training literature, toys, collar, leash and name tag. If interested in Sophie, please call 248.344.0181 (no emails!) and leave a message if we are not able to answer at that time. If the dog you are inquiring about is still available, your call will be returned. Thanks so much!]]>
+            </description>
+            <lastUpdate>2018-04-27T15:17:23Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41494043/1/?bust=1524842934&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41494043/1/?bust=1524842934&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41494043/1/?bust=1524842934&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41494043/1/?bust=1524842934&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41494043/1/?bust=1524842934&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41494043/2/?bust=1524842935&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41494043/2/?bust=1524842935&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41494043/2/?bust=1524842935&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41494043/2/?bust=1524842935&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41494043/2/?bust=1524842935&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/41494043/3/?bust=1524842935&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/41494043/3/?bust=1524842935&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/41494043/3/?bust=1524842935&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/41494043/3/?bust=1524842935&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/41494043/3/?bust=1524842935&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/41494043/4/?bust=1524842935&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/41494043/4/?bust=1524842935&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/41494043/4/?bust=1524842935&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/41494043/4/?bust=1524842935&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/41494043/4/?bust=1524842935&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="5" size="pnt">http://photos.petfinder.com/photos/pets/41494043/5/?bust=1524842936&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="5" size="fpm">http://photos.petfinder.com/photos/pets/41494043/5/?bust=1524842936&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="5" size="x">http://photos.petfinder.com/photos/pets/41494043/5/?bust=1524842936&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="5" size="pn">http://photos.petfinder.com/photos/pets/41494043/5/?bust=1524842936&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="5" size="t">http://photos.petfinder.com/photos/pets/41494043/5/?bust=1524842936&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="6" size="pnt">http://photos.petfinder.com/photos/pets/41494043/6/?bust=1524842936&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="6" size="fpm">http://photos.petfinder.com/photos/pets/41494043/6/?bust=1524842936&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="6" size="x">http://photos.petfinder.com/photos/pets/41494043/6/?bust=1524842936&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="6" size="pn">http://photos.petfinder.com/photos/pets/41494043/6/?bust=1524842936&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="6" size="t">http://photos.petfinder.com/photos/pets/41494043/6/?bust=1524842936&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1 />
+                <address2 />
+                <city>Novi</city>
+                <state>MI</state>
+                <zip>48375</zip>
+                <phone>(248) 344-0181 </phone>
+                <fax />
+                <email>Poodlez5@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41493934</id>
+            <shelterId>MI915</shelterId>
+            <shelterPetId />
+            <name>Theodore</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Pekingese</breed>
+                <breed>Terrier</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Young</age>
+            <sex>M</sex>
+            <size>S</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+            </options>
+            <description>
+                <![CDATA[Theodore is a cute mix of what we believe to be Pekingese and Terrier.  He is still a pup at 6 months and weighs about 10 pounds.  Theodore has a lot to learn and will need a patient new owner who is willing to work with him on his housetraining.  He loves to play hard and has a lot of energy...probably from the Terrier side.  Theodore would not be a good fit for a quiet, senior home due to his energy level.  He is nervous on first introduction with people and will benefit from socialization.  His adoption fee includes a crate, training literature, toys, collar, leash and name tag. If interested in Theodore, please call 248.344.0181 (no emails!) and leave a message if we are not able to answer at that time. If the dog you are inquiring about is still available, your call will be returned. Thanks so much!]]>
+            </description>
+            <lastUpdate>2018-04-27T14:48:32Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41493934/1/?bust=1524840989&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41493934/1/?bust=1524840989&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41493934/1/?bust=1524840989&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41493934/1/?bust=1524840989&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41493934/1/?bust=1524840989&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41493934/2/?bust=1524840989&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41493934/2/?bust=1524840989&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41493934/2/?bust=1524840989&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41493934/2/?bust=1524840989&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41493934/2/?bust=1524840989&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/41493934/3/?bust=1524840990&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/41493934/3/?bust=1524840990&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/41493934/3/?bust=1524840990&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/41493934/3/?bust=1524840990&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/41493934/3/?bust=1524840990&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/41493934/4/?bust=1524840990&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/41493934/4/?bust=1524840990&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/41493934/4/?bust=1524840990&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/41493934/4/?bust=1524840990&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/41493934/4/?bust=1524840990&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1 />
+                <address2 />
+                <city>Novi</city>
+                <state>MI</state>
+                <zip>48375</zip>
+                <phone>(248) 344-0181 </phone>
+                <fax />
+                <email>Poodlez5@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>39313568</id>
+            <shelterId>MI138</shelterId>
+            <shelterPetId>Courtesy Posting</shelterPetId>
+            <name>Taylor</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Labrador Retriever</breed>
+                <breed>Pit Bull Terrier</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Adult</age>
+            <sex>F</sex>
+            <size>L</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[This sweet dog is not Wag dog. We are helping her family find a loving home for her. If you have any questions or would like to set up a meeting please contact Cindy at cindyrenaud@att.net  or jonrenaud@att.net or 734-748-0573. You can also email us and we will forward it. Please share this sweet dog and helps us find a home for her.
+
+Taylor is a 4 year old lab-pit mix who was adopted by our daughter and son-in-law from a rescue organization. They did not know much about her history, but she was found as a stray with a litter of puppies. She was accepted into their program, and underwent training in the Philadelphia prison system, where she was taught basic commands and socialization by prison inmates. The previous rescue organization is unfortunately unable to take her back as they do not have an available foster. She is spayed, micro-chipped, up to date on vaccines, and on preventative heartworm and flea medication. She does have occasional flare ups of arthritis, which is well managed with daily glucosamine and chondroitin supplements.
+
+She is a medium sized dog that has a fair amount of energy at times, though she can also be quite the couch potato! Taylor weighs about 60 pounds. She is sometimes wary of new people, but we have introduced her slowly and she eventually warms up, though it can sometimes take her awhile depending on the person and their anxiety level around her. If they are calm and respectful toward her (let her approach them as opposed to them approaching her), she does fine, but she can definitely pick up nervous energy.
+
+One of the major behavioral issue that we were working on is resource guarding. So much of her training, especially with this, relies on reading her cues. Because this behavior is infrequent we haven’t worked with her long enough to say if she has shown any progress, but her trainer seemed to think that it was something that will improve. She mostly displays this behavior with chew bones or raw hides. She does not have any guarding with her meals, and she is able to “leave it” with her food or treats until we give her the okay.
+
+The rest of the time she is as lovable as can be. She snuggles up with us, loves being petted, rolls on her back for belly rubs. She always greets us at the door when we come home, usually with one of her toys in her mouth.
+
+She is also very protective of us and our home, and can look pretty intimidating to a stranger approaching the house, so she is an outstanding guard dog. We all work during the day, and Taylor is left alone for 8-9 hours in the house most days and does fine. She has never chewed or otherwise destroyed anything other than her own toys.
+
+She does not usually get along with other dogs, which has made finding a foster especially difficult. If introduced properly, and if the other dog has the right temperament, it can work. She was fostered with other dogs for a short period of time between her time in the prison and when our daughter adopted her, but we are not certain that that would be a good set up.
+
+ Please contact the family with any questions.
+
+Contact info:
+cindyrenaud@att.net
+jonrenaud@att.net
+734-748-0573
+
+This sweet dog is not Wag dog. We are helping her family find a loving home for her. Please share this sweet dog and helps us find a home for her.
+
+ For any question please email us at waganimalrescue@yahoo.com]]>
+            </description>
+            <lastUpdate>2017-09-06T19:55:02Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/39313568/1/?bust=1504728199&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/39313568/1/?bust=1504728199&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/39313568/1/?bust=1504728199&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/39313568/1/?bust=1504728199&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/39313568/1/?bust=1504728199&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/39313568/2/?bust=1504728202&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/39313568/2/?bust=1504728202&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/39313568/2/?bust=1504728202&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/39313568/2/?bust=1504728202&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/39313568/2/?bust=1504728202&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>Wag is at the Livonia Petsmart 13150 Middlebelt Rd every Saturday from 11am to 3pm.</address1>
+                <address2>every Saturday from 11am to 3pm.</address2>
+                <city>Livonia</city>
+                <state>MI</state>
+                <zip>48152</zip>
+                <phone />
+                <fax />
+                <email>waganimalrescue@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>39895360</id>
+            <shelterId>MI138</shelterId>
+            <shelterPetId>D17ML985</shelterPetId>
+            <name>Bruno</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Pit Bull Terrier</breed>
+            </breeds>
+            <mix>no</mix>
+            <age>Young</age>
+            <sex>M</sex>
+            <size>L</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[When we found Bruno in the streets of Northville, he showed signs of abandonment when he ran off from us and continued to be standoffish, until the peanut butter cookie came out as a treat. From there, Bruno needed a bath to reveal his shiny white and brown coat.
+
+The energetic Bruno is not only a great companion, he also boasts a strong heart. Bruno will bring a big stomach to the table because he loves to eat. This non-aggressive pit bull will melt your heart with his big brown eyes and his friendliness. He is not bothered by other dogs or humans but if he’s out in the yard and someone approaches, he seems to be territorial. Vets estimated an approximate age of 1-2. He weighs 55 pounds with a lot of muscle left to gain! He has been recently neutered and is still in recovery. Also, he showed no signs of allergies to any medicines. He has not shown signs of being house trained so when he’s not around us or other dogs, we keep him crated. Bruno knew the sit command, but with treats, when we got him. Treats only. Otherwise, he will need training since he knows how to leap near five feet if he needs to get something off a countertop or out of your hand. When we go to take him potty, he remains on a leash and will take a minute to adjust to conditions. On walks, he walks well on a leash when he doesn’t see anything. If there is a dog or a squirrel, he will try to pull and can be powerful. To help put bruno to sleep, he loves listening to soft jazz!
+
+
+Our adoption fee is $200.00 (cash or credit card)
+
+This sweetheart will be at the Livonia PetSmart on Saturdays from 11-3. Come up and meet this cutie. The Livonia PetSmart is located at South East corner Middlebelt and I-96 at 13150 Middlebelt Rd Livonia, MI 48150. It is located in the back of the Meijer and Costco Parking lot. Our pets are in the back right hand side of the store past the grooming and vet clinic.  We ask that you DO NOT contact PetSmart about our animals. They are kind enough to provide space for our adoption events, but are not involved with our rescue work. Please email us if there is a specific puppy/dog you would like to meet to be sure they will be at the adoption event.
+
+
+If you would like to apply for this dog or any of our other dogs, please request an application by clicking the "Adopt Me" or "Contact This Organization" button or email waganimalrescue@yahoo.com.
+
+ Or you can go to our web page at WagAnimalRescue.com  an click the Adopt  to fill out an application. http://waganimalrescue.com/dog-application/
+
+Or email all 21 questions listed below with detailed answers to waganimalrescue@yahoo.com
+
+The information that you provide on the application will help us determine whether the dog that you have chosen is a good match for you so please give as much detail as possible. You must be at least 25 years old to apply. Please answer all questions; otherwise your pre-application may not be reviewed. Include the following information in your email:
+
+1. Your name, address, home phone number & email address. How long have you lived at present address?
+
+2. Age of applicant? Age of co-applicant? Do you live with your parents?
+
+3. Your reason for wanting to adopt this dog? Are you adopting for yourself, family, others, gift/surprise, hunting, watch dog, child’s pet, companion?
+
+4. Type of housing you live in (own home, apartment, condo, mobile home, etc.). If you rent please provide the name of the complex and landlord's phone number.
+
+5. Is your yard Completely Fenced, Partially Fenced, Not Fenced or you have No Yard? How high is your fence? What type of fence: Chain Link, Privacy Fence, Invisible Fence, Other? If no fence, how do you plan on keeping your dog contained in the yard?
+
+6. Number of adults and children in the home, and the ages of the children? Relationship of adults? (Married, Fiance, Older-Children, Roommate , Parent , Other ) Are all household members in agreement with adopting this pet?
+
+7. What arrangements have you made to care for the pet in case you can no longer do so?
+
+8. The number of hours per day the animal will be left alone, and where you will keep the animal when left alone?
+
+9. How much time do your current/previous pet spend outdoors? How much time would this new pet spend outdoors? Where will this dog be routinely living?
+
+10. A list of any animals you've had in the last 10 years, including how long you had them and where they are now. Please include the names of each animal, and the type of animal.
+
+11. Are/were they spayed/neutered? Current on vaccines? On heartworm prevention (dog)?
+
+12. The name and PHONE NUMBER of current or prior veterinarians in the past 5 years. We will be contacting your veterinarian as a reference. Please contact your vet clinic and give them permission to release your pets information. Are the pets listed under your name, if not please list name pet is listed under?
+
+13. The average cost per for providing preventive veterinary care is $200.00 - $500.00. Additionally there are expenses of food, toys, grooming, boarding, emergency veterinary care, etc, does your household budget allow you to comfortably cover these expenses?
+
+14. How do you plan on exercising this dog?
+
+15. Are you willing to enroll this dog in obedience training? If no, what are your plans for training this dog?
+
+16.Rescue animals require time to adjust to their new home. Are you willing to give this animal adequate time for proper adjustment - perhaps three weeks or more? What amount of time do you consider to be reasonable for adjustment?
+
+17. Would you object to someone for WAG Animal Rescue coming/calling your home to check on the dog?
+
+18. What behaviors would you be unable to tolerate from an adopted dog? (potty accidents; jumping up on furniture; playing in early am hours; barking; getting into garbage cans; counter surfing; getting on furniture; hiding from guests/other family members; shedding hair on furniture/clothes; chewing; escaping; fighting; digging.)
+
+19. Methods I plan to use to discourage unwanted behavior(s): (Yell; put dog in another room; remove problem item(s); put dog in crate; put dog outside; I will not tolerate bad behavior; swat/spank/hit with newspaper; spritz with water; throw something at dog; who cares dog are dogs.)
+
+20.You understand that rescue dogs may have unknown medical history/problems and/or unknown behavior issues?
+
+21. Additional information you would like to provide to WAG:
+
+
+The above information that I have provided to WAG Animal Rescue for the purpose of adopting an animal is accurate and complete.Please put in subject line the name of the animal you are interested in.
+
+IMPORTANT PLEASE NOTE THE FOLLOWING:
+A volunteer will review your application and contact you ONLY if you are approved or if further clarification is required. We will make every attempt to contact approved applicants within 5 business days of application submission (M-F), but this will depend on the number of applications received. Please be patient while we processes your adoption applications. We want to be sure that the best match possible is made, so that the dog does not end up needing re-homing again.Please understand that by answering the questions does not guarantee the adoption of the pet, nor are you obligated to adopt the pet.
+
+WAG Animal Rescue adopts to homes that are best fits for our animals' needs, and not on a first-come, first-served basis. If you currently own a dog or have a history of dog ownership, you must provide a vet reference for your application to be processed. Preference is given to applications with prior dog experience and vet references. We are an all-volunteer organization, and regret that we do not have the resources to contact applicants that are not approved. Thank you for your understanding and cooperation.
+
+Approved applicants are based on best fit, not first submitted. WAG RESERVES THE RIGHT TO REFUSE ANY APPLICANT, so please understand that it is within our discretion to make those decisions on behalf of our animals. Keep in mind that we depend 100% on volunteers, most of whom have full-time jobs, so we ask for your understanding as we do the best we can in the endless effort to find homes for these deserving animals!
+
+ For any question please email us at waganimalrescue@yahoo.com]]>
+            </description>
+            <lastUpdate>2017-11-12T13:37:10Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/39895360/1/?bust=1510494028&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/39895360/1/?bust=1510494028&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/39895360/1/?bust=1510494028&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/39895360/1/?bust=1510494028&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/39895360/1/?bust=1510494028&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/39895360/2/?bust=1510494035&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/39895360/2/?bust=1510494035&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/39895360/2/?bust=1510494035&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/39895360/2/?bust=1510494035&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/39895360/2/?bust=1510494035&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/39895360/3/?bust=1510494038&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/39895360/3/?bust=1510494038&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/39895360/3/?bust=1510494038&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/39895360/3/?bust=1510494038&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/39895360/3/?bust=1510494038&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/39895360/4/?bust=1510494044&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/39895360/4/?bust=1510494044&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/39895360/4/?bust=1510494044&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/39895360/4/?bust=1510494044&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/39895360/4/?bust=1510494044&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>Wag is at the Livonia Petsmart 13150 Middlebelt Rd every Saturday from 11am to 3pm.</address1>
+                <address2>every Saturday from 11am to 3pm.</address2>
+                <city>Livonia</city>
+                <state>MI</state>
+                <zip>48152</zip>
+                <phone />
+                <fax />
+                <email>waganimalrescue@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>39919778</id>
+            <shelterId>MI138</shelterId>
+            <shelterPetId>Courtesy Posting</shelterPetId>
+            <name>Wiggles</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Pit Bull Terrier</breed>
+                <breed>Hound</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Adult</age>
+            <sex>F</sex>
+            <size>M</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+                <option>noDogs</option>
+                <option>noCats</option>
+            </options>
+            <description>
+                <![CDATA[This sweet dog is not a Wag dog. We are helping her family find a loving home for her. If you have any questions or would like to set up a meeting please contact Jeffrey at duclosppw@gmail.com or 740-336-3181 (text or call). You can also email us and we will forward it. If you can not adopt please share this sweet dog and helps us find a home for her.
+
+Wiggles is our beloved family dog. She is 4 years old and was a rescue from the woods of North Carolina. She is a mixed breed with pit bull and hound for sure. She weighs 49 pounds .Very funny and charming girl.  Wiggles is spayed and up to date on vaccines. She's very smart and learns fast, can do lots of tricks, but was never trained not to jump. She is not good with other animals. Wiggles needs lots of room to run and a good sturdy fenced in yard. We have moved to a house where pets are not allowed and she is presently outside in a dog house which is not a good situation for her so we hope she can be adopted immediately.
+
+Please rescue Wiggles!
+
+This sweet dog is not a Wag dog. We are helping her family find a loving home for her. If you have any questions or would like to set up a meeting please contact Jeffrey at duclosppw@gmail.com or 740-336-3181 (text or call). You can also email us and we will forward it.
+
+Please share this sweet dog and helps us find a home for her.]]>
+            </description>
+            <lastUpdate>2017-11-15T14:29:59Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/39919778/1/?bust=1510756416&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/39919778/1/?bust=1510756416&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/39919778/1/?bust=1510756416&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/39919778/1/?bust=1510756416&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/39919778/1/?bust=1510756416&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/39919778/2/?bust=1510756474&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/39919778/2/?bust=1510756474&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/39919778/2/?bust=1510756474&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/39919778/2/?bust=1510756474&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/39919778/2/?bust=1510756474&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>Wag is at the Livonia Petsmart 13150 Middlebelt Rd every Saturday from 11am to 3pm.</address1>
+                <address2>every Saturday from 11am to 3pm.</address2>
+                <city>Livonia</city>
+                <state>MI</state>
+                <zip>48152</zip>
+                <phone />
+                <fax />
+                <email>waganimalrescue@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>40602242</id>
+            <shelterId>MI138</shelterId>
+            <shelterPetId>Courtesy Posting</shelterPetId>
+            <name>Max</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Shepherd</breed>
+                <breed>Husky</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Adult</age>
+            <sex>M</sex>
+            <size>L</size>
+            <options>
+                <option>altered</option>
+                <option>noCats</option>
+            </options>
+            <description>
+                <![CDATA[This sweet dog is not a Wag dog. We are helping his family find a loving home for him. If you have any questions or would like to set up a meeting please contact Max at mccrory999@yahoo.com. You can also email us and we will forward it. If you can not adopt please share this sweet dog and helps us find a home for him.
+
+
+Max is a beautiful 8 years old dog. He is a mixture of rottweiler and maybe husky. Max knows basic commands like sit, lay and down.  He would be a  great dog for an older couple or someone without small kids under the age of 10. Max loves  playing outside.
+
+This sweet dog is not a Wag dog. We are helping his family find a loving home for him. If you have any questions or would like to set up a meeting please contact Max at mccrory999@yahoo.com. You can also email us and we will forward it. If you can not adopt please share this sweet dog and helps us find a home for him.
+
+For more information about WAG Animal Rescue, adopting an animal or about our fees please visit our home page www.waganimalrescue.com
+
+ For any question please email us at waganimalrescue@yahoo.com]]>
+            </description>
+            <lastUpdate>2018-01-07T00:35:41Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/40602242/1/?bust=1515285318&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/40602242/1/?bust=1515285318&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/40602242/1/?bust=1515285318&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/40602242/1/?bust=1515285318&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/40602242/1/?bust=1515285318&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/40602242/2/?bust=1515285322&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/40602242/2/?bust=1515285322&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/40602242/2/?bust=1515285322&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/40602242/2/?bust=1515285322&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/40602242/2/?bust=1515285322&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/40602242/3/?bust=1515340948&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/40602242/3/?bust=1515340948&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/40602242/3/?bust=1515340948&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/40602242/3/?bust=1515340948&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/40602242/3/?bust=1515340948&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/40602242/4/?bust=1515340949&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/40602242/4/?bust=1515340949&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/40602242/4/?bust=1515340949&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/40602242/4/?bust=1515340949&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/40602242/4/?bust=1515340949&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>Wag is at the Livonia Petsmart 13150 Middlebelt Rd every Saturday from 11am to 3pm.</address1>
+                <address2>every Saturday from 11am to 3pm.</address2>
+                <city>Livonia</city>
+                <state>MI</state>
+                <zip>48152</zip>
+                <phone />
+                <fax />
+                <email>waganimalrescue@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41200993</id>
+            <shelterId>MI138</shelterId>
+            <shelterPetId>Courtesy Posting</shelterPetId>
+            <name>Duncan</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Shepherd</breed>
+                <breed>Border Collie</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Adult</age>
+            <sex>M</sex>
+            <size>M</size>
+            <options>
+                <option>specialNeeds</option>
+                <option>altered</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[This sweet dog is not Wag dog. We are helping his family find a loving home for him. If you have any questions or would like to set up a meeting, please contact Alyson at alysonsimpson93@yahoo.com or 248-953-5822 (call or text). You can also email us and we will forward it. Please share this sweet dog and helps us find a home for him.
+
+Duncan is a male Australian Shepard board collie mix. He’s going to be 6 in November. He has a big personality and loves to sleep in weird positions.  He is highly intelligent he has learned how to open some doors. He has a lot of energy and loves attention. He has not been around any kids so I am unsure of how he is with them. He also doesn’t really understand that he is a 75lb dog cause he was raised around small dogs. He doesn’t like anyone to touch his butt due to the surgery that he has when he was 2. He also hasn’t been around cats so not sure how he will be around them either. He is good with small dogs but does get intimated by dogs his size and larger. He’s crate trained so he does stay in a crate when no one is home. He can be easy to train but he can be very sassy.
+
+Duncan has colitis and preanal fistulas. He is on multiple medications, metronidazole, azothoprine, predinazone, and tacrolimus. His medication can cause about $150 a month. The tacrolimus comes from road runner pharmacy. He loves routines he doesn’t like it when is broken. He will wake you up when it’s time to feed him or if he has to go to the bathroom. . His predinazone does make him extra thirsty and hungry, he can get aggressive when he is on the predinazone. He has to be on an all fish diet or he can have venison due to his colitis, he cannot have beef, poultry, pork, and lamb. We do add bran into his food to help him get more fiber into his diet. For treats we give him carrots or apples. Due to his cost of medication he is not up to date on his shots. He is about a year behind on his shots. He can also be skittish around men, does take him a bit to warm up to them.
+
+This sweet dog is not Wag dog. We are helping his family find a loving home for him. If you have any questions or would like to set up a meeting, please contact Alyson at alysonsimpson93@yahoo.com or 248-953-5822 (call or text). You can also email us and we will forward it. Please share this sweet dog and helps us find a home for him.]]>
+            </description>
+            <lastUpdate>2018-03-17T13:35:30Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41200993/1/?bust=1521294013&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41200993/1/?bust=1521294013&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41200993/1/?bust=1521294013&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41200993/1/?bust=1521294013&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41200993/1/?bust=1521294013&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41200993/2/?bust=1521294014&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41200993/2/?bust=1521294014&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41200993/2/?bust=1521294014&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41200993/2/?bust=1521294014&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41200993/2/?bust=1521294014&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>Wag is at the Livonia Petsmart 13150 Middlebelt Rd every Saturday from 11am to 3pm.</address1>
+                <address2>every Saturday from 11am to 3pm.</address2>
+                <city>Livonia</city>
+                <state>MI</state>
+                <zip>48152</zip>
+                <phone />
+                <fax />
+                <email>waganimalrescue@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41256388</id>
+            <shelterId>MI138</shelterId>
+            <shelterPetId>D18KA182</shelterPetId>
+            <name>Adeline</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Boxer</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Young</age>
+            <sex>F</sex>
+            <size>M</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[Adeline (Addie) is a ~8 month old Boxer mix looking for her second chance of forever. She’s timid around new faces, but once she realizes you’re her friend, her shell melts away. Addie is a complete doll who seems to understand basic commands like sit and lay down, and she’s close to being potty trained.
+
+Adeline enjoys playing with toys and plays tug of war with other foster pups, or human, whoever seems to be willing. She’s currently in a foster home with 15lb & 35lb dogs, and a cat. She does play rough and should be around other dogs her size. Since Adeline is young, she still has puppy tendencies like jumping which could be too much for small children.
+
+Addie is looking a forever family of her very own that will show her what love and devotion looks like. She’s a sensitive girl who seems to have had a tough past. Adeline isn’t letting her past get her down as she looks for a bright future. Come meet Addie at our Saturday adoption events in Livonia, Mi!
+
+
+Adeline requires a home with a PHYSICALLY FENCED YARD and no children under 8 due to her puppy behaviors and large size. No apartments or condos please. Adeline is not yet house trained and will require going outside numerous times per day.
+
+Adeline is crate trained. She is also current on vaccinations, dewormed, on heart worm and flea preventative, spayed and micro-chipped.
+
+
+Our adoption fee is $200.00 (cash or credit card) .
+
+This sweetheart will be at the Livonia PetSmart on Saturdays from 11-3. Come up and meet this cutie. The Livonia PetSmart is located at South East corner Middlebelt and I-96 at 13150 Middlebelt Rd Livonia, MI 48150. It is located in the back of the Meijer and Costco Parking lot. Our pets are in the back right hand side of the store past the grooming and vet clinic.  We ask that you DO NOT contact PetSmart about our animals. They are kind enough to provide space for our adoption events, but are not involved with our rescue work. Please email us if there is a specific puppy/dog you would like to meet to be sure they will be at the adoption event.
+
+
+If you would like to apply for this dog or any of our other dogs, please request an application by clicking the "Adopt Me" or "Contact This Organization" button or email waganimalrescue@yahoo.com.
+
+ Or you can go to our web page at WagAnimalRescue.com  an click the Adopt  to fill out an application. http://waganimalrescue.com/dog-application/
+
+Or email all 21 questions listed below with detailed answers to waganimalrescue@yahoo.com
+
+The information that you provide on the application will help us determine whether the dog that you have chosen is a good match for you so please give as much detail as possible. You must be at least 25 years old to apply. Please answer all questions; otherwise your pre-application may not be reviewed. Include the following information in your email:
+
+1. Your name, address, home phone number & email address. How long have you lived at present address?
+
+2. Age of applicant? Age of co-applicant? Do you live with your parents?
+
+3. Your reason for wanting to adopt this dog? Are you adopting for yourself, family, others, gift/surprise, hunting, watch dog, child’s pet, companion?
+
+4. Type of housing you live in (own home, apartment, condo, mobile home, etc.). If you rent please provide the name of the complex and landlord's phone number.
+
+5. Is your yard Completely Fenced, Partially Fenced, Not Fenced or you have No Yard? How high is your fence? What type of fence: Chain Link, Privacy Fence, Invisible Fence, Other? If no fence, how do you plan on keeping your dog contained in the yard?
+
+6. Number of adults and children in the home, and the ages of the children? Relationship of adults? (Married, Fiance, Older-Children, Roommate , Parent , Other ) Are all household members in agreement with adopting this pet?
+
+7. What arrangements have you made to care for the pet in case you can no longer do so?
+
+8. The number of hours per day the animal will be left alone, and where you will keep the animal when left alone?
+
+9. How much time do your current/previous pet spend outdoors? How much time would this new pet spend outdoors? Where will this dog be routinely living?
+
+10. A list of any animals you've had in the last 10 years, including how long you had them and where they are now. Please include the names of each animal, and the type of animal.
+
+11. Are/were they spayed/neutered? Current on vaccines? On heartworm prevention (dog)?
+
+12. The name and PHONE NUMBER of current or prior veterinarians in the past 5 years. We will be contacting your veterinarian as a reference. Please contact your vet clinic and give them permission to release your pets information. Are the pets listed under your name, if not please list name pet is listed under?
+
+13. The average cost per for providing preventive veterinary care is $200.00 - $500.00. Additionally there are expenses of food, toys, grooming, boarding, emergency veterinary care, etc, does your household budget allow you to comfortably cover these expenses?
+
+14. How do you plan on exercising this dog?
+
+15. Are you willing to enroll this dog in obedience training? If no, what are your plans for training this dog?
+
+16.Rescue animals require time to adjust to their new home. Are you willing to give this animal adequate time for proper adjustment - perhaps three weeks or more? What amount of time do you consider to be reasonable for adjustment?
+
+17. Would you object to someone for WAG Animal Rescue coming/calling your home to check on the dog?
+
+18. What behaviors would you be unable to tolerate from an adopted dog? (potty accidents; jumping up on furniture; playing in early am hours; barking; getting into garbage cans; counter surfing; getting on furniture; hiding from guests/other family members; shedding hair on furniture/clothes; chewing; escaping; fighting; digging.)
+
+19. Methods I plan to use to discourage unwanted behavior(s): (Yell; put dog in another room; remove problem item(s); put dog in crate; put dog outside; I will not tolerate bad behavior; swat/spank/hit with newspaper; spritz with water; throw something at dog; who cares dog are dogs.)
+
+20.You understand that rescue dogs may have unknown medical history/problems and/or unknown behavior issues?
+
+21. Additional information you would like to provide to WAG:
+
+
+The above information that I have provided to WAG Animal Rescue for the purpose of adopting an animal is accurate and complete.Please put in subject line the name of the animal you are interested in.
+
+IMPORTANT PLEASE NOTE THE FOLLOWING:
+A volunteer will review your application and contact you ONLY if you are approved or if further clarification is required. We will make every attempt to contact approved applicants within 5 business days of application submission (M-F), but this will depend on the number of applications received. Please be patient while we processes your adoption applications. We want to be sure that the best match possible is made, so that the dog does not end up needing re-homing again.Please understand that by answering the questions does not guarantee the adoption of the pet, nor are you obligated to adopt the pet.
+
+WAG Animal Rescue adopts to homes that are best fits for our animals' needs, and not on a first-come, first-served basis. If you currently own a dog or have a history of dog ownership, you must provide a vet reference for your application to be processed. Preference is given to applications with prior dog experience and vet references. We are an all-volunteer organization, and regret that we do not have the resources to contact applicants that are not approved. Thank you for your understanding and cooperation.
+
+Approved applicants are based on best fit, not first submitted. WAG RESERVES THE RIGHT TO REFUSE ANY APPLICANT, so please understand that it is within our discretion to make those decisions on behalf of our animals. Keep in mind that we depend 100% on volunteers, most of whom have full-time jobs, so we ask for your understanding as we do the best we can in the endless effort to find homes for these deserving animals!
+
+WE DO NOT HAVE A SHELTER, ALL OF OUR ANIMALS ARE IN ONE OF OUR VOLUNTEERS HOME.
+
+Many WAG's animals are available for viewing and adoption every Saturday from 11 am-3 pm at the Livonia PetSmart, located at Middlebelt and I-96.WE CANNOT GUARANTEE THAT THE RESCUE YOU ARE INTERESTED IN WILL BE AT THE ADOPTION EVENT.
+
+
+Please remember.......our first and ONLY consideration is the safety and happiness of our dogs.
+
+THANK YOU FOR YOUR INTEREST IN A RESCUE DOG!
+
+For more information about WAG Animal Rescue, adopting an animal or about our fees please visit our home page www.waganimalrescue.com
+
+ For any question please email us at waganimalrescue@yahoo.com]]>
+            </description>
+            <lastUpdate>2018-03-25T12:52:45Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41256388/1/?bust=1521982205&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41256388/1/?bust=1521982205&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41256388/1/?bust=1521982205&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41256388/1/?bust=1521982205&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41256388/1/?bust=1521982205&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41256388/2/?bust=1521982212&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41256388/2/?bust=1521982212&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41256388/2/?bust=1521982212&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41256388/2/?bust=1521982212&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41256388/2/?bust=1521982212&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/41256388/3/?bust=1521982224&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/41256388/3/?bust=1521982224&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/41256388/3/?bust=1521982224&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/41256388/3/?bust=1521982224&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/41256388/3/?bust=1521982224&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/41256388/4/?bust=1521982235&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/41256388/4/?bust=1521982235&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/41256388/4/?bust=1521982235&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/41256388/4/?bust=1521982235&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/41256388/4/?bust=1521982235&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>Wag is at the Livonia Petsmart 13150 Middlebelt Rd every Saturday from 11am to 3pm.</address1>
+                <address2>every Saturday from 11am to 3pm.</address2>
+                <city>Livonia</city>
+                <state>MI</state>
+                <zip>48152</zip>
+                <phone />
+                <fax />
+                <email>waganimalrescue@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41534630</id>
+            <shelterId>MI138</shelterId>
+            <shelterPetId>D18CD192</shelterPetId>
+            <name>Rheny</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Border Collie</breed>
+                <breed>Shih Tzu</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Baby</age>
+            <sex>F</sex>
+            <size>M</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+            </options>
+            <description>
+                <![CDATA[Meet little Rheny. She is a  lovable  Border Collie/Shih Tzu mix puppy with lots of puppy energy. What a combo! Rheny  is 4 months old and weighs 25 pounds. We do not think she will get much bigger maybe 30 to 35 pounds. Perfect size.   She adorable with short hair and longer wiry hair also. Rheny was  rescued from a animal shelter in April.   She is an active, playful puppy at this time, and will require training to help her become the best dog she can be. She would do well with another active adult dog to help her learn proper behaviors and burn off some energy.
+
+Rheny already knows sit and down.  She  need a home with someone willing to enroll her in training courses. She loves to be outside and to play with other dogs. She is  fostered with 5 other dogs and does great with them all. She also fostered with 3 cats and pretty much leaves them alone because she is busy playing with the dogs.
+
+Rheny requires a home with a PHYSICALLY FENCED YARD and no children under 5 due to her puppy behaviors which include biting, jumping and chewing. No apartments or condos please. Rheny is not yet fully house trained, but she is improving. She would not do well in an environment where she is left alone for more than 5 hours a day at this time.
+
+Rheny is spayed, current on vaccinations, dewormed, on heart worm and flea preventative, and is micro-chipped.
+
+Rheny's  adoption fee is $250.00 (cash or credit card)
+
+This sweetheart will be at the Livonia PetSmart on Saturdays from 11-3. Come up and meet this cutie. The Livonia PetSmart is located at South East corner Middlebelt and I-96 at 13150 Middlebelt Rd Livonia, MI 48150. It is located in the back of the Meijer and Costco Parking lot. Our pets are in the back right hand side of the store past the grooming and vet clinic.  We ask that you DO NOT contact PetSmart about our animals. They are kind enough to provide space for our adoption events, but are not involved with our rescue work. Please email us if there is a specific puppy/dog you would like to meet to be sure they will be at the adoption event.
+
+
+If you would like to apply for this dog or any of our other dogs, please request an application by clicking the "Adopt Me" or "Contact This Organization" button or email waganimalrescue@yahoo.com.
+
+ Or you can go to our web page at WagAnimalRescue.com  an click the Adopt  to fill out an application. http://waganimalrescue.com/dog-application/
+
+Or email all 21 questions listed below with detailed answers to waganimalrescue@yahoo.com
+
+The information that you provide on the application will help us determine whether the dog that you have chosen is a good match for you so please give as much detail as possible. You must be at least 25 years old to apply. Please answer all questions; otherwise your pre-application may not be reviewed. Include the following information in your email:
+
+1. Your name, address, home phone number & email address. How long have you lived at present address?
+
+2. Age of applicant? Age of co-applicant? Do you live with your parents?
+
+3. Your reason for wanting to adopt this dog? Are you adopting for yourself, family, others, gift/surprise, hunting, watch dog, child’s pet, companion?
+
+4. Type of housing you live in (own home, apartment, condo, mobile home, etc.). If you rent please provide the name of the complex and landlord's phone number.
+
+5. Is your yard Completely Fenced, Partially Fenced, Not Fenced or you have No Yard? How high is your fence? What type of fence: Chain Link, Privacy Fence, Invisible Fence, Other? If no fence, how do you plan on keeping your dog contained in the yard?
+
+6. Number of adults and children in the home, and the ages of the children? Relationship of adults? (Married, Fiance, Older-Children, Roommate , Parent , Other ) Are all household members in agreement with adopting this pet?
+
+7. What arrangements have you made to care for the pet in case you can no longer do so?
+
+8. The number of hours per day the animal will be left alone, and where you will keep the animal when left alone?
+
+9. How much time do your current/previous pet spend outdoors? How much time would this new pet spend outdoors? Where will this dog be routinely living?
+
+10. A list of any animals you've had in the last 10 years, including how long you had them and where they are now. Please include the names of each animal, and the type of animal.
+
+11. Are/were they spayed/neutered? Current on vaccines? On heartworm prevention (dog)?
+
+12. The name and PHONE NUMBER of current or prior veterinarians in the past 5 years. We will be contacting your veterinarian as a reference. Please contact your vet clinic and give them permission to release your pets information. Are the pets listed under your name, if not please list name pet is listed under?
+
+13. The average cost per for providing preventive veterinary care is $200.00 - $500.00. Additionally there are expenses of food, toys, grooming, boarding, emergency veterinary care, etc, does your household budget allow you to comfortably cover these expenses?
+
+14. How do you plan on exercising this dog?
+
+15. Are you willing to enroll this dog in obedience training? If no, what are your plans for training this dog?
+
+16.Rescue animals require time to adjust to their new home. Are you willing to give this animal adequate time for proper adjustment - perhaps three weeks or more? What amount of time do you consider to be reasonable for adjustment?
+
+17. Would you object to someone for WAG Animal Rescue coming/calling your home to check on the dog?
+
+18. What behaviors would you be unable to tolerate from an adopted dog? (potty accidents; jumping up on furniture; playing in early am hours; barking; getting into garbage cans; counter surfing; getting on furniture; hiding from guests/other family members; shedding hair on furniture/clothes; chewing; escaping; fighting; digging.)
+
+19. Methods I plan to use to discourage unwanted behavior(s): (Yell; put dog in another room; remove problem item(s); put dog in crate; put dog outside; I will not tolerate bad behavior; swat/spank/hit with newspaper; spritz with water; throw something at dog; who cares dog are dogs.)
+
+20.You understand that rescue dogs may have unknown medical history/problems and/or unknown behavior issues?
+
+21. Additional information you would like to provide to WAG:
+
+
+The above information that I have provided to WAG Animal Rescue for the purpose of adopting an animal is accurate and complete.Please put in subject line the name of the animal you are interested in.
+
+IMPORTANT PLEASE NOTE THE FOLLOWING:
+A volunteer will review your application and contact you ONLY if you are approved or if further clarification is required. We will make every attempt to contact approved applicants within 5 business days of application submission (M-F), but this will depend on the number of applications received. Please be patient while we processes your adoption applications. We want to be sure that the best match possible is made, so that the dog does not end up needing re-homing again.Please understand that by answering the questions does not guarantee the adoption of the pet, nor are you obligated to adopt the pet.
+
+WAG Animal Rescue adopts to homes that are best fits for our animals' needs, and not on a first-come, first-served basis. If you currently own a dog or have a history of dog ownership, you must provide a vet reference for your application to be processed. Preference is given to applications with prior dog experience and vet references. We are an all-volunteer organization, and regret that we do not have the resources to contact applicants that are not approved. Thank you for your understanding and cooperation.
+
+Approved applicants are based on best fit, not first submitted. WAG RESERVES THE RIGHT TO REFUSE ANY APPLICANT, so please understand that it is within our discretion to make those decisions on behalf of our animals. Keep in mind that we depend 100% on volunteers, most of whom have full-time jobs, so we ask for your understanding as we do the best we can in the endless effort to find homes for these deserving animals!
+
+WE DO NOT HAVE A SHELTER, ALL OF OUR ANIMALS ARE IN ONE OF OUR VOLUNTEERS HOME.
+
+Many WAG's animals are available for viewing and adoption every Saturday from 11 am-3 pm at the Livonia PetSmart, located at Middlebelt and I-96.WE CANNOT GUARANTEE THAT THE RESCUE YOU ARE INTERESTED IN WILL BE AT THE ADOPTION EVENT.
+
+
+Please remember.......our first and ONLY consideration is the safety and happiness of our dogs.
+
+THANK YOU FOR YOUR INTEREST IN A RESCUE DOG!
+
+For more information about WAG Animal Rescue, adopting an animal or about our fees please visit our home page www.waganimalrescue.com
+
+ For any question please email us at waganimalrescue@yahoo.com]]>
+            </description>
+            <lastUpdate>2018-05-02T14:01:53Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41534630/1/?bust=1525269607&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41534630/1/?bust=1525269607&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41534630/1/?bust=1525269607&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41534630/1/?bust=1525269607&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41534630/1/?bust=1525269607&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41534630/3/?bust=1525269616&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41534630/3/?bust=1525269616&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41534630/3/?bust=1525269616&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41534630/3/?bust=1525269616&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41534630/3/?bust=1525269616&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/41534630/4/?bust=1525269633&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/41534630/4/?bust=1525269633&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/41534630/4/?bust=1525269633&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/41534630/4/?bust=1525269633&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/41534630/4/?bust=1525269633&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/41534630/5/?bust=1525269686&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/41534630/5/?bust=1525269686&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/41534630/5/?bust=1525269686&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/41534630/5/?bust=1525269686&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/41534630/5/?bust=1525269686&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="5" size="pnt">http://photos.petfinder.com/photos/pets/41534630/6/?bust=1525280524&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="5" size="fpm">http://photos.petfinder.com/photos/pets/41534630/6/?bust=1525280524&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="5" size="x">http://photos.petfinder.com/photos/pets/41534630/6/?bust=1525280524&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="5" size="pn">http://photos.petfinder.com/photos/pets/41534630/6/?bust=1525280524&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="5" size="t">http://photos.petfinder.com/photos/pets/41534630/6/?bust=1525280524&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>Wag is at the Livonia Petsmart 13150 Middlebelt Rd every Saturday from 11am to 3pm.</address1>
+                <address2>every Saturday from 11am to 3pm.</address2>
+                <city>Livonia</city>
+                <state>MI</state>
+                <zip>48152</zip>
+                <phone />
+                <fax />
+                <email>waganimalrescue@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>36951825</id>
+            <shelterId>MI408</shelterId>
+            <shelterPetId>10879054-Gran-Tan</shelterPetId>
+            <name>Tanner</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Cocker Spaniel</breed>
+            </breeds>
+            <mix>no</mix>
+            <age>Adult</age>
+            <sex>M</sex>
+            <size>M</size>
+            <options>
+                <option>specialNeeds</option>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[You can fill out an adoption application online on our official website.Welcome to Cocker Nation Rescue of Michigan!
+
+Don't forget to visit our channel at YoutubeHi I am Tanner. I am a loveable quirky dude looking for a home with other dogs. I like cats,but I will chase them and am very interested in them. My foster says I am too interested,but I have never hurt them . I have 2 large pesky cataracts that limit my vision,but I do pretty well. I am on daily drops for my eyes because they get very red and irritated.I am on arthritis meds for my back too. My foster did not even know I had an issue until an xray,but the meds are very inexpensive and help me out. I would do best in a home with kids over 13 because of my vision. I am 10 years old, neutered, housebroken, and up to date on my vaccines. Oh the one place I can't live is in an apartment. I howl for just a few minutes when you leave (I quiet down though). So my idea home is with someone who is home a lot,has other dogs, a fence, and a lot of love to give me. I'm a good guy who is just a bit quirky:) A HOME VISIT AND A VET CHECK MUST BE APPROVED BEFORE SETTING UP a meeting with Tanner. 4/8/18 11:52 AM]]>
+            </description>
+            <lastUpdate>2016-12-11T21:08:59Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/36951825/1/?bust=1502500374&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/36951825/1/?bust=1502500374&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/36951825/1/?bust=1502500374&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/36951825/1/?bust=1502500374&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/36951825/1/?bust=1502500374&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/36951825/2/?bust=1502500374&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/36951825/2/?bust=1502500374&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/36951825/2/?bust=1502500374&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/36951825/2/?bust=1502500374&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/36951825/2/?bust=1502500374&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/36951825/3/?bust=1502500375&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/36951825/3/?bust=1502500375&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/36951825/3/?bust=1502500375&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/36951825/3/?bust=1502500375&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/36951825/3/?bust=1502500375&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1 />
+                <address2 />
+                <city>Livonia</city>
+                <state>MI</state>
+                <zip>48152</zip>
+                <phone>248-345-8978 </phone>
+                <fax />
+                <email>cockernationrescue@aol.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41358556</id>
+            <shelterId>MI408</shelterId>
+            <shelterPetId>12854863-bella</shelterPetId>
+            <name>Bella-COURTESY POST</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Chihuahua</breed>
+            </breeds>
+            <mix>no</mix>
+            <age>Adult</age>
+            <sex>F</sex>
+            <size>S</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[You can fill out an adoption application online on our official website.Welcome to Cocker Nation Rescue of Michigan!
+
+Don't forget to visit our channel at YoutubeTHIS IS A COURTESY POSTING. BELLA IS NOT IN OUR RESCUE. WE ARE HELPING HER OWNER FIND HER A NEW HOME. IF YOU ARE INTERESTED, PLEASE FILL OUT AN APPLICATION AND WE WILL SEND IT TO HER OWNER FOR REVIEW. THANKS!Bella is a sweet 5 year old chihuahua. She likes kids, dogs, and cats. She is very playful and loving, but is really afraid of men. She would do best in a home with women only as she becomes scared and nervous around men. She is housebroken and is up to date on her rabies. If you are interested, please fill out an application. 4/8/18 11:52 AM]]>
+            </description>
+            <lastUpdate>2018-04-08T22:08:12Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41358556/1/?bust=1523227892&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41358556/1/?bust=1523227892&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41358556/1/?bust=1523227892&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41358556/1/?bust=1523227892&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41358556/1/?bust=1523227892&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1 />
+                <address2 />
+                <city>Livonia</city>
+                <state>MI</state>
+                <zip>48152</zip>
+                <phone>248-345-8978 </phone>
+                <fax />
+                <email>cockernationrescue@aol.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>41358557</id>
+            <shelterId>MI408</shelterId>
+            <shelterPetId>12854870-moose angela</shelterPetId>
+            <name>Moose-- COURTESY POST</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Cocker Spaniel</breed>
+            </breeds>
+            <mix>no</mix>
+            <age>Adult</age>
+            <sex>M</sex>
+            <size>M</size>
+            <options>
+                <option>specialNeeds</option>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[You can fill out an adoption application online on our official website.Welcome to Cocker Nation Rescue of Michigan!
+
+Don't forget to visit our channel at YoutubeMOOSE IS NOT IN OUR RESCUE. THIS IS A COURTESY POST. WE ARE TRYING TO HELP HIS OWNER FIND A NEW HOME FOR HIM. IF YOU ARE INTERESTED IN MOOSE, PLEASE FILL OUT AN APPLICATION AND WE WILL SEND IT TO HIS OWNER TO REVIEW. THANKS!Moose is a loving and sweet 8 year old cocker. His owner saved him from going to the pound, but is now unable to care for him. He is great with kids and other dogs. He will chase cats, but does not hurt them. He is housebroken, loves to cuddle with the kids, and is up dated on his rabies and neutered. Moose is currently on daily predisone for his auto immue disease, and needs a home that will make sure he gets his daily medication. He needs a family, that will love him unconditionally. If this is your family, please fill out an application. 4/8/18 11:52 AM]]>
+            </description>
+            <lastUpdate>2018-04-08T22:08:12Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/41358557/1/?bust=1523227891&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/41358557/1/?bust=1523227891&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/41358557/1/?bust=1523227891&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/41358557/1/?bust=1523227891&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/41358557/1/?bust=1523227891&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/41358557/2/?bust=1523227892&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/41358557/2/?bust=1523227892&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/41358557/2/?bust=1523227892&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/41358557/2/?bust=1523227892&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/41358557/2/?bust=1523227892&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/41358557/3/?bust=1523227893&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/41358557/3/?bust=1523227893&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/41358557/3/?bust=1523227893&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/41358557/3/?bust=1523227893&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/41358557/3/?bust=1523227893&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1 />
+                <address2 />
+                <city>Livonia</city>
+                <state>MI</state>
+                <zip>48152</zip>
+                <phone>248-345-8978 </phone>
+                <fax />
+                <email>cockernationrescue@aol.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>26816742</id>
+            <shelterId>MI579</shelterId>
+            <shelterPetId />
+            <name>Gibson</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Boxer</breed>
+                <breed>Hound</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Adult</age>
+            <sex>M</sex>
+            <size>L</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[Good With Kids: Gibson lives with a toddler, however, gets scared by loud noises. He would prefer a home without young children.
+Good With Other Dogs: Yes! Gibson loves playing with other dogs.
+Good With Cats: Unknown
+Housetrained:Yes
+Crate Trained:Yes
+Walks Nicely On A Leash: Working on it
+Knows Basic Commands:Yes
+Energy Level (Couch Potato, Moderate or High):;Moderate/High
+Special Needs: NA
+
+Arrival story: Gibson rode a transport to freedom from a rural shelter on the west side of the state.
+
+Approximate age / weight:  4yrs old / 60 lbs.
+
+Personality: Gibson is such a unique looking character! He loves, loves, loves playing with other dogs and he gets to attend doggy daycare to hang out with his canine pals.
+
+Gibby is house-trained and crate-trained but at this point in time, he is still a bit aloof when it comes to interacting with people. However, we see signs that he wants to engage but rather he doesn’t know how. Gibby is a sweet, gentle soul who just needs some time to learn that he is safe and can trust humans.
+
+Forever home: At this time, our boy Gibson, will need a patient pet parent and a home without young kids along with a yard with a physical fence and another dog in the home.
+
+Contact: Please contact Suzanne at suzpooz20@hotmail.com if you’re interested in adopting Gibson!If you are interested adopting a dog, please download an Adoption Application from our website,www.waggintailsdogrescue.org/adoptionprocess.html and email it to wtdr2008@yahoo.com.
+
+ADOPTION INFO:
+
+We do not have a facility; all of our dogs are fostered in private homes.   We generally have two adoption events per month.  To meet a dog in person, please see our event calendar on our website for the date and time of the next adoption event. Arrangements can be made to meet a dog outside of Saturday adoption events after an application is submitted and approved.
+
+Our adoption process includes an application and in-home meet-n-greet with the dog.
+
+-Adult Dog Adoption Fee - $225
+-Small Breed Adoption Fee - $275
+-Senior Dog Adoption Fee - $125
+-Pup Adoption Fee - $250 plus $50 spay/neuter deposit refunded upon proof of surgery by 6 mos.
+
+Email inquiries are answered faster than phone inquiries.
+
+Thank you for supporting dog rescue and your interest in a rescue dog!]]>
+            </description>
+            <lastUpdate>2013-07-28T20:04:40Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/26816742/1/?bust=1497914245&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/26816742/1/?bust=1497914245&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/26816742/1/?bust=1497914245&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/26816742/1/?bust=1497914245&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/26816742/1/?bust=1497914245&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/26816742/2/?bust=1449301926&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/26816742/2/?bust=1449301926&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/26816742/2/?bust=1449301926&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/26816742/2/?bust=1449301926&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/26816742/2/?bust=1449301926&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/26816742/3/?bust=1497914247&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/26816742/3/?bust=1497914247&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/26816742/3/?bust=1497914247&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/26816742/3/?bust=1497914247&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/26816742/3/?bust=1497914247&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/26816742/4/?bust=1497914248&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/26816742/4/?bust=1497914248&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/26816742/4/?bust=1497914248&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/26816742/4/?bust=1497914248&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/26816742/4/?bust=1497914248&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="5" size="pnt">http://photos.petfinder.com/photos/pets/26816742/5/?bust=1497914248&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="5" size="fpm">http://photos.petfinder.com/photos/pets/26816742/5/?bust=1497914248&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="5" size="x">http://photos.petfinder.com/photos/pets/26816742/5/?bust=1497914248&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="5" size="pn">http://photos.petfinder.com/photos/pets/26816742/5/?bust=1497914248&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="5" size="t">http://photos.petfinder.com/photos/pets/26816742/5/?bust=1497914248&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>P.O. Box 438</address1>
+                <address2 />
+                <city>Northville</city>
+                <state>MI</state>
+                <zip>48167</zip>
+                <phone>248-788-7050 </phone>
+                <fax />
+                <email>wtdr2008@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>38590078</id>
+            <shelterId>MI579</shelterId>
+            <shelterPetId />
+            <name>Moose</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Shepherd</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Adult</age>
+            <sex>M</sex>
+            <size>M</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+                <option>noCats</option>
+            </options>
+            <description>
+                <![CDATA[Good with Kids: Older kids
+Good with other dogs: Yes, same size
+Good with cats: No
+Housetrained: Yes
+Crate Trained: Yes
+Walks Nicely on a leash: Working on it.
+Knows Basic Commands:  Yes
+Energy Level: Moderate
+Special Needs: N/A
+
+Arrival Story:  Moose was surrendered by his family.
+
+Approximate Age/Weight: 3 years old / 60 lbs.
+
+Personality:  Moose is a  fun-loving boy who loves to run and play as well as take long walks with his people.  He is a sensitive and super sweet boy who enjoys baby-talk, responds to his nickname, Moosie, and loves getting pets.  He's a super snuggler who loves attention and affection, but is content to relax quietly in the company of his people when they are busy doing people stuff.
+
+Moose is not a jumper and has good house manners. He enjoys playing with dogs his size who he's come to know and trust.  He does better with slow introductions to new dogs until he feels comfortable.  Moose would also do fine as the only dog in the household as long as he is surrounded by affection, attention and love. He loves older children and is a great companion for them.
+
+Moose prefers walking on quiet trails and country roads as opposed to city streets, which can make him a little nervous.
+
+Moose overall is a loving, easy-going boy who just goes with the flow and enjoys the companionship of his family.
+
+Forever Home: Moose will need a family willing to give him some time to adjust to a new home, routine, and continue his loose-leash training.  He'd do well with a canine companion his size or as the only dog soaking up all the love. Moose would do well with older children who know how to respect dogs.  Moose requires a fenced in yard and a home without cats.  No electric fences for Moose.
+
+Contact: Please contact wtdr2008@yahoo.com if interested in adopting Moose.
+
+
+If you are interested adopting a dog, please download an Adoption Application from our website,www.waggintailsdogrescue.org/adoptionprocess.html and email it to wtdr2008@yahoo.com.
+
+ADOPTION INFO:
+
+We do not have a facility; all of our dogs are fostered in private homes.   We generally have two adoption events per month.  To meet a dog in person, please see our event calendar on our website for the date and time of the next adoption event. Arrangements can be made to meet a dog outside of Saturday adoption events after an application is submitted and approved.
+
+Our adoption process includes an application and in-home meet-n-greet with the dog.
+
+-Adult Dog Adoption Fee - $225
+-Small Breed Adoption Fee - $275
+-Senior Dog Adoption Fee - $125
+-Pup Adoption Fee - $250 plus $50 spay/neuter deposit refunded upon proof of surgery by 6 mos.
+
+Email inquiries are answered faster than phone inquiries.
+
+Thank you for supporting dog rescue and your interest in a rescue dog!]]>
+            </description>
+            <lastUpdate>2017-06-27T10:49:55Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/38590078/1/?bust=1498560696&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/38590078/1/?bust=1498560696&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/38590078/1/?bust=1498560696&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/38590078/1/?bust=1498560696&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/38590078/1/?bust=1498560696&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/38590078/2/?bust=1498560725&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/38590078/2/?bust=1498560725&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/38590078/2/?bust=1498560725&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/38590078/2/?bust=1498560725&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/38590078/2/?bust=1498560725&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/38590078/3/?bust=1498560734&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/38590078/3/?bust=1498560734&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/38590078/3/?bust=1498560734&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/38590078/3/?bust=1498560734&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/38590078/3/?bust=1498560734&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/38590078/4/?bust=1498561151&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/38590078/4/?bust=1498561151&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/38590078/4/?bust=1498561151&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/38590078/4/?bust=1498561151&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/38590078/4/?bust=1498561151&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="5" size="pnt">http://photos.petfinder.com/photos/pets/38590078/5/?bust=1510867562&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="5" size="fpm">http://photos.petfinder.com/photos/pets/38590078/5/?bust=1510867562&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="5" size="x">http://photos.petfinder.com/photos/pets/38590078/5/?bust=1510867562&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="5" size="pn">http://photos.petfinder.com/photos/pets/38590078/5/?bust=1510867562&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="5" size="t">http://photos.petfinder.com/photos/pets/38590078/5/?bust=1510867562&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="6" size="pnt">http://photos.petfinder.com/photos/pets/38590078/6/?bust=1510867562&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="6" size="fpm">http://photos.petfinder.com/photos/pets/38590078/6/?bust=1510867562&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="6" size="x">http://photos.petfinder.com/photos/pets/38590078/6/?bust=1510867562&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="6" size="pn">http://photos.petfinder.com/photos/pets/38590078/6/?bust=1510867562&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="6" size="t">http://photos.petfinder.com/photos/pets/38590078/6/?bust=1510867562&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>P.O. Box 438</address1>
+                <address2 />
+                <city>Northville</city>
+                <state>MI</state>
+                <zip>48167</zip>
+                <phone>248-788-7050 </phone>
+                <fax />
+                <email>wtdr2008@yahoo.com</email>
+            </contact>
+        </pet>
+        <pet>
+            <id>37831466</id>
+            <shelterId>MI579</shelterId>
+            <shelterPetId />
+            <name>Earl</name>
+            <animal>Dog</animal>
+            <breeds>
+                <breed>Australian Shepherd</breed>
+                <breed>Catahoula Leopard Dog</breed>
+            </breeds>
+            <mix>yes</mix>
+            <age>Adult</age>
+            <sex>M</sex>
+            <size>L</size>
+            <options>
+                <option>altered</option>
+                <option>hasShots</option>
+                <option>housetrained</option>
+            </options>
+            <description>
+                <![CDATA[Good with Kids: We are looking for a home without young children
+Good with other dogs: Yes
+Good with cats: He’s never bothered the resident cat
+Housetrained: Yes
+Crate Trained: Yes
+Walks Nicely on a leash:  Yes
+Knows Basic Commands:  This smart guy knows the basics - sit, shake, give
+Energy Level: Medium-High
+
+Special Needs: Since Earl has allergies, he will need to stay on medicine year-round.  He is on two meds that will cost approx $100 per month.
+
+Arrival Story: Earl came to Waggin Tails after his previous owners were unable to take care of him.  He has allergies that had gotten out of control and this poor guy was pretty miserable.  Waggin Tails has been able to find some medication that controls Earl’s itching.  He is very nervous at the vet’s office, but we’ve found a great vet who gently works with Earl to ease his fears using fear-free methods.
+
+Approximate Age/Weight: 7-8 years / 72 lbs.
+
+Personality:  Earl is a super smart and sweet dog.  He makes his foster parents laugh every day with his antics!  He was a superstar in his training class and graduated with flying colors!
+
+Earl LOVES to play fetch!  Tennis balls or other dog toys, it doesn’t matter.  He will bring the ball back to you or set it down near you non-stop.  He will also point at it so you know exactly what he wants.    When playtime is over, Earl does settle down nicely for naps - even if the tennis ball is still in his mouth!
+
+This smart guy loves to go for walks and has learned to walk nicely on leash.  Good boy, Early Bird!
+
+Earl likes to cuddle up and get belly rubs.   He has great house manners, too!
+
+He would make a great agility, free-style dance or possible dock diving dog - he would do really well with some kind of job or sport.  He is wicked smart and food motivated, so he’s very easily trained and would rise to the challenge.  He really enjoys learning new tricks!
+
+There are three other dogs in his foster home and Earl gets along with all of them.  He doesn’t try to engage in play with them, but he’s also not opposed to settling down next to one of the other dogs and chewing on a Nylabone.  He has shown no interest in the resident cat, but is interested in squirrels and birds in the back yard.
+
+Forever Home: We would love to see Earl go to a home with some dog experience and a fenced in yard so that he can run after tennis balls/toys safely.  After all that he’s been through, handsome Earl needs to be with someone who is willing to give him the attention and playtime that he deserves.  While Earl behaves nicely around children, a home without young children is ideal.  If you're looking for a super fun and funny guy, he may be the one for you!
+
+
+Contact:  Please contact wtdr2008@yahoo.com if you're interested in adopting Earl.     .
+
+If you are interested adopting a dog, please download an Adoption Application from our website,www.waggintailsdogrescue.org/adoptionprocess.html and email it to wtdr2008@yahoo.com.
+
+ADOPTION INFO:
+
+We do not have a facility; all of our dogs are fostered in private homes. We generally have two adoption events per month. To meet a dog in person, please see our event calendar on our website for the date and time of the next adoption event. Arrangements can be made to meet a dog outside of Saturday adoption events after an application is submitted and approved.
+
+Our adoption process includes an application and in-home meet-n-greet with the dog.
+
+-Adult Dog Adoption Fee - $225
+-Small Breed Adoption Fee - $275
+-Senior Dog Adoption Fee - $125
+-Pup Adoption Fee - $250 plus $50 spay/neuter deposit refunded upon proof of surgery by 6 mos.
+
+Email inquiries are answered faster than phone inquiries.
+
+Thank you for supporting dog rescue and your interest in a rescue dog!]]>
+            </description>
+            <lastUpdate>2017-04-12T03:02:37Z</lastUpdate>
+            <status>A</status>
+            <media>
+                <photos>
+                    <photo id="1" size="pnt">http://photos.petfinder.com/photos/pets/37831466/1/?bust=1491966157&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="1" size="fpm">http://photos.petfinder.com/photos/pets/37831466/1/?bust=1491966157&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="1" size="x">http://photos.petfinder.com/photos/pets/37831466/1/?bust=1491966157&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="1" size="pn">http://photos.petfinder.com/photos/pets/37831466/1/?bust=1491966157&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="1" size="t">http://photos.petfinder.com/photos/pets/37831466/1/?bust=1491966157&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="2" size="pnt">http://photos.petfinder.com/photos/pets/37831466/2/?bust=1491966159&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="2" size="fpm">http://photos.petfinder.com/photos/pets/37831466/2/?bust=1491966159&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="2" size="x">http://photos.petfinder.com/photos/pets/37831466/2/?bust=1491966159&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="2" size="pn">http://photos.petfinder.com/photos/pets/37831466/2/?bust=1491966159&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="2" size="t">http://photos.petfinder.com/photos/pets/37831466/2/?bust=1491966159&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="3" size="pnt">http://photos.petfinder.com/photos/pets/37831466/3/?bust=1491966159&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="3" size="fpm">http://photos.petfinder.com/photos/pets/37831466/3/?bust=1491966159&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="3" size="x">http://photos.petfinder.com/photos/pets/37831466/3/?bust=1491966159&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="3" size="pn">http://photos.petfinder.com/photos/pets/37831466/3/?bust=1491966159&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="3" size="t">http://photos.petfinder.com/photos/pets/37831466/3/?bust=1491966159&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="4" size="pnt">http://photos.petfinder.com/photos/pets/37831466/4/?bust=1510493597&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="4" size="fpm">http://photos.petfinder.com/photos/pets/37831466/4/?bust=1510493597&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="4" size="x">http://photos.petfinder.com/photos/pets/37831466/4/?bust=1510493597&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="4" size="pn">http://photos.petfinder.com/photos/pets/37831466/4/?bust=1510493597&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="4" size="t">http://photos.petfinder.com/photos/pets/37831466/4/?bust=1510493597&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="5" size="pnt">http://photos.petfinder.com/photos/pets/37831466/5/?bust=1510493597&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="5" size="fpm">http://photos.petfinder.com/photos/pets/37831466/5/?bust=1510493597&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="5" size="x">http://photos.petfinder.com/photos/pets/37831466/5/?bust=1510493597&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="5" size="pn">http://photos.petfinder.com/photos/pets/37831466/5/?bust=1510493597&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="5" size="t">http://photos.petfinder.com/photos/pets/37831466/5/?bust=1510493597&amp;width=50&amp;-t.jpg</photo>
+                    <photo id="6" size="pnt">http://photos.petfinder.com/photos/pets/37831466/6/?bust=1510493598&amp;width=60&amp;-pnt.jpg</photo>
+                    <photo id="6" size="fpm">http://photos.petfinder.com/photos/pets/37831466/6/?bust=1510493598&amp;width=95&amp;-fpm.jpg</photo>
+                    <photo id="6" size="x">http://photos.petfinder.com/photos/pets/37831466/6/?bust=1510493598&amp;width=500&amp;-x.jpg</photo>
+                    <photo id="6" size="pn">http://photos.petfinder.com/photos/pets/37831466/6/?bust=1510493598&amp;width=300&amp;-pn.jpg</photo>
+                    <photo id="6" size="t">http://photos.petfinder.com/photos/pets/37831466/6/?bust=1510493598&amp;width=50&amp;-t.jpg</photo>
+                </photos>
+            </media>
+            <contact>
+                <address1>P.O. Box 438</address1>
+                <address2 />
+                <city>Northville</city>
+                <state>MI</state>
+                <zip>48167</zip>
+                <phone>248-788-7050 </phone>
+                <fax />
+                <email>wtdr2008@yahoo.com</email>
+            </contact>
+        </pet>
+    </pets>
+</petfinder>

@@ -4,6 +4,8 @@ import android.databinding.BindingAdapter;
 import android.net.Uri;
 import android.support.annotation.IdRes;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,32 +38,35 @@ public class BindingAdapters {
 
     @BindingAdapter("imageUrl")
     public static void loadImageIntoView(ImageView view, String url) {
-        if (!TextUtils.isEmpty(url)) {
-            final Transformation transformation = new RoundedCornersTransformation(10, 0);
-            Picasso.with(view.getContext())
-                   .load(Uri.parse(url))
-                   .fit()
-                   .centerCrop()
-                   .transform(transformation)
-                   .into(view);
-        }
+        final Transformation transformation = new RoundedCornersTransformation(10, 0);
+        Picasso.with(view.getContext())
+               .load(Uri.parse(url))
+               .error(R.drawable.shape_animal_image)
+               .fit()
+               .centerCrop()
+               .transform(transformation)
+               .into(view);
     }
 
     @BindingAdapter("gridLayoutManager")
     public static void setGridLayoutManager(RecyclerView recyclerView, int span) {
-        GridLayoutManager layoutManager = new GridLayoutManager(recyclerView.getContext(), span);
-        GridItemDecoration dividerItemDecoration = new GridItemDecoration(recyclerView.getContext(), GridLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        if (span > 0) {
+            GridLayoutManager layoutManager = new GridLayoutManager(recyclerView.getContext(), span);
+            GridItemDecoration dividerItemDecoration = new GridItemDecoration(recyclerView.getContext(), GridLayoutManager.HORIZONTAL);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.addItemDecoration(dividerItemDecoration);
+        }
     }
 
     @BindingAdapter("setGridItemWidth")
     public static void setGridItemWidth(RecyclerView recyclerView, int span) {
-        float widthInDp = recyclerView.getResources().getDisplayMetrics().widthPixels;
-        int edgeMargin = 16;
-        int centerMargin = 8;
-        float marginSize = ((edgeMargin * span) + centerMargin) * recyclerView.getResources().getDisplayMetrics().density;
-        BindingAdapters.recyclerItemWidth = (int) (widthInDp - marginSize) / span;
+        if (span > 0) {
+            float widthInDp = recyclerView.getResources().getDisplayMetrics().widthPixels;
+            int edgeMargin = 16;
+            int centerMargin = 8;
+            float marginSize = ((edgeMargin * span) + centerMargin) * recyclerView.getResources().getDisplayMetrics().density;
+            BindingAdapters.recyclerItemWidth = (int) (widthInDp - marginSize) / span;
+        }
     }
 
     @BindingAdapter("height")
@@ -76,5 +81,33 @@ public class BindingAdapters {
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = width;
         view.setLayoutParams(layoutParams);
+    }
+
+    @BindingAdapter("viewPager")
+    public static void setViewPager(TabLayout tabLayout, ViewPager viewPager) {
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @BindingAdapter("onPageChange")
+    public static void onPageChange(ViewPager viewPager, ViewPagerPageChangeListener listener) {
+        ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                listener.onPageSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        };
+        viewPager.addOnPageChangeListener(pageChangeListener);
+        viewPager.post(() -> pageChangeListener.onPageSelected(0));
+    }
+
+    @FunctionalInterface
+    public interface ViewPagerPageChangeListener {
+        void onPageSelected(int position);
     }
 }

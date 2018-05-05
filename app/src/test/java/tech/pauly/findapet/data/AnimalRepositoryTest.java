@@ -8,8 +8,10 @@ import org.mockito.MockitoAnnotations;
 import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
 import tech.pauly.findapet.data.models.AnimalListResponse;
+import tech.pauly.findapet.data.models.AnimalType;
 
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,9 +38,10 @@ public class AnimalRepositoryTest {
     }
 
     @Test
-    public void fetchAnimals_returnsAnimalListWithSchedulers() {
-        TestObserver<AnimalListResponse> observer = subject.fetchAnimals().test();
+    public void fetchAnimals_returnsAnimalListForCorrectAnimalTypeWithSchedulers() {
+        TestObserver<AnimalListResponse> observer = subject.fetchAnimals(AnimalType.Cat).test();
 
+        verify(animalService).fetchAnimals(anyString(), anyString(), eq("cat"));
         observer.assertValues(animalListResponse)
                 .assertComplete();
         verify(observableHelper).applySchedulers();

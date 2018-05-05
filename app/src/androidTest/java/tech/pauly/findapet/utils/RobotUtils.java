@@ -1,6 +1,7 @@
 package tech.pauly.findapet.utils;
 
 import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.view.View;
@@ -11,6 +12,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -37,14 +39,19 @@ public class RobotUtils {
     //region Hands
 
     public static void clickView(@IdRes int id) {
-        onView(withId(id))
-                .perform(click());
+        onView(withId(id)).perform(click());
     }
 
     public static void seesRecyclerViewWithItemWithTexts(@IdRes int recyclerView, @IdRes int childView, String text1, String text2, String text3) {
         Matcher<View> viewMatcher = allOf(withId(childView), hasDescendant(withText(text1)), hasDescendant(withText(text2)), hasDescendant(withText(text3)));
-        onView(withId(recyclerView)).perform(RecyclerViewActions.scrollTo(viewMatcher));
+        Matcher<View> recyclerViewMatcher = allOf(withId(recyclerView), isDisplayed());
+        onView(recyclerViewMatcher).perform(RecyclerViewActions.scrollTo(viewMatcher));
         onView(viewMatcher).check(matches(isDisplayed()));
+    }
+
+    public static void clickChildVieWithText(@IdRes int parentView, @StringRes int childText) {
+        Matcher<View> childViewMatcher = allOf(isDescendantOfA(withId(parentView)), withText(childText));
+        onView(childViewMatcher).perform(click());
     }
 
     //endregion
