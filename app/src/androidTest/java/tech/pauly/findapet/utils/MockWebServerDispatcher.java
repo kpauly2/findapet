@@ -1,12 +1,8 @@
 package tech.pauly.findapet.utils;
 
-import android.content.Context;
 import android.support.test.espresso.core.internal.deps.guava.io.ByteStreams;
 import android.util.Log;
 
-import org.apache.commons.io.IOUtils;
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;

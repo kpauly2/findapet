@@ -3,6 +3,7 @@ package tech.pauly.findapet.discover;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.databinding.ObservableInt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,8 @@ import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 
 public class DiscoverViewModel implements LifecycleObserver {
+
+    public ObservableInt columnCount = new ObservableInt(2);
 
     private AnimalRepository animalRepository;
     private AnimalListAdapter adapter;

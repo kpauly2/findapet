@@ -17,7 +17,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:cardElevation="0dp"
-        app:custom_width="@{BindingAdapters.recyclerItemWidth}">
+        app:width="@{BindingAdapters.recyclerItemWidth}">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/animal_item_layout"
@@ -32,7 +32,7 @@
                 android:background="@drawable/shape_animal_image"
                 android:contentDescription="@string/menu_shelters"
                 android:elevation="4dp"
-                app:custom_height="@{BindingAdapters.recyclerItemWidth}"
+                app:height="@{BindingAdapters.recyclerItemWidth}"
                 app:imageUrl="@{viewModel.imageUrl}"
                 app:layout_constraintTop_toTopOf="parent" />
 

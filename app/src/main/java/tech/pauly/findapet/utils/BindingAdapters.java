@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -57,17 +58,20 @@ public class BindingAdapters {
     @BindingAdapter("setGridItemWidth")
     public static void setGridItemWidth(RecyclerView recyclerView, int span) {
         float widthInDp = recyclerView.getResources().getDisplayMetrics().widthPixels;
-        BindingAdapters.recyclerItemWidth = (int) ((widthInDp - (40 * recyclerView.getResources().getDisplayMetrics().density)) / span);
+        int edgeMargin = 16;
+        int centerMargin = 8;
+        float marginSize = ((edgeMargin * span) + centerMargin) * recyclerView.getResources().getDisplayMetrics().density;
+        BindingAdapters.recyclerItemWidth = (int) (widthInDp - marginSize) / span;
     }
 
-    @BindingAdapter("custom_height")
+    @BindingAdapter("height")
     public static void setCustomLayoutHeight(View view, int height) {
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = height;
         view.setLayoutParams(layoutParams);
     }
 
-    @BindingAdapter("custom_width")
+    @BindingAdapter("width")
     public static void setCustomLayoutWidth(View view, int width) {
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = width;

@@ -44,9 +44,11 @@ public class DiscoverFragmentTest extends BaseEspressoTest {
 
     @Test
     public void onLaunch_seesAnimalsFetchedFromNetwork() {
+        String expectedAgeBreedText = String.format(getApplicationContext().getResources().getString(R.string.age_breed), "Adult", "Domestic Short Hair / Tabby");
         serverRule.getDispatcher().mockCall(FETCH_ANIMALS, "animal_list_response");
+
         intentsTestRule.launchActivity(new Intent(getApplicationContext(), MainTabActivity.class));
 
-        RobotUtils.seesRecyclerViewWithItemWithText(R.id.animal_list_recycler_view, R.id.animal_item_card, "Finn");
+        RobotUtils.seesRecyclerViewWithItemWithTexts(R.id.animal_list_recycler_view, R.id.animal_item_card, "Saber", expectedAgeBreedText, "5 mi away");
     }
 }
