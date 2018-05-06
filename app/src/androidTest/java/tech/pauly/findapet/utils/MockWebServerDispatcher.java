@@ -1,10 +1,7 @@
 package tech.pauly.findapet.utils;
 
-import android.support.test.espresso.core.internal.deps.guava.io.ByteStreams;
 import android.util.Log;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -41,20 +38,6 @@ public class MockWebServerDispatcher extends Dispatcher {
 
     private MockResponse getMockResponse(String responseFilename) {
         return new MockResponse().setResponseCode(HTTP_OK)
-                                 .setBody(loadResource(responseFilename));
-    }
-
-    private String loadResource(String responseFilename) {
-        String body = null;
-        try {
-            InputStream responseStream = getClass().getResourceAsStream("/" + responseFilename + ".xml");
-            if (responseStream == null) {
-                throw new IOException("Resource not found: " + responseFilename);
-            }
-            body = new String(ByteStreams.toByteArray(responseStream));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return body;
+                                 .setBody(RobotUtils.loadResource(this, responseFilename));
     }
 }

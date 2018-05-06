@@ -23,6 +23,10 @@ public interface DiscoverFragmentRobot {
             this.context = context;
         }
 
+        public void clickDog() {
+            RobotUtils.clickChildVieWithText(R.id.animal_item_card, "Bubba");
+        }
+
         void launchScreen() {
             intentsTestRule.launchActivity(new Intent(context, MainTabActivity.class));
         }
@@ -38,6 +42,10 @@ public interface DiscoverFragmentRobot {
 
         Eyes(EspressoPetApplication context) {
             this.context = context;
+        }
+
+        void seesAnimalDetailsLaunched() {
+            RobotUtils.seesLaunchedActivity(AnimalDetailsActivity.class);
         }
 
         void seesDogs() {

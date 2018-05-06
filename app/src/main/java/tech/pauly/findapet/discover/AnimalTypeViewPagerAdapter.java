@@ -45,7 +45,7 @@ public class AnimalTypeViewPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return context.getString(AnimalType.values()[position].getFormattedName());
+        return context.getString(AnimalType.values()[position].getTabName());
     }
 
     @Override

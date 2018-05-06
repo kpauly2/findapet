@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import dagger.android.support.AndroidSupportInjectionModule;
+import tech.pauly.findapet.discover.AnimalDetailsActivityTest;
 import tech.pauly.findapet.discover.DiscoverFragmentTest;
 
 @Singleton
@@ -14,4 +15,5 @@ import tech.pauly.findapet.discover.DiscoverFragmentTest;
                        EspressoModule.class})
 public interface EspressoApplicationComponent extends ApplicationComponent {
     void inject(DiscoverFragmentTest test);
+    void inject(AnimalDetailsActivityTest test);
 }

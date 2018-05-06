@@ -4,20 +4,24 @@ import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 
+import javax.inject.Inject;
+
 import tech.pauly.findapet.R;
-import tech.pauly.findapet.settings.SettingsFragment;
-import tech.pauly.findapet.shelters.SheltersFragment;
 import tech.pauly.findapet.discover.DiscoverFragment;
 import tech.pauly.findapet.favorites.FavoritesFragment;
+import tech.pauly.findapet.shelters.SheltersFragment;
 
-public class MainTabViewModel {
+public class MainTabViewModel extends BaseViewModel {
 
     public ObservableInt defaultSelectedItem = new ObservableInt(R.id.navigation_discover);
     public BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = getOnNavigationItemSelectedListener();
     // TODO: make not a direct reference: https://www.pivotaltracker.com/story/show/157172208
     private MainTabActivity activity;
 
-    public MainTabViewModel(MainTabActivity activity) {
+    @Inject
+    public MainTabViewModel() {}
+
+    public void setActivity(MainTabActivity activity) {
         this.activity = activity;
     }
 
@@ -34,9 +38,6 @@ public class MainTabViewModel {
                     return true;
                 case R.id.navigation_favorites:
                     activity.launchTabFragment(new FavoritesFragment());
-                    return true;
-                case R.id.navigation_settings:
-                    activity.launchTabFragment(new SettingsFragment());
                     return true;
             }
             return false;

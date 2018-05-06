@@ -15,10 +15,4 @@
         android:id="@+id/navigation_favorites"
         android:icon="@drawable/ic_menu_favorites"
         android:title="@string/menu_favorites" />
-
-    <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/ic_menu_settings"
-        android:title="@string/menu_settings" />
-
 </menu>

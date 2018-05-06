@@ -63,4 +63,14 @@ public class DiscoverFragmentTest extends BaseEspressoTest {
 
         eyes.seesCats();
     }
+
+    @Test
+    public void clickAnimal_launchAnimalDetails() {
+        dependencies.setupDogResponse();
+        hands.launchScreen();
+
+        hands.clickDog();
+
+        eyes.seesAnimalDetailsLaunched();
+    }
 }

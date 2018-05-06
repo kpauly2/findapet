@@ -13,15 +13,27 @@ import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.Media;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
+import tech.pauly.findapet.shared.ActivityEvent;
+import tech.pauly.findapet.shared.TransientDataStore;
+import tech.pauly.findapet.shared.ViewEventBus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class AnimalListItemViewModelTest {
 
     @Mock
-    Animal animal;
+    private Animal animal;
+
+    @Mock
+    private ViewEventBus eventBus;
+
+    @Mock
+    private TransientDataStore dataStore;
+
+    private AnimalListItemViewModel subject;
 
     @Before
     public void setup() {
@@ -37,7 +49,7 @@ public class AnimalListItemViewModelTest {
 
     @Test
     public void onCreate_setAllBasicValuesForInputAnimal() {
-        AnimalListItemViewModel subject = new AnimalListItemViewModel(animal);
+        createSubject();
 
         assertThat(subject.name.get()).isEqualTo("name");
         assertThat(subject.age.get()).isEqualTo("Adult");
@@ -48,7 +60,7 @@ public class AnimalListItemViewModelTest {
     public void onCreate_animalHasMultipleBreeds_setsAllBreeds() {
         when(animal.getBreedList()).thenReturn(Arrays.asList("breed1", "breed2"));
 
-        AnimalListItemViewModel subject = new AnimalListItemViewModel(animal);
+        createSubject();
 
         assertThat(subject.breeds.get()).isEqualTo("breed1 / breed2");
     }
@@ -62,7 +74,7 @@ public class AnimalListItemViewModelTest {
         when(media.getPhotoList()).thenReturn(Collections.singletonList(photo));
         when(animal.getMedia()).thenReturn(media);
 
-        AnimalListItemViewModel subject = new AnimalListItemViewModel(animal);
+        createSubject();
 
         assertThat(subject.imageUrl.get()).isEqualTo("http://url.com");
     }
@@ -73,7 +85,7 @@ public class AnimalListItemViewModelTest {
         when(media.getPhotoList()).thenReturn(Collections.emptyList());
         when(animal.getMedia()).thenReturn(media);
 
-        AnimalListItemViewModel subject = new AnimalListItemViewModel(animal);
+        createSubject();
 
         assertThat(subject.imageUrl.get()).isEqualTo("");
     }
@@ -84,7 +96,7 @@ public class AnimalListItemViewModelTest {
         when(media.getPhotoList()).thenReturn(null);
         when(animal.getMedia()).thenReturn(media);
 
-        AnimalListItemViewModel subject = new AnimalListItemViewModel(animal);
+        createSubject();
 
         assertThat(subject.imageUrl.get()).isEqualTo("");
     }
@@ -98,7 +110,7 @@ public class AnimalListItemViewModelTest {
         when(media.getPhotoList()).thenReturn(Collections.singletonList(photo));
         when(animal.getMedia()).thenReturn(media);
 
-        AnimalListItemViewModel subject = new AnimalListItemViewModel(animal);
+        createSubject();
 
         assertThat(subject.imageUrl.get()).isEqualTo("");
     }
@@ -107,8 +119,21 @@ public class AnimalListItemViewModelTest {
     public void setPhoto_mediaIsNull_doNotSetPhoto() {
         when(animal.getMedia()).thenReturn(null);
 
-        AnimalListItemViewModel subject = new AnimalListItemViewModel(animal);
+        createSubject();
 
         assertThat(subject.imageUrl.get()).isEqualTo("");
+    }
+
+    @Test
+    public void launchAnimalDetails_launchesAnimalDetails() {
+        createSubject();
+
+        subject.launchAnimalDetails();
+
+        verify(eventBus).send(new ActivityEvent(subject.getClass()).startActivity(AnimalDetailsActivity.class));
+    }
+
+    private void createSubject() {
+        subject = new AnimalListItemViewModel(animal, eventBus, dataStore);
     }
 }

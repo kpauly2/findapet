@@ -3,7 +3,11 @@
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/purpleStandard</item>
         <item name="colorPrimaryDark">@color/purpleDark</item>
-        <item name="colorAccent">@color/purpleVeryLight</item>
+        <item name="colorAccent">@android:color/white</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@android:color/white</item>
     </style>
 
     <style name="FontLargeHeader" parent="@android:style/TextAppearance">
@@ -18,9 +22,39 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="FontBody" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="FontSmall" parent="@android:style/TextAppearance">
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="FontHeader" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="FontStrongHeader" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="FontMaxHeader" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="FontTitle" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
     </style>
 </resources>
