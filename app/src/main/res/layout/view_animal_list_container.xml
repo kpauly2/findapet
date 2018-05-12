@@ -23,9 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:adapter="@{viewModel.listAdapter}"
-            app:gridLayoutManager="@{mainViewModel.columnCount}"
-            app:setGridItemWidth="@{mainViewModel.columnCount}"
+            app:recyclerViewGridSpan="@{mainViewModel.columnCount}"
+            app:loadMoreListener="@{viewModel.loadMoreAnimals}"
             android:paddingBottom="@dimen/standard_margin"/>
-
     </FrameLayout>
 </layout>

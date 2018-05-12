@@ -15,9 +15,10 @@ public class AnimalTypeListViewModel extends BaseViewModel {
     private AnimalListAdapter listAdapter;
     private AnimalListItemViewModel.Factory animalListItemFactory;
     private AnimalRepository animalRepository;
-    private AnimalType animalType;
 
+    private AnimalType animalType;
     private boolean animalsLoaded = false;
+    private int lastOffset = 0;
 
     protected AnimalTypeListViewModel(AnimalType animalType,
                                       AnimalListAdapter listAdapter,
@@ -34,7 +35,7 @@ public class AnimalTypeListViewModel extends BaseViewModel {
     }
 
     public void fetchAnimals() {
-        subscribeOnLifecycle(animalRepository.fetchAnimals(animalType)
+        subscribeOnLifecycle(animalRepository.fetchAnimals(animalType, lastOffset)
                                              .subscribe(this::setAnimalList, Throwable::printStackTrace));
     }
 
@@ -44,10 +45,15 @@ public class AnimalTypeListViewModel extends BaseViewModel {
         }
     }
 
+    public void loadMoreAnimals() {
+        fetchAnimals();
+    }
+
     private void setAnimalList(AnimalListResponse animalListResponse) {
         List<AnimalListItemViewModel> viewModelList = new ArrayList<>();
         if (animalListResponse.getAnimalList() != null) {
             animalsLoaded = true;
+            lastOffset = animalListResponse.getLastOffset();
             for (Animal animal : animalListResponse.getAnimalList()) {
                 viewModelList.add(animalListItemFactory.newInstance(animal));
             }

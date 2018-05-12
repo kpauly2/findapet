@@ -17,6 +17,8 @@ import tech.pauly.findapet.data.models.AnimalType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -44,7 +46,7 @@ public class AnimalTypeListViewModelTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         animalListResponse = mock(AnimalListResponse.class);
-        when(animalRepository.fetchAnimals(any(AnimalType.class))).thenReturn(Observable.just(animalListResponse));
+        when(animalRepository.fetchAnimals(any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
         when(animalListItemFactory.newInstance(any(Animal.class))).thenReturn(animalListItemViewModel);
         subject = new AnimalTypeListViewModel(AnimalType.Cat, listAdapter, animalListItemFactory, animalRepository);
     }
@@ -81,14 +83,14 @@ public class AnimalTypeListViewModelTest {
 
         subject.onPageChange();
 
-        verify(animalRepository, never()).fetchAnimals(any(AnimalType.class));
+        verify(animalRepository, never()).fetchAnimals(eq(AnimalType.Cat), anyInt());
     }
 
     @Test
     public void onPageChange_animalsHaveNotBeenLoaded_fetchAnimals() {
         subject.onPageChange();
 
-        verify(animalRepository).fetchAnimals(any(AnimalType.class));
+        verify(animalRepository).fetchAnimals(eq(AnimalType.Cat), anyInt());
     }
 
     @Test
@@ -99,6 +101,20 @@ public class AnimalTypeListViewModelTest {
 
         subject.onPageChange();
 
-        verify(animalRepository).fetchAnimals(any(AnimalType.class));
+        verify(animalRepository).fetchAnimals(eq(AnimalType.Cat), anyInt());
+    }
+
+    @Test
+    public void loadMoreAnimals_fetchAnimalsAtOffsetReturnedFromLastAnimalRequest() {
+        Animal animal = mock(Animal.class);
+        when(animalListResponse.getLastOffset()).thenReturn(10);
+        when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
+        subject.fetchAnimals();
+        verify(animalRepository).fetchAnimals(AnimalType.Cat, 0);
+        clearInvocations(animalRepository);
+
+        subject.loadMoreAnimals();
+
+        verify(animalRepository).fetchAnimals(AnimalType.Cat, 10);
     }
 }

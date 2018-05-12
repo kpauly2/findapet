@@ -44,25 +44,26 @@ public class BindingAdapters {
                .into(view);
     }
 
-    @BindingAdapter("gridLayoutManager")
-    public static void setGridLayoutManager(RecyclerView recyclerView, int span) {
-        if (span > 0) {
-            GridLayoutManager layoutManager = new GridLayoutManager(recyclerView.getContext(), span);
-            GridItemDecoration dividerItemDecoration = new GridItemDecoration(recyclerView.getContext(), GridLayoutManager.HORIZONTAL);
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.addItemDecoration(dividerItemDecoration);
-        }
-    }
+    @BindingAdapter(value = {"recyclerViewGridSpan", "loadMoreListener"})
+    public static void setupRecyclerView(RecyclerView recyclerView, int span, RecyclerViewLoadMoreDataListener listener) {
+        GridLayoutManager layoutManager = new GridLayoutManager(recyclerView.getContext(), span);
+        GridItemDecoration dividerItemDecoration = new GridItemDecoration(recyclerView.getContext(), GridLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
-    @BindingAdapter("setGridItemWidth")
-    public static void setGridItemWidth(RecyclerView recyclerView, int span) {
-        if (span > 0) {
-            float widthInDp = recyclerView.getResources().getDisplayMetrics().widthPixels;
-            int edgeMargin = 16;
-            int centerMargin = 8;
-            float marginSize = ((edgeMargin * span) + centerMargin) * recyclerView.getResources().getDisplayMetrics().density;
-            BindingAdapters.recyclerItemWidth = (int) (widthInDp - marginSize) / span;
-        }
+        float widthInDp = recyclerView.getResources().getDisplayMetrics().widthPixels;
+        int edgeMargin = 16;
+        int centerMargin = 8;
+        float marginSize = ((edgeMargin * span) + centerMargin) * recyclerView.getResources().getDisplayMetrics().density;
+        BindingAdapters.recyclerItemWidth = (int) (widthInDp - marginSize) / span;
+
+        EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener((GridLayoutManager) recyclerView.getLayoutManager()) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                listener.loadMore();
+            }
+        };
+        recyclerView.addOnScrollListener(scrollListener);
     }
 
     @BindingAdapter("height")
@@ -105,5 +106,10 @@ public class BindingAdapters {
     @FunctionalInterface
     public interface ViewPagerPageChangeListener {
         void onPageSelected(int position);
+    }
+
+    @FunctionalInterface
+    public interface RecyclerViewLoadMoreDataListener {
+        void loadMore();
     }
 }
