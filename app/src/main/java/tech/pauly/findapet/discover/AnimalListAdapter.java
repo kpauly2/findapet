@@ -31,13 +31,7 @@ public class AnimalListAdapter extends RecyclerView.Adapter<AnimalListItemViewHo
     }
 
     public void setAnimalItems(List<AnimalListItemViewModel> items) {
-        clearItems();
         animalItems.addAll(items);
-        notifyDataSetChanged();
-    }
-
-    public void clearItems() {
-        animalItems.clear();
         notifyDataSetChanged();
     }
 }

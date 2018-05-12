@@ -10,6 +10,7 @@ import io.reactivex.observers.TestObserver;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -31,7 +32,7 @@ public class AnimalRepositoryTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         animalListResponse = mock(AnimalListResponse.class);
-        when(animalService.fetchAnimals(anyString(), anyString(), anyString())).thenReturn(Observable.just(animalListResponse));
+        when(animalService.fetchAnimals(anyString(), anyString(), anyString(), anyInt(), anyInt())).thenReturn(Observable.just(animalListResponse));
         when(observableHelper.applySchedulers()).thenReturn(observable -> observable);
 
         subject = new AnimalRepository(animalService, observableHelper);
@@ -39,9 +40,9 @@ public class AnimalRepositoryTest {
 
     @Test
     public void fetchAnimals_returnsAnimalListForCorrectAnimalTypeWithSchedulers() {
-        TestObserver<AnimalListResponse> observer = subject.fetchAnimals(AnimalType.Cat).test();
+        TestObserver<AnimalListResponse> observer = subject.fetchAnimals(AnimalType.Cat, 10).test();
 
-        verify(animalService).fetchAnimals(anyString(), anyString(), eq("cat"));
+        verify(animalService).fetchAnimals(anyString(), anyString(), eq("cat"), eq(10), anyInt());
         observer.assertValues(animalListResponse)
                 .assertComplete();
         verify(observableHelper).applySchedulers();

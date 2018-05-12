@@ -24,4 +24,8 @@ public class AnimalListResponse {
     public List<Animal> getAnimalList() {
         return animalList;
     }
+
+    public int getLastOffset() {
+        return lastOffset;
+    }
 }
