@@ -22,13 +22,9 @@ public class BindingAdapters {
 
     public static int recyclerItemWidth;
 
-    @BindingAdapter("navigationItemSelectedListener")
-    public static void navigationItemSelectedListener(BottomNavigationView bottomNavigationView, BottomNavigationView.OnNavigationItemSelectedListener listener) {
+    @BindingAdapter(value = {"navigationItemSelectedListener", "defaultSelectedItem"})
+    public static void setupBottomNavigationView(BottomNavigationView bottomNavigationView, BottomNavigationView.OnNavigationItemSelectedListener listener, @IdRes int selectedItemResId) {
         bottomNavigationView.setOnNavigationItemSelectedListener(listener);
-    }
-
-    @BindingAdapter("defaultSelectedItem")
-    public static void defaultSelectedItem(BottomNavigationView bottomNavigationView, @IdRes int selectedItemResId) {
         bottomNavigationView.setSelectedItemId(selectedItemResId);
     }
 

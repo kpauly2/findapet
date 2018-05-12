@@ -130,7 +130,7 @@ public class AnimalListItemViewModelTest {
 
         subject.launchAnimalDetails();
 
-        verify(eventBus).send(new ActivityEvent(subject.getClass()).startActivity(AnimalDetailsActivity.class));
+        verify(eventBus).send(ActivityEvent.build(subject).startActivity(AnimalDetailsActivity.class));
     }
 
     private void createSubject() {

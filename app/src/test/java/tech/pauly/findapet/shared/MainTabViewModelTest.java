@@ -1,11 +1,9 @@
 package tech.pauly.findapet.shared;
 
-import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -22,15 +20,14 @@ import static org.mockito.Mockito.when;
 public class MainTabViewModelTest {
 
     @Mock
-    private MainTabActivity activity;
+    private ViewEventBus eventBus;
 
     private MainTabViewModel subject;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        subject = new MainTabViewModel();
-        subject.setActivity(activity);
+        subject = new MainTabViewModel(eventBus);
     }
 
     @Test
@@ -45,32 +42,26 @@ public class MainTabViewModelTest {
     public void onNavigationItemSelected_menuItemDiscover_returnTrueAndLaunchDiscoverFragment() {
         MenuItem menuItem = mock(MenuItem.class);
         when(menuItem.getItemId()).thenReturn(R.id.navigation_discover);
-        ArgumentCaptor<Fragment> captor = ArgumentCaptor.forClass(Fragment.class);
 
         assertThat(subject.onNavigationItemSelectedListener.onNavigationItemSelected(menuItem)).isTrue();
-        verify(activity).launchTabFragment(captor.capture());
-        assertThat(captor.getValue()).isInstanceOf(DiscoverFragment.class);
+        verify(eventBus).send(FragmentEvent.build(subject).container(R.id.fragment_content).fragment(DiscoverFragment.class));
     }
 
     @Test
     public void onNavigationItemSelected_menuItemShelters_returnTrueAndLaunchSheltersFragment() {
         MenuItem menuItem = mock(MenuItem.class);
         when(menuItem.getItemId()).thenReturn(R.id.navigation_shelters);
-        ArgumentCaptor<Fragment> captor = ArgumentCaptor.forClass(Fragment.class);
 
         assertThat(subject.onNavigationItemSelectedListener.onNavigationItemSelected(menuItem)).isTrue();
-        verify(activity).launchTabFragment(captor.capture());
-        assertThat(captor.getValue()).isInstanceOf(SheltersFragment.class);
+        verify(eventBus).send(FragmentEvent.build(subject).container(R.id.fragment_content).fragment(SheltersFragment.class));
     }
 
     @Test
     public void onNavigationItemSelected_menuItemFavorites_returnTrueAndLaunchFavoritesFragment() {
         MenuItem menuItem = mock(MenuItem.class);
         when(menuItem.getItemId()).thenReturn(R.id.navigation_favorites);
-        ArgumentCaptor<Fragment> captor = ArgumentCaptor.forClass(Fragment.class);
 
         assertThat(subject.onNavigationItemSelectedListener.onNavigationItemSelected(menuItem)).isTrue();
-        verify(activity).launchTabFragment(captor.capture());
-        assertThat(captor.getValue()).isInstanceOf(FavoritesFragment.class);
+        verify(eventBus).send(FragmentEvent.build(subject).container(R.id.fragment_content).fragment(FavoritesFragment.class));
     }
 }
