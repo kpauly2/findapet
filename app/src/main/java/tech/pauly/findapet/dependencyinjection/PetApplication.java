@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.v4.app.Fragment;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
@@ -22,6 +24,10 @@ public class PetApplication extends Application implements HasActivityInjector,
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
 
         DaggerApplicationComponent.builder()
                                   .applicationModule(new ApplicationModule(this))

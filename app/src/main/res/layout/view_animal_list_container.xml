@@ -6,6 +6,10 @@
 
         <variable
             name="viewModel"
+            type="tech.pauly.findapet.discover.AnimalTypeListViewModel" />
+
+        <variable
+            name="mainViewModel"
             type="tech.pauly.findapet.discover.DiscoverViewModel" />
     </data>
 
@@ -19,8 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:adapter="@{viewModel.listAdapter}"
-            app:gridLayoutManager="@{viewModel.columnCount}"
-            app:setGridItemWidth="@{viewModel.columnCount}" />
+            app:gridLayoutManager="@{mainViewModel.columnCount}"
+            app:setGridItemWidth="@{mainViewModel.columnCount}"
+            android:paddingBottom="@dimen/standard_margin"/>
 
     </FrameLayout>
 </layout>
