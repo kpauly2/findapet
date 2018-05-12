@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import tech.pauly.findapet.R;
@@ -18,7 +20,8 @@ import tech.pauly.findapet.dependencyinjection.ForApplication;
 public class AnimalTypeViewPagerAdapter extends PagerAdapter {
 
     private final Context context;
-    private DiscoverViewModel viewModel;
+    private List<AnimalTypeListViewModel> listViewModels;
+    private DiscoverViewModel mainViewModel;
 
     @Inject
     AnimalTypeViewPagerAdapter(@ForApplication Context context) {
@@ -29,7 +32,8 @@ public class AnimalTypeViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
         ViewAnimalListContainerBinding binding = DataBindingUtil.inflate(inflater, R.layout.view_animal_list_container, container, false);
-        binding.setViewModel(viewModel);
+        binding.setViewModel(listViewModels.get(position));
+        binding.setMainViewModel(mainViewModel);
         binding.executePendingBindings();
         container.addView(binding.getRoot());
         return binding;
@@ -58,7 +62,11 @@ public class AnimalTypeViewPagerAdapter extends PagerAdapter {
         return ((ViewDataBinding) object).getRoot() == view;
     }
 
-    public void setViewModel(DiscoverViewModel viewModel) {
-        this.viewModel = viewModel;
+    public void setListViewModels(List<AnimalTypeListViewModel> listViewModels) {
+        this.listViewModels = listViewModels;
+    }
+
+    public void setMainViewModel(DiscoverViewModel viewModel) {
+        this.mainViewModel = viewModel;
     }
 }

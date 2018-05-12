@@ -7,61 +7,38 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import tech.pauly.findapet.data.AnimalRepository;
-import tech.pauly.findapet.data.models.Animal;
-import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
-import tech.pauly.findapet.shared.ActivityEvent;
 import tech.pauly.findapet.shared.BaseViewModel;
-import tech.pauly.findapet.shared.ViewEventBus;
 
 public class DiscoverViewModel extends BaseViewModel {
-
     public ObservableInt columnCount = new ObservableInt(2);
 
-    private AnimalRepository animalRepository;
     private AnimalTypeViewPagerAdapter viewPagerAdapter;
-    private AnimalListAdapter listAdapter;
-    private AnimalListItemViewModel.Factory animalListItemFactory;
+
+    private List<AnimalTypeListViewModel> animalTypeListViewModels = new ArrayList<>();
 
     @Inject
-    public DiscoverViewModel(AnimalRepository animalRepository,
-                             AnimalTypeViewPagerAdapter viewPagerAdapter,
-                             AnimalListAdapter listAdapter,
-                             AnimalListItemViewModel.Factory animalListItemFactory) {
-        this.animalRepository = animalRepository;
+    public DiscoverViewModel(AnimalTypeViewPagerAdapter viewPagerAdapter,
+                             AnimalTypeListViewModel.Factory animalTypeListViewModelFactory) {
         this.viewPagerAdapter = viewPagerAdapter;
-        this.listAdapter = listAdapter;
-        this.animalListItemFactory = animalListItemFactory;
 
-        viewPagerAdapter.setViewModel(this);
-    }
-
-    public AnimalListAdapter getListAdapter() {
-        return listAdapter;
+        viewPagerAdapter.setMainViewModel(this);
+        viewPagerAdapter.setListViewModels(createAnimalTypeViewModels(animalTypeListViewModelFactory));
     }
 
     public AnimalTypeViewPagerAdapter getViewPagerAdapter() {
         return viewPagerAdapter;
     }
 
-    public void fetchAnimalsForNewPage(int position) {
-        listAdapter.clearItems();
-        fetchAnimals(AnimalType.values()[position]);
+    public void onPageChange(int position) {
+        animalTypeListViewModels.get(position).onPageChange();
     }
 
-    void fetchAnimals(AnimalType animalType) {
-        subscribeOnLifecycle(animalRepository.fetchAnimals(animalType)
-                                             .subscribe(this::setupAnimalList, Throwable::printStackTrace));
-    }
-
-    private void setupAnimalList(AnimalListResponse animalListResponse) {
-        List<AnimalListItemViewModel> viewModelList = new ArrayList<>();
-        if (animalListResponse.getAnimalList() != null) {
-            for (Animal animal : animalListResponse.getAnimalList()) {
-                viewModelList.add(animalListItemFactory.newInstance(animal));
-            }
+    private List<AnimalTypeListViewModel> createAnimalTypeViewModels(AnimalTypeListViewModel.Factory animalTypeListViewModelFactory) {
+        animalTypeListViewModels.clear();
+        for (AnimalType type : AnimalType.values()) {
+            animalTypeListViewModels.add(animalTypeListViewModelFactory.newInstance(type));
         }
-        listAdapter.setAnimalItems(viewModelList);
+        return animalTypeListViewModels;
     }
 }
