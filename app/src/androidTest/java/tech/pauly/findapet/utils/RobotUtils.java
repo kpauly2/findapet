@@ -68,10 +68,6 @@ public class RobotUtils {
         intended(hasComponent(activityClass.getName()));
     }
 
-    public static void seesActivityIsFinishing(IntentsTestRule testRule) {
-        testRule.getActivity().isFinishing();
-    }
-
     //endregion
 
     //region Hands

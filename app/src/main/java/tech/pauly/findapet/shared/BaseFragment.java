@@ -28,16 +28,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void activityEvent(ActivityEvent event) {
-        switch (event.getType()) {
-            case START:
-                startActivity(new Intent(getContext(), event.getStartActivityClass()));
-                return;
-            case FINISH:
-                getActivity().finish();
-                return;
-            default:
-                throw new IllegalStateException("ActivityEvent type " + event.getType() + " not handled.");
-        }
+        startActivity(new Intent(getContext(), event.getStartActivityClass()));
     }
 
     private void subscribeToEventBus() {

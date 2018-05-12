@@ -28,16 +28,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void activityEvent(ActivityEvent event) {
-        switch (event.getType()) {
-            case START:
-                startActivity(new Intent(this, event.getStartActivityClass()));
-                return;
-            case FINISH:
-                finish();
-                return;
-            default:
-                throw new IllegalStateException("ActivityEvent type " + event.getType() + " not handled.");
-        }
+        startActivity(new Intent(this, event.getStartActivityClass()));
     }
 
     private void subscribeToEventBus() {
