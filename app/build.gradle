@@ -29,6 +29,9 @@ android {
                         "Valid environments are prod and espresso.")
             }
             buildConfigField "String", "ENVIRONMENT", "\"${environment}\""
+
+            String apiKey = project.property("findapet.petfinder.apikey")
+            buildConfigField "String", "API_KEY", "\"${apiKey}\""
         }
     }
 
