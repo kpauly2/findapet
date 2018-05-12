@@ -5,23 +5,31 @@ import android.support.annotation.StringRes;
 import tech.pauly.findapet.R;
 
 public enum AnimalType {
-    Dog(R.string.tab_dog),
-    Cat(R.string.tab_cat),
-    SmallFurry(R.string.tab_smallfurry),
-    Barnyard(R.string.tab_barnyard),
-    Bird(R.string.tab_bird),
-    Horse(R.string.tab_horse),
-    Rabbit(R.string.tab_rabbit),
-    Reptile(R.string.tab_reptile);
+    Dog(R.string.tab_dog, R.string.dog),
+    Cat(R.string.tab_cat, R.string.cat),
+    SmallFurry(R.string.tab_smallfurry, R.string.smallfurry),
+    Barnyard(R.string.tab_barnyard, R.string.barnyard),
+    Bird(R.string.tab_bird, R.string.bird),
+    Horse(R.string.tab_horse, R.string.horse),
+    Rabbit(R.string.tab_rabbit, R.string.rabbit),
+    Reptile(R.string.tab_reptile, R.string.reptile);
 
     @StringRes
-    private int formattedName;
+    private int tabName;
 
-    AnimalType(@StringRes int formattedName) {
-        this.formattedName = formattedName;
+    @StringRes
+    private int singularName;
+
+    AnimalType(@StringRes int tabName, @StringRes int singularName) {
+        this.tabName = tabName;
+        this.singularName = singularName;
     }
 
-    public int getFormattedName() {
-        return formattedName;
+    public int getTabName() {
+        return tabName;
+    }
+
+    public int getSingularName() {
+        return singularName;
     }
 }

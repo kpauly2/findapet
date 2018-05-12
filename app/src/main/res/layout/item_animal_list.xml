@@ -16,6 +16,9 @@
         android:id="@+id/animal_item_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> viewModel.launchAnimalDetails()}"
         app:cardElevation="0dp"
         app:width="@{BindingAdapters.recyclerItemWidth}">
 

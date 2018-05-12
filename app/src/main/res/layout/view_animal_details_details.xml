@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="tech.pauly.findapet.discover.AnimalDetailsViewModel" />
+
+        <import type="tech.pauly.findapet.utils.BindingAdapters" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/animal_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingEnd="@dimen/standard_margin"
+        android:paddingStart="@dimen/standard_margin">
+
+        <TextView
+            android:id="@+id/animal_age_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:paddingStart="@dimen/standard_margin"
+            android:text="@{viewModel.ageType}"
+            android:textAlignment="center"
+            android:textAppearance="@style/FontHeader"
+            android:textColor="@color/textLight"
+            app:layout_constraintEnd_toStartOf="@+id/animal_sex"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Adult Cat" />
+
+        <TextView
+            android:id="@+id/animal_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:text="@{viewModel.sex}"
+            android:textAlignment="center"
+            android:textAppearance="@style/FontHeader"
+            android:textColor="@color/textLight"
+            app:layout_constraintEnd_toStartOf="@+id/animal_size"
+            app:layout_constraintStart_toEndOf="@+id/animal_age_type"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Male" />
+
+        <TextView
+            android:id="@+id/animal_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:paddingEnd="@dimen/standard_margin"
+            android:text="@{viewModel.size}"
+            android:textAlignment="center"
+            android:textAppearance="@style/FontHeader"
+            android:textColor="@color/textLight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/animal_sex"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Medium" />
+
+        <View
+            android:id="@+id/divider_top"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:visibility="@{viewModel.optionsVisibility ? View.VISIBLE : View.GONE}"
+            android:background="@color/offWhite"
+            app:layout_constraintTop_toBottomOf="@+id/animal_age_type" />
+
+        <TextView
+            android:id="@+id/options_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:text="@string/animal_details_about"
+            android:visibility="@{viewModel.optionsVisibility ? View.VISIBLE : View.GONE}"
+            android:textAppearance="@style/FontTitle"
+            android:textColor="@color/purpleStandard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_top" />
+
+        <TextView
+            android:id="@+id/options_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/half_margin"
+            android:text="@{viewModel.options}"
+            android:textAppearance="@style/FontBody"
+            android:visibility="@{viewModel.optionsVisibility ? View.VISIBLE : View.GONE}"
+            android:textColor="@color/textStandard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/options_title"
+            tools:text="HEALTH\nVaccinations up to date, spayed / neutered.\n\nPREFERS A HOME WITHOUT\nChildren." />
+
+        <View
+            android:id="@+id/divider_center"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@color/offWhite"
+            android:visibility="@{viewModel.descriptionVisibility ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@+id/options_body" />
+
+        <TextView
+            android:id="@+id/description_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:text="@{@string/animal_details_description(viewModel.name.toUpperCase())}"
+            android:textAppearance="@style/FontTitle"
+            android:textColor="@color/purpleStandard"
+            android:visibility="@{viewModel.descriptionVisibility ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_center"
+            tools:text="MEET MOZART" />
+
+        <TextView
+            android:id="@+id/description_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/half_margin"
+            android:text="@{viewModel.description}"
+            android:textAppearance="@style/FontBody"
+            android:textColor="@color/textStandard"
+            android:visibility="@{viewModel.descriptionVisibility ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_title"
+            android:paddingBottom="@dimen/standard_margin"
+            tools:text="1) I am the shy kind; it may take me a bit of time for me to settle in   2) I like to be pet, but I am pretty" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

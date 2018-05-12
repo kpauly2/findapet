@@ -47,14 +47,4 @@ public class MainTabActivityTest {
         RobotUtils.doesNotSeeView(R.id.fragment_shelters);
         RobotUtils.doesNotSeeView(R.id.fragment_settings);
     }
-
-    @Test
-    public void onClickSettings_seeOnlySettings() {
-        RobotUtils.clickView(R.id.navigation_settings);
-
-        RobotUtils.seesView(R.id.fragment_settings);
-        RobotUtils.doesNotSeeView(R.id.fragment_discover);
-        RobotUtils.doesNotSeeView(R.id.fragment_shelters);
-        RobotUtils.doesNotSeeView(R.id.fragment_favorites);
-    }
 }

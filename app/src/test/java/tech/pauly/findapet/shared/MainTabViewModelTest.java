@@ -12,9 +12,6 @@ import org.mockito.MockitoAnnotations;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.discover.DiscoverFragment;
 import tech.pauly.findapet.favorites.FavoritesFragment;
-import tech.pauly.findapet.settings.SettingsFragment;
-import tech.pauly.findapet.shared.MainTabActivity;
-import tech.pauly.findapet.shared.MainTabViewModel;
 import tech.pauly.findapet.shelters.SheltersFragment;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +29,8 @@ public class MainTabViewModelTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        subject = new MainTabViewModel(activity);
+        subject = new MainTabViewModel();
+        subject.setActivity(activity);
     }
 
     @Test
@@ -74,16 +72,5 @@ public class MainTabViewModelTest {
         assertThat(subject.onNavigationItemSelectedListener.onNavigationItemSelected(menuItem)).isTrue();
         verify(activity).launchTabFragment(captor.capture());
         assertThat(captor.getValue()).isInstanceOf(FavoritesFragment.class);
-    }
-
-    @Test
-    public void onNavigationItemSelected_menuItemSettings_returnTrueAndLaunchSettingsFragment() {
-        MenuItem menuItem = mock(MenuItem.class);
-        when(menuItem.getItemId()).thenReturn(R.id.navigation_settings);
-        ArgumentCaptor<Fragment> captor = ArgumentCaptor.forClass(Fragment.class);
-
-        assertThat(subject.onNavigationItemSelectedListener.onNavigationItemSelected(menuItem)).isTrue();
-        verify(activity).launchTabFragment(captor.capture());
-        assertThat(captor.getValue()).isInstanceOf(SettingsFragment.class);
     }
 }

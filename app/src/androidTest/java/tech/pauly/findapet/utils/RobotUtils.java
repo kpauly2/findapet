@@ -4,13 +4,24 @@ import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.test.espresso.core.internal.deps.guava.io.ByteStreams;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.view.View;
 
 import org.hamcrest.Matcher;
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import tech.pauly.findapet.data.models.Animal;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -18,6 +29,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.core.StringContains.containsString;
 
 public class RobotUtils {
 
@@ -28,10 +40,32 @@ public class RobotUtils {
                 .check(matches(isDisplayed()));
     }
 
+    public static void seesViewWithText(@IdRes int id, @StringRes int text) {
+        onView(withId(id))
+                .check(matches(isDisplayed()))
+                .check(matches(withText(text)));
+    }
+
+    public static void seesViewWithContainsText(@IdRes int id, String text) {
+        onView(withId(id))
+                .check(matches(isDisplayed()))
+                .check(matches(withText(containsString(text))));
+    }
+
+    public static void seesViewWithText(@IdRes int id, String text) {
+        onView(withId(id))
+                .check(matches(isDisplayed()))
+                .check(matches(withText(text)));
+    }
+
     public static void doesNotSeeView(@IdRes int id) {
         try {
             onView(withId(id)).check(matches(not(isDisplayed())));
         } catch (NoMatchingViewException e) {}
+    }
+
+    public static void seesLaunchedActivity(Class activityClass) {
+        intended(hasComponent(activityClass.getName()));
     }
 
     //endregion
@@ -50,9 +84,38 @@ public class RobotUtils {
     }
 
     public static void clickChildVieWithText(@IdRes int parentView, @StringRes int childText) {
-        Matcher<View> childViewMatcher = allOf(isDescendantOfA(withId(parentView)), withText(childText));
+        Matcher<View> childViewMatcher = allOf(isDescendantOfA(withId(parentView)), withText(childText), isDisplayed());
+        onView(childViewMatcher).perform(click());
+    }
+
+    public static void clickChildVieWithText(@IdRes int parentView, String childText) {
+        Matcher<View> childViewMatcher = allOf(isDescendantOfA(withId(parentView)), withText(childText), isDisplayed());
         onView(childViewMatcher).perform(click());
     }
 
     //endregion
+
+    public static <T> T parseResource(Object sourceObject, String responseFilename, Class<T> clazz) {
+        Serializer ser = new Persister();
+        try {
+            return clazz.cast(ser.read(Animal.class, RobotUtils.loadResource(sourceObject, responseFilename)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String loadResource(Object sourceObject, String responseFilename) {
+        String body = null;
+        try {
+            InputStream responseStream = sourceObject.getClass().getResourceAsStream("/" + responseFilename + ".xml");
+            if (responseStream == null) {
+                throw new IOException("Resource not found: " + responseFilename);
+            }
+            body = new String(ByteStreams.toByteArray(responseStream));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return body;
+    }
 }

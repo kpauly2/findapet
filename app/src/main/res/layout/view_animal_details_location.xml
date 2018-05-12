@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="tech.pauly.findapet.discover.AnimalDetailsViewModel" />
+
+        <import type="tech.pauly.findapet.utils.BindingAdapters" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/animal_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@android:color/white"
+        android:paddingEnd="@dimen/standard_margin"
+        android:paddingStart="@dimen/standard_margin">
+
+        <TextView
+            android:id="@+id/location_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            tools:text="LOCATION"
+            android:textAppearance="@style/FontTitle"
+            android:textColor="@color/purpleStandard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
