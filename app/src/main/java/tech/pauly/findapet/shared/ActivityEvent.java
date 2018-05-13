@@ -8,7 +8,7 @@ public class ActivityEvent extends BaseViewEvent {
         return new ActivityEvent(emitter.getClass());
     }
 
-    public ActivityEvent(Class emitter) {
+    private ActivityEvent(Class emitter) {
         this.emitter = emitter;
     }
 

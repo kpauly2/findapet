@@ -15,29 +15,27 @@ public class MainTabViewModel extends BaseViewModel {
 
     public ObservableInt defaultSelectedItem = new ObservableInt(R.id.navigation_discover);
     public BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = getOnNavigationItemSelectedListener();
-    // TODO: make not a direct reference: https://www.pivotaltracker.com/story/show/157172208
-    private MainTabActivity activity;
+
+    private ViewEventBus eventBus;
 
     @Inject
-    public MainTabViewModel() {}
-
-    public void setActivity(MainTabActivity activity) {
-        this.activity = activity;
+    public MainTabViewModel(ViewEventBus eventBus) {
+        this.eventBus = eventBus;
     }
 
     @NonNull
     private BottomNavigationView.OnNavigationItemSelectedListener getOnNavigationItemSelectedListener() {
         return item -> {
+            FragmentEvent event = FragmentEvent.build(this).container(R.id.fragment_content);
             switch (item.getItemId()) {
                 case R.id.navigation_discover:
-                    // TODO: don't create these view objects in the VM: https://www.pivotaltracker.com/story/show/157172208
-                    activity.launchTabFragment(new DiscoverFragment());
+                    eventBus.send(event.fragment(DiscoverFragment.class));
                     return true;
                 case R.id.navigation_shelters:
-                    activity.launchTabFragment(new SheltersFragment());
+                    eventBus.send(event.fragment(SheltersFragment.class));
                     return true;
                 case R.id.navigation_favorites:
-                    activity.launchTabFragment(new FavoritesFragment());
+                    eventBus.send(event.fragment(FavoritesFragment.class));
                     return true;
             }
             return false;

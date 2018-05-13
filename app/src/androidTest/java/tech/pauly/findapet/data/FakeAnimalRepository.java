@@ -16,8 +16,8 @@ public class FakeAnimalRepository extends AnimalRepository {
     }
 
     @Override
-    public Observable<AnimalListResponse> fetchAnimals(AnimalType animalType) {
+    public Observable<AnimalListResponse> fetchAnimals(AnimalType animalType, int offset) {
         countingIdlingResource.increment();
-        return super.fetchAnimals(animalType).doAfterTerminate(() -> countingIdlingResource.decrement());
+        return super.fetchAnimals(animalType, offset).doAfterTerminate(() -> countingIdlingResource.decrement());
     }
 }

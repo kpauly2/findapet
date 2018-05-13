@@ -1,5 +1,7 @@
 package tech.pauly.findapet.shared;
 
+import com.bea.xml.stream.events.BaseEvent;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -24,17 +26,25 @@ import io.reactivex.subjects.PublishSubject;
 @Singleton
 public class ViewEventBus {
 
-    public PublishSubject<ActivityEvent> activitySubject = PublishSubject.create();
+    public PublishSubject<BaseViewEvent> subject = PublishSubject.create();
 
     @Inject
     public ViewEventBus() {}
 
-    public void send(ActivityEvent event) {
-        activitySubject.onNext(event);
+    public void send(BaseViewEvent event) {
+        subject.onNext(event);
     }
 
     public Observable<ActivityEvent> activity(Class emitterClass) {
-        return activitySubject.filter(event -> fromEmitter(event, emitterClass));
+        return subject.filter(event -> event instanceof ActivityEvent
+                                       && fromEmitter(event, emitterClass))
+                      .map(event -> (ActivityEvent) event);
+    }
+
+    public Observable<FragmentEvent> fragment(Class emitterClass) {
+        return subject.filter(event -> event instanceof FragmentEvent
+                                       && fromEmitter(event, emitterClass))
+                      .map(event -> (FragmentEvent) event);
     }
 
     private boolean fromEmitter(BaseViewEvent event, Class viewModelClass) {
