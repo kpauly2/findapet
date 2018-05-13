@@ -6,6 +6,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Root(name = "pet", strict = false)
@@ -24,7 +25,7 @@ public class Animal {
     private String name;
 
     @Element(name = "animal")
-    private AnimalType type;
+    private String type;
 
     @ElementList(name = "breeds", entry = "breed")
     private List<String> breed;
@@ -33,7 +34,7 @@ public class Animal {
     private String mix;
 
     @Element
-    private Age age;
+    private String age;
 
     @Element
     private Sex sex;
@@ -42,7 +43,7 @@ public class Animal {
     private AnimalSize size;
 
     @ElementList(entry = "option")
-    private List<Option> options;
+    private List<String> options;
 
     @Element(required = false)
     private String description;
@@ -74,7 +75,7 @@ public class Animal {
     }
 
     public AnimalType getType() {
-        return type;
+        return AnimalType.fromString(type);
     }
 
     public List<String> getBreedList() {
@@ -86,7 +87,7 @@ public class Animal {
     }
 
     public Age getAge() {
-        return age;
+        return Age.fromString(age);
     }
 
     public Sex getSex() {
@@ -98,7 +99,11 @@ public class Animal {
     }
 
     public List<Option> getOptions() {
-        return options;
+        List<Option> optionList = new ArrayList<>();
+        for (String option : options) {
+            optionList.add(Option.fromString(option));
+        }
+        return optionList;
     }
 
     @Nullable

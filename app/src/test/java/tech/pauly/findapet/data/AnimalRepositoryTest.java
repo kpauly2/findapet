@@ -40,7 +40,7 @@ public class AnimalRepositoryTest {
 
     @Test
     public void fetchAnimals_returnsAnimalListForCorrectAnimalTypeWithSchedulers() {
-        TestObserver<AnimalListResponse> observer = subject.fetchAnimals(AnimalType.Cat, 10).test();
+        TestObserver<AnimalListResponse> observer = subject.fetchAnimals(AnimalType.CAT, 10).test();
 
         verify(animalService).fetchAnimals(anyString(), anyString(), eq("cat"), eq(10), anyInt());
         observer.assertValues(animalListResponse)

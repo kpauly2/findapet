@@ -48,7 +48,7 @@ public class AnimalTypeListViewModelTest {
         animalListResponse = mock(AnimalListResponse.class);
         when(animalRepository.fetchAnimals(any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
         when(animalListItemFactory.newInstance(any(Animal.class))).thenReturn(animalListItemViewModel);
-        subject = new AnimalTypeListViewModel(AnimalType.Cat, listAdapter, animalListItemFactory, animalRepository);
+        subject = new AnimalTypeListViewModel(AnimalType.CAT, listAdapter, animalListItemFactory, animalRepository);
     }
 
     @Test
@@ -83,14 +83,14 @@ public class AnimalTypeListViewModelTest {
 
         subject.onPageChange();
 
-        verify(animalRepository, never()).fetchAnimals(eq(AnimalType.Cat), anyInt());
+        verify(animalRepository, never()).fetchAnimals(eq(AnimalType.CAT), anyInt());
     }
 
     @Test
     public void onPageChange_animalsHaveNotBeenLoaded_fetchAnimals() {
         subject.onPageChange();
 
-        verify(animalRepository).fetchAnimals(eq(AnimalType.Cat), anyInt());
+        verify(animalRepository).fetchAnimals(eq(AnimalType.CAT), anyInt());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class AnimalTypeListViewModelTest {
 
         subject.onPageChange();
 
-        verify(animalRepository).fetchAnimals(eq(AnimalType.Cat), anyInt());
+        verify(animalRepository).fetchAnimals(eq(AnimalType.CAT), anyInt());
     }
 
     @Test
@@ -110,11 +110,11 @@ public class AnimalTypeListViewModelTest {
         when(animalListResponse.getLastOffset()).thenReturn(10);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
         subject.fetchAnimals();
-        verify(animalRepository).fetchAnimals(AnimalType.Cat, 0);
+        verify(animalRepository).fetchAnimals(AnimalType.CAT, 0);
         clearInvocations(animalRepository);
 
         subject.loadMoreAnimals();
 
-        verify(animalRepository).fetchAnimals(AnimalType.Cat, 10);
+        verify(animalRepository).fetchAnimals(AnimalType.CAT, 10);
     }
 }

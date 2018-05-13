@@ -13,8 +13,8 @@ public class Status {
     @Element(required = false)
     private String message;
 
-    public int getCode() {
-        return code;
+    public StatusCode getCode() {
+        return StatusCode.fromInt(code);
     }
 
     @Nullable

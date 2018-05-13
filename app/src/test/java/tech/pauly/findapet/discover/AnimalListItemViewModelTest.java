@@ -14,6 +14,7 @@ import tech.pauly.findapet.data.models.Media;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
 import tech.pauly.findapet.shared.ActivityEvent;
+import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.TransientDataStore;
 import tech.pauly.findapet.shared.ViewEventBus;
 
@@ -33,6 +34,9 @@ public class AnimalListItemViewModelTest {
     @Mock
     private TransientDataStore dataStore;
 
+    @Mock
+    private ResourceProvider resourceProvider;
+
     private AnimalListItemViewModel subject;
 
     @Before
@@ -40,11 +44,12 @@ public class AnimalListItemViewModelTest {
         MockitoAnnotations.initMocks(this);
 
         when(animal.getName()).thenReturn("name");
-        when(animal.getAge()).thenReturn(Age.Adult);
+        when(animal.getAge()).thenReturn(Age.ADULT);
         when(animal.getBreedList()).thenReturn(Collections.singletonList("breeds"));
         Media media = mock(Media.class);
         when(media.getPhotoList()).thenReturn(Collections.emptyList());
         when(animal.getMedia()).thenReturn(media);
+        when(resourceProvider.getString(Age.ADULT.getName())).thenReturn("Adult");
     }
 
     @Test
@@ -69,7 +74,7 @@ public class AnimalListItemViewModelTest {
     public void setPhoto_animalHasXPhoto_setsPhoto() {
         Photo photo = mock(Photo.class);
         when(photo.getUrl()).thenReturn("http://url.com");
-        when(photo.getSize()).thenReturn(PhotoSize.x);
+        when(photo.getSize()).thenReturn(PhotoSize.LARGE);
         Media media = mock(Media.class);
         when(media.getPhotoList()).thenReturn(Collections.singletonList(photo));
         when(animal.getMedia()).thenReturn(media);
@@ -105,7 +110,7 @@ public class AnimalListItemViewModelTest {
     public void setPhoto_animalDoesNotHaveXPhoto_doNotSetPhoto() {
         Photo photo = mock(Photo.class);
         when(photo.getUrl()).thenReturn("http://url.com");
-        when(photo.getSize()).thenReturn(PhotoSize.fpm);
+        when(photo.getSize()).thenReturn(PhotoSize.FEATURED_PET_MODULE);
         Media media = mock(Media.class);
         when(media.getPhotoList()).thenReturn(Collections.singletonList(photo));
         when(animal.getMedia()).thenReturn(media);
@@ -134,6 +139,6 @@ public class AnimalListItemViewModelTest {
     }
 
     private void createSubject() {
-        subject = new AnimalListItemViewModel(animal, eventBus, dataStore);
+        subject = new AnimalListItemViewModel(animal, eventBus, dataStore, resourceProvider);
     }
 }

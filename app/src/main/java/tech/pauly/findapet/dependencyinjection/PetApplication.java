@@ -12,6 +12,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import tech.pauly.findapet.BuildConfig;
 
 public class PetApplication extends Application implements HasActivityInjector,
                                                            HasSupportFragmentInjector {
@@ -27,7 +28,9 @@ public class PetApplication extends Application implements HasActivityInjector,
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
-        LeakCanary.install(this);
+        if (!BuildConfig.ENVIRONMENT.equals("espresso")) {
+            LeakCanary.install(this);
+        }
 
         DaggerApplicationComponent.builder()
                                   .applicationModule(new ApplicationModule(this))
