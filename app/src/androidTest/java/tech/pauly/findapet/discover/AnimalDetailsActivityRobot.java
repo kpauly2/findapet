@@ -59,7 +59,7 @@ public interface AnimalDetailsActivityRobot {
         Eyes seesDescriptionSection() {
             RobotUtils.seesView(R.id.divider_center);
             RobotUtils.seesView(R.id.description_title);
-            RobotUtils.seesViewWithContainsText(R.id.description_body, "Sahara, senior female. Sahara likes to be brushed and will lay in the same room with you or next to you. She wants to be near you but not necessarily on your lap.");
+            RobotUtils.seesViewWithContainsText(R.id.description_body, "Sahara, senior female.");
             return this;
         }
 

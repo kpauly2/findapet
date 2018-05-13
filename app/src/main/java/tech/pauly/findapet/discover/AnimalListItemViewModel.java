@@ -1,11 +1,13 @@
 package tech.pauly.findapet.discover;
 
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.Media;
 import tech.pauly.findapet.data.models.Photo;
@@ -13,6 +15,7 @@ import tech.pauly.findapet.data.models.PhotoSize;
 import tech.pauly.findapet.shared.ActivityEvent;
 import tech.pauly.findapet.shared.AnimalDetailsUseCase;
 import tech.pauly.findapet.shared.BaseViewModel;
+import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.TransientDataStore;
 import tech.pauly.findapet.shared.ViewEventBus;
 
@@ -26,12 +29,12 @@ public class AnimalListItemViewModel extends BaseViewModel {
     private ViewEventBus eventBus;
     private TransientDataStore dataStore;
 
-    protected AnimalListItemViewModel(Animal animal, ViewEventBus eventBus, TransientDataStore dataStore) {
+    protected AnimalListItemViewModel(Animal animal, ViewEventBus eventBus, TransientDataStore dataStore, ResourceProvider resourceProvider) {
         this.animal = animal;
         this.eventBus = eventBus;
         this.dataStore = dataStore;
         name.set(animal.getName());
-        age.set(animal.getAge().toString());
+        age.set(resourceProvider.getString(animal.getAge().getName()));
 
         setBreeds(animal.getBreedList());
         setPhoto(animal.getMedia());
@@ -59,7 +62,7 @@ public class AnimalListItemViewModel extends BaseViewModel {
             Photo finalPhoto = null;
             // TODO: Fallback sizes: https://www.pivotaltracker.com/story/show/157261497
             for (Photo photo : media.getPhotoList()) {
-                if (photo.getSize() == PhotoSize.x) {
+                if (photo.getSize() == PhotoSize.LARGE) {
                     finalPhoto = photo;
                 }
             }
@@ -72,15 +75,17 @@ public class AnimalListItemViewModel extends BaseViewModel {
     public static class Factory {
         private ViewEventBus eventBus;
         private TransientDataStore dataStore;
+        private ResourceProvider resourceProvider;
 
         @Inject
-        public Factory(ViewEventBus eventBus, TransientDataStore dataStore) {
+        public Factory(ViewEventBus eventBus, TransientDataStore dataStore, ResourceProvider resourceProvider) {
             this.eventBus = eventBus;
             this.dataStore = dataStore;
+            this.resourceProvider = resourceProvider;
         }
 
         public AnimalListItemViewModel newInstance(Animal animal) {
-            return new AnimalListItemViewModel(animal, eventBus, dataStore);
+            return new AnimalListItemViewModel(animal, eventBus, dataStore, resourceProvider);
         }
     }
 }

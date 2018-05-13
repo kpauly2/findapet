@@ -48,7 +48,8 @@ public class AnimalDetailsViewModel extends BaseViewModel {
             name.set(animal.getName());
             sex.set(animal.getSex().getFormattedName());
             size.set(animal.getSize().getFormattedName());
-            ageType.set(animal.getAge() + " " + resourceProvider.getString(animal.getType().getSingularName()));
+            ageType.set(resourceProvider.getString(animal.getAge().getName()) + " "
+                        + resourceProvider.getString(animal.getType().getSingularName()));
 
             setPhoto(animal.getMedia());
             setBreeds(animal.getBreedList());
@@ -100,7 +101,7 @@ public class AnimalDetailsViewModel extends BaseViewModel {
             Photo finalPhoto = null;
             // TODO: Fallback sizes: https://www.pivotaltracker.com/story/show/157261497
             for (Photo photo : media.getPhotoList()) {
-                if (photo.getSize() == PhotoSize.x) {
+                if (photo.getSize() == PhotoSize.LARGE) {
                     finalPhoto = photo;
                 }
             }

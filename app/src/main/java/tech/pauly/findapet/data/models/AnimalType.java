@@ -5,14 +5,16 @@ import android.support.annotation.StringRes;
 import tech.pauly.findapet.R;
 
 public enum AnimalType {
-    Dog(R.string.tab_dog, R.string.dog),
-    Cat(R.string.tab_cat, R.string.cat),
-    SmallFurry(R.string.tab_smallfurry, R.string.smallfurry),
-    Barnyard(R.string.tab_barnyard, R.string.barnyard),
-    Bird(R.string.tab_bird, R.string.bird),
-    Horse(R.string.tab_horse, R.string.horse),
-    Rabbit(R.string.tab_rabbit, R.string.rabbit),
-    Reptile(R.string.tab_reptile, R.string.reptile);
+    DOG("Dog", R.string.tab_dog, R.string.dog),
+    CAT("Cat", R.string.tab_cat, R.string.cat),
+    SMALLFURRY("Small & Furry", R.string.tab_smallfurry, R.string.smallfurry),
+    BARNYARD("Barnyard", R.string.tab_barnyard, R.string.barnyard),
+    BIRD("Bird", R.string.tab_bird, R.string.bird),
+    HORSE("Horse", R.string.tab_horse, R.string.horse),
+    RABBIT("Rabbit", R.string.tab_rabbit, R.string.rabbit),
+    REPTILE("Scales, Fins & Other", R.string.tab_reptile, R.string.reptile);
+
+    private String serverName;
 
     @StringRes
     private int tabName;
@@ -20,9 +22,19 @@ public enum AnimalType {
     @StringRes
     private int singularName;
 
-    AnimalType(@StringRes int tabName, @StringRes int singularName) {
+    AnimalType(String serverName, @StringRes int tabName, @StringRes int singularName) {
+        this.serverName = serverName;
         this.tabName = tabName;
         this.singularName = singularName;
+    }
+
+    static AnimalType fromString(String name) {
+        for (AnimalType type : AnimalType.values()) {
+            if (type.serverName.equals(name)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("No matching AnimalType for name " + name);
     }
 
     public int getTabName() {
@@ -31,5 +43,9 @@ public enum AnimalType {
 
     public int getSingularName() {
         return singularName;
+    }
+
+    public String getServerName() {
+        return serverName;
     }
 }

@@ -14,7 +14,7 @@
     <string name="tab_bird">BIRDS</string>
     <string name="tab_horse">HORSES</string>
     <string name="tab_rabbit">RABBITS</string>
-    <string name="tab_reptile">REPTILES</string>
+    <string name="tab_reptile">SCALES</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="pet_image">pet image</string>
     <string name="favorite">Favorite</string>
@@ -29,7 +29,7 @@
     <string name="bird">Bird</string>
     <string name="horse">Horse</string>
     <string name="rabbit">Rabbit</string>
-    <string name="reptile">Reptile</string>
+    <string name="reptile">Scaled</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="unknown">Unknown</string>
@@ -48,4 +48,8 @@
     <string name="house_broken">House broken</string>
     <string name="house_trained">House trained</string>
     <string name="altered">Altered</string>
+    <string name="baby">Baby</string>
+    <string name="young">Young</string>
+    <string name="adult">Adult</string>
+    <string name="senior">Senior</string>
 </resources>

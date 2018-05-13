@@ -11,7 +11,7 @@ public class Photo {
     private String id;
 
     @Attribute
-    private PhotoSize size;
+    private String size;
 
     @Text
     private String url;
@@ -21,7 +21,7 @@ public class Photo {
     }
 
     public PhotoSize getSize() {
-        return size;
+        return PhotoSize.fromString(size);
     }
 
     public String getUrl() {

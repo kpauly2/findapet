@@ -124,7 +124,7 @@ public class AnimalDetailsViewModelTest {
     private AnimalDetailsUseCase setupFullAnimalUseCase() {
         Photo photo = mock(Photo.class);
         when(photo.getUrl()).thenReturn("http://url.com");
-        when(photo.getSize()).thenReturn(PhotoSize.x);
+        when(photo.getSize()).thenReturn(PhotoSize.LARGE);
 
         Media media = mock(Media.class);
         when(media.getPhotoList()).thenReturn(Collections.singletonList(photo));
@@ -133,12 +133,12 @@ public class AnimalDetailsViewModelTest {
         when(animal.getName()).thenReturn("name");
         when(animal.getSex()).thenReturn(Sex.M);
         when(animal.getSize()).thenReturn(AnimalSize.L);
-        when(animal.getType()).thenReturn(AnimalType.Cat);
-        when(animal.getAge()).thenReturn(Age.Adult);
+        when(animal.getType()).thenReturn(AnimalType.CAT);
+        when(animal.getAge()).thenReturn(Age.ADULT);
         when(animal.getDescription()).thenReturn("");
         when(animal.getMedia()).thenReturn(media);
         when(animal.getBreedList()).thenReturn(Arrays.asList("breed1", "breed2"));
-        when(animal.getOptions()).thenReturn(Arrays.asList(Option.altered, Option.houseBroken));
+        when(animal.getOptions()).thenReturn(Arrays.asList(Option.ALTERED, Option.HOUSE_BROKEN));
         when(animal.getDescription()).thenReturn("description");
 
         AnimalDetailsUseCase useCase = mock(AnimalDetailsUseCase.class);
@@ -151,6 +151,7 @@ public class AnimalDetailsViewModelTest {
         when(resourceProvider.getString(R.string.cat)).thenReturn("Cat");
         when(resourceProvider.getString(R.string.altered)).thenReturn("Altered");
         when(resourceProvider.getString(R.string.house_broken)).thenReturn("House Broken");
+        when(resourceProvider.getString(Age.ADULT.getName())).thenReturn("Adult");
         subject = new AnimalDetailsViewModel(dataStore, viewPagerAdapter, resourceProvider);
     }
 }
