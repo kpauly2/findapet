@@ -13,7 +13,7 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".shared.MainTabActivity"
+            android:name=".shared.MainActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
@@ -24,6 +24,6 @@
         <activity
             android:name=".discover.AnimalDetailsActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".shared.MainTabActivity"/>
+            android:parentActivityName=".shared.MainActivity"/>
     </application>
 </manifest>

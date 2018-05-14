@@ -5,7 +5,7 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.dependencyinjection.EspressoPetApplication;
-import tech.pauly.findapet.shared.MainTabActivity;
+import tech.pauly.findapet.shared.MainActivity;
 import tech.pauly.findapet.utils.MockWebServerRule;
 import tech.pauly.findapet.utils.RobotUtils;
 
@@ -15,10 +15,10 @@ public interface DiscoverFragmentRobot {
 
     class Hands {
 
-        private IntentsTestRule<MainTabActivity> intentsTestRule;
+        private IntentsTestRule<MainActivity> intentsTestRule;
         private EspressoPetApplication context;
 
-        Hands(IntentsTestRule<MainTabActivity> intentsTestRule, EspressoPetApplication context) {
+        Hands(IntentsTestRule<MainActivity> intentsTestRule, EspressoPetApplication context) {
             this.intentsTestRule = intentsTestRule;
             this.context = context;
         }
@@ -28,7 +28,7 @@ public interface DiscoverFragmentRobot {
         }
 
         void launchScreen() {
-            intentsTestRule.launchActivity(new Intent(context, MainTabActivity.class));
+            intentsTestRule.launchActivity(new Intent(context, MainActivity.class));
         }
 
         void clickCatTab() {

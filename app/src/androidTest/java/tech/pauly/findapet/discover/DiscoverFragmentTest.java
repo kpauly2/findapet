@@ -12,13 +12,13 @@ import org.junit.Test;
 import javax.inject.Inject;
 
 import tech.pauly.findapet.shared.BaseEspressoTest;
-import tech.pauly.findapet.shared.MainTabActivity;
+import tech.pauly.findapet.shared.MainActivity;
 import tech.pauly.findapet.utils.MockWebServerRule;
 
 public class DiscoverFragmentTest extends BaseEspressoTest {
 
     @Rule
-    public IntentsTestRule<MainTabActivity> intentsTestRule = new IntentsTestRule<>(MainTabActivity.class, false, false);
+    public IntentsTestRule<MainActivity> intentsTestRule = new IntentsTestRule<>(MainActivity.class, false, false);
 
     @Rule
     public MockWebServerRule serverRule = new MockWebServerRule();

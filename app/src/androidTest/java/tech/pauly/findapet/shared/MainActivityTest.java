@@ -8,10 +8,10 @@ import org.junit.Test;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.utils.RobotUtils;
 
-public class MainTabActivityTest {
+public class MainActivityTest {
 
     @Rule
-    public ActivityTestRule<MainTabActivity> activityRule = new ActivityTestRule<>(MainTabActivity.class);
+    public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
     public void onLaunch_showDiscover() {

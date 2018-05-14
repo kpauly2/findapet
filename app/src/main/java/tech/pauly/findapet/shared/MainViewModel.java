@@ -11,7 +11,7 @@ import tech.pauly.findapet.discover.DiscoverFragment;
 import tech.pauly.findapet.favorites.FavoritesFragment;
 import tech.pauly.findapet.shelters.SheltersFragment;
 
-public class MainTabViewModel extends BaseViewModel {
+public class MainViewModel extends BaseViewModel {
 
     public ObservableInt defaultSelectedItem = new ObservableInt(R.id.navigation_discover);
     public BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = getOnNavigationItemSelectedListener();
@@ -19,7 +19,7 @@ public class MainTabViewModel extends BaseViewModel {
     private ViewEventBus eventBus;
 
     @Inject
-    public MainTabViewModel(ViewEventBus eventBus) {
+    public MainViewModel(ViewEventBus eventBus) {
         this.eventBus = eventBus;
     }
 

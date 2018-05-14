@@ -17,17 +17,17 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MainTabViewModelTest {
+public class MainViewModelTest {
 
     @Mock
     private ViewEventBus eventBus;
 
-    private MainTabViewModel subject;
+    private MainViewModel subject;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        subject = new MainTabViewModel(eventBus);
+        subject = new MainViewModel(eventBus);
     }
 
     @Test
