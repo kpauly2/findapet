@@ -19,32 +19,27 @@ public class MainActivityTest {
     }
 
     @Test
-    public void onClickDiscover_seeOnlyDiscover() {
-        RobotUtils.clickView(R.id.navigation_discover);
+    public void onClickMenu_seesNavigationPanel() {
 
-        RobotUtils.seesView(R.id.fragment_discover);
-        RobotUtils.doesNotSeeView(R.id.fragment_shelters);
-        RobotUtils.doesNotSeeView(R.id.fragment_favorites);
-        RobotUtils.doesNotSeeView(R.id.fragment_settings);
     }
 
     @Test
-    public void onClickShelters_seeOnlyShelters() {
-        RobotUtils.clickView(R.id.navigation_shelters);
+    public void onNavigationPanel_clickShelter_seesShelters() {
 
-        RobotUtils.seesView(R.id.fragment_shelters);
-        RobotUtils.doesNotSeeView(R.id.fragment_discover);
-        RobotUtils.doesNotSeeView(R.id.fragment_favorites);
-        RobotUtils.doesNotSeeView(R.id.fragment_settings);
     }
 
     @Test
-    public void onClickFavorites_seeOnlyFavorites() {
-        RobotUtils.clickView(R.id.navigation_favorites);
+    public void onNavigationPanel_clickFavorites_seesFavorites() {
 
-        RobotUtils.seesView(R.id.fragment_favorites);
-        RobotUtils.doesNotSeeView(R.id.fragment_discover);
-        RobotUtils.doesNotSeeView(R.id.fragment_shelters);
-        RobotUtils.doesNotSeeView(R.id.fragment_settings);
+    }
+
+    @Test
+    public void onNavigationPanel_clickDiscover_showPetTypes() {
+
+    }
+
+    @Test
+    public void onNavigationPanel_clickDiscoverAndDog_seesDogs() {
+
     }
 }

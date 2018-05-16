@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Find a Pet</string>
-    <string name="menu_discover">Discover</string>
+    <string name="empty_string"></string>
+    <string name="menu_discover">Pets</string>
     <string name="menu_shelters">Shelters</string>
     <string name="menu_favorites">Favorites</string>
     <string name="menu_settings">Settings</string>
@@ -52,4 +53,6 @@
     <string name="young">Young</string>
     <string name="adult">Adult</string>
     <string name="senior">Senior</string>
+    <string name="drawer">Navigation Drawer</string>
+    <string name="drawer_content">Navigation drawer content</string>
 </resources>

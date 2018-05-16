@@ -18,9 +18,9 @@ import tech.pauly.findapet.data.models.Option;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
 import tech.pauly.findapet.data.models.Sex;
-import tech.pauly.findapet.shared.AnimalDetailsUseCase;
+import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase;
 import tech.pauly.findapet.shared.ResourceProvider;
-import tech.pauly.findapet.shared.TransientDataStore;
+import tech.pauly.findapet.shared.datastore.TransientDataStore;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

@@ -17,14 +17,14 @@ public enum AnimalType {
     private String serverName;
 
     @StringRes
-    private int tabName;
+    private int toolbarName;
 
     @StringRes
     private int singularName;
 
-    AnimalType(String serverName, @StringRes int tabName, @StringRes int singularName) {
+    AnimalType(String serverName, @StringRes int toolbarName, @StringRes int singularName) {
         this.serverName = serverName;
-        this.tabName = tabName;
+        this.toolbarName = toolbarName;
         this.singularName = singularName;
     }
 
@@ -37,8 +37,8 @@ public enum AnimalType {
         throw new IllegalArgumentException("No matching AnimalType for name " + name);
     }
 
-    public int getTabName() {
-        return tabName;
+    public int getToolbarName() {
+        return toolbarName;
     }
 
     public int getSingularName() {

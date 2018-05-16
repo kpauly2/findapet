@@ -1,4 +1,4 @@
-package tech.pauly.findapet.shared;
+package tech.pauly.findapet.shared.datastore;
 
 import tech.pauly.findapet.data.models.Animal;
 

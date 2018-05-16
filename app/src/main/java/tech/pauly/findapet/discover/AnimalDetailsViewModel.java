@@ -14,10 +14,10 @@ import tech.pauly.findapet.data.models.Media;
 import tech.pauly.findapet.data.models.Option;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
-import tech.pauly.findapet.shared.AnimalDetailsUseCase;
+import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase;
 import tech.pauly.findapet.shared.BaseViewModel;
 import tech.pauly.findapet.shared.ResourceProvider;
-import tech.pauly.findapet.shared.TransientDataStore;
+import tech.pauly.findapet.shared.datastore.TransientDataStore;
 
 public class AnimalDetailsViewModel extends BaseViewModel {
 
