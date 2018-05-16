@@ -23,14 +23,17 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     ViewEventBus eventBus;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivityMainBinding binding = this.binding;
         getLifecycle().addObserver(viewModel);
         binding.setViewModel(viewModel);
+        viewModel.setDrawer(binding.drawerLayout);
 
         setupDrawer();
     }
@@ -46,9 +49,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupDrawer() {
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = binding.drawerLayout;
         ActionBarDrawerToggle drawerToggle;
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

@@ -21,7 +21,7 @@ import tech.pauly.findapet.shared.ViewEventBus;
 public class DiscoverFragment extends BaseFragment {
 
     @Inject
-    DiscoverViewModel discoverViewModel;
+    DiscoverViewModel viewModel;
 
     @Inject
     ViewEventBus eventBus;
@@ -36,8 +36,8 @@ public class DiscoverFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         FragmentDiscoverBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_discover, container, false);
-        binding.setViewModel(discoverViewModel);
-        getLifecycle().addObserver(discoverViewModel);
+        binding.setViewModel(viewModel);
+        getLifecycle().addObserver(viewModel);
         return binding.getRoot();
     }
 

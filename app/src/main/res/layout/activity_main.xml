@@ -74,74 +74,87 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/standard_margin"
-                        android:layout_marginTop="@dimen/standard_margin"
+                        android:layout_marginTop="@dimen/large_margin"
                         android:text="@string/app_name"
                         android:textAppearance="@style/FontLargeHeader"
                         android:textColor="@color/textStandard"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <View
-                        android:id="@+id/discover_container"
+                    <RadioGroup
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="@dimen/standard_margin"
-                        app:layout_constraintTop_toBottomOf="@id/navigation_title"/>
-
-                    <ImageView
-                        android:id="@+id/discover_icon"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/discover_container"
-                        app:layout_constraintBottom_toBottomOf="@id/discover_container"
-                        app:layout_constraintStart_toStartOf="@id/discover_container"
-                        android:src="@drawable/ic_menu_discover"
-                        android:tint="@color/textLight"
-                        android:layout_marginStart="24dp"
-                        android:contentDescription="@string/menu_discover" />
+                        android:layout_marginTop="@dimen/large_margin"
+                        app:layout_constraintTop_toBottomOf="@id/navigation_title"
+                        app:onCheckChanged="@{viewModel::checkChanged}">
 
-                    <TextView
-                        android:id="@+id/discover_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:text="@string/menu_discover"
-                        android:textAppearance="@style/FontStrongBody"
-                        android:textColor="@color/textLight"
-                        app:layout_constraintStart_toEndOf="@id/discover_icon"
-                        app:layout_constraintTop_toTopOf="@id/discover_container"
-                        app:layout_constraintBottom_toBottomOf="@id/discover_container"/>
+                        <ToggleButton
+                            android:id="@+id/discover_button"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_button_background"
+                            android:drawablePadding="@dimen/large_margin"
+                            android:drawableStart="@drawable/ic_menu_discover"
+                            android:drawableTint="@color/nav_bar_button_text"
+                            android:gravity="start|center_vertical"
+                            android:padding="@dimen/standard_margin"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_button_text"
+                            android:textOff="@string/menu_discover"
+                            android:textOn="@string/menu_discover" />
 
-                    <View
-                        android:id="@+id/shelters_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        app:layout_constraintTop_toBottomOf="@id/discover_container"/>
+                        <ToggleButton
+                            android:id="@+id/shelters_button"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_button_background"
+                            android:drawablePadding="@dimen/large_margin"
+                            android:drawableStart="@drawable/ic_menu_shelters"
+                            android:drawableTint="@color/nav_bar_button_text"
+                            android:gravity="start|center_vertical"
+                            android:padding="@dimen/standard_margin"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_button_text"
+                            android:textOff="@string/menu_shelters"
+                            android:textOn="@string/menu_shelters"
+                            app:layout_constraintTop_toBottomOf="@id/discover_button" />
 
-                    <ImageView
-                        android:id="@+id/shelters_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/shelters_container"
-                        app:layout_constraintBottom_toBottomOf="@id/shelters_container"
-                        app:layout_constraintStart_toStartOf="@id/shelters_container"
-                        android:src="@drawable/ic_menu_shelters"
-                        android:tint="@color/textLight"
-                        android:layout_marginStart="24dp"
-                        android:contentDescription="@string/menu_shelters" />
+                        <ToggleButton
+                            android:id="@+id/favorites_button"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_button_background"
+                            android:drawablePadding="@dimen/large_margin"
+                            android:drawableStart="@drawable/ic_menu_favorites"
+                            android:drawableTint="@color/nav_bar_button_text"
+                            android:gravity="start|center_vertical"
+                            android:padding="@dimen/standard_margin"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_button_text"
+                            android:textOff="@string/menu_favorites"
+                            android:textOn="@string/menu_favorites"
+                            app:layout_constraintTop_toBottomOf="@id/shelters_button" />
 
-                    <TextView
-                        android:id="@+id/shelters_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:text="@string/menu_shelters"
-                        android:textAppearance="@style/FontStrongBody"
-                        android:textColor="@color/textLight"
-                        app:layout_constraintStart_toEndOf="@id/shelters_icon"
-                        app:layout_constraintTop_toTopOf="@id/shelters_container"
-                        app:layout_constraintBottom_toBottomOf="@id/shelters_container"/>
-
+                        <ToggleButton
+                            android:id="@+id/settings_button"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_button_background"
+                            android:drawablePadding="@dimen/large_margin"
+                            android:drawableStart="@drawable/ic_menu_settings"
+                            android:drawableTint="@color/nav_bar_button_text"
+                            android:gravity="start|center_vertical"
+                            android:padding="@dimen/standard_margin"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_button_text"
+                            android:textOff="@string/menu_settings"
+                            android:textOn="@string/menu_settings"
+                            app:layout_constraintTop_toBottomOf="@id/favorites_button" />
+                    </RadioGroup>
                 </android.support.constraint.ConstraintLayout>
             </ScrollView>
         </android.support.design.widget.NavigationView>
