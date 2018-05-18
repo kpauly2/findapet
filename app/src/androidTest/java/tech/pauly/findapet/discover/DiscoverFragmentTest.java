@@ -46,27 +46,16 @@ public class DiscoverFragmentTest extends BaseEspressoTest {
 
     @Test
     public void onLaunch_seesAnimalsFetchedFromNetwork() {
-        dependencies.setupDogResponse();
-
-        hands.launchScreen();
-
-        eyes.seesDogs();
-    }
-
-    @Test
-    public void clickAnotherTab_seesNewAnimalList() {
-        dependencies.setupDogResponse();
-
-        hands.launchScreen();
         dependencies.setupCatResponse();
-        hands.clickCatTab();
+
+        hands.launchScreen();
 
         eyes.seesCats();
     }
 
     @Test
     public void clickAnimal_launchAnimalDetails() {
-        dependencies.setupDogResponse();
+        dependencies.setupCatResponse();
         hands.launchScreen();
 
         hands.clickDog();

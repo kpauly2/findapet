@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.ToggleButton;
@@ -99,30 +100,6 @@ public class BindingAdapters {
         };
         viewPager.addOnPageChangeListener(pageChangeListener);
         viewPager.post(() -> pageChangeListener.onPageSelected(0));
-    }
-
-    @BindingAdapter("onCheckChanged")
-    public static void setupRadioGroup(RadioGroup radioGroup, RadioGroupCheckChangedListener listener) {
-        RadioGroup.OnCheckedChangeListener checkedChangeListener = (group, checkedId) -> {
-            for (int j = 0; j < radioGroup.getChildCount(); j++) {
-                ToggleButton view = (ToggleButton) radioGroup.getChildAt(j);
-                if (view.getId() == checkedId && !view.isChecked()) {
-                    view.setChecked(true);
-                } else {
-                    view.setChecked(false);
-                }
-            }
-            listener.checkChanged(checkedId);
-        };
-        for (int j = 0; j < radioGroup.getChildCount(); j++) {
-            View view = radioGroup.getChildAt(j);
-            view.setOnClickListener(v -> {
-                radioGroup.clearCheck();
-                radioGroup.check(view.getId());
-            });
-        }
-        radioGroup.setOnCheckedChangeListener(checkedChangeListener);
-        radioGroup.check(radioGroup.getChildAt(0).getId());
     }
 
     @FunctionalInterface

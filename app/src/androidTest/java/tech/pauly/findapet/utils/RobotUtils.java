@@ -3,11 +3,15 @@ package tech.pauly.findapet.utils;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.core.internal.deps.guava.io.ByteStreams;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.espresso.matcher.BoundedMatcher;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -15,19 +19,26 @@ import org.simpleframework.xml.core.Persister;
 import java.io.IOException;
 import java.io.InputStream;
 
+import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.models.Animal;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.DrawerMatchers.isClosed;
+import static android.support.test.espresso.contrib.DrawerMatchers.isOpen;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.StringContains.containsString;
 
@@ -68,6 +79,27 @@ public class RobotUtils {
         intended(hasComponent(activityClass.getName()));
     }
 
+    public static void seesNavigationPanelClosed() {
+        onView(withId(R.id.drawer_layout))
+                .check(matches(isClosed(Gravity.START)));
+    }
+
+    public static void seesNavigationPanelOpen() {
+        onView(withId(R.id.drawer_layout))
+                .check(matches(isOpen()));
+    }
+
+    public static void seesButtonChecked(@IdRes int view, boolean checked) {
+        Matcher<View> checkMatcher = checked ? isChecked() : isNotChecked();
+        onView(withId(view))
+                .check(matches(checkMatcher));
+    }
+
+    public static void seesToolbarWithTitle(String title) {
+        onView(isAssignableFrom(Toolbar.class))
+                .check(matches(withToolbarTitle(is(title))));
+    }
+
     //endregion
 
     //region Hands
@@ -93,7 +125,27 @@ public class RobotUtils {
         onView(childViewMatcher).perform(click());
     }
 
+    public static void clickMenu() {
+        onView(withId(R.id.drawer_layout))
+                .perform(DrawerActions.open());
+    }
+
     //endregion
+
+    public static Matcher<View> withToolbarTitle(Matcher<CharSequence> titleMatcher) {
+        return new BoundedMatcher<View, Toolbar>(Toolbar.class) {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with toolbar title: ");
+                titleMatcher.describeTo(description);
+            }
+
+            @Override
+            protected boolean matchesSafely(Toolbar toolbar) {
+                return titleMatcher.matches(toolbar.getTitle());
+            }
+        };
+    }
 
     public static <T> T parseResource(Object sourceObject, String responseFilename, Class<T> clazz) {
         Serializer ser = new Persister();

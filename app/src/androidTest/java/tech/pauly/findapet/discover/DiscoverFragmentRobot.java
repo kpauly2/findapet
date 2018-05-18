@@ -24,15 +24,11 @@ public interface DiscoverFragmentRobot {
         }
 
         public void clickDog() {
-            RobotUtils.clickChildVieWithText(R.id.animal_item_card, "Bubba");
+            RobotUtils.clickChildVieWithText(R.id.animal_item_card, "Gretzky");
         }
 
         void launchScreen() {
             intentsTestRule.launchActivity(new Intent(context, MainActivity.class));
-        }
-
-        void clickCatTab() {
-            RobotUtils.clickChildVieWithText(R.id.discover_tabs, R.string.tab_cat);
         }
     }
     
@@ -48,11 +44,6 @@ public interface DiscoverFragmentRobot {
             RobotUtils.seesLaunchedActivity(AnimalDetailsActivity.class);
         }
 
-        void seesDogs() {
-            String expectedAgeBreedText = String.format(context.getResources().getString(R.string.age_breed), "Adult", "Australian Shepherd / Catahoula Leopard Dog");
-            RobotUtils.seesRecyclerViewWithItemWithTexts(R.id.animal_list_recycler_view, R.id.animal_item_card, "Earl", expectedAgeBreedText, "5 mi away");
-        }
-
         void seesCats() {
             String expectedAgeBreedText = String.format(context.getResources().getString(R.string.age_breed), "Adult", "Domestic Short Hair / Tabby");
             RobotUtils.seesRecyclerViewWithItemWithTexts(R.id.animal_list_recycler_view, R.id.animal_item_card, "Saber", expectedAgeBreedText, "5 mi away");
@@ -65,10 +56,6 @@ public interface DiscoverFragmentRobot {
 
         Dependencies(MockWebServerRule serverRule) {
             this.serverRule = serverRule;
-        }
-
-        void setupDogResponse() {
-            serverRule.getDispatcher().mockCall(FETCH_ANIMALS, "animal_list_response_dogs");
         }
 
         void setupCatResponse() {

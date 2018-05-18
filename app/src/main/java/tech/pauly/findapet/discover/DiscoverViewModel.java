@@ -14,6 +14,7 @@ import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.shared.BaseViewModel;
+import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 
@@ -37,19 +38,19 @@ public class DiscoverViewModel extends BaseViewModel {
         this.animalListItemFactory = animalListItemFactory;
         this.animalRepository = animalRepository;
         this.dataStore = dataStore;
+
+        DiscoverAnimalTypeUseCase useCase = dataStore.get(DiscoverAnimalTypeUseCase.class);
+        if (useCase != null) {
+            animalType = useCase.getAnimalType();
+        }
     }
 
     public AnimalListAdapter getListAdapter() {
         return listAdapter;
     }
 
-    public void reloadWithNewAnimalType(AnimalType animalType) {
-        this.animalType = animalType;
-        reloadList();
-    }
-
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    public void reloadList() {
+    public void loadList() {
         lastOffset = 0;
         dataStore.save(new DiscoverToolbarTitleUseCase(animalType.getToolbarName()));
         fetchAnimals();

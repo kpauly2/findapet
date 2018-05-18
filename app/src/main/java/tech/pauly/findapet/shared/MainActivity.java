@@ -3,7 +3,6 @@ package tech.pauly.findapet.shared;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,6 +22,7 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     ViewEventBus eventBus;
+
     private ActivityMainBinding binding;
 
     @Override
@@ -33,9 +33,15 @@ public class MainActivity extends BaseActivity {
         ActivityMainBinding binding = this.binding;
         getLifecycle().addObserver(viewModel);
         binding.setViewModel(viewModel);
-        viewModel.setDrawer(binding.drawerLayout);
 
         setupDrawer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        subscribeToDrawerChange();
+        subscribeToExpandingLayoutChange();
     }
 
     @Nullable
@@ -46,6 +52,22 @@ public class MainActivity extends BaseActivity {
         viewEvents.add(eventBus.fragment(MainViewModel.class).subscribe(this::fragmentEvent));
 
         return viewEvents;
+    }
+
+    private void subscribeToDrawerChange() {
+        subscribeOnLifecycle(viewModel.getDrawerSubject()
+                                      .subscribe(bool -> binding.drawerLayout.closeDrawers(),
+                                                 Throwable::printStackTrace));
+    }
+
+    private void subscribeToExpandingLayoutChange() {
+        subscribeOnLifecycle(viewModel.getExpandingLayoutSubject().subscribe(event -> {
+            if (event == MainViewModel.ExpandingLayoutEvent.TOGGLE) {
+                binding.expandingLayout.tapToggle();
+            } else {
+                binding.expandingLayout.collapse();
+            }
+        }, Throwable::printStackTrace));
     }
 
     private void setupDrawer() {

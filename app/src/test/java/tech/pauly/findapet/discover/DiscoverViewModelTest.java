@@ -14,6 +14,7 @@ import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
+import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 
@@ -48,42 +49,38 @@ public class DiscoverViewModelTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         when(animalRepository.fetchAnimals(any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
+        DiscoverAnimalTypeUseCase useCase = mock(DiscoverAnimalTypeUseCase.class);
+        when(useCase.getAnimalType()).thenReturn(AnimalType.CAT);
+        when(dataStore.get(DiscoverAnimalTypeUseCase.class)).thenReturn(useCase);
         subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore);
     }
 
     @Test
-    public void reloadWithNewAnimalType_setsAnimalTypeAndResetsOffsetAndFetchesAnimals() {
-        Animal animal = mock(Animal.class);
-        when(animalListResponse.getLastOffset()).thenReturn(10);
-        when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
-        subject.reloadWithNewAnimalType(AnimalType.CAT);
+    public void onCreate_usesAnimalTypeFromDataStore() {
+        subject.loadList();
+
+        verify(dataStore).save(new DiscoverToolbarTitleUseCase(AnimalType.CAT.getToolbarName()));
         verify(animalRepository).fetchAnimals(AnimalType.CAT, 0);
-        clearInvocations(animalRepository);
-
-        subject.reloadWithNewAnimalType(AnimalType.DOG);
-
-        verify(dataStore).save(new DiscoverToolbarTitleUseCase(AnimalType.DOG.getToolbarName()));
-        verify(animalRepository).fetchAnimals(AnimalType.DOG, 0);
     }
 
     @Test
-    public void reloadList_fetchAnimalsOnNext_sendAnimalListToAdapter() {
+    public void loadList_fetchAnimalsOnNext_sendAnimalListToAdapter() {
         Animal animal = mock(Animal.class);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
         ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
 
-        subject.reloadList();
+        subject.loadList();
 
         verify(listAdapter).setAnimalItems(argumentCaptor.capture());
         verify(animalListItemFactory).newInstance(animal);
     }
 
     @Test
-    public void reloadList_fetchAnimalsOnNextAndAnimalListNull_setsEmptyList() {
+    public void loadList_fetchAnimalsOnNextAndAnimalListNull_setsEmptyList() {
         when(animalListResponse.getAnimalList()).thenReturn(null);
         ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
 
-        subject.reloadList();
+        subject.loadList();
 
         verify(listAdapter).setAnimalItems(argumentCaptor.capture());
         assertThat(argumentCaptor.getValue().size()).isEqualTo(0);
@@ -94,7 +91,7 @@ public class DiscoverViewModelTest {
         Animal animal = mock(Animal.class);
         when(animalListResponse.getLastOffset()).thenReturn(10);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
-        subject.reloadList();
+        subject.loadList();
         verify(animalRepository).fetchAnimals(AnimalType.CAT, 0);
         clearInvocations(animalRepository);
 

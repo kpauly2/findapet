@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -23,6 +24,13 @@ public class BaseActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    public void fragmentEvent(FragmentEvent event) {
+        Fragment newFragment = Fragment.instantiate(this, event.getFragmentClass().getName());
+        getSupportFragmentManager().beginTransaction()
+                                   .replace(event.getContainerId(), newFragment)
+                                   .commit();
+    }
+
     @Nullable
     protected CompositeDisposable registerViewEvents() {
         return null;
@@ -32,11 +40,8 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(new Intent(this, event.getStartActivityClass()));
     }
 
-    public void fragmentEvent(FragmentEvent event) {
-        Fragment newFragment = Fragment.instantiate(this, event.getFragmentClass().getName());
-        getSupportFragmentManager().beginTransaction()
-                                   .replace(event.getContainerId(), newFragment)
-                                   .commit();
+    protected void subscribeOnLifecycle(Disposable subscription) {
+        lifecycleSubscriptions.add(subscription);
     }
 
     private void subscribeToEventBus() {
