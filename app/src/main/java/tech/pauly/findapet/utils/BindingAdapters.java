@@ -99,6 +99,11 @@ public class BindingAdapters {
         viewPager.post(() -> pageChangeListener.onPageSelected(0));
     }
 
+    @BindingAdapter("offscreenPageLimit")
+    public static void offscreenPageLimit(ViewPager viewPager, int limit) {
+        viewPager.setOffscreenPageLimit(limit);
+    }
+
     @FunctionalInterface
     public interface ViewPagerPageChangeListener {
         void onPageSelected(int position);

@@ -2,11 +2,13 @@ package tech.pauly.findapet.discover;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.models.Age;
@@ -18,12 +20,13 @@ import tech.pauly.findapet.data.models.Option;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
 import tech.pauly.findapet.data.models.Sex;
-import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase;
 import tech.pauly.findapet.shared.ResourceProvider;
+import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class AnimalDetailsViewModelTest {
@@ -33,6 +36,9 @@ public class AnimalDetailsViewModelTest {
 
     @Mock
     private AnimalDetailsViewPagerAdapter viewPagerAdapter;
+
+    @Mock
+    private AnimalImagesPagerAdapter imagesPagerAdapter;
 
     @Mock
     private ResourceProvider resourceProvider;
@@ -59,7 +65,6 @@ public class AnimalDetailsViewModelTest {
         createSubjectWithUseCase(null);
 
         assertThat(subject.name.get()).isEqualTo("");
-        assertThat(subject.imageUrl.get()).isEqualTo("");
         assertThat(subject.ageType.get()).isEqualTo("");
         assertThat(subject.breeds.get()).isEqualTo("");
         assertThat(subject.sex.get()).isEqualTo(R.string.missing);
@@ -89,10 +94,14 @@ public class AnimalDetailsViewModelTest {
     }
 
     @Test
-    public void onCreate_animalPhotoPresent_setImageUrl() {
+    public void onCreate_animalPhotoPresent_addsOnlyLargeImagesToPagerAdapter() {
         createSubjectWithUseCase(setupFullAnimalUseCase());
+        ArgumentCaptor<List<AnimalImageViewModel>> imageViewModelsCaptor = ArgumentCaptor.forClass(List.class);
 
-        assertThat(subject.imageUrl.get()).isEqualTo("http://url.com");
+        verify(imagesPagerAdapter).setAnimalImages(imageViewModelsCaptor.capture());
+        List<AnimalImageViewModel> savedImageList = imageViewModelsCaptor.getValue();
+        assertThat(savedImageList).hasSize(1);
+        assertThat(savedImageList.get(0).imageUrl.get()).isEqualTo("http://url.com");
     }
 
 
@@ -126,8 +135,12 @@ public class AnimalDetailsViewModelTest {
         when(photo.getUrl()).thenReturn("http://url.com");
         when(photo.getSize()).thenReturn(PhotoSize.LARGE);
 
+        Photo photo2 = mock(Photo.class);
+        when(photo.getUrl()).thenReturn("http://url2.com");
+        when(photo.getSize()).thenReturn(PhotoSize.PET_NOTE_THUMBNAIL);
+
         Media media = mock(Media.class);
-        when(media.getPhotoList()).thenReturn(Collections.singletonList(photo));
+        when(media.getPhotoList()).thenReturn(Arrays.asList(photo, photo2));
 
         Animal animal = mock(Animal.class);
         when(animal.getName()).thenReturn("name");
@@ -152,6 +165,6 @@ public class AnimalDetailsViewModelTest {
         when(resourceProvider.getString(R.string.altered)).thenReturn("Altered");
         when(resourceProvider.getString(R.string.house_broken)).thenReturn("House Broken");
         when(resourceProvider.getString(Age.ADULT.getName())).thenReturn("Adult");
-        subject = new AnimalDetailsViewModel(dataStore, viewPagerAdapter, resourceProvider);
+        subject = new AnimalDetailsViewModel(dataStore, viewPagerAdapter, resourceProvider, imagesPagerAdapter);
     }
 }

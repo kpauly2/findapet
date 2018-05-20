@@ -58,10 +58,10 @@ public class AnimalListItemViewModel extends BaseViewModel {
     private void setPhoto(Media media) {
         if (media != null && media.getPhotoList() != null && !media.getPhotoList().isEmpty()) {
             Photo finalPhoto = null;
-            // TODO: Fallback sizes: https://www.pivotaltracker.com/story/show/157261497
             for (Photo photo : media.getPhotoList()) {
                 if (photo.getSize() == PhotoSize.LARGE) {
                     finalPhoto = photo;
+                    break;
                 }
             }
             if (finalPhoto != null) {
