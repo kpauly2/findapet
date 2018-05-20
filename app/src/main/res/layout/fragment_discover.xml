@@ -7,9 +7,11 @@
         <variable
             name="viewModel"
             type="tech.pauly.findapet.discover.DiscoverViewModel" />
+
+        <import type="tech.pauly.findapet.R" />
     </data>
 
-    <FrameLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/fragment_discover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,15 +19,17 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:elevation="0dp"
-        android:paddingTop="@dimen/standard_margin">
+        android:paddingTop="@dimen/standard_margin"
+        app:refreshing="@{viewModel.refreshing}"
+        app:swipeRefreshListener="@{viewModel::loadList}">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/animal_list_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:adapter="@{viewModel.listAdapter}"
-            app:recyclerViewGridSpan="@{viewModel.columnCount}"
-            app:loadMoreListener="@{viewModel::loadMoreAnimals}"/>
+            app:loadMoreListener="@{viewModel::loadMoreAnimals}"
+            app:recyclerViewGridSpan="@{viewModel.columnCount}" />
 
-    </FrameLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

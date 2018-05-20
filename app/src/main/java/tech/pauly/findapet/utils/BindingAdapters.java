@@ -1,11 +1,13 @@
 package tech.pauly.findapet.utils;
 
+import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.net.Uri;
 import android.support.annotation.IdRes;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -114,6 +116,17 @@ public class BindingAdapters {
         layout.setCurrentItem(position);
     }
 
+    @BindingAdapter("swipeRefreshListener")
+    public static void setupSwipeRefreshLayout(SwipeRefreshLayout layout, SwipeRefreshListener listener) {
+        layout.setOnRefreshListener(listener::onRefresh);
+        layout.setColorSchemeColors(layout.getResources().getColor(R.color.purpleStandard));
+    }
+
+    @BindingAdapter("refreshing")
+    public static void refreshing(SwipeRefreshLayout layout, boolean refreshing) {
+        layout.setRefreshing(refreshing);
+    }
+
     @FunctionalInterface
     public interface ViewPagerPageChangeListener {
         void onPageSelected(int position);
@@ -122,5 +135,10 @@ public class BindingAdapters {
     @FunctionalInterface
     public interface RecyclerViewLoadMoreDataListener {
         void loadMore();
+    }
+
+    @FunctionalInterface
+    public interface SwipeRefreshListener {
+        void onRefresh();
     }
 }

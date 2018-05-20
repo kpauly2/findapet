@@ -2,6 +2,7 @@ package tech.pauly.findapet.discover;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 
 public class DiscoverViewModel extends BaseViewModel {
+
     public ObservableInt columnCount = new ObservableInt(2);
+    public ObservableBoolean refreshing = new ObservableBoolean(false);
 
     private final AnimalListAdapter listAdapter;
     private final AnimalListItemViewModel.Factory animalListItemFactory;
@@ -51,8 +54,9 @@ public class DiscoverViewModel extends BaseViewModel {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     public void loadList() {
-        lastOffset = 0;
         dataStore.save(new DiscoverToolbarTitleUseCase(animalType.getToolbarName()));
+        listAdapter.clearAnimalItems();
+        lastOffset = 0;
         fetchAnimals();
     }
 
@@ -61,11 +65,13 @@ public class DiscoverViewModel extends BaseViewModel {
     }
 
     private void fetchAnimals() {
+        refreshing.set(true);
         subscribeOnLifecycle(animalRepository.fetchAnimals(animalType, lastOffset)
                                              .subscribe(this::setAnimalList, Throwable::printStackTrace));
     }
 
     private void setAnimalList(AnimalListResponse animalListResponse) {
+        refreshing.set(false);
         List<AnimalListItemViewModel> viewModelList = new ArrayList<>();
         if (animalListResponse.getAnimalList() != null) {
             lastOffset = animalListResponse.getLastOffset();
