@@ -104,6 +104,16 @@ public class BindingAdapters {
         viewPager.setOffscreenPageLimit(limit);
     }
 
+    @BindingAdapter("indicatorCount")
+    public static void indicatorCount(PageIndicatorLayout layout, int count) {
+        layout.setupIndicators(count);
+    }
+
+    @BindingAdapter("indicatorPosition")
+    public static void indicatorPosition(PageIndicatorLayout layout, int position) {
+        layout.setCurrentItem(position);
+    }
+
     @FunctionalInterface
     public interface ViewPagerPageChangeListener {
         void onPageSelected(int position);

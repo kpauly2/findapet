@@ -33,6 +33,8 @@ public class AnimalDetailsViewModel extends BaseViewModel {
     public ObservableBoolean descriptionVisibility = new ObservableBoolean(false);
     public ObservableBoolean optionsVisibility = new ObservableBoolean(false);
     public ObservableInt imagesPageLimit = new ObservableInt(4);
+    public ObservableInt imagesCount = new ObservableInt(0);
+    public ObservableInt currentImagePosition = new ObservableInt(0);
 
     private AnimalDetailsViewPagerAdapter detailsPagerAdapter;
     private AnimalImagesPagerAdapter imagesPagerAdapter;
@@ -69,6 +71,10 @@ public class AnimalDetailsViewModel extends BaseViewModel {
 
     public AnimalImagesPagerAdapter getImagesPagerAdapter() {
         return imagesPagerAdapter;
+    }
+
+    public void imagePageChange(int position) {
+        currentImagePosition.set(position);
     }
 
     private void setDescription(String description) {
@@ -113,6 +119,7 @@ public class AnimalDetailsViewModel extends BaseViewModel {
                     imageViewModels.add(new AnimalImageViewModel(photo));
                 }
             }
+            imagesCount.set(imageViewModels.size());
             imagesPagerAdapter.setAnimalImages(imageViewModels);
         }
     }

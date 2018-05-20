@@ -25,7 +25,9 @@ import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -94,7 +96,7 @@ public class AnimalDetailsViewModelTest {
     }
 
     @Test
-    public void onCreate_animalPhotoPresent_addsOnlyLargeImagesToPagerAdapter() {
+    public void onCreate_animalPhotoPresent_addsImagesToPagerAdapter() {
         createSubjectWithUseCase(setupFullAnimalUseCase());
         ArgumentCaptor<List<AnimalImageViewModel>> imageViewModelsCaptor = ArgumentCaptor.forClass(List.class);
 
@@ -102,8 +104,18 @@ public class AnimalDetailsViewModelTest {
         List<AnimalImageViewModel> savedImageList = imageViewModelsCaptor.getValue();
         assertThat(savedImageList).hasSize(1);
         assertThat(savedImageList.get(0).imageUrl.get()).isEqualTo("http://url.com");
+        assertThat(subject.imagesCount.get()).isEqualTo(1);
     }
 
+    @Test
+    public void onCreate_largeAnimalPhotoNotPresent_addsNoImagesToAdapter() {
+        AnimalDetailsUseCase useCase = setupFullAnimalUseCase();
+        when(useCase.getAnimal().getMedia()).thenReturn(null);
+        createSubjectWithUseCase(useCase);
+
+        verify(imagesPagerAdapter, never()).setAnimalImages(any(List.class));
+        assertThat(subject.imagesCount.get()).isEqualTo(0);
+    }
 
     @Test
     public void onCreate_animalHasMultipleBreeds_setsAllBreeds() {
@@ -130,14 +142,23 @@ public class AnimalDetailsViewModelTest {
         assertThat(subject.options.get()).isEqualTo("Altered\nHouse Broken");
     }
 
+    @Test
+    public void imagePageChange_updateCurrentImagePosition() {
+        createSubjectWithUseCase(setupFullAnimalUseCase());
+
+        subject.imagePageChange(1);
+
+        assertThat(subject.currentImagePosition.get()).isEqualTo(1);
+    }
+
     private AnimalDetailsUseCase setupFullAnimalUseCase() {
         Photo photo = mock(Photo.class);
         when(photo.getUrl()).thenReturn("http://url.com");
         when(photo.getSize()).thenReturn(PhotoSize.LARGE);
 
         Photo photo2 = mock(Photo.class);
-        when(photo.getUrl()).thenReturn("http://url2.com");
-        when(photo.getSize()).thenReturn(PhotoSize.PET_NOTE_THUMBNAIL);
+        when(photo2.getUrl()).thenReturn("http://url2.com");
+        when(photo2.getSize()).thenReturn(PhotoSize.PET_NOTE_THUMBNAIL);
 
         Media media = mock(Media.class);
         when(media.getPhotoList()).thenReturn(Arrays.asList(photo, photo2));

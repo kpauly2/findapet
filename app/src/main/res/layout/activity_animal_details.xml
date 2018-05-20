@@ -45,11 +45,27 @@
                 android:id="@+id/animal_images_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:elevation="4dp"
                 android:background="@color/purpleVeryLight"
+                android:elevation="4dp"
                 app:adapter="@{viewModel.imagesPagerAdapter}"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                app:offscreenPageLimit="@{viewModel.imagesPageLimit}" />
+                app:offscreenPageLimit="@{viewModel.imagesPageLimit}"
+                app:onPageChange="@{viewModel.imagePageChange}" />
+
+            <tech.pauly.findapet.utils.PageIndicatorLayout
+                android:id="@+id/page_indicator"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center|center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/standard_margin"
+                android:elevation="8dp"
+                app:indicatorCount="@{viewModel.imagesCount}"
+                app:indicatorPosition="@{viewModel.currentImagePosition}"
+                app:layout_constraintBottom_toBottomOf="@id/animal_images_view_pager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="asdf" />
 
             <TextView
                 android:id="@+id/animal_name"
@@ -73,7 +89,7 @@
                 android:paddingStart="@dimen/standard_margin"
                 android:text="@{viewModel.breeds}"
                 android:textAppearance="@style/FontHeader"
-                app:layout_constraintBottom_toBottomOf="@+id/animal_images_view_pager"
+                app:layout_constraintBottom_toTopOf="@+id/page_indicator"
                 tools:text="Ragamuffin" />
 
             <tech.pauly.findapet.shared.WrapViewPager
