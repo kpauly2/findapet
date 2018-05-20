@@ -59,7 +59,7 @@ public class AnimalDetailsViewModelTest {
         assertThat(subject.name.get()).isEqualTo("name");
         assertThat(subject.sex.get()).isEqualTo(R.string.male);
         assertThat(subject.size.get()).isEqualTo(R.string.large);
-        assertThat(subject.ageType.get()).isEqualTo("Adult Cat");
+        assertThat(subject.age.get()).isEqualTo(R.string.adult);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class AnimalDetailsViewModelTest {
         createSubjectWithUseCase(null);
 
         assertThat(subject.name.get()).isEqualTo("");
-        assertThat(subject.ageType.get()).isEqualTo("");
+        assertThat(subject.age.get()).isEqualTo(R.string.missing);
         assertThat(subject.breeds.get()).isEqualTo("");
         assertThat(subject.sex.get()).isEqualTo(R.string.missing);
         assertThat(subject.size.get()).isEqualTo(R.string.missing);
@@ -167,7 +167,6 @@ public class AnimalDetailsViewModelTest {
         when(animal.getName()).thenReturn("name");
         when(animal.getSex()).thenReturn(Sex.M);
         when(animal.getSize()).thenReturn(AnimalSize.L);
-        when(animal.getType()).thenReturn(AnimalType.CAT);
         when(animal.getAge()).thenReturn(Age.ADULT);
         when(animal.getDescription()).thenReturn("");
         when(animal.getMedia()).thenReturn(media);
@@ -182,7 +181,6 @@ public class AnimalDetailsViewModelTest {
     }
     private void createSubjectWithUseCase(AnimalDetailsUseCase useCase) {
         when(dataStore.get(AnimalDetailsUseCase.class)).thenReturn(useCase);
-        when(resourceProvider.getString(R.string.cat)).thenReturn("Cat");
         when(resourceProvider.getString(R.string.altered)).thenReturn("Altered");
         when(resourceProvider.getString(R.string.house_broken)).thenReturn("House Broken");
         when(resourceProvider.getString(Age.ADULT.getName())).thenReturn("Adult");

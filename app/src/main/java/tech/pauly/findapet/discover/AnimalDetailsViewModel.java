@@ -24,7 +24,7 @@ public class AnimalDetailsViewModel extends BaseViewModel {
 
     private final ResourceProvider resourceProvider;
     public ObservableField<String> name = new ObservableField<>("");
-    public ObservableField<String> ageType = new ObservableField<>("");
+    public ObservableInt age = new ObservableInt(R.string.missing);
     public ObservableField<String> breeds = new ObservableField<>("");
     public ObservableInt sex = new ObservableInt(R.string.missing);
     public ObservableInt size = new ObservableInt(R.string.missing);
@@ -55,8 +55,7 @@ public class AnimalDetailsViewModel extends BaseViewModel {
             name.set(animal.getName());
             sex.set(animal.getSex().getFormattedName());
             size.set(animal.getSize().getFormattedName());
-            ageType.set(resourceProvider.getString(animal.getAge().getName()) + " "
-                        + resourceProvider.getString(animal.getType().getSingularName()));
+            age.set(animal.getAge().getName());
 
             setPhotos(animal.getMedia());
             setBreeds(animal.getBreedList());
