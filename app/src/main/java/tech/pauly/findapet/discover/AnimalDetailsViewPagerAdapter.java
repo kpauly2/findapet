@@ -3,6 +3,7 @@ package tech.pauly.findapet.discover;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +26,9 @@ public class AnimalDetailsViewPagerAdapter extends PagerAdapter {
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
         switch (position) {
             case 0:
@@ -47,7 +49,7 @@ public class AnimalDetailsViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         switch (position) {
             case 0:
                 ViewAnimalDetailsDetailsBinding detailsBinding = (ViewAnimalDetailsDetailsBinding) object;
@@ -83,7 +85,7 @@ public class AnimalDetailsViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return ((ViewDataBinding) object).getRoot() == view;
     }
 

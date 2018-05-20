@@ -4,6 +4,7 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,8 +24,7 @@ public class AnimalDetailsViewModel extends BaseViewModel {
 
     private final ResourceProvider resourceProvider;
     public ObservableField<String> name = new ObservableField<>("");
-    public ObservableField<String> imageUrl = new ObservableField<>("");
-    public ObservableField<String> ageType = new ObservableField<>("");
+    public ObservableInt age = new ObservableInt(R.string.missing);
     public ObservableField<String> breeds = new ObservableField<>("");
     public ObservableInt sex = new ObservableInt(R.string.missing);
     public ObservableInt size = new ObservableInt(R.string.missing);
@@ -32,34 +32,48 @@ public class AnimalDetailsViewModel extends BaseViewModel {
     public ObservableField<String> description = new ObservableField<>("");
     public ObservableBoolean descriptionVisibility = new ObservableBoolean(false);
     public ObservableBoolean optionsVisibility = new ObservableBoolean(false);
+    public ObservableInt imagesPageLimit = new ObservableInt(4);
+    public ObservableInt imagesCount = new ObservableInt(0);
+    public ObservableInt currentImagePosition = new ObservableInt(0);
 
-    private AnimalDetailsViewPagerAdapter viewPagerAdapter;
+    private AnimalDetailsViewPagerAdapter detailsPagerAdapter;
+    private AnimalImagesPagerAdapter imagesPagerAdapter;
 
     @Inject
     AnimalDetailsViewModel(TransientDataStore dataStore,
                            AnimalDetailsViewPagerAdapter viewPagerAdapter,
-                           ResourceProvider resourceProvider) {
-        this.viewPagerAdapter = viewPagerAdapter;
+                           ResourceProvider resourceProvider,
+                           AnimalImagesPagerAdapter imagesPagerAdapter) {
+        this.detailsPagerAdapter = viewPagerAdapter;
         this.resourceProvider = resourceProvider;
-        this.viewPagerAdapter.setViewModel(this);
+        this.imagesPagerAdapter = imagesPagerAdapter;
+        this.detailsPagerAdapter.setViewModel(this);
+
         AnimalDetailsUseCase useCase = dataStore.get(AnimalDetailsUseCase.class);
         if (useCase != null) {
             Animal animal = useCase.getAnimal();
             name.set(animal.getName());
             sex.set(animal.getSex().getFormattedName());
             size.set(animal.getSize().getFormattedName());
-            ageType.set(resourceProvider.getString(animal.getAge().getName()) + " "
-                        + resourceProvider.getString(animal.getType().getSingularName()));
+            age.set(animal.getAge().getName());
 
-            setPhoto(animal.getMedia());
+            setPhotos(animal.getMedia());
             setBreeds(animal.getBreedList());
             setOptions(animal.getOptions());
             setDescription(animal.getDescription());
         }
     }
 
-    public AnimalDetailsViewPagerAdapter getViewPagerAdapter() {
-        return viewPagerAdapter;
+    public AnimalDetailsViewPagerAdapter getDetailsPagerAdapter() {
+        return detailsPagerAdapter;
+    }
+
+    public AnimalImagesPagerAdapter getImagesPagerAdapter() {
+        return imagesPagerAdapter;
+    }
+
+    public void imagePageChange(int position) {
+        currentImagePosition.set(position);
     }
 
     private void setDescription(String description) {
@@ -96,18 +110,16 @@ public class AnimalDetailsViewModel extends BaseViewModel {
         this.breeds.set(breedString.toString());
     }
 
-    private void setPhoto(Media media) {
+    private void setPhotos(Media media) {
         if (media != null && media.getPhotoList() != null && !media.getPhotoList().isEmpty()) {
-            Photo finalPhoto = null;
-            // TODO: Fallback sizes: https://www.pivotaltracker.com/story/show/157261497
+            List<AnimalImageViewModel> imageViewModels = new ArrayList<>();
             for (Photo photo : media.getPhotoList()) {
                 if (photo.getSize() == PhotoSize.LARGE) {
-                    finalPhoto = photo;
+                    imageViewModels.add(new AnimalImageViewModel(photo));
                 }
             }
-            if (finalPhoto != null) {
-                imageUrl.set(finalPhoto.getUrl());
-            }
+            imagesCount.set(imageViewModels.size());
+            imagesPagerAdapter.setAnimalImages(imageViewModels);
         }
     }
 }
