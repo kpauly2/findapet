@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="tech.pauly.findapet.shared.MainViewModel" />
+
+        <import type="tech.pauly.findapet.data.models.AnimalType" />
+    </data>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="8dp">
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/collapsing_toolbar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:layout_scrollFlags="snap|scroll|enterAlways|enterAlwaysCollapsed"
+                    app:titleEnabled="false">
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:theme="@style/ToolbarTheme"
+                        app:layout_collapseMode="pin"
+                        app:title="@{viewModel.toolbarTitle}"
+                        app:titleTextAppearance="@style/FontStrongHeader"
+                        app:titleTextColor="@android:color/white" />
+                </android.support.design.widget.CollapsingToolbarLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <FrameLayout
+                android:id="@+id/fragment_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="0dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/navigation_view"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@android:color/white">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/navigation_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/standard_margin"
+                        android:layout_marginTop="@dimen/large_margin"
+                        android:text="@string/app_name"
+                        android:textAppearance="@style/FontLargeHeader"
+                        android:textColor="@color/textStandard"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ToggleButton
+                        android:id="@+id/button_discover"
+                        style="@style/NavMenuButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/large_margin"
+                        android:background="@drawable/nav_bar_dropdown_button_background"
+                        android:drawableEnd="@drawable/selector_drop_down"
+                        android:drawablePadding="@dimen/large_margin"
+                        android:drawableStart="@drawable/ic_menu_discover"
+                        android:drawableTint="@color/textLight"
+                        android:gravity="start|center_vertical"
+                        android:onClick="@{viewModel::clickDiscover}"
+                        android:padding="@dimen/standard_margin"
+                        android:textAllCaps="false"
+                        android:textColor="@color/textLight"
+                        android:textOff="@string/menu_discover"
+                        android:textOn="@string/menu_discover"
+                        app:layout_constraintTop_toBottomOf="@id/navigation_title" />
+
+                    <tech.pauly.findapet.utils.ExpandingLayout
+                        android:id="@+id/expanding_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/purpleVeryLight"
+                        android:orientation="vertical"
+                        app:duration="350"
+                        app:layout_constraintTop_toBottomOf="@id/button_discover">
+
+                        <Button
+                            android:id="@+id/button_dog"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_deep_button_background"
+                            android:enabled="@{viewModel.currentAnimalType != AnimalType.DOG}"
+                            android:gravity="start|center_vertical"
+                            android:onClick="@{() -> viewModel.clickAnimalType(AnimalType.DOG)}"
+                            android:paddingEnd="@dimen/standard_margin"
+                            android:paddingStart="64dp"
+                            android:text="@string/tab_dog"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_deep_button_text" />
+
+                        <Button
+                            android:id="@+id/button_cat"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_deep_button_background"
+                            android:enabled="@{viewModel.currentAnimalType != AnimalType.CAT}"
+                            android:gravity="start|center_vertical"
+                            android:onClick="@{() -> viewModel.clickAnimalType(AnimalType.CAT)}"
+                            android:paddingEnd="@dimen/standard_margin"
+                            android:paddingStart="64dp"
+                            android:text="@string/tab_cat"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_deep_button_text" />
+
+                        <Button
+                            android:id="@+id/button_smallfurry"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_deep_button_background"
+                            android:enabled="@{viewModel.currentAnimalType != AnimalType.SMALLFURRY}"
+                            android:gravity="start|center_vertical"
+                            android:onClick="@{() -> viewModel.clickAnimalType(AnimalType.SMALLFURRY)}"
+                            android:paddingEnd="@dimen/standard_margin"
+                            android:paddingStart="64dp"
+                            android:text="@string/tab_smallfurry"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_deep_button_text" />
+
+                        <Button
+                            android:id="@+id/button_barnyard"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_deep_button_background"
+                            android:enabled="@{viewModel.currentAnimalType != AnimalType.BARNYARD}"
+                            android:gravity="start|center_vertical"
+                            android:onClick="@{() -> viewModel.clickAnimalType(AnimalType.BARNYARD)}"
+                            android:paddingEnd="@dimen/standard_margin"
+                            android:paddingStart="64dp"
+                            android:text="@string/tab_barnyard"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_deep_button_text" />
+
+                        <Button
+                            android:id="@+id/button_bird"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_deep_button_background"
+                            android:enabled="@{viewModel.currentAnimalType != AnimalType.BIRD}"
+                            android:gravity="start|center_vertical"
+                            android:onClick="@{() -> viewModel.clickAnimalType(AnimalType.BIRD)}"
+                            android:paddingEnd="@dimen/standard_margin"
+                            android:paddingStart="64dp"
+                            android:text="@string/tab_bird"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_deep_button_text" />
+
+                        <Button
+                            android:id="@+id/button_horse"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_deep_button_background"
+                            android:enabled="@{viewModel.currentAnimalType != AnimalType.HORSE}"
+                            android:gravity="start|center_vertical"
+                            android:onClick="@{() -> viewModel.clickAnimalType(AnimalType.HORSE)}"
+                            android:paddingEnd="@dimen/standard_margin"
+                            android:paddingStart="64dp"
+                            android:text="@string/tab_horse"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_deep_button_text" />
+
+                        <Button
+                            android:id="@+id/button_rabbit"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_deep_button_background"
+                            android:enabled="@{viewModel.currentAnimalType != AnimalType.RABBIT}"
+                            android:gravity="start|center_vertical"
+                            android:onClick="@{() -> viewModel.clickAnimalType(AnimalType.RABBIT)}"
+                            android:paddingEnd="@dimen/standard_margin"
+                            android:paddingStart="64dp"
+                            android:text="@string/tab_rabbit"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_deep_button_text" />
+
+                        <Button
+                            android:id="@+id/button_reptile"
+                            style="@style/NavMenuButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/nav_bar_deep_button_background"
+                            android:enabled="@{viewModel.currentAnimalType != AnimalType.REPTILE}"
+                            android:gravity="start|center_vertical"
+                            android:onClick="@{() -> viewModel.clickAnimalType(AnimalType.REPTILE)}"
+                            android:paddingEnd="@dimen/standard_margin"
+                            android:paddingStart="64dp"
+                            android:text="@string/tab_reptile"
+                            android:textAllCaps="false"
+                            android:textColor="@color/nav_bar_deep_button_text" />
+
+                    </tech.pauly.findapet.utils.ExpandingLayout>
+
+                    <ToggleButton
+                        android:id="@+id/button_shelters"
+                        style="@style/NavMenuButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/nav_bar_button_background"
+                        android:drawablePadding="@dimen/large_margin"
+                        android:drawableStart="@drawable/ic_menu_shelters"
+                        android:drawableTint="@color/nav_bar_button_text"
+                        android:gravity="start|center_vertical"
+                        android:onClick="@{viewModel::clickShelters}"
+                        android:padding="@dimen/standard_margin"
+                        android:textAllCaps="false"
+                        android:checked="@{viewModel.currentButton == @id/button_shelters}"
+                        android:textColor="@color/nav_bar_button_text"
+                        android:textOff="@string/menu_shelters"
+                        android:textOn="@string/menu_shelters"
+                        app:layout_constraintTop_toBottomOf="@id/expanding_layout" />
+
+                    <ToggleButton
+                        android:id="@+id/button_favorites"
+                        style="@style/NavMenuButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/nav_bar_button_background"
+                        android:drawablePadding="@dimen/large_margin"
+                        android:drawableStart="@drawable/ic_menu_favorites"
+                        android:drawableTint="@color/nav_bar_button_text"
+                        android:gravity="start|center_vertical"
+                        android:onClick="@{viewModel::clickFavorites}"
+                        android:padding="@dimen/standard_margin"
+                        android:checked="@{viewModel.currentButton == @id/button_favorites}"
+                        android:textAllCaps="false"
+                        android:textColor="@color/nav_bar_button_text"
+                        android:textOff="@string/menu_favorites"
+                        android:textOn="@string/menu_favorites"
+                        app:layout_constraintTop_toBottomOf="@id/button_shelters" />
+
+                    <ToggleButton
+                        android:id="@+id/button_settings"
+                        style="@style/NavMenuButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/nav_bar_button_background"
+                        android:drawablePadding="@dimen/large_margin"
+                        android:drawableStart="@drawable/ic_menu_settings"
+                        android:drawableTint="@color/nav_bar_button_text"
+                        android:gravity="start|center_vertical"
+                        android:onClick="@{viewModel::clickSettings}"
+                        android:padding="@dimen/standard_margin"
+                        android:checked="@{viewModel.currentButton == @id/button_settings}"
+                        android:textAllCaps="false"
+                        android:textColor="@color/nav_bar_button_text"
+                        android:textOff="@string/menu_settings"
+                        android:textOn="@string/menu_settings"
+                        app:layout_constraintTop_toBottomOf="@id/button_favorites" />
+                </android.support.constraint.ConstraintLayout>
+            </ScrollView>
+        </android.support.design.widget.NavigationView>
+    </android.support.v4.widget.DrawerLayout>
+</layout>

@@ -9,7 +9,7 @@ import org.junit.Test;
 import javax.inject.Inject;
 
 import tech.pauly.findapet.shared.BaseEspressoTest;
-import tech.pauly.findapet.shared.TransientDataStore;
+import tech.pauly.findapet.shared.datastore.TransientDataStore;
 
 public class AnimalDetailsActivityTest extends BaseEspressoTest {
 

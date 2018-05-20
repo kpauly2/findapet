@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="purpleLightest">#FAFAFF</color>
-    <color name="purpleVeryLight">#BABCF8</color>
+    <color name="purpleVeryLight">#E7E8FB</color>
     <color name="purpleLight">#B6B8FD</color>
     <color name="purpleStandard">#8B8EEB</color>
     <color name="purpleStandardDark">#797CDB</color>

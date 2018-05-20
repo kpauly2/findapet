@@ -8,11 +8,16 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import tech.pauly.findapet.R;
 
 public class AnimalListAdapter extends RecyclerView.Adapter<AnimalListItemViewHolder> {
 
     private List<AnimalListItemViewModel> animalItems = new ArrayList<>();
+
+    @Inject
+    AnimalListAdapter() {}
 
     @Override
     public AnimalListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

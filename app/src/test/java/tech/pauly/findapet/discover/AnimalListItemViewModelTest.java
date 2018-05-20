@@ -15,7 +15,7 @@ import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
 import tech.pauly.findapet.shared.ActivityEvent;
 import tech.pauly.findapet.shared.ResourceProvider;
-import tech.pauly.findapet.shared.TransientDataStore;
+import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.shared.ViewEventBus;
 
 import static org.assertj.core.api.Assertions.assertThat;

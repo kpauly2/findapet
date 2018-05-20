@@ -1,6 +1,7 @@
-package tech.pauly.findapet.shared;
+package tech.pauly.findapet.shared.datastore;
 
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -61,12 +62,26 @@ public class TransientDataStore {
         return useCaseClass.cast(removedUseCase);
     }
 
-    public Observable<Class> observeUseCase(Class useCaseClass) {
+    public <T extends UseCase> Observable<Class> observeUseCase(Class<T> useCaseClass) {
         return dataSubject.filter(clazz -> clazz.equals(useCaseClass));
+    }
+
+    @SuppressWarnings({ "ConstantConditions", "unchecked" })
+    public <T extends UseCase> Observable<T> observeAndGetUseCase(Class<T> useCaseClass) {
+        return observeUseCase(useCaseClass).flatMap(clazz -> Observable.just(get((Class<T>) clazz)));
     }
 
     public  <T extends UseCase> boolean containsUseCase(Class<T> useCaseClass) {
         return transientData.containsKey(useCaseClass);
     }
 
+    @VisibleForTesting
+    ConcurrentMap<Class, UseCase> getTransientData() {
+        return transientData;
+    }
+
+    @VisibleForTesting
+    PublishSubject<Class> getDataSubject() {
+        return dataSubject;
+    }
 }

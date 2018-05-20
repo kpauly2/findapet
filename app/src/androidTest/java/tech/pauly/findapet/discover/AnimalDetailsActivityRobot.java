@@ -6,8 +6,8 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.dependencyinjection.EspressoPetApplication;
-import tech.pauly.findapet.shared.AnimalDetailsUseCase;
-import tech.pauly.findapet.shared.TransientDataStore;
+import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase;
+import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.utils.RobotUtils;
 
 public interface AnimalDetailsActivityRobot {

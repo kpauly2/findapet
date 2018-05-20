@@ -1,22 +1,20 @@
 package tech.pauly.findapet.discover;
 
 import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.Media;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
 import tech.pauly.findapet.shared.ActivityEvent;
-import tech.pauly.findapet.shared.AnimalDetailsUseCase;
+import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase;
 import tech.pauly.findapet.shared.BaseViewModel;
 import tech.pauly.findapet.shared.ResourceProvider;
-import tech.pauly.findapet.shared.TransientDataStore;
+import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.shared.ViewEventBus;
 
 public class AnimalListItemViewModel extends BaseViewModel {

@@ -9,64 +9,23 @@
             type="tech.pauly.findapet.discover.DiscoverViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
         android:id="@+id/fragment_discover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:elevation="0dp">
+        android:elevation="0dp"
+        android:paddingTop="@dimen/standard_margin">
 
-        <SearchView
-            android:id="@+id/discover_search"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/animal_list_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/shape_round_corners"
-            android:elevation="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            app:adapter="@{viewModel.listAdapter}"
+            app:recyclerViewGridSpan="@{viewModel.columnCount}"
+            app:loadMoreListener="@{viewModel::loadMoreAnimals}"/>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/discover_list_view_pager"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:adapter="@{viewModel.viewPagerAdapter}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/discover_tabs"
-            app:onPageChange="@{viewModel::onPageChange}" />
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/discover_tabs"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/purpleStandard"
-            android:paddingTop="55dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tabBackground="@color/purpleStandard"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabIndicatorHeight="2dp"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@android:color/white"
-            app:tabTextAppearance="@style/FontStrongBody"
-            app:tabTextColor="@color/purpleVeryLight"
-            app:viewPager="@{(discoverListViewPager)}" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:background="@drawable/shape_strong_shadow"
-            app:layout_constraintEnd_toEndOf="@+id/discover_tabs"
-            app:layout_constraintStart_toStartOf="@+id/discover_tabs"
-            app:layout_constraintTop_toBottomOf="@+id/discover_tabs" />
-
-    </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
 </layout>
