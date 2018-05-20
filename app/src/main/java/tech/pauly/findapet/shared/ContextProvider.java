@@ -19,12 +19,12 @@ import tech.pauly.findapet.dependencyinjection.ForApplication;
  * this class and use the limited set of context APIs implemented in this class.
  */
 @Singleton
-public class ResourceProvider {
+public class ContextProvider {
 
     private Context context;
 
     @Inject
-    ResourceProvider(@ForApplication Context context) {
+    ContextProvider(@ForApplication Context context) {
         this.context = context;
     }
 
