@@ -10,10 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
-import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
@@ -110,10 +107,5 @@ public class BindingAdapters {
     @FunctionalInterface
     public interface RecyclerViewLoadMoreDataListener {
         void loadMore();
-    }
-
-    @FunctionalInterface
-    public interface RadioGroupCheckChangedListener {
-        void checkChanged(int position);
     }
 }

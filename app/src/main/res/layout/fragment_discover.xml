@@ -16,7 +16,8 @@
         android:background="@android:color/white"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:elevation="0dp">
+        android:elevation="0dp"
+        android:paddingTop="@dimen/standard_margin">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/animal_list_recycler_view"
@@ -24,8 +25,7 @@
             android:layout_height="match_parent"
             app:adapter="@{viewModel.listAdapter}"
             app:recyclerViewGridSpan="@{viewModel.columnCount}"
-            app:loadMoreListener="@{viewModel::loadMoreAnimals}"
-            android:paddingBottom="@dimen/standard_margin"/>
+            app:loadMoreListener="@{viewModel::loadMoreAnimals}"/>
 
     </FrameLayout>
 </layout>

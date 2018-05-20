@@ -113,26 +113,41 @@ interface MainActivityRobot {
 
         void seesDiscover() {
             RobotUtils.seesView(R.id.fragment_discover);
+            RobotUtils.doesNotSeeView(R.id.fragment_shelters);
+            RobotUtils.doesNotSeeView(R.id.fragment_favorites);
+            RobotUtils.doesNotSeeView(R.id.fragment_settings);
         }
 
         void seesDogDiscover() {
             RobotUtils.seesView(R.id.fragment_discover);
             RobotUtils.seesToolbarWithTitle(context.getString(R.string.tab_dog));
-        }
-
-        void seesFavorites() {
-            RobotUtils.seesView(R.id.fragment_favorites);
-            RobotUtils.seesToolbarWithTitle(context.getString(R.string.menu_favorites));
+            RobotUtils.doesNotSeeView(R.id.fragment_shelters);
+            RobotUtils.doesNotSeeView(R.id.fragment_favorites);
+            RobotUtils.doesNotSeeView(R.id.fragment_settings);
         }
 
         void seesShelters() {
             RobotUtils.seesView(R.id.fragment_shelters);
             RobotUtils.seesToolbarWithTitle(context.getString(R.string.menu_shelters));
+            RobotUtils.doesNotSeeView(R.id.fragment_discover);
+            RobotUtils.doesNotSeeView(R.id.fragment_favorites);
+            RobotUtils.doesNotSeeView(R.id.fragment_settings);
+        }
+
+        void seesFavorites() {
+            RobotUtils.seesView(R.id.fragment_favorites);
+            RobotUtils.seesToolbarWithTitle(context.getString(R.string.menu_favorites));
+            RobotUtils.doesNotSeeView(R.id.fragment_shelters);
+            RobotUtils.doesNotSeeView(R.id.fragment_discover);
+            RobotUtils.doesNotSeeView(R.id.fragment_settings);
         }
 
         void seesSettings() {
             RobotUtils.seesView(R.id.fragment_settings);
             RobotUtils.seesToolbarWithTitle(context.getString(R.string.menu_settings));
+            RobotUtils.doesNotSeeView(R.id.fragment_shelters);
+            RobotUtils.doesNotSeeView(R.id.fragment_favorites);
+            RobotUtils.doesNotSeeView(R.id.fragment_discover);
         }
     }
 }

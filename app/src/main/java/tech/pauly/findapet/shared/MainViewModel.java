@@ -21,13 +21,16 @@ import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.shelters.SheltersFragment;
 
 public class MainViewModel extends BaseViewModel {
+
+    private static final int NO_SELECTION = 0;
+
     public enum ExpandingLayoutEvent {
         TOGGLE, COLLAPSE
-    }
 
+    }
     public ObservableInt toolbarTitle = new ObservableInt(R.string.empty_string);
     public ObservableField<AnimalType> currentAnimalType = new ObservableField<>();
-    public ObservableInt currentButton = new ObservableInt(0);
+    public ObservableInt currentButton = new ObservableInt(NO_SELECTION);
 
     private ViewEventBus eventBus;
     private TransientDataStore dataStore;
@@ -76,11 +79,10 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void clickAnimalType(AnimalType type) {
-        dataStore.save(new DiscoverAnimalTypeUseCase(type));
-
         currentAnimalType.set(type);
-        currentButton.set(0);
+        currentButton.set(NO_SELECTION);
 
+        dataStore.save(new DiscoverAnimalTypeUseCase(type));
         launchFragment(DiscoverFragment.class);
     }
 

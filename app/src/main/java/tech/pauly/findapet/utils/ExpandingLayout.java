@@ -15,6 +15,8 @@ import tech.pauly.findapet.R;
 public class ExpandingLayout extends LinearLayout {
 
     private static final int DEFAULT_DURATION = 500;
+    private static final int COLLAPSED_VALUE = 0;
+    private static final int EXPANDED_VALUE = 1;
 
     private enum State {
         COLLAPSED,
@@ -28,7 +30,7 @@ public class ExpandingLayout extends LinearLayout {
 
     private int duration;
     private State currentState = State.COLLAPSED;
-    private float currentAnimationValue = 0;
+    private float currentAnimationValue = COLLAPSED_VALUE;
     private int fullLayoutHeight = 0;
     private boolean forceCollapse = false;
 
@@ -69,9 +71,9 @@ public class ExpandingLayout extends LinearLayout {
         }
 
         if (forceCollapse || currentState == State.EXPANDING || currentState == State.EXPANDED) {
-                animator = ValueAnimator.ofFloat(currentAnimationValue, 0);
+            animator = ValueAnimator.ofFloat(currentAnimationValue, COLLAPSED_VALUE);
         } else {
-            animator = ValueAnimator.ofFloat(currentAnimationValue, 1);
+            animator = ValueAnimator.ofFloat(currentAnimationValue, EXPANDED_VALUE);
         }
         forceCollapse = false;
 
@@ -85,9 +87,9 @@ public class ExpandingLayout extends LinearLayout {
         float lastAnimationValue = currentAnimationValue;
         currentAnimationValue = animationValue;
 
-        if (currentAnimationValue == 0) {
+        if (currentAnimationValue == COLLAPSED_VALUE) {
             currentState = State.COLLAPSED;
-        } else if (currentAnimationValue == 1) {
+        } else if (currentAnimationValue == EXPANDED_VALUE) {
             currentState = State.EXPANDED;
         } else {
             if (currentAnimationValue > lastAnimationValue) {
