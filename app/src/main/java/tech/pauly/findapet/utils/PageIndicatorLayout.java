@@ -16,7 +16,6 @@ import static android.view.Gravity.CENTER;
 public class PageIndicatorLayout extends LinearLayout {
     private int indicatorCount;
     private int currentItem = 0;
-    private int margin = 8;
     private Context context;
 
     public PageIndicatorLayout(Context context) {
