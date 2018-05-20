@@ -48,7 +48,6 @@ public class DiscoverViewModelTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        when(animalRepository.fetchAnimals(any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
         DiscoverAnimalTypeUseCase useCase = mock(DiscoverAnimalTypeUseCase.class);
         when(useCase.getAnimalType()).thenReturn(AnimalType.CAT);
         when(dataStore.get(DiscoverAnimalTypeUseCase.class)).thenReturn(useCase);
@@ -56,15 +55,19 @@ public class DiscoverViewModelTest {
     }
 
     @Test
-    public void onCreate_usesAnimalTypeFromDataStore() {
+    public void loadList_usesAnimalTypeFromDataStoreAndClearsListAndStartsRefreshing() {
+        when(animalRepository.fetchAnimals(any(AnimalType.class), anyInt())).thenReturn(Observable.empty());
         subject.loadList();
 
         verify(dataStore).save(new DiscoverToolbarTitleUseCase(AnimalType.CAT.getToolbarName()));
         verify(animalRepository).fetchAnimals(AnimalType.CAT, 0);
+        verify(listAdapter).clearAnimalItems();
+        assertThat(subject.refreshing.get()).isTrue();
     }
 
     @Test
-    public void loadList_fetchAnimalsOnNext_sendAnimalListToAdapter() {
+    public void loadList_fetchAnimalsOnNext_sendAnimalListToAdapterAndStopsRefreshing() {
+        when(animalRepository.fetchAnimals(any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
         Animal animal = mock(Animal.class);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
         ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
@@ -73,10 +76,12 @@ public class DiscoverViewModelTest {
 
         verify(listAdapter).setAnimalItems(argumentCaptor.capture());
         verify(animalListItemFactory).newInstance(animal);
+        assertThat(subject.refreshing.get()).isFalse();
     }
 
     @Test
     public void loadList_fetchAnimalsOnNextAndAnimalListNull_setsEmptyList() {
+        when(animalRepository.fetchAnimals(any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
         when(animalListResponse.getAnimalList()).thenReturn(null);
         ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
 
@@ -88,6 +93,7 @@ public class DiscoverViewModelTest {
 
     @Test
     public void loadMoreAnimals_fetchAnimalsAtCurrentOffset() {
+        when(animalRepository.fetchAnimals(any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
         Animal animal = mock(Animal.class);
         when(animalListResponse.getLastOffset()).thenReturn(10);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
