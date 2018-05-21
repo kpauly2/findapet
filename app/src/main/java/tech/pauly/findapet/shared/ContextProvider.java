@@ -33,12 +33,4 @@ public class ContextProvider {
     public String getString(@StringRes int stringId) {
         return context.getString(stringId);
     }
-
-    public boolean hasPermission(String... permissions) {
-        boolean hasPermission = true;
-        for (String permission : permissions) {
-            hasPermission &= ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
-        }
-        return hasPermission;
-    }
 }

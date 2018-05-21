@@ -14,7 +14,7 @@ import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
-import tech.pauly.findapet.shared.ContextProvider;
+import tech.pauly.findapet.shared.PermissionHelper;
 import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
@@ -49,7 +49,7 @@ public class DiscoverViewModelTest {
     private AnimalListResponse animalListResponse;
 
     @Mock
-    private ContextProvider contextProvider;
+    private PermissionHelper permissionHelper;
 
     @Mock
     private ViewEventBus eventBus;
@@ -62,9 +62,9 @@ public class DiscoverViewModelTest {
         DiscoverAnimalTypeUseCase useCase = mock(DiscoverAnimalTypeUseCase.class);
         when(useCase.getAnimalType()).thenReturn(AnimalType.CAT);
         when(dataStore.get(DiscoverAnimalTypeUseCase.class)).thenReturn(useCase);
-        when(contextProvider.hasPermission(ACCESS_FINE_LOCATION)).thenReturn(true);
+        when(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(true);
         when(animalRepository.fetchAnimals(any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
-        subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, contextProvider, eventBus);
+        subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class DiscoverViewModelTest {
 
     @Test
     public void requestPermissionToLoad_locationPermissionNotGranted_requestPermission() {
-        when(contextProvider.hasPermission(ACCESS_FINE_LOCATION)).thenReturn(false);
+        when(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(false);
         ArgumentCaptor<PermissionEvent> argumentCaptor = ArgumentCaptor.forClass(PermissionEvent.class);
 
         subject.requestPermissionToLoad();

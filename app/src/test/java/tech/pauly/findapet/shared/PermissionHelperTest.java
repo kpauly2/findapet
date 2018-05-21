@@ -1,10 +1,12 @@
 package tech.pauly.findapet.shared;
 
+import android.content.Context;
 import android.support.v4.app.SupportActivity;
 
 import org.assertj.core.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +20,14 @@ import static org.mockito.Mockito.when;
 
 public class PermissionHelperTest {
 
+    @Mock
+    Context context;
+
     private PermissionHelper subject;
 
     @Before
     public void setup() {
-        subject = new PermissionHelper();
+        subject = new PermissionHelper(context);
     }
 
     @Test

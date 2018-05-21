@@ -15,7 +15,7 @@ import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.shared.BaseViewModel;
-import tech.pauly.findapet.shared.ContextProvider;
+import tech.pauly.findapet.shared.PermissionHelper;
 import tech.pauly.findapet.shared.events.PermissionEvent;
 import tech.pauly.findapet.shared.events.ViewEventBus;
 import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
@@ -34,7 +34,7 @@ public class DiscoverViewModel extends BaseViewModel {
     private final AnimalListItemViewModel.Factory animalListItemFactory;
     private final AnimalRepository animalRepository;
     private TransientDataStore dataStore;
-    private ContextProvider contextProvider;
+    private PermissionHelper permissionHelper;
     private ViewEventBus eventBus;
 
     private AnimalType animalType = AnimalType.CAT;
@@ -46,13 +46,13 @@ public class DiscoverViewModel extends BaseViewModel {
                              AnimalListItemViewModel.Factory animalListItemFactory,
                              AnimalRepository animalRepository,
                              TransientDataStore dataStore,
-                             ContextProvider contextProvider,
+                             PermissionHelper permissionHelper,
                              ViewEventBus eventBus) {
         this.listAdapter = listAdapter;
         this.animalListItemFactory = animalListItemFactory;
         this.animalRepository = animalRepository;
         this.dataStore = dataStore;
-        this.contextProvider = contextProvider;
+        this.permissionHelper = permissionHelper;
         this.eventBus = eventBus;
 
         DiscoverAnimalTypeUseCase useCase = dataStore.get(DiscoverAnimalTypeUseCase.class);
@@ -74,7 +74,7 @@ public class DiscoverViewModel extends BaseViewModel {
     }
 
     public void requestPermissionToLoad() {
-        if (contextProvider.hasPermission(ACCESS_FINE_LOCATION)) {
+        if (permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)) {
             loadList();
         } else {
             eventBus.send(PermissionEvent.build(this)
