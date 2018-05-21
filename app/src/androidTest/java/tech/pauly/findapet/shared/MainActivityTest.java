@@ -1,6 +1,7 @@
 package tech.pauly.findapet.shared;
 
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.GrantPermissionRule;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -10,6 +11,9 @@ public class MainActivityTest extends BaseEspressoTest {
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
+
+    @Rule
+    public GrantPermissionRule locationPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
     private MainActivityRobot.Hands hands = new MainActivityRobot.Hands();
     private MainActivityRobot.Eyes eyes;

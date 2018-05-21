@@ -16,7 +16,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.databinding.FragmentDiscoverBinding;
 import tech.pauly.findapet.shared.BaseFragment;
-import tech.pauly.findapet.shared.ViewEventBus;
+import tech.pauly.findapet.shared.events.ViewEventBus;
 
 public class DiscoverFragment extends BaseFragment {
 
@@ -47,6 +47,7 @@ public class DiscoverFragment extends BaseFragment {
         CompositeDisposable viewEvents = new CompositeDisposable();
 
         viewEvents.add(eventBus.activity(AnimalListItemViewModel.class).subscribe(this::activityEvent));
+        viewEvents.add(eventBus.permission(DiscoverViewModel.class).subscribe(this::permissionEvent));
 
         return viewEvents;
     }

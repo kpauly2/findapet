@@ -1,12 +1,11 @@
-package tech.pauly.findapet.shared;
-
-import com.bea.xml.stream.events.BaseEvent;
+package tech.pauly.findapet.shared.events;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
+import tech.pauly.findapet.shared.BaseFragment;
 
 /**
  * A Singleton class to manage events that the Presentation layer needs the View layer to handle.
@@ -45,6 +44,12 @@ public class ViewEventBus {
         return subject.filter(event -> event instanceof FragmentEvent
                                        && fromEmitter(event, emitterClass))
                       .map(event -> (FragmentEvent) event);
+    }
+
+    public Observable<PermissionEvent> permission(Class emitterClass) {
+        return subject.filter(event -> event instanceof PermissionEvent
+                                       && fromEmitter(event, emitterClass))
+                      .map(event -> (PermissionEvent) event);
     }
 
     private boolean fromEmitter(BaseViewEvent event, Class viewModelClass) {

@@ -1,7 +1,9 @@
 package tech.pauly.findapet.shared;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,5 +32,13 @@ public class ContextProvider {
 
     public String getString(@StringRes int stringId) {
         return context.getString(stringId);
+    }
+
+    public boolean hasPermission(String... permissions) {
+        boolean hasPermission = true;
+        for (String permission : permissions) {
+            hasPermission &= ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+        }
+        return hasPermission;
     }
 }

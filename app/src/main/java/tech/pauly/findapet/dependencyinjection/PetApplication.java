@@ -22,6 +22,8 @@ public class PetApplication extends Application implements HasActivityInjector,
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidFragmentInjector;
 
+    private static ApplicationComponent component;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -32,10 +34,10 @@ public class PetApplication extends Application implements HasActivityInjector,
             LeakCanary.install(this);
         }
 
-        DaggerApplicationComponent.builder()
+        component = DaggerApplicationComponent.builder()
                                   .applicationModule(new ApplicationModule(this))
-                                  .build()
-                                  .inject(this);
+                                  .build();
+        component.inject(this);
     }
 
     @Override
@@ -46,5 +48,9 @@ public class PetApplication extends Application implements HasActivityInjector,
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return dispatchingAndroidFragmentInjector;
+    }
+
+    public static ApplicationComponent getComponent() {
+        return component;
     }
 }

@@ -10,12 +10,12 @@ import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.Media;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
-import tech.pauly.findapet.shared.ActivityEvent;
+import tech.pauly.findapet.shared.events.ActivityEvent;
 import tech.pauly.findapet.shared.ContextProvider;
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase;
 import tech.pauly.findapet.shared.BaseViewModel;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
-import tech.pauly.findapet.shared.ViewEventBus;
+import tech.pauly.findapet.shared.events.ViewEventBus;
 
 public class AnimalListItemViewModel extends BaseViewModel {
 

@@ -3,6 +3,7 @@ package tech.pauly.findapet.discover;
 import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.rule.GrantPermissionRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,6 +23,9 @@ public class DiscoverFragmentTest extends BaseEspressoTest {
 
     @Rule
     public MockWebServerRule serverRule = new MockWebServerRule();
+
+    @Rule
+    public GrantPermissionRule locationPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
     @Inject
     CountingIdlingResource idlingResource;

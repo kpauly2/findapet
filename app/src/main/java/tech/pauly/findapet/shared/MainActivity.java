@@ -14,6 +14,7 @@ import dagger.android.AndroidInjection;
 import io.reactivex.disposables.CompositeDisposable;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.databinding.ActivityMainBinding;
+import tech.pauly.findapet.shared.events.ViewEventBus;
 
 public class MainActivity extends BaseActivity {
 

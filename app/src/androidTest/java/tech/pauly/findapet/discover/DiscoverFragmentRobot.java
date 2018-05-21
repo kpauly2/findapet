@@ -23,7 +23,7 @@ public interface DiscoverFragmentRobot {
             this.context = context;
         }
 
-        public void clickDog() {
+        void clickDog() {
             RobotUtils.clickChildVieWithText(R.id.animal_item_card, "Gretzky");
         }
 

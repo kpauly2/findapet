@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
+import tech.pauly.findapet.shared.PermissionHelper;
 
 @Singleton
 @Component(modules = { AndroidSupportInjectionModule.class,
@@ -12,5 +13,5 @@ import dagger.android.support.AndroidSupportInjectionModule;
                        ApplicationModule.class,
                        DataModule.class })
 public interface ApplicationComponent extends AndroidInjector<PetApplication> {
-
+    PermissionHelper permissionHelper();
 }

@@ -34,9 +34,9 @@ public interface AnimalDetailsActivityRobot {
         }
 
         Eyes seeFullCatDetails() {
-            RobotUtils.seesViewWithText(R.id.animal_name, "Sahara");
+            RobotUtils.seesToolbarWithTitle("Sahara");
             RobotUtils.seesViewWithText(R.id.animal_breed, "Domestic Short Hair / Tortoiseshell");
-            RobotUtils.seesViewWithText(R.id.animal_age_type, "Senior Cat");
+            RobotUtils.seesViewWithText(R.id.animal_age, "Senior");
             RobotUtils.seesViewWithText(R.id.animal_sex, "Female");
             RobotUtils.seesViewWithText(R.id.animal_size, "Medium");
             return this;
