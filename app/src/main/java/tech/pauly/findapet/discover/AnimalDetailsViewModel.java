@@ -15,14 +15,14 @@ import tech.pauly.findapet.data.models.Media;
 import tech.pauly.findapet.data.models.Option;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
+import tech.pauly.findapet.shared.ContextProvider;
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase;
 import tech.pauly.findapet.shared.BaseViewModel;
-import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 
 public class AnimalDetailsViewModel extends BaseViewModel {
 
-    private final ResourceProvider resourceProvider;
+    private final ContextProvider contextProvider;
     public ObservableField<String> name = new ObservableField<>("");
     public ObservableInt age = new ObservableInt(R.string.missing);
     public ObservableField<String> breeds = new ObservableField<>("");
@@ -42,10 +42,10 @@ public class AnimalDetailsViewModel extends BaseViewModel {
     @Inject
     AnimalDetailsViewModel(TransientDataStore dataStore,
                            AnimalDetailsViewPagerAdapter viewPagerAdapter,
-                           ResourceProvider resourceProvider,
+                           ContextProvider contextProvider,
                            AnimalImagesPagerAdapter imagesPagerAdapter) {
         this.detailsPagerAdapter = viewPagerAdapter;
-        this.resourceProvider = resourceProvider;
+        this.contextProvider = contextProvider;
         this.imagesPagerAdapter = imagesPagerAdapter;
         this.detailsPagerAdapter.setViewModel(this);
 
@@ -89,7 +89,7 @@ public class AnimalDetailsViewModel extends BaseViewModel {
             StringBuilder optionsText = new StringBuilder();
             for (int i = 0; i < options.size(); i++) {
                 Option option = options.get(i);
-                optionsText.append(resourceProvider.getString(option.getFormattedName()));
+                optionsText.append(contextProvider.getString(option.getFormattedName()));
                 if (i < options.size() - 1) {
                     optionsText.append("\n");
                 }

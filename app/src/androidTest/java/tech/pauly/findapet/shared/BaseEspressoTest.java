@@ -12,6 +12,6 @@ public class BaseEspressoTest {
     }
 
     protected EspressoApplicationComponent getTestComponent() {
-        return getApplicationContext().getComponent();
+        return getApplicationContext().getEspressoComponent();
     }
 }

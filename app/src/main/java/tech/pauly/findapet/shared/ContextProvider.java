@@ -1,7 +1,9 @@
 package tech.pauly.findapet.shared;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,12 +21,12 @@ import tech.pauly.findapet.dependencyinjection.ForApplication;
  * this class and use the limited set of context APIs implemented in this class.
  */
 @Singleton
-public class ResourceProvider {
+public class ContextProvider {
 
     private Context context;
 
     @Inject
-    ResourceProvider(@ForApplication Context context) {
+    ContextProvider(@ForApplication Context context) {
         this.context = context;
     }
 

@@ -1,4 +1,4 @@
-package tech.pauly.findapet.shared;
+package tech.pauly.findapet.shared.events;
 
 public class ActivityEvent extends BaseViewEvent {
 

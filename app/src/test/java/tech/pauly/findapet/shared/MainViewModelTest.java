@@ -19,6 +19,9 @@ import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.shared.datastore.UseCase;
+import tech.pauly.findapet.shared.events.BaseViewEvent;
+import tech.pauly.findapet.shared.events.FragmentEvent;
+import tech.pauly.findapet.shared.events.ViewEventBus;
 import tech.pauly.findapet.shelters.SheltersFragment;
 
 import static org.assertj.core.api.Assertions.assertThat;

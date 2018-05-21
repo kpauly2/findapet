@@ -132,21 +132,6 @@ public class RobotUtils {
 
     //endregion
 
-    public static Matcher<View> withToolbarTitle(Matcher<CharSequence> titleMatcher) {
-        return new BoundedMatcher<View, Toolbar>(Toolbar.class) {
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("with toolbar title: ");
-                titleMatcher.describeTo(description);
-            }
-
-            @Override
-            protected boolean matchesSafely(Toolbar toolbar) {
-                return titleMatcher.matches(toolbar.getTitle());
-            }
-        };
-    }
-
     public static <T> T parseResource(Object sourceObject, String responseFilename, Class<T> clazz) {
         Serializer ser = new Persister();
         try {
@@ -169,5 +154,20 @@ public class RobotUtils {
             e.printStackTrace();
         }
         return body;
+    }
+
+    private static Matcher<View> withToolbarTitle(Matcher<CharSequence> titleMatcher) {
+        return new BoundedMatcher<View, Toolbar>(Toolbar.class) {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with toolbar title: ");
+                titleMatcher.describeTo(description);
+            }
+
+            @Override
+            protected boolean matchesSafely(Toolbar toolbar) {
+                return titleMatcher.matches(toolbar.getTitle());
+            }
+        };
     }
 }

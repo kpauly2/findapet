@@ -14,7 +14,7 @@ public class EspressoPetApplication extends PetApplication {
         component.inject(this);
     }
 
-    public EspressoApplicationComponent getComponent() {
+    public EspressoApplicationComponent getEspressoComponent() {
         return component;
     }
 }

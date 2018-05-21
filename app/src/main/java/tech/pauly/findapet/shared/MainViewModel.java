@@ -18,6 +18,8 @@ import tech.pauly.findapet.settings.SettingsFragment;
 import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
+import tech.pauly.findapet.shared.events.FragmentEvent;
+import tech.pauly.findapet.shared.events.ViewEventBus;
 import tech.pauly.findapet.shelters.SheltersFragment;
 
 public class MainViewModel extends BaseViewModel {

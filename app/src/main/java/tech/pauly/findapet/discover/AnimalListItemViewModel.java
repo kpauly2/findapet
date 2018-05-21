@@ -10,12 +10,12 @@ import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.Media;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
-import tech.pauly.findapet.shared.ActivityEvent;
+import tech.pauly.findapet.shared.events.ActivityEvent;
+import tech.pauly.findapet.shared.ContextProvider;
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase;
 import tech.pauly.findapet.shared.BaseViewModel;
-import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
-import tech.pauly.findapet.shared.ViewEventBus;
+import tech.pauly.findapet.shared.events.ViewEventBus;
 
 public class AnimalListItemViewModel extends BaseViewModel {
 
@@ -27,12 +27,12 @@ public class AnimalListItemViewModel extends BaseViewModel {
     private ViewEventBus eventBus;
     private TransientDataStore dataStore;
 
-    protected AnimalListItemViewModel(Animal animal, ViewEventBus eventBus, TransientDataStore dataStore, ResourceProvider resourceProvider) {
+    protected AnimalListItemViewModel(Animal animal, ViewEventBus eventBus, TransientDataStore dataStore, ContextProvider contextProvider) {
         this.animal = animal;
         this.eventBus = eventBus;
         this.dataStore = dataStore;
         name.set(animal.getName());
-        age.set(resourceProvider.getString(animal.getAge().getName()));
+        age.set(contextProvider.getString(animal.getAge().getName()));
 
         setBreeds(animal.getBreedList());
         setPhoto(animal.getMedia());
@@ -73,17 +73,17 @@ public class AnimalListItemViewModel extends BaseViewModel {
     public static class Factory {
         private ViewEventBus eventBus;
         private TransientDataStore dataStore;
-        private ResourceProvider resourceProvider;
+        private ContextProvider contextProvider;
 
         @Inject
-        public Factory(ViewEventBus eventBus, TransientDataStore dataStore, ResourceProvider resourceProvider) {
+        public Factory(ViewEventBus eventBus, TransientDataStore dataStore, ContextProvider contextProvider) {
             this.eventBus = eventBus;
             this.dataStore = dataStore;
-            this.resourceProvider = resourceProvider;
+            this.contextProvider = contextProvider;
         }
 
         public AnimalListItemViewModel newInstance(Animal animal) {
-            return new AnimalListItemViewModel(animal, eventBus, dataStore, resourceProvider);
+            return new AnimalListItemViewModel(animal, eventBus, dataStore, contextProvider);
         }
     }
 }

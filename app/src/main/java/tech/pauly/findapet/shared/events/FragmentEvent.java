@@ -1,8 +1,8 @@
-package tech.pauly.findapet.shared;
+package tech.pauly.findapet.shared.events;
 
 import android.support.annotation.IdRes;
 
-class FragmentEvent extends BaseViewEvent {
+public class FragmentEvent extends BaseViewEvent {
 
     private Class fragmentClass;
     @IdRes

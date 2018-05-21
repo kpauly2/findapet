@@ -14,13 +14,12 @@ import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalSize;
-import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.data.models.Media;
 import tech.pauly.findapet.data.models.Option;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
 import tech.pauly.findapet.data.models.Sex;
-import tech.pauly.findapet.shared.ResourceProvider;
+import tech.pauly.findapet.shared.ContextProvider;
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 
@@ -43,7 +42,7 @@ public class AnimalDetailsViewModelTest {
     private AnimalImagesPagerAdapter imagesPagerAdapter;
 
     @Mock
-    private ResourceProvider resourceProvider;
+    private ContextProvider contextProvider;
 
     private AnimalDetailsViewModel subject;
 
@@ -181,9 +180,9 @@ public class AnimalDetailsViewModelTest {
     }
     private void createSubjectWithUseCase(AnimalDetailsUseCase useCase) {
         when(dataStore.get(AnimalDetailsUseCase.class)).thenReturn(useCase);
-        when(resourceProvider.getString(R.string.altered)).thenReturn("Altered");
-        when(resourceProvider.getString(R.string.house_broken)).thenReturn("House Broken");
-        when(resourceProvider.getString(Age.ADULT.getName())).thenReturn("Adult");
-        subject = new AnimalDetailsViewModel(dataStore, viewPagerAdapter, resourceProvider, imagesPagerAdapter);
+        when(contextProvider.getString(R.string.altered)).thenReturn("Altered");
+        when(contextProvider.getString(R.string.house_broken)).thenReturn("House Broken");
+        when(contextProvider.getString(Age.ADULT.getName())).thenReturn("Adult");
+        subject = new AnimalDetailsViewModel(dataStore, viewPagerAdapter, contextProvider, imagesPagerAdapter);
     }
 }
