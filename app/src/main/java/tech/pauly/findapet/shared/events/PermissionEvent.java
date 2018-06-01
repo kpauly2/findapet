@@ -19,7 +19,7 @@ public class PermissionEvent extends BaseViewEvent {
         this.emitter = emitter;
     }
 
-    public PermissionEvent requestPermission(String... permissions) {
+    public PermissionEvent requestPermissions(String... permissions) {
         this.permissions = permissions;
         return this;
     }

@@ -6,6 +6,7 @@ import io.reactivex.Observable;
 import tech.pauly.findapet.BuildConfig;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
+import tech.pauly.findapet.shared.LocationHelper;
 
 public class AnimalRepository {
 
@@ -20,9 +21,8 @@ public class AnimalRepository {
         this.observableHelper = observableHelper;
     }
 
-    public Observable<AnimalListResponse> fetchAnimals(AnimalType animalType, int offset) {
-        //TODO: remove hardcoded location in https://www.pivotaltracker.com/story/show/157157373
-        return animalService.fetchAnimals("48335", BuildConfig.API_KEY, animalType.name().toLowerCase(), offset, ANIMAL_RETURN_COUNT)
+    public Observable<AnimalListResponse> fetchAnimals(String location, AnimalType animalType, int offset) {
+        return animalService.fetchAnimals(location, BuildConfig.API_KEY, animalType.name().toLowerCase(), offset, ANIMAL_RETURN_COUNT)
                             .compose(observableHelper.applySchedulers());
     }
 }

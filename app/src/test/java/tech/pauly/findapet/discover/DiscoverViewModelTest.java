@@ -14,6 +14,7 @@ import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
+import tech.pauly.findapet.shared.LocationHelper;
 import tech.pauly.findapet.shared.PermissionHelper;
 import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
@@ -25,6 +26,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -46,13 +48,16 @@ public class DiscoverViewModelTest {
     private TransientDataStore dataStore;
 
     @Mock
-    private AnimalListResponse animalListResponse;
-
-    @Mock
     private PermissionHelper permissionHelper;
 
     @Mock
     private ViewEventBus eventBus;
+
+    @Mock
+    private LocationHelper locationHelper;
+
+    @Mock
+    private AnimalListResponse animalListResponse;
 
     private DiscoverViewModel subject;
 
@@ -63,15 +68,16 @@ public class DiscoverViewModelTest {
         when(useCase.getAnimalType()).thenReturn(AnimalType.CAT);
         when(dataStore.get(DiscoverAnimalTypeUseCase.class)).thenReturn(useCase);
         when(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(true);
-        when(animalRepository.fetchAnimals(any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
-        subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus);
+        when(animalRepository.fetchAnimals(anyString(), any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
+        when(locationHelper.getCurrentLocation()).thenReturn(Observable.just("zipcode"));
+        subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus, locationHelper);
     }
 
     @Test
-    public void onResume_firstLoad_loadList() {
+    public void onResume_firstLoad_loadListForCurrentLocationAndAnimalAndNoOffset() {
         subject.onResume();
 
-        verify(animalRepository).fetchAnimals(AnimalType.CAT, 0);
+        verify(animalRepository).fetchAnimals("zipcode", AnimalType.CAT, 0);
     }
 
     @Test
@@ -80,7 +86,7 @@ public class DiscoverViewModelTest {
         clearInvocations(animalRepository);
         subject.onResume();
 
-        verify(animalRepository, never()).fetchAnimals(any(AnimalType.class), anyInt());
+        verify(animalRepository, never()).fetchAnimals(anyString(), any(AnimalType.class), anyInt());
     }
 
     @Test
@@ -98,11 +104,11 @@ public class DiscoverViewModelTest {
 
     @Test
     public void requestPermissionToLoad_locationPermissionGranted_usesAnimalTypeFromDataStoreAndClearsListAndStartsRefreshing() {
-        when(animalRepository.fetchAnimals(any(AnimalType.class), anyInt())).thenReturn(Observable.empty());
+        when(animalRepository.fetchAnimals(anyString(), any(AnimalType.class), anyInt())).thenReturn(Observable.empty());
         subject.requestPermissionToLoad();
 
         verify(dataStore).save(new DiscoverToolbarTitleUseCase(AnimalType.CAT.getToolbarName()));
-        verify(animalRepository).fetchAnimals(AnimalType.CAT, 0);
+        verify(animalRepository).fetchAnimals("zipcode", AnimalType.CAT, 0);
         verify(listAdapter).clearAnimalItems();
         assertThat(subject.refreshing.get()).isTrue();
     }
@@ -137,11 +143,11 @@ public class DiscoverViewModelTest {
         when(animalListResponse.getLastOffset()).thenReturn(10);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
         subject.requestPermissionToLoad();
-        verify(animalRepository).fetchAnimals(AnimalType.CAT, 0);
+        verify(animalRepository).fetchAnimals("zipcode", AnimalType.CAT, 0);
         clearInvocations(animalRepository);
 
         subject.loadMoreAnimals();
 
-        verify(animalRepository).fetchAnimals(AnimalType.CAT, 10);
+        verify(animalRepository).fetchAnimals("zipcode", AnimalType.CAT, 10);
     }
 }

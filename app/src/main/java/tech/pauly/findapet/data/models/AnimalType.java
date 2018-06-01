@@ -5,27 +5,23 @@ import android.support.annotation.StringRes;
 import tech.pauly.findapet.R;
 
 public enum AnimalType {
-    DOG("Dog", R.string.tab_dog, R.string.dog),
-    CAT("Cat", R.string.tab_cat, R.string.cat),
-    SMALLFURRY("Small & Furry", R.string.tab_smallfurry, R.string.smallfurry),
-    BARNYARD("Barnyard", R.string.tab_barnyard, R.string.barnyard),
-    BIRD("Bird", R.string.tab_bird, R.string.bird),
-    HORSE("Horse", R.string.tab_horse, R.string.horse),
-    RABBIT("Rabbit", R.string.tab_rabbit, R.string.rabbit),
-    REPTILE("Scales, Fins & Other", R.string.tab_reptile, R.string.reptile);
+    DOG("Dog", R.string.tab_dog),
+    CAT("Cat", R.string.tab_cat),
+    SMALLFURRY("Small & Furry", R.string.tab_smallfurry),
+    BARNYARD("Barnyard", R.string.tab_barnyard),
+    BIRD("Bird", R.string.tab_bird),
+    HORSE("Horse", R.string.tab_horse),
+    RABBIT("Rabbit", R.string.tab_rabbit),
+    REPTILE("Scales, Fins & Other", R.string.tab_reptile);
 
     private String serverName;
 
     @StringRes
     private int toolbarName;
 
-    @StringRes
-    private int singularName;
-
-    AnimalType(String serverName, @StringRes int toolbarName, @StringRes int singularName) {
+    AnimalType(String serverName, @StringRes int toolbarName) {
         this.serverName = serverName;
         this.toolbarName = toolbarName;
-        this.singularName = singularName;
     }
 
     static AnimalType fromString(String name) {
@@ -39,13 +35,5 @@ public enum AnimalType {
 
     public int getToolbarName() {
         return toolbarName;
-    }
-
-    public int getSingularName() {
-        return singularName;
-    }
-
-    public String getServerName() {
-        return serverName;
     }
 }
