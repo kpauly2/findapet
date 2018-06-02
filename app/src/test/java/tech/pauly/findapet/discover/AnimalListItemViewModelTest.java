@@ -14,7 +14,7 @@ import tech.pauly.findapet.data.models.Media;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
 import tech.pauly.findapet.shared.events.ActivityEvent;
-import tech.pauly.findapet.shared.ContextProvider;
+import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.shared.events.ViewEventBus;
 
@@ -35,7 +35,7 @@ public class AnimalListItemViewModelTest {
     private TransientDataStore dataStore;
 
     @Mock
-    private ContextProvider contextProvider;
+    private ResourceProvider resourceProvider;
 
     private AnimalListItemViewModel subject;
 
@@ -49,7 +49,7 @@ public class AnimalListItemViewModelTest {
         Media media = mock(Media.class);
         when(media.getPhotoList()).thenReturn(Collections.emptyList());
         when(animal.getMedia()).thenReturn(media);
-        when(contextProvider.getString(Age.ADULT.getName())).thenReturn("Adult");
+        when(resourceProvider.getString(Age.ADULT.getName())).thenReturn("Adult");
     }
 
     @Test
@@ -139,6 +139,6 @@ public class AnimalListItemViewModelTest {
     }
 
     private void createSubject() {
-        subject = new AnimalListItemViewModel(animal, eventBus, dataStore, contextProvider);
+        subject = new AnimalListItemViewModel(animal, eventBus, dataStore, resourceProvider);
     }
 }

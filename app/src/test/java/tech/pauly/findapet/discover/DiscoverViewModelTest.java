@@ -15,7 +15,7 @@ import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
-import tech.pauly.findapet.shared.ContextProvider;
+import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.LocationHelper;
 import tech.pauly.findapet.shared.PermissionHelper;
 import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
@@ -63,7 +63,7 @@ public class DiscoverViewModelTest {
     private AnimalListResponse animalListResponse;
 
     @Mock
-    private ContextProvider contextProvider;
+    private ResourceProvider resourceProvider;
 
     private DiscoverViewModel subject;
 
@@ -76,9 +76,9 @@ public class DiscoverViewModelTest {
         when(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(true);
         when(animalRepository.fetchAnimals(anyString(), any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
         when(locationHelper.getCurrentLocation(anyBoolean())).thenReturn(Observable.just("zipcode"));
-        when(contextProvider.getString(R.string.near_location, "zipcode")).thenReturn("Near zipcode");
-        when(contextProvider.getString(R.string.near_location, "zipcode2")).thenReturn("Near zipcode2");
-        subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus, locationHelper, contextProvider);
+        when(resourceProvider.getString(R.string.near_location, "zipcode")).thenReturn("Near zipcode");
+        when(resourceProvider.getString(R.string.near_location, "zipcode2")).thenReturn("Near zipcode2");
+        subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus, locationHelper, resourceProvider);
     }
 
     @Test

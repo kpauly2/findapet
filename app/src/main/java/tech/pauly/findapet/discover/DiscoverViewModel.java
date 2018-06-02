@@ -9,7 +9,6 @@ import android.databinding.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -19,7 +18,7 @@ import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.shared.BaseViewModel;
-import tech.pauly.findapet.shared.ContextProvider;
+import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.LocationHelper;
 import tech.pauly.findapet.shared.PermissionHelper;
 import tech.pauly.findapet.shared.events.PermissionEvent;
@@ -44,7 +43,7 @@ public class DiscoverViewModel extends BaseViewModel {
     private PermissionHelper permissionHelper;
     private ViewEventBus eventBus;
     private LocationHelper locationHelper;
-    private ContextProvider contextProvider;
+    private ResourceProvider resourceProvider;
 
     private AnimalType animalType = AnimalType.CAT;
     private int lastOffset = 0;
@@ -58,7 +57,7 @@ public class DiscoverViewModel extends BaseViewModel {
                              PermissionHelper permissionHelper,
                              ViewEventBus eventBus,
                              LocationHelper locationHelper,
-                             ContextProvider contextProvider) {
+                             ResourceProvider resourceProvider) {
         this.listAdapter = listAdapter;
         this.animalListItemFactory = animalListItemFactory;
         this.animalRepository = animalRepository;
@@ -66,7 +65,7 @@ public class DiscoverViewModel extends BaseViewModel {
         this.permissionHelper = permissionHelper;
         this.eventBus = eventBus;
         this.locationHelper = locationHelper;
-        this.contextProvider = contextProvider;
+        this.resourceProvider = resourceProvider;
 
         DiscoverAnimalTypeUseCase useCase = dataStore.get(DiscoverAnimalTypeUseCase.class);
         if (useCase != null) {
@@ -119,7 +118,7 @@ public class DiscoverViewModel extends BaseViewModel {
 
     private void setLocationChip(String location) {
         chipList.clear();
-        chipList.add(contextProvider.getString(R.string.near_location, location));
+        chipList.add(resourceProvider.getString(R.string.near_location, location));
     }
 
     private void showError(Throwable throwable) {
