@@ -7,14 +7,19 @@ import android.support.annotation.Nullable;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import io.reactivex.disposables.CompositeDisposable;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.databinding.ActivityFilterBinding;
 import tech.pauly.findapet.shared.BaseActivity;
+import tech.pauly.findapet.shared.events.ViewEventBus;
 
 public class FilterActivity extends BaseActivity {
 
     @Inject
     FilterViewModel viewModel;
+
+    @Inject
+    ViewEventBus eventBus;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,5 +34,16 @@ public class FilterActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         }
+    }
+
+    @Nullable
+    @Override
+    protected CompositeDisposable registerViewEvents() {
+        CompositeDisposable viewEvents = new CompositeDisposable();
+
+        viewEvents.add(eventBus.activity(FilterViewModel.class).subscribe(this::activityEvent));
+
+        return viewEvents;
+
     }
 }

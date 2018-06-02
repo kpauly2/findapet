@@ -1,8 +1,11 @@
 package tech.pauly.findapet.shared.events;
 
+import java.util.Objects;
+
 public class ActivityEvent extends BaseViewEvent {
 
     private Class startActivityClass;
+    private boolean finishActivity = false;
 
     public static ActivityEvent build(Object emitter) {
         return new ActivityEvent(emitter.getClass());
@@ -10,6 +13,11 @@ public class ActivityEvent extends BaseViewEvent {
 
     private ActivityEvent(Class emitter) {
         this.emitter = emitter;
+    }
+
+    public ActivityEvent finishActivity() {
+        this.finishActivity = true;
+        return this;
     }
 
     public ActivityEvent startActivity(Class startActivityClass) {
@@ -21,6 +29,10 @@ public class ActivityEvent extends BaseViewEvent {
         return startActivityClass;
     }
 
+    public boolean isFinishActivity() {
+        return finishActivity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -29,14 +41,13 @@ public class ActivityEvent extends BaseViewEvent {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         ActivityEvent that = (ActivityEvent) o;
-
-        return startActivityClass != null ? startActivityClass.equals(that.startActivityClass) : that.startActivityClass == null;
+        return finishActivity == that.finishActivity && Objects.equals(startActivityClass, that.startActivityClass);
     }
 
     @Override
     public int hashCode() {
-        return startActivityClass != null ? startActivityClass.hashCode() : 0;
+
+        return Objects.hash(startActivityClass, finishActivity);
     }
 }
