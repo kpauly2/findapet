@@ -101,16 +101,16 @@ public class DiscoverViewModel extends BaseViewModel {
         dataStore.save(new DiscoverToolbarTitleUseCase(animalType.getToolbarName()));
         listAdapter.clearAnimalItems();
         lastOffset = 0;
-        fetchAnimals();
+        fetchAnimals(true);
     }
 
     public void loadMoreAnimals() {
-        fetchAnimals();
+        fetchAnimals(false);
     }
 
-    private void fetchAnimals() {
+    private void fetchAnimals(boolean resetLocation) {
         refreshing.set(true);
-        subscribeOnLifecycle(locationHelper.getCurrentLocation()
+        subscribeOnLifecycle(locationHelper.getCurrentLocation(resetLocation)
                                            .flatMap(location -> {
                                                setLocationChip(location);
                                                return animalRepository.fetchAnimals(location, animalType, lastOffset);
