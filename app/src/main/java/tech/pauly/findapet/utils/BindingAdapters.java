@@ -1,6 +1,5 @@
 package tech.pauly.findapet.utils;
 
-import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.net.Uri;
 import android.support.annotation.IdRes;
@@ -127,6 +126,13 @@ public class BindingAdapters {
     @BindingAdapter("refreshing")
     public static void refreshing(SwipeRefreshLayout layout, boolean refreshing) {
         layout.setRefreshing(refreshing);
+    }
+
+    @BindingAdapter("bringToFront")
+    public static void bringToFront(View view, boolean bringToFront) {
+        if (bringToFront) {
+            view.bringToFront();
+        }
     }
 
     @BindingAdapter("chipList")

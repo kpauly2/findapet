@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import tech.pauly.findapet.discover.AnimalDetailsActivity;
 import tech.pauly.findapet.discover.DiscoverFragment;
+import tech.pauly.findapet.discover.FilterActivity;
 import tech.pauly.findapet.favorites.FavoritesFragment;
 import tech.pauly.findapet.settings.SettingsFragment;
 import tech.pauly.findapet.shared.MainActivity;
@@ -29,4 +30,7 @@ public abstract class AndroidViewModule {
 
     @ContributesAndroidInjector
     abstract AnimalDetailsActivity bindAnimalDetailsActivity();
+
+    @ContributesAndroidInjector
+    abstract FilterActivity bindFilterActivity();
 }

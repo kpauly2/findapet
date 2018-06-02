@@ -49,6 +49,7 @@
                     android:theme="@style/ToolbarTheme"
                     app:layout_collapseMode="pin"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:titleTextAppearance="@style/FontStrongHeader"
                     app:title="@{viewModel.name}" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
