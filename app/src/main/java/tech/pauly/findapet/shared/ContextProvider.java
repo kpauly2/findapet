@@ -30,7 +30,7 @@ public class ContextProvider {
         this.context = context;
     }
 
-    public String getString(@StringRes int stringId) {
-        return context.getString(stringId);
+    public String getString(@StringRes int stringId, Object... formatArgs) {
+        return context.getString(stringId, formatArgs);
     }
 }

@@ -10,10 +10,12 @@ import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
+import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
+import tech.pauly.findapet.shared.ContextProvider;
 import tech.pauly.findapet.shared.LocationHelper;
 import tech.pauly.findapet.shared.PermissionHelper;
 import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
@@ -59,6 +61,9 @@ public class DiscoverViewModelTest {
     @Mock
     private AnimalListResponse animalListResponse;
 
+    @Mock
+    private ContextProvider contextProvider;
+
     private DiscoverViewModel subject;
 
     @Before
@@ -70,7 +75,9 @@ public class DiscoverViewModelTest {
         when(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(true);
         when(animalRepository.fetchAnimals(anyString(), any(AnimalType.class), anyInt())).thenReturn(Observable.just(animalListResponse));
         when(locationHelper.getCurrentLocation()).thenReturn(Observable.just("zipcode"));
-        subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus, locationHelper);
+        when(contextProvider.getString(R.string.near_location, "zipcode")).thenReturn("Near zipcode");
+        when(contextProvider.getString(R.string.near_location, "zipcode2")).thenReturn("Near zipcode2");
+        subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus, locationHelper, contextProvider);
     }
 
     @Test
@@ -103,7 +110,7 @@ public class DiscoverViewModelTest {
     }
 
     @Test
-    public void requestPermissionToLoad_locationPermissionGranted_usesAnimalTypeFromDataStoreAndClearsListAndStartsRefreshing() {
+    public void requestPermissionToLoad_locationPermissionGranted_usesAnimalTypeFromDataStoreAndClearsListAndStartsRefreshingAndSetsLocationChip() {
         when(animalRepository.fetchAnimals(anyString(), any(AnimalType.class), anyInt())).thenReturn(Observable.empty());
         subject.requestPermissionToLoad();
 
@@ -111,6 +118,20 @@ public class DiscoverViewModelTest {
         verify(animalRepository).fetchAnimals("zipcode", AnimalType.CAT, 0);
         verify(listAdapter).clearAnimalItems();
         assertThat(subject.refreshing.get()).isTrue();
+        assertThat(subject.chipList.size()).isEqualTo(1);
+        assertThat(subject.chipList.get(0)).isEqualTo("Near zipcode");
+    }
+
+    @Test
+    public void requestPermissionToLoad_locationPermissionGrantedAndSearchASecondTime_resetsLocationChip() {
+        when(animalRepository.fetchAnimals(anyString(), any(AnimalType.class), anyInt())).thenReturn(Observable.empty());
+        subject.requestPermissionToLoad();
+        when(locationHelper.getCurrentLocation()).thenReturn(Observable.just("zipcode2"));
+
+        subject.requestPermissionToLoad();
+
+        assertThat(subject.chipList.size()).isEqualTo(1);
+        assertThat(subject.chipList.get(0)).isEqualTo("Near zipcode2");
     }
 
     @Test

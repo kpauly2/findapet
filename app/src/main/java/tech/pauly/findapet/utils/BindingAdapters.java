@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.util.List;
+
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import tech.pauly.findapet.R;
 
@@ -119,12 +121,17 @@ public class BindingAdapters {
     @BindingAdapter("swipeRefreshListener")
     public static void setupSwipeRefreshLayout(SwipeRefreshLayout layout, SwipeRefreshListener listener) {
         layout.setOnRefreshListener(listener::onRefresh);
-        layout.setColorSchemeColors(layout.getResources().getColor(R.color.purpleStandard));
+        layout.setColorSchemeColors(layout.getContext().getColor(R.color.purpleStandard));
     }
 
     @BindingAdapter("refreshing")
     public static void refreshing(SwipeRefreshLayout layout, boolean refreshing) {
         layout.setRefreshing(refreshing);
+    }
+
+    @BindingAdapter("chipList")
+    public static void chipList(ChipListLayout layout, List<String> chips) {
+        layout.setChips(chips);
     }
 
     @FunctionalInterface

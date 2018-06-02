@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -13,62 +14,84 @@
         <import type="android.view.View" />
     </data>
 
-    <FrameLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{viewModel.locationMissing ? View.VISIBLE : View.GONE}"
-            android:elevation="4dp">
-
-            <TextView
-                android:id="@+id/missing_location_message"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="@string/location_missing"
-                android:textAppearance="@style/FontStrongBody"
-                android:textColor="@color/purpleStandard"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="@dimen/half_margin"
-                android:gravity="end"
-                app:layout_constraintEnd_toStartOf="@id/missing_location_arrow"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageView
-                android:id="@+id/missing_location_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow"
-                android:rotation="-90"
-                android:layout_margin="@dimen/standard_margin"
-                android:contentDescription="@string/missing_location_arrow"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-        </android.support.constraint.ConstraintLayout>
+        <tech.pauly.findapet.utils.ChipListLayout
+            android:id="@+id/filters_bar"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:gravity="start"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/half_margin"
+            android:paddingRight="@dimen/half_margin"
+            android:paddingTop="@dimen/half_margin"
+            android:visibility="@{viewModel.locationMissing ? View.GONE : View.VISIBLE}"
+            app:chipList="@{viewModel.chipList}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/fragment_discover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/discover_swipe_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@android:color/white"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:elevation="0dp"
             android:paddingTop="@dimen/standard_margin"
             android:visibility="@{viewModel.locationMissing ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/filters_bar"
             app:refreshing="@{viewModel.refreshing}"
             app:swipeRefreshListener="@{viewModel::requestPermissionToLoad}">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/animal_list_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:adapter="@{viewModel.listAdapter}"
                 app:loadMoreListener="@{viewModel::loadMoreAnimals}"
                 app:recyclerViewGridSpan="@{viewModel.columnCount}" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
-    </FrameLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="4dp"
+            android:visibility="@{viewModel.locationMissing ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone">
+
+            <TextView
+                android:id="@+id/missing_location_message"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/half_margin"
+                android:layout_marginTop="30dp"
+                android:gravity="end"
+                android:text="@string/location_missing"
+                android:textAppearance="@style/FontStrongBody"
+                android:textColor="@color/purpleStandard"
+                app:layout_constraintEnd_toStartOf="@id/missing_location_arrow"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/missing_location_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/standard_margin"
+                android:contentDescription="@string/missing_location_arrow"
+                android:rotation="-90"
+                android:src="@drawable/ic_arrow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>

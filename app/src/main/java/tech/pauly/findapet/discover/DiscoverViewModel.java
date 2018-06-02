@@ -2,19 +2,24 @@ package tech.pauly.findapet.discover;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
+import android.databinding.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.shared.BaseViewModel;
+import tech.pauly.findapet.shared.ContextProvider;
 import tech.pauly.findapet.shared.LocationHelper;
 import tech.pauly.findapet.shared.PermissionHelper;
 import tech.pauly.findapet.shared.events.PermissionEvent;
@@ -30,6 +35,7 @@ public class DiscoverViewModel extends BaseViewModel {
     public ObservableInt columnCount = new ObservableInt(2);
     public ObservableBoolean refreshing = new ObservableBoolean(false);
     public ObservableBoolean locationMissing = new ObservableBoolean(false);
+    public ObservableList<String> chipList = new ObservableArrayList<>();
 
     private final AnimalListAdapter listAdapter;
     private final AnimalListItemViewModel.Factory animalListItemFactory;
@@ -38,6 +44,7 @@ public class DiscoverViewModel extends BaseViewModel {
     private PermissionHelper permissionHelper;
     private ViewEventBus eventBus;
     private LocationHelper locationHelper;
+    private ContextProvider contextProvider;
 
     private AnimalType animalType = AnimalType.CAT;
     private int lastOffset = 0;
@@ -50,7 +57,8 @@ public class DiscoverViewModel extends BaseViewModel {
                              TransientDataStore dataStore,
                              PermissionHelper permissionHelper,
                              ViewEventBus eventBus,
-                             LocationHelper locationHelper) {
+                             LocationHelper locationHelper,
+                             ContextProvider contextProvider) {
         this.listAdapter = listAdapter;
         this.animalListItemFactory = animalListItemFactory;
         this.animalRepository = animalRepository;
@@ -58,6 +66,7 @@ public class DiscoverViewModel extends BaseViewModel {
         this.permissionHelper = permissionHelper;
         this.eventBus = eventBus;
         this.locationHelper = locationHelper;
+        this.contextProvider = contextProvider;
 
         DiscoverAnimalTypeUseCase useCase = dataStore.get(DiscoverAnimalTypeUseCase.class);
         if (useCase != null) {
@@ -102,8 +111,15 @@ public class DiscoverViewModel extends BaseViewModel {
     private void fetchAnimals() {
         refreshing.set(true);
         subscribeOnLifecycle(locationHelper.getCurrentLocation()
-                                           .flatMap(location -> animalRepository.fetchAnimals(location, animalType, lastOffset))
-                                           .subscribe(this::setAnimalList, this::showError));
+                                           .flatMap(location -> {
+                                               setLocationChip(location);
+                                               return animalRepository.fetchAnimals(location, animalType, lastOffset);
+                                           }).subscribe(this::setAnimalList, this::showError));
+    }
+
+    private void setLocationChip(String location) {
+        chipList.clear();
+        chipList.add(contextProvider.getString(R.string.near_location, location));
     }
 
     private void showError(Throwable throwable) {

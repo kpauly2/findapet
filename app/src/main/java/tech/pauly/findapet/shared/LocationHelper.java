@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -38,6 +39,10 @@ public class LocationHelper {
     public Observable<String> getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return Observable.error(new IllegalAccessException("Requesting permission without having granted permission to ACCESS_FINE_LOCATION"));
+        }
+
+        if (isEmulator()) {
+            return Observable.just("48335");
         }
 
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -69,11 +74,7 @@ public class LocationHelper {
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             locationSubject.onNext(addresses.get(0).getPostalCode());
         } catch (IOException e) {
-            if (isEmulator()) {
-                locationSubject.onNext("48335");
-            } else {
-                locationSubject.onError(e);
-            }
+            locationSubject.onError(e);
         }
     }
 
