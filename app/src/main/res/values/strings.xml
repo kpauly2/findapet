@@ -23,14 +23,6 @@
     <string name="animal_details_tab_location">LOCATION</string>
     <string name="animal_details_about">ABOUT</string>
     <string name="animal_details_description">MEET %s</string>
-    <string name="dog">Dog</string>
-    <string name="cat">Cat</string>
-    <string name="smallfurry">Small &amp; Furry</string>
-    <string name="barnyard">Barnyard</string>
-    <string name="bird">Bird</string>
-    <string name="horse">Horse</string>
-    <string name="rabbit">Rabbit</string>
-    <string name="reptile">Scaled</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="unknown">Unknown</string>

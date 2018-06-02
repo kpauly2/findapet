@@ -15,6 +15,7 @@ import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.shared.BaseViewModel;
+import tech.pauly.findapet.shared.LocationHelper;
 import tech.pauly.findapet.shared.PermissionHelper;
 import tech.pauly.findapet.shared.events.PermissionEvent;
 import tech.pauly.findapet.shared.events.ViewEventBus;
@@ -36,6 +37,7 @@ public class DiscoverViewModel extends BaseViewModel {
     private TransientDataStore dataStore;
     private PermissionHelper permissionHelper;
     private ViewEventBus eventBus;
+    private LocationHelper locationHelper;
 
     private AnimalType animalType = AnimalType.CAT;
     private int lastOffset = 0;
@@ -47,13 +49,15 @@ public class DiscoverViewModel extends BaseViewModel {
                              AnimalRepository animalRepository,
                              TransientDataStore dataStore,
                              PermissionHelper permissionHelper,
-                             ViewEventBus eventBus) {
+                             ViewEventBus eventBus,
+                             LocationHelper locationHelper) {
         this.listAdapter = listAdapter;
         this.animalListItemFactory = animalListItemFactory;
         this.animalRepository = animalRepository;
         this.dataStore = dataStore;
         this.permissionHelper = permissionHelper;
         this.eventBus = eventBus;
+        this.locationHelper = locationHelper;
 
         DiscoverAnimalTypeUseCase useCase = dataStore.get(DiscoverAnimalTypeUseCase.class);
         if (useCase != null) {
@@ -78,7 +82,7 @@ public class DiscoverViewModel extends BaseViewModel {
             loadList();
         } else {
             eventBus.send(PermissionEvent.build(this)
-                                         .requestPermission(ACCESS_FINE_LOCATION)
+                                         .requestPermissions(ACCESS_FINE_LOCATION)
                                          .listener(locationPermissionResponseListener())
                                          .code(100));
         }
@@ -97,8 +101,13 @@ public class DiscoverViewModel extends BaseViewModel {
 
     private void fetchAnimals() {
         refreshing.set(true);
-        subscribeOnLifecycle(animalRepository.fetchAnimals(animalType, lastOffset)
-                                             .subscribe(this::setAnimalList, Throwable::printStackTrace));
+        subscribeOnLifecycle(locationHelper.getCurrentLocation()
+                                           .flatMap(location -> animalRepository.fetchAnimals(location, animalType, lastOffset))
+                                           .subscribe(this::setAnimalList, this::showError));
+    }
+
+    private void showError(Throwable throwable) {
+        throwable.printStackTrace();
     }
 
     private void setAnimalList(AnimalListResponse animalListResponse) {
