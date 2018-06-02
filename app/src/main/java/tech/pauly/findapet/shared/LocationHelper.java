@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import tech.pauly.findapet.dependencyinjection.ForApplication;
@@ -40,19 +41,19 @@ public class LocationHelper {
         this.context = context;
     }
 
-    public Observable<String> getCurrentLocation(boolean resetLocation) {
+    public Single<String> getCurrentLocation(boolean resetLocation) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return Observable.error(new IllegalAccessException("Requesting permission without having granted permission to ACCESS_FINE_LOCATION"));
+            return Single.error(new IllegalAccessException("Requesting permission without having granted permission to ACCESS_FINE_LOCATION"));
         }
 
         if (isEmulator()) {
-            return Observable.just("48335");
+            return Single.just("48335");
         }
 
         if (resetLocation) {
             fetchNewLocation();
         }
-        return locationSubject.filter(s -> !s.equals(RESET));
+        return locationSubject.filter(s -> !s.equals(RESET)).singleOrError();
     }
 
     @SuppressLint("MissingPermission")
@@ -91,8 +92,13 @@ public class LocationHelper {
     }
 
     private boolean isEmulator() {
-        return Build.FINGERPRINT.startsWith("generic") || Build.FINGERPRINT.startsWith("unknown") || Build.MODEL.contains("google_sdk") || Build.MODEL.contains("Emulator") ||
-               Build.MODEL.contains("Android SDK built for x86") || Build.MANUFACTURER.contains("Genymotion") ||
-               (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")) || "google_sdk".equals(Build.PRODUCT);
+        return Build.FINGERPRINT.startsWith("generic")
+               || Build.FINGERPRINT.startsWith("unknown")
+               || Build.MODEL.contains("google_sdk")
+               || Build.MODEL.contains("Emulator")
+               || Build.MODEL.contains("Android SDK built for x86")
+               || Build.MANUFACTURER.contains("Genymotion")
+               || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+               || "google_sdk".equals(Build.PRODUCT);
     }
 }

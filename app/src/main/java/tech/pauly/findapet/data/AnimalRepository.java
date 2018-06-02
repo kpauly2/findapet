@@ -2,11 +2,10 @@ package tech.pauly.findapet.data;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import tech.pauly.findapet.BuildConfig;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
-import tech.pauly.findapet.shared.LocationHelper;
 
 public class AnimalRepository {
 
@@ -21,7 +20,7 @@ public class AnimalRepository {
         this.observableHelper = observableHelper;
     }
 
-    public Observable<AnimalListResponse> fetchAnimals(String location, AnimalType animalType, int offset) {
+    public Single<AnimalListResponse> fetchAnimals(String location, AnimalType animalType, int offset) {
         return animalService.fetchAnimals(location, BuildConfig.API_KEY, animalType.name().toLowerCase(), offset, ANIMAL_RETURN_COUNT)
                             .compose(observableHelper.applySchedulers());
     }

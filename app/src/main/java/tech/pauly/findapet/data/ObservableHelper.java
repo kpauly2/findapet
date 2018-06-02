@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Scheduler;
+import io.reactivex.SingleTransformer;
 import tech.pauly.findapet.dependencyinjection.IoScheduler;
 import tech.pauly.findapet.dependencyinjection.MainThreadScheduler;
 
@@ -17,7 +18,7 @@ public class ObservableHelper {
         this.mainThreadScheduler = mainThreadScheduler;
     }
 
-    public <T> ObservableTransformer<T, T> applySchedulers() {
+    public <T> SingleTransformer<T, T> applySchedulers() {
         return upstream -> upstream.subscribeOn(ioScheduler)
                                    .observeOn(mainThreadScheduler);
     }

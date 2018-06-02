@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
@@ -32,7 +32,7 @@ public class AnimalRepositoryTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         animalListResponse = mock(AnimalListResponse.class);
-        when(animalService.fetchAnimals(anyString(), anyString(), anyString(), anyInt(), anyInt())).thenReturn(Observable.just(animalListResponse));
+        when(animalService.fetchAnimals(anyString(), anyString(), anyString(), anyInt(), anyInt())).thenReturn(Single.just(animalListResponse));
         when(observableHelper.applySchedulers()).thenReturn(observable -> observable);
 
         subject = new AnimalRepository(animalService, observableHelper);
