@@ -21,16 +21,16 @@ import tech.pauly.findapet.dependencyinjection.ForApplication;
  * this class and use the limited set of context APIs implemented in this class.
  */
 @Singleton
-public class ContextProvider {
+public class ResourceProvider {
 
     private Context context;
 
     @Inject
-    ContextProvider(@ForApplication Context context) {
+    ResourceProvider(@ForApplication Context context) {
         this.context = context;
     }
 
-    public String getString(@StringRes int stringId) {
-        return context.getString(stringId);
+    public String getString(@StringRes int stringId, Object... formatArgs) {
+        return context.getString(stringId, formatArgs);
     }
 }

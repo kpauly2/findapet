@@ -49,4 +49,5 @@
     <string name="drawer_content">Navigation drawer content</string>
     <string name="location_missing">Pick a location to start searching for pets</string>
     <string name="missing_location_arrow">missing location arrow</string>
+    <string name="near_location">Near %s</string>
 </resources>

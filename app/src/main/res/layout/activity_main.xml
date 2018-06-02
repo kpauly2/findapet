@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:contentScrim="?attr/colorPrimary"
-                    app:layout_scrollFlags="snap|scroll|enterAlways|enterAlwaysCollapsed"
+                    app:layout_scrollFlags="snap"
                     app:titleEnabled="false">
 
                     <android.support.v7.widget.Toolbar
