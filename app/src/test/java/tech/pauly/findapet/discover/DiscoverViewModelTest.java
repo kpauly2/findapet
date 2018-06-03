@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.AnimalRepository;
@@ -33,8 +34,6 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -88,8 +87,8 @@ public class DiscoverViewModelTest {
         when(useCase.getAnimalType()).thenReturn(AnimalType.CAT);
         when(dataStore.get(DiscoverAnimalTypeUseCase.class)).thenReturn(useCase);
         when(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(true);
-        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Single.just(animalListResponse));
-        when(locationHelper.getCurrentLocation(anyBoolean())).thenReturn(Single.just("zipcode"));
+        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.just(animalListResponse));
+        when(locationHelper.getCurrentLocation(anyBoolean())).thenReturn(Observable.just("zipcode"));
         when(resourceProvider.getString(R.string.chip_near_location, "zipcode")).thenReturn("Near zipcode");
         when(resourceProvider.getString(R.string.chip_near_location, "zipcode2")).thenReturn("Near zipcode2");
         when(dataStore.get(FilterUpdatedUseCase.class)).thenReturn(null);
@@ -146,7 +145,7 @@ public class DiscoverViewModelTest {
 
     @Test
     public void requestPermissionToLoad_locationPermissionGranted_usesAnimalTypeFromDataStoreAndClearsListAndStartsRefreshing() {
-        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Single.never());
+        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.never());
         ArgumentCaptor<FetchAnimalsRequest> captor = ArgumentCaptor.forClass(FetchAnimalsRequest.class);
 
         subject.requestPermissionToLoad();
@@ -162,7 +161,7 @@ public class DiscoverViewModelTest {
 
     @Test
     public void requestPermissionToLoad_getCurrentLocation_resetsLocationAndSetsLocationChip() {
-        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Single.never());
+        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.never());
 
         subject.requestPermissionToLoad();
 
@@ -174,9 +173,9 @@ public class DiscoverViewModelTest {
 
     @Test
     public void requestPermissionToLoad_getCurrentLocationASecondTime_resetsLocationChip() {
-        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Single.never());
+        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.never());
         subject.requestPermissionToLoad();
-        when(locationHelper.getCurrentLocation(anyBoolean())).thenReturn(Single.just("zipcode2"));
+        when(locationHelper.getCurrentLocation(anyBoolean())).thenReturn(Observable.just("zipcode2"));
 
         subject.requestPermissionToLoad();
 
@@ -187,7 +186,7 @@ public class DiscoverViewModelTest {
 
     @Test
     public void requestPermissionToLoad_getCurrentFilterAndSexIsU_doNotAddChip() {
-        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Single.never());
+        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.never());
 
         subject.requestPermissionToLoad();
 

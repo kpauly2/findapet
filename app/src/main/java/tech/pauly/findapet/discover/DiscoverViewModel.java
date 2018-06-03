@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.AnimalRepository;
@@ -121,21 +122,20 @@ public class DiscoverViewModel extends BaseViewModel {
 
     private void fetchAnimals(boolean resetLocation) {
         refreshing.set(true);
-        subscribeOnLifecycle(Single.zip(getCurrentLocation(resetLocation),
-                                        getCurrentFilter(),
-                                        (location, filter) -> new FetchAnimalsRequest(animalType, lastOffset, location, filter))
+        subscribeOnLifecycle(Observable.zip(getCurrentLocation(resetLocation), getCurrentFilter(),
+                                            (location, filter) -> new FetchAnimalsRequest(animalType, lastOffset, location, filter))
                                    .flatMap(animalRepository::fetchAnimals)
                                    .subscribe(this::setAnimalList, this::showError));
     }
 
-    private Single<Filter> getCurrentFilter() {
+    private Observable<Filter> getCurrentFilter() {
         return filterRepository.getCurrentFilterAndNoFilterIfEmpty()
-                               .doOnSuccess(this::addFilterChips);
+                               .doOnSuccess(this::addFilterChips).toObservable();
     }
 
-    private Single<String> getCurrentLocation(boolean resetLocation) {
+    private Observable<String> getCurrentLocation(boolean resetLocation) {
         return locationHelper.getCurrentLocation(resetLocation)
-                             .doOnSuccess(this::addLocationChip);
+                     .doOnNext(this::addLocationChip);
     }
 
     private void addFilterChips(Filter filter) {

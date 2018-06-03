@@ -36,7 +36,7 @@ public class AnimalRepositoryTest {
         MockitoAnnotations.initMocks(this);
         animalListResponse = mock(AnimalListResponse.class);
         when(animalService.fetchAnimals(anyString(), anyString(), anyString(), anyInt(), anyInt(), anyString())).thenReturn(Single.just(animalListResponse));
-        when(observableHelper.applySchedulers()).thenReturn(single -> single);
+        when(observableHelper.applySingleSchedulers()).thenReturn(single -> single);
 
         subject = new AnimalRepository(animalService, observableHelper);
     }
@@ -51,6 +51,6 @@ public class AnimalRepositoryTest {
         verify(animalService).fetchAnimals(eq("zipcode"), anyString(), eq("cat"), eq(0), eq(20), eq("M"));
         observer.assertValues(animalListResponse)
                 .assertComplete();
-        verify(observableHelper).applySchedulers();
+        verify(observableHelper).applySingleSchedulers();
     }
 }
