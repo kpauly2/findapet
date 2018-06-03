@@ -1,6 +1,6 @@
 package tech.pauly.findapet.data;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import tech.pauly.findapet.data.models.AnimalListResponse;
@@ -8,9 +8,10 @@ import tech.pauly.findapet.data.models.AnimalListResponse;
 public interface AnimalService {
 
     @GET("pet.find")
-    Observable<AnimalListResponse> fetchAnimals(@Query("location") String location,
-                                                @Query("key") String key,
-                                                @Query("animal") String type,
-                                                @Query("offset") int offset,
-                                                @Query("count") int count);
+    Single<AnimalListResponse> fetchAnimals(@Query("location") String location,
+                                            @Query("key") String key,
+                                            @Query("animal") String type,
+                                            @Query("offset") int offset,
+                                            @Query("count") int count,
+                                            @Query("sex") String sex);
 }

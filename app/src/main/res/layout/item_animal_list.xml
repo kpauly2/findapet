@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/animal_distance"
-                android:textAppearance="@style/FontSmall"
+                android:textAppearance="@style/FontVerySmall"
                 android:textColor="@color/textStandard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

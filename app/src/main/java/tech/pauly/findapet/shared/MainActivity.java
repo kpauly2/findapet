@@ -7,6 +7,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import javax.inject.Inject;
 
@@ -14,6 +16,8 @@ import dagger.android.AndroidInjection;
 import io.reactivex.disposables.CompositeDisposable;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.databinding.ActivityMainBinding;
+import tech.pauly.findapet.discover.FilterActivity;
+import tech.pauly.findapet.shared.events.ActivityEvent;
 import tech.pauly.findapet.shared.events.ViewEventBus;
 
 public class MainActivity extends BaseActivity {
@@ -43,6 +47,25 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         subscribeToDrawerChange();
         subscribeToExpandingLayoutChange();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.menu_search:
+                activityEvent(ActivityEvent.build(this).startActivity(FilterActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Nullable

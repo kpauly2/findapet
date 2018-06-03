@@ -1,6 +1,5 @@
 package tech.pauly.findapet.utils;
 
-import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.net.Uri;
 import android.support.annotation.IdRes;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import tech.pauly.findapet.R;
+import tech.pauly.findapet.discover.Chip;
 
 public class BindingAdapters {
 
@@ -130,7 +130,7 @@ public class BindingAdapters {
     }
 
     @BindingAdapter("chipList")
-    public static void chipList(ChipListLayout layout, List<String> chips) {
+    public static void chipList(ChipListLayout layout, List<Chip> chips) {
         layout.setChips(chips);
     }
 

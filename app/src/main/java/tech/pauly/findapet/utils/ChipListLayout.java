@@ -12,11 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tech.pauly.findapet.R;
+import tech.pauly.findapet.discover.Chip;
 
 public class ChipListLayout extends LinearLayout {
 
     private Context context;
-    private List<String> chips = new ArrayList<>();
+    private List<Chip> chips = new ArrayList<>();
 
     public ChipListLayout(Context context) {
         super(context);
@@ -38,7 +39,7 @@ public class ChipListLayout extends LinearLayout {
         updateLayout();
     }
 
-    public void setChips(List<String> chips) {
+    public void setChips(List<Chip> chips) {
         this.chips = chips;
         updateLayout();
     }
@@ -48,9 +49,9 @@ public class ChipListLayout extends LinearLayout {
             setVisibility(VISIBLE);
             removeAllViews();
             LayoutInflater inflater = LayoutInflater.from(context);
-            for (String chip : chips) {
+            for (Chip chip : chips) {
                 FrameLayout chipLayout = (FrameLayout) inflater.inflate(R.layout.item_chip, this, false);
-                ((TextView) chipLayout.getChildAt(0)).setText(chip);
+                ((TextView) chipLayout.getChildAt(0)).setText(chip.getText());
                 addView(chipLayout);
             }
         } else {

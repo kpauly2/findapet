@@ -3,7 +3,8 @@
     package="tech.pauly.findapet">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-feature android:name="android.hardware.location.network" />
 
     <application
@@ -16,8 +17,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".shared.MainActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,7 +26,11 @@
         </activity>
         <activity
             android:name=".discover.AnimalDetailsActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".shared.MainActivity"/>
+            android:parentActivityName=".shared.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".discover.FilterActivity"
+            android:parentActivityName=".shared.MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

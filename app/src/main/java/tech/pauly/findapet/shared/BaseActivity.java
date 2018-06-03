@@ -62,7 +62,11 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void activityEvent(ActivityEvent event) {
-        startActivity(new Intent(this, event.getStartActivityClass()));
+        if (event.isFinishActivity()) {
+            finish();
+        } else {
+            startActivity(new Intent(this, event.getStartActivityClass()));
+        }
     }
 
     protected void subscribeOnLifecycle(Disposable subscription) {

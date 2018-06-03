@@ -15,6 +15,12 @@ android {
         DdmPreferences.setTimeOut(60000)
         testInstrumentationRunner "tech.pauly.findapet.EspressoTestRunner"
         testInstrumentationRunnerArguments disableAnalytics: 'true'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -94,7 +100,11 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     //Architecture Components
+    def room_version = "1.1.0"
     implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
 
     //Dagger 2
     implementation 'com.google.dagger:dagger:2.14.1'
@@ -118,6 +128,7 @@ dependencies {
     testImplementation('com.squareup.assertj:assertj-android:1.1.1') {
         exclude module: 'support-annotations'
     }
+    testImplementation "android.arch.persistence.room:testing:$room_version"
 
     //Espresso Tests
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.0', {

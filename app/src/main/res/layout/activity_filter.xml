@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="tech.pauly.findapet.discover.FilterViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            android:theme="@style/ToolbarTheme"
+            app:layout_collapseMode="pin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/filter_title"
+            app:titleTextAppearance="@style/FontStrongHeader"
+            app:titleTextColor="@color/purpleStandard" />
+
+        <TextView
+            android:id="@+id/sex_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:text="@string/sex_header"
+            android:textAppearance="@style/FontStrongHeader"
+            android:textColor="@color/textStandard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <ToggleButton
+            android:id="@+id/button_male"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@drawable/selector_filter_button"
+            android:checked="@={viewModel.maleChecked}"
+            android:drawableEnd="@drawable/ic_check"
+            android:drawablePadding="12dp"
+            android:elevation="4dp"
+            android:gravity="start|center_vertical"
+            android:paddingEnd="12dp"
+            android:paddingStart="12dp"
+            android:textAppearance="@style/FontSmall"
+            android:textColor="@drawable/selector_filter_button_text"
+            android:textOff="@string/male"
+            android:textOn="@string/male"
+            app:layout_constraintBottom_toBottomOf="@+id/button_female"
+            app:layout_constraintEnd_toStartOf="@+id/button_female"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sex_header" />
+
+        <ToggleButton
+            android:id="@+id/button_female"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:background="@drawable/selector_filter_button"
+            android:checked="@={viewModel.femaleChecked}"
+            android:drawableEnd="@drawable/ic_check"
+            android:drawablePadding="12dp"
+            android:elevation="4dp"
+            android:gravity="start|center_vertical"
+            android:paddingEnd="12dp"
+            android:paddingStart="12dp"
+            android:textAppearance="@style/FontSmall"
+            android:textColor="@drawable/selector_filter_button_text"
+            android:textOff="@string/female"
+            android:textOn="@string/female"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_male"
+            app:layout_constraintTop_toTopOf="@id/button_male" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_large_button"
+            android:onClick="@{viewModel::saveFilter}"
+            android:text="@string/filter_search_button"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
