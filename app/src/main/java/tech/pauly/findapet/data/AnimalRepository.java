@@ -6,6 +6,7 @@ import io.reactivex.Single;
 import tech.pauly.findapet.BuildConfig;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
+import tech.pauly.findapet.data.models.FetchAnimalsRequest;
 
 public class AnimalRepository {
 
@@ -20,8 +21,13 @@ public class AnimalRepository {
         this.observableHelper = observableHelper;
     }
 
-    public Single<AnimalListResponse> fetchAnimals(String location, AnimalType animalType, int offset) {
-        return animalService.fetchAnimals(location, BuildConfig.API_KEY, animalType.name().toLowerCase(), offset, ANIMAL_RETURN_COUNT)
+    public Single<AnimalListResponse> fetchAnimals(FetchAnimalsRequest request) {
+        return animalService.fetchAnimals(request.getLocation(),
+                                          BuildConfig.API_KEY,
+                                          request.getAnimalType().name().toLowerCase(),
+                                          request.getLastOffset(),
+                                          ANIMAL_RETURN_COUNT,
+                                          request.getFilter().getSex().getServerName())
                             .compose(observableHelper.applySchedulers());
     }
 }

@@ -12,6 +12,8 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import tech.pauly.findapet.data.FilterRepository;
 import tech.pauly.findapet.data.models.Filter;
+import tech.pauly.findapet.data.models.Sex;
+import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.shared.events.ActivityEvent;
 import tech.pauly.findapet.shared.events.ViewEventBus;
 
@@ -30,6 +32,9 @@ public class FilterViewModelTest {
     private ViewEventBus eventBus;
 
     @Mock
+    private TransientDataStore dataStore;
+
+    @Mock
     private Filter filter;
 
     private FilterViewModel subject;
@@ -39,12 +44,12 @@ public class FilterViewModelTest {
         MockitoAnnotations.initMocks(this);
         when(filterRepository.getCurrentFilter()).thenReturn(Single.just(filter));
         when(filterRepository.insertFilter(any(Filter.class))).thenReturn(Completable.complete());
-        subject = new FilterViewModel(filterRepository, eventBus);
+        subject = new FilterViewModel(filterRepository, eventBus, dataStore);
     }
 
     @Test
-    public void loadCurrentFilter_sexIs0_populatesScreenForFilter() {
-        when(filter.getSex()).thenReturn(0);
+    public void loadCurrentFilter_sexIsU_populatesScreenForFilter() {
+        when(filter.getSex()).thenReturn(Sex.U);
 
         subject.loadCurrentFilter();
 
@@ -53,8 +58,8 @@ public class FilterViewModelTest {
     }
 
     @Test
-    public void loadCurrentFilter_sexIs1_populatesScreenForFilter() {
-        when(filter.getSex()).thenReturn(1);
+    public void loadCurrentFilter_sexIsM_populatesScreenForFilter() {
+        when(filter.getSex()).thenReturn(Sex.M);
 
         subject.loadCurrentFilter();
 
@@ -63,8 +68,8 @@ public class FilterViewModelTest {
     }
 
     @Test
-    public void loadCurrentFilter_sexIs2_populatesScreenForFilter() {
-        when(filter.getSex()).thenReturn(2);
+    public void loadCurrentFilter_sexIsF_populatesScreenForFilter() {
+        when(filter.getSex()).thenReturn(Sex.F);
 
         subject.loadCurrentFilter();
 
@@ -73,7 +78,14 @@ public class FilterViewModelTest {
     }
 
     @Test
-    public void saveFilter_bothSexesChecked_insertsCorrectFilterAndFinish() {
+    public void saveFilter_savesUseCaseAndFinishesScreen() {
+        subject.saveFilter(mock(View.class));
+
+        verify(eventBus).send(ActivityEvent.build(this).finishActivity());
+    }
+
+    @Test
+    public void saveFilter_bothSexesChecked_insertsCorrectFilter() {
         subject.maleChecked.set(true);
         subject.femaleChecked.set(true);
         ArgumentCaptor<Filter> captor = ArgumentCaptor.forClass(Filter.class);
@@ -81,12 +93,11 @@ public class FilterViewModelTest {
         subject.saveFilter(mock(View.class));
 
         verify(filterRepository).insertFilter(captor.capture());
-        assertThat(captor.getValue().getSex()).isEqualTo(0);
-        verify(eventBus).send(ActivityEvent.build(this).finishActivity());
+        assertThat(captor.getValue().getSex()).isEqualTo(Sex.U);
     }
 
     @Test
-    public void saveFilter_neitherSexChecked_insertsCorrectFilterAndFinish() {
+    public void saveFilter_neitherSexChecked_insertsCorrectFilter() {
         subject.maleChecked.set(false);
         subject.femaleChecked.set(false);
         ArgumentCaptor<Filter> captor = ArgumentCaptor.forClass(Filter.class);
@@ -94,12 +105,11 @@ public class FilterViewModelTest {
         subject.saveFilter(mock(View.class));
 
         verify(filterRepository).insertFilter(captor.capture());
-        assertThat(captor.getValue().getSex()).isEqualTo(0);
-        verify(eventBus).send(ActivityEvent.build(this).finishActivity());
+        assertThat(captor.getValue().getSex()).isEqualTo(Sex.U);
     }
 
     @Test
-    public void saveFilter_onlyMaleChecked_insertsCorrectFilterAndFinish() {
+    public void saveFilter_onlyMaleChecked_insertsCorrectFilter() {
         subject.maleChecked.set(true);
         subject.femaleChecked.set(false);
         ArgumentCaptor<Filter> captor = ArgumentCaptor.forClass(Filter.class);
@@ -107,12 +117,11 @@ public class FilterViewModelTest {
         subject.saveFilter(mock(View.class));
 
         verify(filterRepository).insertFilter(captor.capture());
-        assertThat(captor.getValue().getSex()).isEqualTo(1);
-        verify(eventBus).send(ActivityEvent.build(this).finishActivity());
+        assertThat(captor.getValue().getSex()).isEqualTo(Sex.M);
     }
 
     @Test
-    public void saveFilter_onlyFemaleChecked_insertsCorrectFilterAndFinish() {
+    public void saveFilter_onlyFemaleChecked_insertsCorrectFilter() {
         subject.maleChecked.set(false);
         subject.femaleChecked.set(true);
         ArgumentCaptor<Filter> captor = ArgumentCaptor.forClass(Filter.class);
@@ -120,7 +129,6 @@ public class FilterViewModelTest {
         subject.saveFilter(mock(View.class));
 
         verify(filterRepository).insertFilter(captor.capture());
-        assertThat(captor.getValue().getSex()).isEqualTo(2);
-        verify(eventBus).send(ActivityEvent.build(this).finishActivity());
+        assertThat(captor.getValue().getSex()).isEqualTo(Sex.F);
     }
 }

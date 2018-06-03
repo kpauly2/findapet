@@ -61,4 +61,17 @@ public class FilterRepositoryTest {
         verify(filterDatabase.filterDao()).insert(filter);
         assertThat(subject.currentFilterId).isEqualTo(1L);
     }
+
+    @Test
+    public void getCurrentFilterAndNoFilterIfEmpty_currentIdNotPresent_returnEmptyFilter() {
+        subject.getCurrentFilterAndNoFilterIfEmpty().test().assertValues(new Filter());
+    }
+
+    @Test
+    public void getCurrentFilterAndNoFilterIfEmpty_currentIdPresent_returnFilter() {
+        subject.currentFilterId = 1L;
+
+        subject.getCurrentFilterAndNoFilterIfEmpty().test().assertValues(filter);
+        verify(filterDatabase.filterDao()).findById(1L);
+    }
 }

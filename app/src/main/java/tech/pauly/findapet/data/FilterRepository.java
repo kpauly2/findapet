@@ -41,4 +41,8 @@ public class FilterRepository {
                      .compose(observableHelper.applySchedulers())
                      .ignoreElement();
     }
+
+    public Single<Filter> getCurrentFilterAndNoFilterIfEmpty() {
+        return getCurrentFilter().onErrorResumeNext(Single.just(new Filter()));
+    }
 }

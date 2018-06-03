@@ -12,15 +12,21 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Single;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.AnimalRepository;
+import tech.pauly.findapet.data.FilterRepository;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
+import tech.pauly.findapet.data.models.FetchAnimalsRequest;
+import tech.pauly.findapet.data.models.Filter;
+import tech.pauly.findapet.data.models.Sex;
 import tech.pauly.findapet.shared.BaseViewModel;
 import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.LocationHelper;
 import tech.pauly.findapet.shared.PermissionHelper;
+import tech.pauly.findapet.shared.datastore.FilterUpdatedUseCase;
 import tech.pauly.findapet.shared.events.PermissionEvent;
 import tech.pauly.findapet.shared.events.ViewEventBus;
 import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
@@ -28,13 +34,15 @@ import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static tech.pauly.findapet.discover.Chip.Type.FILTER;
+import static tech.pauly.findapet.discover.Chip.Type.LOCATION;
 
 public class DiscoverViewModel extends BaseViewModel {
 
     public ObservableInt columnCount = new ObservableInt(2);
     public ObservableBoolean refreshing = new ObservableBoolean(false);
     public ObservableBoolean locationMissing = new ObservableBoolean(false);
-    public ObservableList<String> chipList = new ObservableArrayList<>();
+    public ObservableList<Chip> chipList = new ObservableArrayList<>();
 
     private final AnimalListAdapter listAdapter;
     private final AnimalListItemViewModel.Factory animalListItemFactory;
@@ -44,6 +52,7 @@ public class DiscoverViewModel extends BaseViewModel {
     private ViewEventBus eventBus;
     private LocationHelper locationHelper;
     private ResourceProvider resourceProvider;
+    private FilterRepository filterRepository;
 
     private AnimalType animalType = AnimalType.CAT;
     private int lastOffset = 0;
@@ -57,7 +66,8 @@ public class DiscoverViewModel extends BaseViewModel {
                              PermissionHelper permissionHelper,
                              ViewEventBus eventBus,
                              LocationHelper locationHelper,
-                             ResourceProvider resourceProvider) {
+                             ResourceProvider resourceProvider,
+                             FilterRepository filterRepository) {
         this.listAdapter = listAdapter;
         this.animalListItemFactory = animalListItemFactory;
         this.animalRepository = animalRepository;
@@ -66,6 +76,7 @@ public class DiscoverViewModel extends BaseViewModel {
         this.eventBus = eventBus;
         this.locationHelper = locationHelper;
         this.resourceProvider = resourceProvider;
+        this.filterRepository = filterRepository;
 
         DiscoverAnimalTypeUseCase useCase = dataStore.get(DiscoverAnimalTypeUseCase.class);
         if (useCase != null) {
@@ -79,7 +90,8 @@ public class DiscoverViewModel extends BaseViewModel {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void onResume() {
-        if (firstLoad) {
+        FilterUpdatedUseCase useCase = dataStore.get(FilterUpdatedUseCase.class);
+        if (firstLoad || useCase != null) {
             firstLoad = false;
             requestPermissionToLoad();
         }
@@ -109,16 +121,39 @@ public class DiscoverViewModel extends BaseViewModel {
 
     private void fetchAnimals(boolean resetLocation) {
         refreshing.set(true);
-        subscribeOnLifecycle(locationHelper.getCurrentLocation(resetLocation)
-                                           .flatMap(location -> {
-                                               setLocationChip(location);
-                                               return animalRepository.fetchAnimals(location, animalType, lastOffset);
-                                           }).subscribe(this::setAnimalList, this::showError));
+        subscribeOnLifecycle(Single.zip(getCurrentLocation(resetLocation),
+                                        getCurrentFilter(),
+                                        (location, filter) -> new FetchAnimalsRequest(animalType, lastOffset, location, filter))
+                                   .flatMap(animalRepository::fetchAnimals)
+                                   .subscribe(this::setAnimalList, this::showError));
     }
 
-    private void setLocationChip(String location) {
-        chipList.clear();
-        chipList.add(resourceProvider.getString(R.string.near_location, location));
+    private Single<Filter> getCurrentFilter() {
+        return filterRepository.getCurrentFilterAndNoFilterIfEmpty()
+                               .doOnSuccess(this::addFilterChips);
+    }
+
+    private Single<String> getCurrentLocation(boolean resetLocation) {
+        return locationHelper.getCurrentLocation(resetLocation)
+                             .doOnSuccess(this::addLocationChip);
+    }
+
+    private void addFilterChips(Filter filter) {
+        for (Chip chip : chipList) {
+            if (chip.getType() == FILTER) {
+                chipList.remove(chip);
+            }
+        }
+        if (filter.getSex() != Sex.U) {
+            chipList.add(new Chip(FILTER, resourceProvider.getString(filter.getSex().getFormattedName())));
+        }
+    }
+
+    private void addLocationChip(String location) {
+        if (chipList.size() > 0 && chipList.get(0).getType() == LOCATION) {
+            chipList.remove(0);
+        }
+        chipList.add(0, new Chip(LOCATION, resourceProvider.getString(R.string.chip_near_location, location)));
     }
 
     private void showError(Throwable throwable) {

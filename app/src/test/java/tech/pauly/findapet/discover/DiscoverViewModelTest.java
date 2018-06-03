@@ -12,14 +12,19 @@ import java.util.List;
 import io.reactivex.Single;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.AnimalRepository;
+import tech.pauly.findapet.data.FilterRepository;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
+import tech.pauly.findapet.data.models.FetchAnimalsRequest;
+import tech.pauly.findapet.data.models.Filter;
+import tech.pauly.findapet.data.models.Sex;
 import tech.pauly.findapet.shared.LocationHelper;
 import tech.pauly.findapet.shared.PermissionHelper;
 import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
+import tech.pauly.findapet.shared.datastore.FilterUpdatedUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.shared.events.PermissionEvent;
 import tech.pauly.findapet.shared.events.ViewEventBus;
@@ -65,6 +70,15 @@ public class DiscoverViewModelTest {
     @Mock
     private ResourceProvider resourceProvider;
 
+    @Mock
+    private FilterRepository filterRepository;
+
+    @Mock
+    private FetchAnimalsRequest fetchAnimalsRequest;
+
+    @Mock
+    private Filter filter;
+
     private DiscoverViewModel subject;
 
     @Before
@@ -74,27 +88,47 @@ public class DiscoverViewModelTest {
         when(useCase.getAnimalType()).thenReturn(AnimalType.CAT);
         when(dataStore.get(DiscoverAnimalTypeUseCase.class)).thenReturn(useCase);
         when(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(true);
-        when(animalRepository.fetchAnimals(anyString(), any(AnimalType.class), anyInt())).thenReturn(Single.just(animalListResponse));
+        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Single.just(animalListResponse));
         when(locationHelper.getCurrentLocation(anyBoolean())).thenReturn(Single.just("zipcode"));
-        when(resourceProvider.getString(R.string.near_location, "zipcode")).thenReturn("Near zipcode");
-        when(resourceProvider.getString(R.string.near_location, "zipcode2")).thenReturn("Near zipcode2");
-        subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus, locationHelper, resourceProvider);
+        when(resourceProvider.getString(R.string.chip_near_location, "zipcode")).thenReturn("Near zipcode");
+        when(resourceProvider.getString(R.string.chip_near_location, "zipcode2")).thenReturn("Near zipcode2");
+        when(dataStore.get(FilterUpdatedUseCase.class)).thenReturn(null);
+        when(filter.getSex()).thenReturn(Sex.U);
+        when(filterRepository.getCurrentFilterAndNoFilterIfEmpty()).thenReturn(Single.just(filter));
+        when(fetchAnimalsRequest.getFilter()).thenReturn(filter);
+        when(fetchAnimalsRequest.getAnimalType()).thenReturn(AnimalType.CAT);
+        when(fetchAnimalsRequest.getLocation()).thenReturn("zipcode");
+        when(fetchAnimalsRequest.getLastOffset()).thenReturn(0);
+
+        subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus, locationHelper, resourceProvider, filterRepository);
     }
 
     @Test
-    public void onResume_firstLoad_loadListForCurrentLocationAndAnimalAndNoOffset() {
+    public void onResume_firstLoad_loadList() {
         subject.onResume();
 
-        verify(animalRepository).fetchAnimals("zipcode", AnimalType.CAT, 0);
+        verify(animalRepository).fetchAnimals(any(FetchAnimalsRequest.class));
     }
 
     @Test
-    public void onResume_notFirstLoad_doNothing() {
+    public void onResume_notFirstLoadButFilterUpdated_loadList() {
         subject.onResume();
         clearInvocations(animalRepository);
+        when(dataStore.get(FilterUpdatedUseCase.class)).thenReturn(mock(FilterUpdatedUseCase.class));
+
         subject.onResume();
 
-        verify(animalRepository, never()).fetchAnimals(anyString(), any(AnimalType.class), anyInt());
+        verify(animalRepository).fetchAnimals(any(FetchAnimalsRequest.class));
+    }
+
+    @Test
+    public void onResume_notFirstLoadAndFilterNotUpdated_doNothing() {
+        subject.onResume();
+        clearInvocations(animalRepository);
+
+        subject.onResume();
+
+        verify(animalRepository, never()).fetchAnimals(any(FetchAnimalsRequest.class));
     }
 
     @Test
@@ -111,38 +145,65 @@ public class DiscoverViewModelTest {
     }
 
     @Test
-    public void requestPermissionToLoad_locationPermissionGranted_usesAnimalTypeFromDataStoreAndClearsListAndStartsRefreshingAndSetsLocationChip() {
-        when(animalRepository.fetchAnimals(anyString(), any(AnimalType.class), anyInt())).thenReturn(Single.never());
+    public void requestPermissionToLoad_locationPermissionGranted_usesAnimalTypeFromDataStoreAndClearsListAndStartsRefreshing() {
+        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Single.never());
+        ArgumentCaptor<FetchAnimalsRequest> captor = ArgumentCaptor.forClass(FetchAnimalsRequest.class);
+
         subject.requestPermissionToLoad();
 
         verify(dataStore).save(new DiscoverToolbarTitleUseCase(AnimalType.CAT.getToolbarName()));
-        verify(animalRepository).fetchAnimals("zipcode", AnimalType.CAT, 0);
+        verify(animalRepository).fetchAnimals(captor.capture());
+        assertThat(captor.getValue().getLocation()).isEqualTo("zipcode");
+        assertThat(captor.getValue().getAnimalType()).isEqualTo(AnimalType.CAT);
+        assertThat(captor.getValue().getLastOffset()).isEqualTo(0);
         verify(listAdapter).clearAnimalItems();
         assertThat(subject.refreshing.get()).isTrue();
-        assertThat(subject.chipList.size()).isEqualTo(1);
-        assertThat(subject.chipList.get(0)).isEqualTo("Near zipcode");
     }
 
     @Test
-    public void requestPermissionToLoad_locationPermissionGranted_resetsLocationAndSetsLocationChip() {
-        when(animalRepository.fetchAnimals(anyString(), any(AnimalType.class), anyInt())).thenReturn(Single.never());
+    public void requestPermissionToLoad_getCurrentLocation_resetsLocationAndSetsLocationChip() {
+        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Single.never());
+
         subject.requestPermissionToLoad();
 
         verify(locationHelper).getCurrentLocation(true);
         assertThat(subject.chipList.size()).isEqualTo(1);
-        assertThat(subject.chipList.get(0)).isEqualTo("Near zipcode");
+        assertThat(subject.chipList.get(0).getType()).isEqualTo(Chip.Type.LOCATION);
+        assertThat(subject.chipList.get(0).getText()).isEqualTo("Near zipcode");
     }
 
     @Test
-    public void requestPermissionToLoad_locationPermissionGrantedAndSearchASecondTime_resetsLocationChip() {
-        when(animalRepository.fetchAnimals(anyString(), any(AnimalType.class), anyInt())).thenReturn(Single.never());
+    public void requestPermissionToLoad_getCurrentLocationASecondTime_resetsLocationChip() {
+        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Single.never());
         subject.requestPermissionToLoad();
         when(locationHelper.getCurrentLocation(anyBoolean())).thenReturn(Single.just("zipcode2"));
 
         subject.requestPermissionToLoad();
 
         assertThat(subject.chipList.size()).isEqualTo(1);
-        assertThat(subject.chipList.get(0)).isEqualTo("Near zipcode2");
+        assertThat(subject.chipList.get(0).getType()).isEqualTo(Chip.Type.LOCATION);
+        assertThat(subject.chipList.get(0).getText()).isEqualTo("Near zipcode2");
+    }
+
+    @Test
+    public void requestPermissionToLoad_getCurrentFilterAndSexIsU_doNotAddChip() {
+        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Single.never());
+
+        subject.requestPermissionToLoad();
+
+        assertThat(subject.chipList.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void requestPermissionToLoad_getCurrentFilterAndSexIsNotU_addChip() {
+        when(filter.getSex()).thenReturn(Sex.M);
+        when(resourceProvider.getString(R.string.male)).thenReturn("Male");
+
+        subject.requestPermissionToLoad();
+
+        assertThat(subject.chipList.size()).isEqualTo(2);
+        assertThat(subject.chipList.get(1).getText()).isEqualTo("Male");
+        assertThat(subject.chipList.get(1).getType()).isEqualTo(Chip.Type.FILTER);
     }
 
     @Test
@@ -175,12 +236,14 @@ public class DiscoverViewModelTest {
         when(animalListResponse.getLastOffset()).thenReturn(10);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
         subject.requestPermissionToLoad();
-        verify(animalRepository).fetchAnimals("zipcode", AnimalType.CAT, 0);
+        ArgumentCaptor<FetchAnimalsRequest> captor = ArgumentCaptor.forClass(FetchAnimalsRequest.class);
+        verify(animalRepository).fetchAnimals(captor.capture());
         clearInvocations(animalRepository);
 
         subject.loadMoreAnimals();
 
-        verify(animalRepository).fetchAnimals("zipcode", AnimalType.CAT, 10);
+        verify(animalRepository).fetchAnimals(captor.capture());
         verify(locationHelper).getCurrentLocation(false);
+        assertThat(captor.getValue().getLastOffset()).isEqualTo(10);
     }
 }
