@@ -18,7 +18,12 @@ public class ObservableHelper {
         this.mainThreadScheduler = mainThreadScheduler;
     }
 
-    public <T> SingleTransformer<T, T> applySchedulers() {
+    public <T> ObservableTransformer<T, T> applyObservableSchedulers() {
+        return upstream -> upstream.subscribeOn(ioScheduler)
+                                   .observeOn(mainThreadScheduler);
+    }
+
+    public <T> SingleTransformer<T, T> applySingleSchedulers() {
         return upstream -> upstream.subscribeOn(ioScheduler)
                                    .observeOn(mainThreadScheduler);
     }

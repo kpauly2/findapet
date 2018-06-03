@@ -32,13 +32,13 @@ public class FilterRepository {
         }
         return database.filterDao()
                        .findById(currentFilterId)
-                       .compose(observableHelper.applySchedulers());
+                       .compose(observableHelper.applySingleSchedulers());
     }
 
     public Completable insertFilter(Filter filter) {
         return Single.fromCallable(() -> database.filterDao().insert(filter))
                      .map(id -> currentFilterId = id)
-                     .compose(observableHelper.applySchedulers())
+                     .compose(observableHelper.applySingleSchedulers())
                      .ignoreElement();
     }
 

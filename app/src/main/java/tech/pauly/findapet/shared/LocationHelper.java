@@ -41,19 +41,19 @@ public class LocationHelper {
         this.context = context;
     }
 
-    public Single<String> getCurrentLocation(boolean resetLocation) {
+    public Observable<String> getCurrentLocation(boolean resetLocation) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return Single.error(new IllegalAccessException("Requesting permission without having granted permission to ACCESS_FINE_LOCATION"));
+            return Observable.error(new IllegalAccessException("Requesting location without having granted permission to ACCESS_FINE_LOCATION"));
         }
 
         if (isEmulator()) {
-            return Single.just("48335");
+            return Observable.just("48335");
         }
 
         if (resetLocation) {
             fetchNewLocation();
         }
-        return locationSubject.filter(s -> !s.equals(RESET)).singleOrError();
+        return locationSubject.filter(s -> !s.equals(RESET));
     }
 
     @SuppressLint("MissingPermission")

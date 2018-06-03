@@ -32,7 +32,7 @@ public class FilterRepositoryTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        when(observableHelper.applySchedulers()).thenReturn(observable -> observable);
+        when(observableHelper.applySingleSchedulers()).thenReturn(observable -> observable);
         when(filterDatabase.filterDao()).thenReturn(filterDao);
         when(filterDao.findById(anyLong())).thenReturn(Single.just(filter));
         when(filter.getId()).thenReturn(1L);
