@@ -6,15 +6,13 @@ import android.arch.persistence.room.TypeConverters;
 
 import java.util.Objects;
 
-import tech.pauly.findapet.data.SexConverter;
-
 @Entity
 public class Filter {
 
     @PrimaryKey(autoGenerate = true)
     private Long id;
 
-    @TypeConverters(SexConverter.class)
+    @TypeConverters(Sex.class)
     private Sex sex = Sex.U;
 
     public Long getId() {

@@ -65,7 +65,6 @@ public class MainActivity extends BaseActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 

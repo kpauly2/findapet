@@ -129,13 +129,6 @@ public class BindingAdapters {
         layout.setRefreshing(refreshing);
     }
 
-    @BindingAdapter("bringToFront")
-    public static void bringToFront(View view, boolean bringToFront) {
-        if (bringToFront) {
-            view.bringToFront();
-        }
-    }
-
     @BindingAdapter("chipList")
     public static void chipList(ChipListLayout layout, List<Chip> chips) {
         layout.setChips(chips);

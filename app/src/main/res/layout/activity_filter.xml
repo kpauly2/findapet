@@ -52,6 +52,8 @@
             android:layout_marginTop="@dimen/standard_margin"
             android:background="@drawable/selector_filter_button"
             android:checked="@={viewModel.maleChecked}"
+            android:drawableEnd="@drawable/ic_check"
+            android:drawablePadding="12dp"
             android:elevation="4dp"
             android:gravity="start|center_vertical"
             android:paddingEnd="12dp"
@@ -65,17 +67,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sex_header" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:elevation="4dp"
-            android:src="@drawable/ic_check"
-            android:visibility="@{viewModel.maleChecked ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@+id/button_male"
-            app:layout_constraintEnd_toEndOf="@+id/button_male"
-            app:layout_constraintTop_toTopOf="@+id/button_male" />
-
         <ToggleButton
             android:id="@+id/button_female"
             android:layout_width="0dp"
@@ -84,6 +75,8 @@
             android:layout_marginStart="@dimen/standard_margin"
             android:background="@drawable/selector_filter_button"
             android:checked="@={viewModel.femaleChecked}"
+            android:drawableEnd="@drawable/ic_check"
+            android:drawablePadding="12dp"
             android:elevation="4dp"
             android:gravity="start|center_vertical"
             android:paddingEnd="12dp"
@@ -96,24 +89,13 @@
             app:layout_constraintStart_toEndOf="@+id/button_male"
             app:layout_constraintTop_toTopOf="@id/button_male" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:elevation="4dp"
-            android:src="@drawable/ic_check"
-            android:visibility="@{viewModel.femaleChecked ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@+id/button_female"
-            app:layout_constraintEnd_toEndOf="@+id/button_female"
-            app:layout_constraintTop_toTopOf="@+id/button_female" />
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:onClick="@{viewModel::saveFilter}"
             android:background="@drawable/selector_large_button"
+            android:onClick="@{viewModel::saveFilter}"
             android:text="@string/filter_search_button"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

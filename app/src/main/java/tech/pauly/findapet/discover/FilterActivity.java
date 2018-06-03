@@ -44,6 +44,5 @@ public class FilterActivity extends BaseActivity {
         viewEvents.add(eventBus.activity(FilterViewModel.class).subscribe(this::activityEvent));
 
         return viewEvents;
-
     }
 }

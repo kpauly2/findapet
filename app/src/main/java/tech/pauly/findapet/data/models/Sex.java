@@ -1,5 +1,6 @@
 package tech.pauly.findapet.data.models;
 
+import android.arch.persistence.room.TypeConverter;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
@@ -30,5 +31,22 @@ public enum Sex {
 
     public String getServerName() {
         return serverName;
+    }
+
+    @TypeConverter
+    public static Sex toSex(int code) {
+        switch (code) {
+            case 1:
+                return Sex.M;
+            case 2:
+                return Sex.F;
+            default:
+                return Sex.U;
+        }
+    }
+
+    @TypeConverter
+    public static int toCode(Sex sex) {
+        return sex.getCode();
     }
 }
