@@ -22,6 +22,11 @@ public class FilterViewModel extends BaseViewModel {
 
     public ObservableBoolean maleChecked = new ObservableBoolean(true);
     public ObservableBoolean femaleChecked = new ObservableBoolean(true);
+    public ObservableBoolean babyChecked = new ObservableBoolean(true);
+    public ObservableBoolean youngChecked = new ObservableBoolean(true);
+    public ObservableBoolean adultChecked = new ObservableBoolean(true);
+    public ObservableBoolean seniorChecked = new ObservableBoolean(true);
+
     private FilterRepository filterRepository;
     private ViewEventBus eventBus;
     private TransientDataStore dataStore;

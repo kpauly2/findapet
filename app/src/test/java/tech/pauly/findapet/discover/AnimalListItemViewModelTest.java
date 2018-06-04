@@ -49,7 +49,7 @@ public class AnimalListItemViewModelTest {
         Media media = mock(Media.class);
         when(media.getPhotoList()).thenReturn(Collections.emptyList());
         when(animal.getMedia()).thenReturn(media);
-        when(resourceProvider.getString(Age.ADULT.getName())).thenReturn("Adult");
+        when(resourceProvider.getString(Age.ADULT.getFormattedName())).thenReturn("Adult");
     }
 
     @Test

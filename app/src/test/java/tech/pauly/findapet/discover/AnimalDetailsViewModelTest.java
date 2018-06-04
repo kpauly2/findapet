@@ -182,7 +182,7 @@ public class AnimalDetailsViewModelTest {
         when(dataStore.get(AnimalDetailsUseCase.class)).thenReturn(useCase);
         when(resourceProvider.getString(R.string.altered)).thenReturn("Altered");
         when(resourceProvider.getString(R.string.house_broken)).thenReturn("House Broken");
-        when(resourceProvider.getString(Age.ADULT.getName())).thenReturn("Adult");
+        when(resourceProvider.getString(Age.ADULT.getFormattedName())).thenReturn("Adult");
         subject = new AnimalDetailsViewModel(dataStore, viewPagerAdapter, resourceProvider, imagesPagerAdapter);
     }
 }
