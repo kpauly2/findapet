@@ -1,6 +1,7 @@
 package tech.pauly.findapet.discover;
 
 import android.view.View;
+import android.widget.ToggleButton;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import tech.pauly.findapet.data.FilterRepository;
+import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Filter;
 import tech.pauly.findapet.data.models.Sex;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
@@ -48,33 +50,60 @@ public class FilterViewModelTest {
     }
 
     @Test
-    public void loadCurrentFilter_sexIsU_populatesScreenForFilter() {
-        when(filter.getSex()).thenReturn(Sex.U);
-
-        subject.loadCurrentFilter();
-
-        assertThat(subject.maleChecked.get()).isTrue();
-        assertThat(subject.femaleChecked.get()).isTrue();
-    }
-
-    @Test
-    public void loadCurrentFilter_sexIsM_populatesScreenForFilter() {
+    public void loadCurrentFilter_populatesScreenForFilter() {
+        subject.selectedSex.set(Sex.F);
+        subject.selectedAge.set(Age.YOUNG);
         when(filter.getSex()).thenReturn(Sex.M);
+        when(filter.getAge()).thenReturn(Age.ADULT);
 
         subject.loadCurrentFilter();
 
-        assertThat(subject.maleChecked.get()).isTrue();
-        assertThat(subject.femaleChecked.get()).isFalse();
+        assertThat(subject.selectedSex.get()).isEqualTo(Sex.M);
+        assertThat(subject.selectedAge.get()).isEqualTo(Age.ADULT);
     }
 
     @Test
-    public void loadCurrentFilter_sexIsF_populatesScreenForFilter() {
-        when(filter.getSex()).thenReturn(Sex.F);
+    public void checkSex_buttonNotChecked_setSexToU() {
+        subject.selectedSex.set(Sex.F);
+        ToggleButton button = mock(ToggleButton.class);
+        when(button.isChecked()).thenReturn(false);
 
-        subject.loadCurrentFilter();
+        subject.checkSex(button, Sex.M);
 
-        assertThat(subject.maleChecked.get()).isFalse();
-        assertThat(subject.femaleChecked.get()).isTrue();
+        assertThat(subject.selectedSex.get()).isEqualTo(Sex.U);
+    }
+
+    @Test
+    public void checkSex_buttonChecked_setSexToButtonSex() {
+        subject.selectedSex.set(Sex.F);
+        ToggleButton button = mock(ToggleButton.class);
+        when(button.isChecked()).thenReturn(true);
+
+        subject.checkSex(button, Sex.M);
+
+        assertThat(subject.selectedSex.get()).isEqualTo(Sex.M);
+    }
+
+    @Test
+    public void checkAge_buttonNotChecked_setAgeToMissing() {
+        subject.selectedAge.set(Age.YOUNG);
+        ToggleButton button = mock(ToggleButton.class);
+        when(button.isChecked()).thenReturn(false);
+
+        subject.checkAge(button, Age.ADULT);
+
+        assertThat(subject.selectedAge.get()).isEqualTo(Age.MISSING);
+    }
+
+    @Test
+    public void checkAge_buttonChecked_setAgeToButtonAge() {
+        subject.selectedAge.set(Age.YOUNG);
+        ToggleButton button = mock(ToggleButton.class);
+        when(button.isChecked()).thenReturn(true);
+
+        subject.checkAge(button, Age.ADULT);
+
+        assertThat(subject.selectedAge.get()).isEqualTo(Age.ADULT);
     }
 
     @Test
@@ -85,50 +114,15 @@ public class FilterViewModelTest {
     }
 
     @Test
-    public void saveFilter_bothSexesChecked_insertsCorrectFilter() {
-        subject.maleChecked.set(true);
-        subject.femaleChecked.set(true);
-        ArgumentCaptor<Filter> captor = ArgumentCaptor.forClass(Filter.class);
-
-        subject.saveFilter(mock(View.class));
-
-        verify(filterRepository).insertFilter(captor.capture());
-        assertThat(captor.getValue().getSex()).isEqualTo(Sex.U);
-    }
-
-    @Test
-    public void saveFilter_neitherSexChecked_insertsCorrectFilter() {
-        subject.maleChecked.set(false);
-        subject.femaleChecked.set(false);
-        ArgumentCaptor<Filter> captor = ArgumentCaptor.forClass(Filter.class);
-
-        subject.saveFilter(mock(View.class));
-
-        verify(filterRepository).insertFilter(captor.capture());
-        assertThat(captor.getValue().getSex()).isEqualTo(Sex.U);
-    }
-
-    @Test
-    public void saveFilter_onlyMaleChecked_insertsCorrectFilter() {
-        subject.maleChecked.set(true);
-        subject.femaleChecked.set(false);
+    public void saveFilter_insertsNewFilterForCurrentSelectedItems() {
+        subject.selectedSex.set(Sex.M);
+        subject.selectedAge.set(Age.ADULT);
         ArgumentCaptor<Filter> captor = ArgumentCaptor.forClass(Filter.class);
 
         subject.saveFilter(mock(View.class));
 
         verify(filterRepository).insertFilter(captor.capture());
         assertThat(captor.getValue().getSex()).isEqualTo(Sex.M);
-    }
-
-    @Test
-    public void saveFilter_onlyFemaleChecked_insertsCorrectFilter() {
-        subject.maleChecked.set(false);
-        subject.femaleChecked.set(true);
-        ArgumentCaptor<Filter> captor = ArgumentCaptor.forClass(Filter.class);
-
-        subject.saveFilter(mock(View.class));
-
-        verify(filterRepository).insertFilter(captor.capture());
-        assertThat(captor.getValue().getSex()).isEqualTo(Sex.F);
+        assertThat(captor.getValue().getAge()).isEqualTo(Age.ADULT);
     }
 }

@@ -130,8 +130,13 @@ public class BindingAdapters {
     }
 
     @BindingAdapter("chipList")
-    public static void chipList(ChipListLayout layout, List<Chip> chips) {
-        layout.setChips(chips);
+    public static void chipList(FilterChipListLayout layout, List<Chip> chips) {
+        layout.setFilterChips(chips);
+    }
+
+    @BindingAdapter("locationChip")
+    public static void locationChip(FilterChipListLayout layout, Chip chip) {
+        layout.setLocationChip(chip);
     }
 
     @FunctionalInterface

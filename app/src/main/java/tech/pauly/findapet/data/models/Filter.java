@@ -17,6 +17,7 @@ public class Filter {
 
     @TypeConverters(Age.class)
     private Age age = Age.MISSING;
+
     public Long getId() {
         return id;
     }

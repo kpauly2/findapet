@@ -5,7 +5,7 @@ import android.arch.persistence.room.RoomDatabase;
 
 import tech.pauly.findapet.data.models.Filter;
 
-@Database(entities = {Filter.class}, version = 2)
+@Database(entities = {Filter.class}, version = 3)
 public abstract class FilterDatabase extends RoomDatabase {
     public abstract FilterDao filterDao();
 }

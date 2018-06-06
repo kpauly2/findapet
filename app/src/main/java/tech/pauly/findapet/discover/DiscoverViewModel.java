@@ -4,6 +4,7 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 
@@ -13,10 +14,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.Single;
+import io.reactivex.disposables.Disposable;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.FilterRepository;
+import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
@@ -24,19 +26,17 @@ import tech.pauly.findapet.data.models.FetchAnimalsRequest;
 import tech.pauly.findapet.data.models.Filter;
 import tech.pauly.findapet.data.models.Sex;
 import tech.pauly.findapet.shared.BaseViewModel;
-import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.LocationHelper;
 import tech.pauly.findapet.shared.PermissionHelper;
-import tech.pauly.findapet.shared.datastore.FilterUpdatedUseCase;
-import tech.pauly.findapet.shared.events.PermissionEvent;
-import tech.pauly.findapet.shared.events.ViewEventBus;
+import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
+import tech.pauly.findapet.shared.datastore.FilterUpdatedUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
+import tech.pauly.findapet.shared.events.PermissionEvent;
+import tech.pauly.findapet.shared.events.ViewEventBus;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static tech.pauly.findapet.discover.Chip.Type.FILTER;
-import static tech.pauly.findapet.discover.Chip.Type.LOCATION;
 
 public class DiscoverViewModel extends BaseViewModel {
 
@@ -44,6 +44,7 @@ public class DiscoverViewModel extends BaseViewModel {
     public ObservableBoolean refreshing = new ObservableBoolean(false);
     public ObservableBoolean locationMissing = new ObservableBoolean(false);
     public ObservableList<Chip> chipList = new ObservableArrayList<>();
+    public ObservableField<Chip> locationChip = new ObservableField<>();
 
     private final AnimalListAdapter listAdapter;
     private final AnimalListItemViewModel.Factory animalListItemFactory;
@@ -102,10 +103,7 @@ public class DiscoverViewModel extends BaseViewModel {
         if (permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)) {
             loadList();
         } else {
-            eventBus.send(PermissionEvent.build(this)
-                                         .requestPermissions(ACCESS_FINE_LOCATION)
-                                         .listener(locationPermissionResponseListener())
-                                         .code(100));
+            eventBus.send(PermissionEvent.build(this).requestPermissions(ACCESS_FINE_LOCATION).listener(locationPermissionResponseListener()).code(100));
         }
     }
 
@@ -122,38 +120,45 @@ public class DiscoverViewModel extends BaseViewModel {
 
     private void fetchAnimals(boolean resetLocation) {
         refreshing.set(true);
-        subscribeOnLifecycle(Observable.zip(getCurrentLocation(resetLocation), getCurrentFilter(),
+        subscribeOnLifecycle(Observable.zip(getCurrentLocation(resetLocation),
+                                            getCurrentFilter(),
                                             (location, filter) -> new FetchAnimalsRequest(animalType, lastOffset, location, filter))
-                                   .flatMap(animalRepository::fetchAnimals)
-                                   .subscribe(this::setAnimalList, this::showError));
+                                       .flatMap(animalRepository::fetchAnimals)
+                                       .subscribe(this::setAnimalList, this::showError));
     }
 
     private Observable<Filter> getCurrentFilter() {
         return filterRepository.getCurrentFilterAndNoFilterIfEmpty()
+                               .doOnSubscribe(this::removeFilterChips)
                                .doOnSuccess(this::addFilterChips).toObservable();
     }
 
     private Observable<String> getCurrentLocation(boolean resetLocation) {
         return locationHelper.getCurrentLocation(resetLocation)
-                     .doOnNext(this::addLocationChip);
+                             .doOnSubscribe(this::removeLocationChip)
+                             .doOnNext(this::addLocationChip);
+    }
+
+    private void removeFilterChips(Disposable disposable) {
+        chipList.clear();
     }
 
     private void addFilterChips(Filter filter) {
-        for (Chip chip : chipList) {
-            if (chip.getType() == FILTER) {
-                chipList.remove(chip);
-            }
-        }
         if (filter.getSex() != Sex.U) {
-            chipList.add(new Chip(FILTER, resourceProvider.getString(filter.getSex().getFormattedName())));
+            chipList.add(new Chip(resourceProvider.getString(filter.getSex().getFormattedName())));
+        }
+
+        if (filter.getAge() != Age.MISSING) {
+            chipList.add(new Chip(resourceProvider.getString(filter.getAge().getFormattedName())));
         }
     }
 
+    private void removeLocationChip(Disposable disposable) {
+        locationChip.set(null);
+    }
+
     private void addLocationChip(String location) {
-        if (chipList.size() > 0 && chipList.get(0).getType() == LOCATION) {
-            chipList.remove(0);
-        }
-        chipList.add(0, new Chip(LOCATION, resourceProvider.getString(R.string.chip_near_location, location)));
+        locationChip.set(new Chip(resourceProvider.getString(R.string.chip_near_location, location)));
     }
 
     private void showError(Throwable throwable) {

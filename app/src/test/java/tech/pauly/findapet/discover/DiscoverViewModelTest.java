@@ -14,6 +14,7 @@ import io.reactivex.Single;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.FilterRepository;
+import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
@@ -91,13 +92,17 @@ public class DiscoverViewModelTest {
         when(locationHelper.getCurrentLocation(anyBoolean())).thenReturn(Observable.just("zipcode"));
         when(resourceProvider.getString(R.string.chip_near_location, "zipcode")).thenReturn("Near zipcode");
         when(resourceProvider.getString(R.string.chip_near_location, "zipcode2")).thenReturn("Near zipcode2");
-        when(dataStore.get(FilterUpdatedUseCase.class)).thenReturn(null);
-        when(filter.getSex()).thenReturn(Sex.U);
-        when(filterRepository.getCurrentFilterAndNoFilterIfEmpty()).thenReturn(Single.just(filter));
-        when(fetchAnimalsRequest.getFilter()).thenReturn(filter);
         when(fetchAnimalsRequest.getAnimalType()).thenReturn(AnimalType.CAT);
         when(fetchAnimalsRequest.getLocation()).thenReturn("zipcode");
         when(fetchAnimalsRequest.getLastOffset()).thenReturn(0);
+
+        when(filterRepository.getCurrentFilterAndNoFilterIfEmpty()).thenReturn(Single.just(filter));
+        when(fetchAnimalsRequest.getFilter()).thenReturn(filter);
+        when(dataStore.get(FilterUpdatedUseCase.class)).thenReturn(null);
+        when(filter.getSex()).thenReturn(Sex.U);
+        when(filter.getAge()).thenReturn(Age.MISSING);
+        when(resourceProvider.getString(R.string.male)).thenReturn("Male");
+        when(resourceProvider.getString(R.string.adult)).thenReturn("Adult");
 
         subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus, locationHelper, resourceProvider, filterRepository);
     }
@@ -166,9 +171,8 @@ public class DiscoverViewModelTest {
         subject.requestPermissionToLoad();
 
         verify(locationHelper).getCurrentLocation(true);
-        assertThat(subject.chipList.size()).isEqualTo(1);
-        assertThat(subject.chipList.get(0).getType()).isEqualTo(Chip.Type.LOCATION);
-        assertThat(subject.chipList.get(0).getText()).isEqualTo("Near zipcode");
+        assertThat(subject.locationChip.get()).isNotNull();
+        assertThat(subject.locationChip.get().getText()).isEqualTo("Near zipcode");
     }
 
     @Test
@@ -179,30 +183,37 @@ public class DiscoverViewModelTest {
 
         subject.requestPermissionToLoad();
 
-        assertThat(subject.chipList.size()).isEqualTo(1);
-        assertThat(subject.chipList.get(0).getType()).isEqualTo(Chip.Type.LOCATION);
-        assertThat(subject.chipList.get(0).getText()).isEqualTo("Near zipcode2");
+        assertThat(subject.locationChip.get()).isNotNull();
+        assertThat(subject.locationChip.get().getText()).isEqualTo("Near zipcode2");
     }
 
     @Test
-    public void requestPermissionToLoad_getCurrentFilterAndSexIsU_doNotAddChip() {
+    public void requestPermissionToLoad_getCurrentFilterAndFilterIsEmpty_doNotAddChips() {
         when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.never());
 
         subject.requestPermissionToLoad();
 
-        assertThat(subject.chipList.size()).isEqualTo(1);
+        assertThat(subject.chipList.size()).isEqualTo(0);
     }
 
     @Test
     public void requestPermissionToLoad_getCurrentFilterAndSexIsNotU_addChip() {
         when(filter.getSex()).thenReturn(Sex.M);
-        when(resourceProvider.getString(R.string.male)).thenReturn("Male");
 
         subject.requestPermissionToLoad();
 
-        assertThat(subject.chipList.size()).isEqualTo(2);
-        assertThat(subject.chipList.get(1).getText()).isEqualTo("Male");
-        assertThat(subject.chipList.get(1).getType()).isEqualTo(Chip.Type.FILTER);
+        assertThat(subject.chipList.size()).isEqualTo(1);
+        assertThat(subject.chipList.get(0).getText()).isEqualTo("Male");
+    }
+
+    @Test
+    public void requestPermissionToLoad_getCurrentFilterAndAgeIsNotMissing_addChip() {
+        when(filter.getAge()).thenReturn(Age.ADULT);
+
+        subject.requestPermissionToLoad();
+
+        assertThat(subject.chipList.size()).isEqualTo(1);
+        assertThat(subject.chipList.get(0).getText()).isEqualTo("Adult");
     }
 
     @Test

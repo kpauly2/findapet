@@ -3,10 +3,10 @@ package tech.pauly.findapet.data;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import tech.pauly.findapet.BuildConfig;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.FetchAnimalsRequest;
+import tech.pauly.findapet.data.models.Filter;
 
 public class AnimalRepository {
 
@@ -22,12 +22,14 @@ public class AnimalRepository {
     }
 
     public Observable<AnimalListResponse> fetchAnimals(FetchAnimalsRequest request) {
+        Filter filter = request.getFilter();
         return animalService.fetchAnimals(request.getLocation(),
                                           BuildConfig.API_KEY,
                                           request.getAnimalType().name().toLowerCase(),
                                           request.getLastOffset(),
                                           ANIMAL_RETURN_COUNT,
-                                          request.getFilter().getSex().getServerName())
+                                          filter.getSex().getServerName(),
+                                          filter.getAge().getServerName())
                             .compose(observableHelper.applySingleSchedulers())
                             .toObservable();
     }
