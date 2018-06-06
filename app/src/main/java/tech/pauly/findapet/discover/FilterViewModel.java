@@ -47,21 +47,11 @@ public class FilterViewModel extends BaseViewModel {
     }
 
     public void checkSex(View view, Sex sex) {
-        boolean checked = ((ToggleButton) view).isChecked();
-        if (checked) {
-            selectedSex.set(sex);
-        } else {
-            selectedSex.set(Sex.U);
-        }
+        selectedSex.set(isViewChecked(view) ? sex : Sex.U);
     }
 
     public void checkAge(View view, Age age) {
-        boolean checked = ((ToggleButton) view).isChecked();
-        if (checked) {
-            selectedAge.set(age);
-        } else {
-            selectedAge.set(Age.MISSING);
-        }
+        selectedAge.set(isViewChecked(view) ? age : Age.MISSING);
     }
 
     public void saveFilter(View v) {
@@ -80,5 +70,14 @@ public class FilterViewModel extends BaseViewModel {
     private void populateScreenForFilter(Filter filter) {
         selectedSex.set(filter.getSex());
         selectedAge.set(filter.getAge());
+    }
+
+    private boolean isViewChecked(View view) {
+        boolean checked = false;
+        if (view instanceof ToggleButton) {
+            ToggleButton button = (ToggleButton) view;
+            checked = button.isChecked();
+        }
+        return checked;
     }
 }

@@ -103,7 +103,10 @@ public class DiscoverViewModel extends BaseViewModel {
         if (permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)) {
             loadList();
         } else {
-            eventBus.send(PermissionEvent.build(this).requestPermissions(ACCESS_FINE_LOCATION).listener(locationPermissionResponseListener()).code(100));
+            eventBus.send(PermissionEvent.build(this)
+                                         .requestPermissions(ACCESS_FINE_LOCATION)
+                                         .listener(locationPermissionResponseListener())
+                                         .code(100));
         }
     }
 
