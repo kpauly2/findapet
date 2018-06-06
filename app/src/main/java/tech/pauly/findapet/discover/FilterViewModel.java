@@ -3,11 +3,15 @@ package tech.pauly.findapet.discover;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.ToggleButton;
 
 import javax.inject.Inject;
 
 import tech.pauly.findapet.data.FilterRepository;
+import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Filter;
 import tech.pauly.findapet.data.models.Sex;
 import tech.pauly.findapet.shared.BaseViewModel;
@@ -20,8 +24,9 @@ import static tech.pauly.findapet.data.models.Sex.U;
 
 public class FilterViewModel extends BaseViewModel {
 
-    public ObservableBoolean maleChecked = new ObservableBoolean(true);
-    public ObservableBoolean femaleChecked = new ObservableBoolean(true);
+    public ObservableField<Sex> selectedSex = new ObservableField<>(Sex.U);
+    public ObservableField<Age> selectedAge = new ObservableField<>(Age.MISSING);
+
     private FilterRepository filterRepository;
     private ViewEventBus eventBus;
     private TransientDataStore dataStore;
@@ -41,9 +46,18 @@ public class FilterViewModel extends BaseViewModel {
                                              .subscribe(this::populateScreenForFilter, Throwable::printStackTrace));
     }
 
+    public void checkSex(View view, Sex sex) {
+        selectedSex.set(isViewChecked(view) ? sex : Sex.U);
+    }
+
+    public void checkAge(View view, Age age) {
+        selectedAge.set(isViewChecked(view) ? age : Age.MISSING);
+    }
+
     public void saveFilter(View v) {
         Filter filter = new Filter();
-        filter.setSex(getSex());
+        filter.setSex(selectedSex.get());
+        filter.setAge(selectedAge.get());
         subscribeOnLifecycle(filterRepository.insertFilter(filter)
                                              .subscribe(this::finish, Throwable::printStackTrace));
     }
@@ -54,30 +68,16 @@ public class FilterViewModel extends BaseViewModel {
     }
 
     private void populateScreenForFilter(Filter filter) {
-        switch (filter.getSex()) {
-            case U:
-                maleChecked.set(true);
-                femaleChecked.set(true);
-                break;
-            case M:
-                maleChecked.set(true);
-                femaleChecked.set(false);
-                break;
-            case F:
-                maleChecked.set(false);
-                femaleChecked.set(true);
-                break;
-        }
+        selectedSex.set(filter.getSex());
+        selectedAge.set(filter.getAge());
     }
 
-    private Sex getSex() {
-        if ((maleChecked.get() && femaleChecked.get())
-            || (!maleChecked.get() && !femaleChecked.get())) {
-            return U;
-        } else if (maleChecked.get() && !femaleChecked.get()) {
-            return Sex.M;
-        } else {
-            return Sex.F;
+    private boolean isViewChecked(View view) {
+        boolean checked = false;
+        if (view instanceof ToggleButton) {
+            ToggleButton button = (ToggleButton) view;
+            checked = button.isChecked();
         }
+        return checked;
     }
 }

@@ -7,6 +7,7 @@ import org.mockito.MockitoAnnotations;
 
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
+import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.AnimalListResponse;
 import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.data.models.FetchAnimalsRequest;
@@ -35,7 +36,13 @@ public class AnimalRepositoryTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         animalListResponse = mock(AnimalListResponse.class);
-        when(animalService.fetchAnimals(anyString(), anyString(), anyString(), anyInt(), anyInt(), anyString())).thenReturn(Single.just(animalListResponse));
+        when(animalService.fetchAnimals(anyString(),
+                                        anyString(),
+                                        anyString(),
+                                        anyInt(),
+                                        anyInt(),
+                                        anyString(),
+                                        anyString())).thenReturn(Single.just(animalListResponse));
         when(observableHelper.applySingleSchedulers()).thenReturn(single -> single);
 
         subject = new AnimalRepository(animalService, observableHelper);
@@ -45,10 +52,17 @@ public class AnimalRepositoryTest {
     public void fetchAnimals_returnsAnimalListForCorrectAnimalTypeWithSchedulers() {
         Filter filter = new Filter();
         filter.setSex(Sex.M);
+        filter.setAge(Age.ADULT);
         FetchAnimalsRequest request = new FetchAnimalsRequest(AnimalType.CAT, 0, "zipcode", filter);
         TestObserver<AnimalListResponse> observer = subject.fetchAnimals(request).test();
 
-        verify(animalService).fetchAnimals(eq("zipcode"), anyString(), eq("cat"), eq(0), eq(20), eq("M"));
+        verify(animalService).fetchAnimals(eq("zipcode"),
+                                           anyString(),
+                                           eq("cat"),
+                                           eq(0),
+                                           eq(20),
+                                           eq("M"),
+                                           eq("Adult"));
         observer.assertValues(animalListResponse)
                 .assertComplete();
         verify(observableHelper).applySingleSchedulers();

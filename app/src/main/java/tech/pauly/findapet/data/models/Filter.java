@@ -15,6 +15,9 @@ public class Filter {
     @TypeConverters(Sex.class)
     private Sex sex = Sex.U;
 
+    @TypeConverters(Age.class)
+    private Age age = Age.MISSING;
+
     public Long getId() {
         return id;
     }
@@ -31,6 +34,14 @@ public class Filter {
         this.id = id;
     }
 
+    public Age getAge() {
+        return age;
+    }
+
+    public void setAge(Age age) {
+        this.age = age;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -40,12 +51,12 @@ public class Filter {
             return false;
         }
         Filter filter = (Filter) o;
-        return Objects.equals(id, filter.id) && sex == filter.sex;
+        return Objects.equals(id, filter.id) && sex == filter.sex && age == filter.age;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, sex);
+        return Objects.hash(id, sex, age);
     }
 }

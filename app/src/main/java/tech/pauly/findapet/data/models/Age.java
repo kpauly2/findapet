@@ -1,20 +1,41 @@
 package tech.pauly.findapet.data.models;
 
+import android.arch.persistence.room.TypeConverter;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
 import tech.pauly.findapet.R;
 
 public enum Age {
-    BABY(R.string.baby),
-    YOUNG(R.string.young),
-    ADULT(R.string.adult),
-    SENIOR(R.string.senior);
+    MISSING(0, R.string.missing, null),
+    BABY(1, R.string.baby, "Baby"),
+    YOUNG(2, R.string.young, "Young"),
+    ADULT(3, R.string.adult, "Adult"),
+    SENIOR(4, R.string.senior, "Senior");
+
+    private int code;
+    @StringRes
+    private int formattedName;
+    private String serverName;
+
+    Age(int code, @StringRes int formattedName, @Nullable String serverName) {
+        this.code = code;
+        this.formattedName = formattedName;
+        this.serverName = serverName;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    @Nullable
+    public String getServerName() {
+        return serverName;
+    }
 
     @StringRes
-    private int name;
-
-    Age(@StringRes int name) {
-        this.name = name;
+    public int getFormattedName() {
+        return formattedName;
     }
 
     static Age fromString(String name) {
@@ -26,7 +47,24 @@ public enum Age {
         throw new IllegalArgumentException("No matching Age for name " + name);
     }
 
-    public int getName() {
-        return name;
+    @TypeConverter
+    public static Age toAge(int code) {
+        switch (code) {
+            case 1:
+                return BABY;
+            case 2:
+                return YOUNG;
+            case 3:
+                return ADULT;
+            case 4:
+                return SENIOR;
+            default:
+                return MISSING;
+        }
+    }
+
+    @TypeConverter
+    public static int toCode(Age age) {
+        return age.getCode();
     }
 }

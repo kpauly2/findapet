@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <tech.pauly.findapet.utils.ChipListLayout
+        <tech.pauly.findapet.utils.FilterChipListLayout
             android:id="@+id/filters_bar"
             android:layout_width="0dp"
             android:layout_height="44dp"
@@ -31,6 +31,7 @@
             android:paddingTop="@dimen/half_margin"
             android:visibility="@{viewModel.locationMissing ? View.GONE : View.VISIBLE}"
             app:chipList="@{viewModel.chipList}"
+            app:locationChip="@{viewModel.locationChip}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

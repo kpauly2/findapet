@@ -32,7 +32,7 @@ public class AnimalListItemViewModel extends BaseViewModel {
         this.eventBus = eventBus;
         this.dataStore = dataStore;
         name.set(animal.getName());
-        age.set(resourceProvider.getString(animal.getAge().getName()));
+        age.set(resourceProvider.getString(animal.getAge().getFormattedName()));
 
         setBreeds(animal.getBreedList());
         setPhoto(animal.getMedia());

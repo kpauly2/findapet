@@ -54,4 +54,5 @@
     <string name="sex_header">SEX</string>
     <string name="filter_search_button">search with filter</string>
     <string name="chip_near_location">Near %s</string>
+    <string name="age_header">AGE</string>
 </resources>

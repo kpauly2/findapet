@@ -38,7 +38,7 @@
                         app:adapter="@{viewModel.imagesPagerAdapter}"
                         app:layout_collapseMode="parallax"
                         app:offscreenPageLimit="@{viewModel.imagesPageLimit}"
-                        app:onPageChange="@{viewModel.imagePageChange}" />
+                        app:onPageChange="@{(position) -> viewModel.imagePageChange(position)}" />
 
                 </FrameLayout>
 

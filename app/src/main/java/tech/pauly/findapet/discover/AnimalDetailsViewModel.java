@@ -55,7 +55,7 @@ public class AnimalDetailsViewModel extends BaseViewModel {
             name.set(animal.getName());
             sex.set(animal.getSex().getFormattedName());
             size.set(animal.getSize().getFormattedName());
-            age.set(animal.getAge().getName());
+            age.set(animal.getAge().getFormattedName());
 
             setPhotos(animal.getMedia());
             setBreeds(animal.getBreedList());
