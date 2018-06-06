@@ -164,8 +164,8 @@ public class AnimalDetailsViewModelTest {
 
         Animal animal = mock(Animal.class);
         when(animal.getName()).thenReturn("name");
-        when(animal.getSex()).thenReturn(Sex.M);
-        when(animal.getSize()).thenReturn(AnimalSize.L);
+        when(animal.getSex()).thenReturn(Sex.MALE);
+        when(animal.getSize()).thenReturn(AnimalSize.LARGE);
         when(animal.getAge()).thenReturn(Age.ADULT);
         when(animal.getDescription()).thenReturn("");
         when(animal.getMedia()).thenReturn(media);

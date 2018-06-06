@@ -13,10 +13,13 @@ public class Filter {
     private Long id;
 
     @TypeConverters(Sex.class)
-    private Sex sex = Sex.U;
+    private Sex sex = Sex.MISSING;
 
     @TypeConverters(Age.class)
     private Age age = Age.MISSING;
+
+    @TypeConverters(AnimalSize.class)
+    private AnimalSize size = AnimalSize.MISSING;
 
     public Long getId() {
         return id;
@@ -42,6 +45,14 @@ public class Filter {
         this.age = age;
     }
 
+    public AnimalSize getSize() {
+        return size;
+    }
+
+    public void setSize(AnimalSize size) {
+        this.size = size;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -51,12 +62,12 @@ public class Filter {
             return false;
         }
         Filter filter = (Filter) o;
-        return Objects.equals(id, filter.id) && sex == filter.sex && age == filter.age;
+        return Objects.equals(id, filter.id) && sex == filter.sex && age == filter.age && size == filter.size;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, sex, age);
+        return Objects.hash(id, sex, age, size);
     }
 }

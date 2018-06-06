@@ -37,10 +37,10 @@ public class Animal {
     private String age;
 
     @Element
-    private Sex sex;
+    private String sex;
 
     @Element
-    private AnimalSize size;
+    private String size;
 
     @ElementList(entry = "option")
     private List<String> options;
@@ -91,11 +91,11 @@ public class Animal {
     }
 
     public Sex getSex() {
-        return sex;
+        return Sex.fromString(sex);
     }
 
     public AnimalSize getSize() {
-        return size;
+        return AnimalSize.fromString(size);
     }
 
     public List<Option> getOptions() {

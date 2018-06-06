@@ -7,11 +7,13 @@ import android.support.annotation.StringRes;
 import tech.pauly.findapet.R;
 
 public enum Sex {
-    U(0, R.string.unknown, null),
-    M(1, R.string.male, "M"),
-    F(2, R.string.female, "F");
+    MISSING(0, R.string.missing, null),
+    MALE(1, R.string.male, "M"),
+    FEMALE(2, R.string.female, "F"),
+    UNKNOWN(3, R.string.unknown, "U");
 
     private int code;
+    @StringRes
     private int formattedName;
     private String serverName;
 
@@ -25,10 +27,12 @@ public enum Sex {
         return code;
     }
 
+    @StringRes
     public int getFormattedName() {
         return formattedName;
     }
 
+    @Nullable
     public String getServerName() {
         return serverName;
     }
@@ -37,16 +41,26 @@ public enum Sex {
     public static Sex toSex(int code) {
         switch (code) {
             case 1:
-                return Sex.M;
+                return Sex.MALE;
             case 2:
-                return Sex.F;
+                return Sex.FEMALE;
             default:
-                return Sex.U;
+                return Sex.MISSING;
         }
     }
 
     @TypeConverter
     public static int toCode(Sex sex) {
         return sex.getCode();
+    }
+
+    public static Sex fromString(String name) {
+        for (Sex sex : Sex.values()) {
+            if (sex.serverName.equals(name)) {
+                return sex;
+            }
+        }
+        throw new IllegalArgumentException("No matching Sex for name " + name);
+
     }
 }
