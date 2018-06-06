@@ -15,6 +15,7 @@ public enum Sex {
     private int code;
     @StringRes
     private int formattedName;
+    @Nullable
     private String serverName;
 
     Sex(int code, @StringRes int formattedName, @Nullable String serverName) {
@@ -56,7 +57,7 @@ public enum Sex {
 
     public static Sex fromString(String name) {
         for (Sex sex : Sex.values()) {
-            if (sex.serverName.equals(name)) {
+            if (sex.serverName != null && sex.serverName.equals(name)) {
                 return sex;
             }
         }

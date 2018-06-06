@@ -16,6 +16,7 @@ public enum AnimalSize {
     private int code;
     @StringRes
     private int formattedName;
+    @Nullable
     private String serverName;
 
     AnimalSize(int code, @StringRes int formattedName, @Nullable String serverName) {
@@ -61,7 +62,7 @@ public enum AnimalSize {
 
     public static AnimalSize fromString(String name) {
         for (AnimalSize size : AnimalSize.values()) {
-            if (size.serverName.equals(name)) {
+            if (size.serverName != null && size.serverName.equals(name)) {
                 return size;
             }
         }
