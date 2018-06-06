@@ -147,6 +147,8 @@
             android:paddingBottom="@dimen/standard_margin"
             android:text="@{viewModel.description}"
             android:textAppearance="@style/FontBody"
+            android:autoLink="all"
+            android:textColorLink="@color/purpleStandard"
             android:textColor="@color/textStandard"
             android:visibility="@{viewModel.descriptionVisibility ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
