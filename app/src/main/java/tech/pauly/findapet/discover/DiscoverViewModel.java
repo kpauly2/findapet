@@ -21,6 +21,7 @@ import tech.pauly.findapet.data.FilterRepository;
 import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
+import tech.pauly.findapet.data.models.AnimalSize;
 import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.data.models.FetchAnimalsRequest;
 import tech.pauly.findapet.data.models.Filter;
@@ -147,12 +148,16 @@ public class DiscoverViewModel extends BaseViewModel {
     }
 
     private void addFilterChips(Filter filter) {
-        if (filter.getSex() != Sex.U) {
+        if (filter.getSex() != Sex.MISSING) {
             chipList.add(new Chip(resourceProvider.getString(filter.getSex().getFormattedName())));
         }
 
         if (filter.getAge() != Age.MISSING) {
             chipList.add(new Chip(resourceProvider.getString(filter.getAge().getFormattedName())));
+        }
+
+        if (filter.getSize() != AnimalSize.MISSING) {
+            chipList.add(new Chip(resourceProvider.getString(filter.getSize().getFormattedName())));
         }
     }
 

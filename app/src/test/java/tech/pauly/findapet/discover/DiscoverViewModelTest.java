@@ -17,6 +17,7 @@ import tech.pauly.findapet.data.FilterRepository;
 import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
+import tech.pauly.findapet.data.models.AnimalSize;
 import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.data.models.FetchAnimalsRequest;
 import tech.pauly.findapet.data.models.Filter;
@@ -99,10 +100,12 @@ public class DiscoverViewModelTest {
         when(filterRepository.getCurrentFilterAndNoFilterIfEmpty()).thenReturn(Single.just(filter));
         when(fetchAnimalsRequest.getFilter()).thenReturn(filter);
         when(dataStore.get(FilterUpdatedUseCase.class)).thenReturn(null);
-        when(filter.getSex()).thenReturn(Sex.U);
+        when(filter.getSex()).thenReturn(Sex.MISSING);
         when(filter.getAge()).thenReturn(Age.MISSING);
+        when(filter.getSize()).thenReturn(AnimalSize.MISSING);
         when(resourceProvider.getString(R.string.male)).thenReturn("Male");
         when(resourceProvider.getString(R.string.adult)).thenReturn("Adult");
+        when(resourceProvider.getString(R.string.large)).thenReturn("Large");
 
         subject = new DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus, locationHelper, resourceProvider, filterRepository);
     }
@@ -197,8 +200,8 @@ public class DiscoverViewModelTest {
     }
 
     @Test
-    public void requestPermissionToLoad_getCurrentFilterAndSexIsNotU_addChip() {
-        when(filter.getSex()).thenReturn(Sex.M);
+    public void requestPermissionToLoad_getCurrentFilterAndSexIsNotMissing_addChip() {
+        when(filter.getSex()).thenReturn(Sex.MALE);
 
         subject.requestPermissionToLoad();
 
@@ -214,6 +217,16 @@ public class DiscoverViewModelTest {
 
         assertThat(subject.chipList.size()).isEqualTo(1);
         assertThat(subject.chipList.get(0).getText()).isEqualTo("Adult");
+    }
+
+    @Test
+    public void requestPermissionToLoad_getCurrentFilterAndSizeIsNotMissing_addChip() {
+        when(filter.getSize()).thenReturn(AnimalSize.LARGE);
+
+        subject.requestPermissionToLoad();
+
+        assertThat(subject.chipList.size()).isEqualTo(1);
+        assertThat(subject.chipList.get(0).getText()).isEqualTo("Large");
     }
 
     @Test

@@ -14,6 +14,8 @@
         <import type="tech.pauly.findapet.data.models.Sex" />
 
         <import type="tech.pauly.findapet.data.models.Age" />
+
+        <import type="tech.pauly.findapet.data.models.AnimalSize" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -65,13 +67,14 @@
                 android:layout_marginEnd="@dimen/half_margin"
                 android:layout_weight="1"
                 android:background="@drawable/selector_filter_button"
-                android:checked="@{viewModel.selectedSex == Sex.M}"
+                android:checked="@{viewModel.selectedSex == Sex.MALE}"
                 android:drawableEnd="@drawable/ic_check"
                 android:elevation="4dp"
                 android:gravity="start|center_vertical"
-                android:onClick="@{(v) -> viewModel.checkSex(v, Sex.M)}"
+                android:onClick="@{(v) -> viewModel.checkSex(v, Sex.MALE)}"
                 android:paddingEnd="@dimen/half_margin"
                 android:paddingStart="@dimen/half_margin"
+                android:singleLine="true"
                 android:textAppearance="@style/FontSmall"
                 android:textColor="@drawable/selector_filter_button_text"
                 android:textOff="@string/male"
@@ -84,13 +87,14 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_filter_button"
-                android:checked="@{viewModel.selectedSex == Sex.F}"
+                android:checked="@{viewModel.selectedSex == Sex.FEMALE}"
                 android:drawableEnd="@drawable/ic_check"
                 android:elevation="4dp"
                 android:gravity="start|center_vertical"
-                android:onClick="@{(v) -> viewModel.checkSex(v, Sex.F)}"
+                android:onClick="@{(v) -> viewModel.checkSex(v, Sex.FEMALE)}"
                 android:paddingEnd="@dimen/half_margin"
                 android:paddingStart="@dimen/half_margin"
+                android:singleLine="true"
                 android:textAppearance="@style/FontSmall"
                 android:textColor="@drawable/selector_filter_button_text"
                 android:textOff="@string/female"
@@ -144,6 +148,7 @@
                 android:onClick="@{(v) -> viewModel.checkAge(v, Age.BABY)}"
                 android:paddingEnd="@dimen/half_margin"
                 android:paddingStart="@dimen/half_margin"
+                android:singleLine="true"
                 android:textAppearance="@style/FontSmall"
                 android:textColor="@drawable/selector_filter_button_text"
                 android:textOff="@string/baby"
@@ -163,6 +168,7 @@
                 android:onClick="@{(v) -> viewModel.checkAge(v, Age.YOUNG)}"
                 android:paddingEnd="@dimen/half_margin"
                 android:paddingStart="@dimen/half_margin"
+                android:singleLine="true"
                 android:textAppearance="@style/FontSmall"
                 android:textColor="@drawable/selector_filter_button_text"
                 android:textOff="@string/young"
@@ -182,6 +188,7 @@
                 android:onClick="@{(v) -> viewModel.checkAge(v, Age.ADULT)}"
                 android:paddingEnd="@dimen/half_margin"
                 android:paddingStart="@dimen/half_margin"
+                android:singleLine="true"
                 android:textAppearance="@style/FontSmall"
                 android:textColor="@drawable/selector_filter_button_text"
                 android:textOff="@string/adult"
@@ -201,10 +208,125 @@
                 android:onClick="@{(v) -> viewModel.checkAge(v, Age.SENIOR)}"
                 android:paddingEnd="@dimen/half_margin"
                 android:paddingStart="@dimen/half_margin"
+                android:singleLine="true"
                 android:textAppearance="@style/FontSmall"
                 android:textColor="@drawable/selector_filter_button_text"
                 android:textOff="@string/senior"
                 android:textOn="@string/senior" />
+        </RadioGroup>
+
+        <View
+            android:id="@+id/divider_age"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@color/offWhite"
+            app:layout_constraintTop_toBottomOf="@+id/age_radio_group" />
+
+        <TextView
+            android:id="@+id/size_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:text="@string/size_header"
+            android:textAppearance="@style/FontStrongHeader"
+            android:textColor="@color/textStandard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_age" />
+
+        <RadioGroup
+            android:id="@+id/size_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/half_margin"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/size_header">
+
+            <ToggleButton
+                android:id="@+id/button_small"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_filter_button"
+                android:checked="@{viewModel.selectedSize == AnimalSize.SMALL}"
+                android:drawableEnd="@drawable/ic_check"
+                android:elevation="4dp"
+                android:gravity="start|center_vertical"
+                android:onClick="@{(v) -> viewModel.checkSize(v, AnimalSize.SMALL)}"
+                android:paddingEnd="@dimen/half_margin"
+                android:paddingStart="@dimen/half_margin"
+                android:singleLine="true"
+                android:textAppearance="@style/FontSmall"
+                android:textColor="@drawable/selector_filter_button_text"
+                android:textOff="@string/small"
+                android:textOn="@string/small" />
+
+            <ToggleButton
+                android:id="@+id/button_medium"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/half_margin"
+                android:layout_weight="1"
+                android:background="@drawable/selector_filter_button"
+                android:checked="@{viewModel.selectedSize == AnimalSize.MEDIUM}"
+                android:drawableEnd="@drawable/ic_check"
+                android:elevation="4dp"
+                android:gravity="start|center_vertical"
+                android:onClick="@{(v) -> viewModel.checkSize(v, AnimalSize.MEDIUM)}"
+                android:paddingEnd="@dimen/half_margin"
+                android:paddingStart="@dimen/half_margin"
+                android:singleLine="true"
+                android:textAppearance="@style/FontSmall"
+                android:textColor="@drawable/selector_filter_button_text"
+                android:textOff="@string/medium"
+                android:textOn="@string/medium" />
+
+            <ToggleButton
+                android:id="@+id/button_large"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/half_margin"
+                android:layout_weight="1"
+                android:background="@drawable/selector_filter_button"
+                android:checked="@{viewModel.selectedSize == AnimalSize.LARGE}"
+                android:drawableEnd="@drawable/ic_check"
+                android:elevation="4dp"
+                android:gravity="start|center_vertical"
+                android:onClick="@{(v) -> viewModel.checkSize(v, AnimalSize.LARGE)}"
+                android:paddingEnd="@dimen/half_margin"
+                android:paddingStart="@dimen/half_margin"
+                android:singleLine="true"
+                android:textAppearance="@style/FontSmall"
+                android:textColor="@drawable/selector_filter_button_text"
+                android:textOff="@string/large"
+                android:textOn="@string/large" />
+
+            <ToggleButton
+                android:id="@+id/button_xl"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/half_margin"
+                android:layout_weight="1"
+                android:background="@drawable/selector_filter_button"
+                android:checked="@{viewModel.selectedSize == AnimalSize.EXTRA_LARGE}"
+                android:drawableEnd="@drawable/ic_check"
+                android:elevation="4dp"
+                android:gravity="start|center_vertical"
+                android:onClick="@{(v) -> viewModel.checkSize(v, AnimalSize.EXTRA_LARGE)}"
+                android:paddingEnd="@dimen/half_margin"
+                android:paddingStart="@dimen/half_margin"
+                android:singleLine="true"
+                android:textAppearance="@style/FontSmall"
+                android:textColor="@drawable/selector_filter_button_text"
+                android:textOff="@string/extra_large"
+                android:textOn="@string/extra_large" />
         </RadioGroup>
 
         <Button

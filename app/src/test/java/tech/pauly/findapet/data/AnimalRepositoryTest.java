@@ -9,6 +9,7 @@ import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.AnimalListResponse;
+import tech.pauly.findapet.data.models.AnimalSize;
 import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.data.models.FetchAnimalsRequest;
 import tech.pauly.findapet.data.models.Filter;
@@ -42,6 +43,7 @@ public class AnimalRepositoryTest {
                                         anyInt(),
                                         anyInt(),
                                         anyString(),
+                                        anyString(),
                                         anyString())).thenReturn(Single.just(animalListResponse));
         when(observableHelper.applySingleSchedulers()).thenReturn(single -> single);
 
@@ -51,8 +53,9 @@ public class AnimalRepositoryTest {
     @Test
     public void fetchAnimals_returnsAnimalListForCorrectAnimalTypeWithSchedulers() {
         Filter filter = new Filter();
-        filter.setSex(Sex.M);
+        filter.setSex(Sex.MALE);
         filter.setAge(Age.ADULT);
+        filter.setSize(AnimalSize.LARGE);
         FetchAnimalsRequest request = new FetchAnimalsRequest(AnimalType.CAT, 0, "zipcode", filter);
         TestObserver<AnimalListResponse> observer = subject.fetchAnimals(request).test();
 
@@ -62,7 +65,8 @@ public class AnimalRepositoryTest {
                                            eq(0),
                                            eq(20),
                                            eq("M"),
-                                           eq("Adult"));
+                                           eq("Adult"),
+                                           eq("L"));
         observer.assertValues(animalListResponse)
                 .assertComplete();
         verify(observableHelper).applySingleSchedulers();

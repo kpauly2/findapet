@@ -14,5 +14,6 @@ public interface AnimalService {
                                             @Query("offset") int offset,
                                             @Query("count") int count,
                                             @Query("sex") String sex,
-                                            @Query("age") String age);
+                                            @Query("age") String age,
+                                            @Query("size") String size);
 }

@@ -13,6 +13,7 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import tech.pauly.findapet.data.FilterRepository;
 import tech.pauly.findapet.data.models.Age;
+import tech.pauly.findapet.data.models.AnimalSize;
 import tech.pauly.findapet.data.models.Filter;
 import tech.pauly.findapet.data.models.Sex;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
@@ -51,37 +52,40 @@ public class FilterViewModelTest {
 
     @Test
     public void loadCurrentFilter_populatesScreenForFilter() {
-        subject.selectedSex.set(Sex.F);
+        subject.selectedSex.set(Sex.FEMALE);
         subject.selectedAge.set(Age.YOUNG);
-        when(filter.getSex()).thenReturn(Sex.M);
+        subject.selectedSize.set(AnimalSize.SMALL);
+        when(filter.getSex()).thenReturn(Sex.MALE);
         when(filter.getAge()).thenReturn(Age.ADULT);
+        when(filter.getSize()).thenReturn(AnimalSize.LARGE);
 
         subject.loadCurrentFilter();
 
-        assertThat(subject.selectedSex.get()).isEqualTo(Sex.M);
+        assertThat(subject.selectedSex.get()).isEqualTo(Sex.MALE);
         assertThat(subject.selectedAge.get()).isEqualTo(Age.ADULT);
+        assertThat(subject.selectedSize.get()).isEqualTo(AnimalSize.LARGE);
     }
 
     @Test
     public void checkSex_buttonNotChecked_setSexToU() {
-        subject.selectedSex.set(Sex.F);
+        subject.selectedSex.set(Sex.FEMALE);
         ToggleButton button = mock(ToggleButton.class);
         when(button.isChecked()).thenReturn(false);
 
-        subject.checkSex(button, Sex.M);
+        subject.checkSex(button, Sex.MALE);
 
-        assertThat(subject.selectedSex.get()).isEqualTo(Sex.U);
+        assertThat(subject.selectedSex.get()).isEqualTo(Sex.MISSING);
     }
 
     @Test
     public void checkSex_buttonChecked_setSexToButtonSex() {
-        subject.selectedSex.set(Sex.F);
+        subject.selectedSex.set(Sex.FEMALE);
         ToggleButton button = mock(ToggleButton.class);
         when(button.isChecked()).thenReturn(true);
 
-        subject.checkSex(button, Sex.M);
+        subject.checkSex(button, Sex.MALE);
 
-        assertThat(subject.selectedSex.get()).isEqualTo(Sex.M);
+        assertThat(subject.selectedSex.get()).isEqualTo(Sex.MALE);
     }
 
     @Test
@@ -107,6 +111,28 @@ public class FilterViewModelTest {
     }
 
     @Test
+    public void checkSize_buttonNotChecked_setSizeToMissing() {
+        subject.selectedSize.set(AnimalSize.MEDIUM);
+        ToggleButton button = mock(ToggleButton.class);
+        when(button.isChecked()).thenReturn(false);
+
+        subject.checkSize(button, AnimalSize.SMALL);
+
+        assertThat(subject.selectedSize.get()).isEqualTo(AnimalSize.MISSING);
+    }
+
+    @Test
+    public void checkSize_buttonChecked_setSizeToButtonSize() {
+        subject.selectedSize.set(AnimalSize.MEDIUM);
+        ToggleButton button = mock(ToggleButton.class);
+        when(button.isChecked()).thenReturn(true);
+
+        subject.checkSize(button, AnimalSize.SMALL);
+
+        assertThat(subject.selectedSize.get()).isEqualTo(AnimalSize.SMALL);
+    }
+
+    @Test
     public void saveFilter_savesUseCaseAndFinishesScreen() {
         subject.saveFilter(mock(View.class));
 
@@ -115,14 +141,16 @@ public class FilterViewModelTest {
 
     @Test
     public void saveFilter_insertsNewFilterForCurrentSelectedItems() {
-        subject.selectedSex.set(Sex.M);
+        subject.selectedSex.set(Sex.MALE);
         subject.selectedAge.set(Age.ADULT);
+        subject.selectedSize.set(AnimalSize.LARGE);
         ArgumentCaptor<Filter> captor = ArgumentCaptor.forClass(Filter.class);
 
         subject.saveFilter(mock(View.class));
 
         verify(filterRepository).insertFilter(captor.capture());
-        assertThat(captor.getValue().getSex()).isEqualTo(Sex.M);
+        assertThat(captor.getValue().getSex()).isEqualTo(Sex.MALE);
         assertThat(captor.getValue().getAge()).isEqualTo(Age.ADULT);
+        assertThat(captor.getValue().getSize()).isEqualTo(AnimalSize.LARGE);
     }
 }
