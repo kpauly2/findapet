@@ -65,6 +65,10 @@ public class FilterViewModel extends BaseViewModel {
                                              .subscribe(this::finish, Throwable::printStackTrace));
     }
 
+    public void clickBreedSearch(View v) {
+        eventBus.send(ActivityEvent.build(this).startActivity(BreedActivity.class));
+    }
+
     private void finish() {
         dataStore.save(new FilterUpdatedUseCase());
         eventBus.send(ActivityEvent.build(this).finishActivity());

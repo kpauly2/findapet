@@ -153,4 +153,11 @@ public class FilterViewModelTest {
         assertThat(captor.getValue().getAge()).isEqualTo(Age.ADULT);
         assertThat(captor.getValue().getSize()).isEqualTo(AnimalSize.LARGE);
     }
+
+    @Test
+    public void onClickBreedSearch_launchesBreedActivity() {
+        subject.clickBreedSearch(null);
+
+        verify(eventBus).send(ActivityEvent.build(subject).startActivity(BreedActivity.class));
+    }
 }

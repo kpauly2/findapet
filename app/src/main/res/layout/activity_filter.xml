@@ -29,12 +29,58 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/white"
-            android:theme="@style/ToolbarTheme"
+            android:theme="@style/LightToolbarTheme"
             app:layout_collapseMode="pin"
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/filter_title"
             app:titleTextAppearance="@style/FontStrongHeader"
             app:titleTextColor="@color/purpleStandard" />
+
+        <TextView
+            android:id="@+id/breed_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:text="@string/breed_header"
+            android:textAppearance="@style/FontStrongHeader"
+            android:textColor="@color/textStandard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <Button
+            android:id="@+id/button_breed_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_rounded_button"
+            android:drawableEnd="@drawable/ic_search"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/half_margin"
+            android:elevation="4dp"
+            android:gravity="start|center_vertical"
+            android:onClick="@{viewModel::clickBreedSearch}"
+            android:paddingEnd="@dimen/half_margin"
+            android:paddingStart="@dimen/half_margin"
+            android:singleLine="true"
+            android:text="@string/filter_breed_hint"
+            android:textAppearance="@style/FontSmall"
+            android:textColor="@color/purpleVeryLight"
+            android:textOff="@string/small"
+            android:textOn="@string/small"
+            app:layout_constraintTop_toBottomOf="@id/breed_header"/>
+
+        <View
+            android:id="@+id/divider_breed"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:background="@color/offWhite"
+            app:layout_constraintTop_toBottomOf="@+id/button_breed_search" />
 
         <TextView
             android:id="@+id/sex_header"
@@ -48,7 +94,7 @@
             android:textColor="@color/textStandard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/divider_breed" />
 
         <RadioGroup
             android:id="@+id/sex_radio_group"

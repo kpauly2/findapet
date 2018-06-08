@@ -12,6 +12,7 @@
 
     <style name="LightToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/purpleStandard</item>
+        <item name="colorControlHighlight">@color/purpleVeryLight</item>
     </style>
 
     <style name="NavMenuButton" parent="Widget.AppCompat.Button.Borderless">
