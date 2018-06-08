@@ -17,6 +17,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.databinding.ActivityMainBinding;
 import tech.pauly.findapet.discover.FilterActivity;
+import tech.pauly.findapet.shared.datastore.FilterAnimalTypeUseCase;
+import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.shared.events.ActivityEvent;
 import tech.pauly.findapet.shared.events.ViewEventBus;
 
@@ -27,6 +29,9 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     ViewEventBus eventBus;
+
+    @Inject
+    TransientDataStore dataStore;
 
     private ActivityMainBinding binding;
 
@@ -61,6 +66,7 @@ public class MainActivity extends BaseActivity {
 
         switch (id) {
             case R.id.menu_search:
+                dataStore.save(new FilterAnimalTypeUseCase(viewModel.currentAnimalType.get()));
                 activityEvent(ActivityEvent.build(this).startActivity(FilterActivity.class));
                 return true;
             default:

@@ -32,9 +32,5 @@
             android:name=".discover.FilterActivity"
             android:parentActivityName=".shared.MainActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".discover.BreedActivity"
-            android:parentActivityName=".discover.FilterActivity"
-            android:screenOrientation="portrait" />
     </application>
 </manifest>

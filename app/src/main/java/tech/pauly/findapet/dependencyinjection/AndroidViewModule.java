@@ -3,7 +3,6 @@ package tech.pauly.findapet.dependencyinjection;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import tech.pauly.findapet.discover.AnimalDetailsActivity;
-import tech.pauly.findapet.discover.BreedActivity;
 import tech.pauly.findapet.discover.DiscoverFragment;
 import tech.pauly.findapet.discover.FilterActivity;
 import tech.pauly.findapet.favorites.FavoritesFragment;
@@ -34,7 +33,4 @@ public abstract class AndroidViewModule {
 
     @ContributesAndroidInjector
     abstract FilterActivity bindFilterActivity();
-
-    @ContributesAndroidInjector
-    abstract BreedActivity breedActivity();
 }
