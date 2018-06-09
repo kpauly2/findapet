@@ -71,6 +71,13 @@ public class AnimalListItemViewModelTest {
     }
 
     @Test
+    public void onCreate_distanceVisibilityFalse() {
+        createSubject();
+        
+        assertThat(subject.getDistanceVisibility()).isFalse();
+    }
+
+    @Test
     public void setPhoto_animalHasXPhoto_setsPhoto() {
         Photo photo = mock(Photo.class);
         when(photo.getUrl()).thenReturn("http://url.com");
@@ -136,6 +143,33 @@ public class AnimalListItemViewModelTest {
         subject.launchAnimalDetails();
 
         verify(eventBus).send(ActivityEvent.build(subject).startActivity(AnimalDetailsActivity.class));
+    }
+
+    @Test
+    public void distanceLessThanZero_distanceVisibilityFalse() {
+        createSubject();
+
+        subject.distance.set(-1);
+
+        assertThat(subject.getDistanceVisibility()).isFalse();
+    }
+
+    @Test
+    public void distanceZero_distanceVisibilityTrue() {
+        createSubject();
+
+        subject.distance.set(0);
+
+        assertThat(subject.getDistanceVisibility()).isTrue();
+    }
+
+    @Test
+    public void distanceLessMoreThanZero_distanceVisibilityTrue() {
+        createSubject();
+
+        subject.distance.set(1);
+
+        assertThat(subject.getDistanceVisibility()).isTrue();
     }
 
     private void createSubject() {

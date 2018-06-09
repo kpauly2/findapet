@@ -1,6 +1,7 @@
 package tech.pauly.findapet.discover;
 
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 
 import java.util.List;
 
@@ -23,11 +24,15 @@ public class AnimalListItemViewModel extends BaseViewModel {
     public ObservableField<String> imageUrl = new ObservableField<>("");
     public ObservableField<String> age = new ObservableField<>("");
     public ObservableField<String> breeds = new ObservableField<>("");
+    public ObservableInt distance = new ObservableInt(-1);
     private Animal animal;
     private ViewEventBus eventBus;
     private TransientDataStore dataStore;
 
-    protected AnimalListItemViewModel(Animal animal, ViewEventBus eventBus, TransientDataStore dataStore, ResourceProvider resourceProvider) {
+    protected AnimalListItemViewModel(Animal animal,
+                                      ViewEventBus eventBus,
+                                      TransientDataStore dataStore,
+                                      ResourceProvider resourceProvider) {
         this.animal = animal;
         this.eventBus = eventBus;
         this.dataStore = dataStore;
@@ -41,6 +46,10 @@ public class AnimalListItemViewModel extends BaseViewModel {
     public void launchAnimalDetails() {
         dataStore.save(new AnimalDetailsUseCase(animal));
         eventBus.send(ActivityEvent.build(this).startActivity(AnimalDetailsActivity.class));
+    }
+
+    public boolean getDistanceVisibility() {
+        return distance.get() >= 0;
     }
 
     private void setBreeds(List<String> breedList) {
