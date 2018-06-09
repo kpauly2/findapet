@@ -2,9 +2,7 @@ package tech.pauly.findapet.discover;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
-import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
-import android.databinding.ObservableList;
 import android.view.View;
 import android.widget.ToggleButton;
 
@@ -31,22 +29,26 @@ public class FilterViewModel extends BaseViewModel {
     public ObservableField<Sex> selectedSex = new ObservableField<>(Sex.MISSING);
     public ObservableField<Age> selectedAge = new ObservableField<>(Age.MISSING);
     public ObservableField<AnimalSize> selectedSize = new ObservableField<>(AnimalSize.MISSING);
-    public ObservableList<String> breedList = new ObservableArrayList<>();
+    public ObservableField<String> selectedBreed = new ObservableField<>("");
 
     private FilterRepository filterRepository;
     private BreedRepository breedRepository;
     private ViewEventBus eventBus;
     private TransientDataStore dataStore;
+    private FilterAdapter adapter;
 
     @Inject
     FilterViewModel(FilterRepository filterRepository,
                     BreedRepository breedRepository,
                     ViewEventBus eventBus,
-                    TransientDataStore dataStore) {
+                    TransientDataStore dataStore,
+                    FilterAdapter adapter) {
         this.filterRepository = filterRepository;
         this.breedRepository = breedRepository;
         this.eventBus = eventBus;
         this.dataStore = dataStore;
+        this.adapter = adapter;
+        adapter.setViewModel(this);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -79,6 +81,10 @@ public class FilterViewModel extends BaseViewModel {
         selectedSize.set(isViewChecked(view) ? size : AnimalSize.MISSING);
     }
 
+    public void checkBreed(View view, String breed) {
+        selectedBreed.set(isViewChecked(view) ? breed : "");
+    }
+
     public void saveFilter(View v) {
         Filter filter = new Filter();
         filter.setSex(selectedSex.get());
@@ -86,6 +92,10 @@ public class FilterViewModel extends BaseViewModel {
         filter.setSize(selectedSize.get());
         subscribeOnLifecycle(filterRepository.insertFilter(filter)
                                              .subscribe(this::finish, Throwable::printStackTrace));
+    }
+
+    public FilterAdapter getAdapter() {
+        return adapter;
     }
 
     private void finish() {
@@ -102,7 +112,7 @@ public class FilterViewModel extends BaseViewModel {
     private void populateBreedList(BreedListResponse response) {
         List<String> breedList = response.getBreedList();
         if (breedList != null) {
-            this.breedList.addAll(breedList);
+            adapter.setBreedItems(breedList);
         }
     }
 

@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
+import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -48,6 +49,9 @@ public class FilterViewModelTest {
     private TransientDataStore dataStore;
 
     @Mock
+    private FilterAdapter filterAdapter;
+
+    @Mock
     private Filter filter;
 
     @Mock
@@ -61,7 +65,17 @@ public class FilterViewModelTest {
         when(filterRepository.getCurrentFilter()).thenReturn(Single.just(filter));
         when(filterRepository.insertFilter(any(Filter.class))).thenReturn(Completable.complete());
         when(breedRepository.getBreedList(any(AnimalType.class))).thenReturn(Single.just(breedListResponse));
-        subject = new FilterViewModel(filterRepository, breedRepository, eventBus, dataStore);
+        subject = new FilterViewModel(filterRepository, breedRepository, eventBus, dataStore, filterAdapter);
+    }
+
+    @Test
+    public void create_setViewModelOnAdapter() {
+        verify(filterAdapter).setViewModel(subject);
+    }
+
+    @Test
+    public void getAdapter_returnsAdapter() {
+        assertThat(subject.getAdapter()).isEqualTo(filterAdapter);
     }
 
     @Test
@@ -147,6 +161,28 @@ public class FilterViewModelTest {
     }
 
     @Test
+    public void checkBreed_buttonNotChecked_setBreedToEmpty() {
+        subject.selectedBreed.set("Calico");
+        ToggleButton button = mock(ToggleButton.class);
+        when(button.isChecked()).thenReturn(false);
+
+        subject.checkBreed(button, "Ragdoll");
+
+        assertThat(subject.selectedBreed.get()).isEqualTo("");
+    }
+
+    @Test
+    public void checkBreed_buttonChecked_setBreedToButtonBreed() {
+        subject.selectedBreed.set("Calico");
+        ToggleButton button = mock(ToggleButton.class);
+        when(button.isChecked()).thenReturn(true);
+
+        subject.checkBreed(button, "Ragdoll");
+
+        assertThat(subject.selectedBreed.get()).isEqualTo("Ragdoll");
+    }
+
+    @Test
     public void saveFilter_savesUseCaseAndFinishesScreen() {
         subject.saveFilter(mock(View.class));
 
@@ -194,7 +230,7 @@ public class FilterViewModelTest {
 
         subject.updateBreedList();
 
-        assertThat(subject.breedList).hasSize(0);
+        verify(filterAdapter, never()).setBreedItems(any(List.class));
     }
 
     @Test
@@ -204,7 +240,7 @@ public class FilterViewModelTest {
 
         subject.updateBreedList();
 
-        assertThat(subject.breedList).isEqualTo(breedListResponse.getBreedList());
+        verify(filterAdapter).setBreedItems(breedListResponse.getBreedList());
     }
 
     private void setupDataStoreWithUseCase() {

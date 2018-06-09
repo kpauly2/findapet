@@ -3,7 +3,7 @@
     android:color="@color/purpleLight">
     <item>
         <selector>
-            <item android:drawable="@drawable/shape_filter_button_selected"/>
+            <item android:drawable="@drawable/shape_filter_button_unselected"/>
         </selector>
     </item>
 </ripple>

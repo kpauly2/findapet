@@ -1,6 +1,7 @@
 package tech.pauly.findapet.discover;
 
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -19,14 +20,15 @@ public class AnimalListAdapter extends RecyclerView.Adapter<AnimalListItemViewHo
     @Inject
     AnimalListAdapter() {}
 
+    @NonNull
     @Override
-    public AnimalListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AnimalListItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         return new AnimalListItemViewHolder(DataBindingUtil.inflate(inflater, R.layout.item_animal_list, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(AnimalListItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AnimalListItemViewHolder holder, int position) {
         holder.bind(animalItems.get(position));
     }
 
