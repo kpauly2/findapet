@@ -7,7 +7,6 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
-import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +138,7 @@ public class DiscoverViewModel extends BaseViewModel {
     }
 
     private Observable<String> getCurrentLocation(boolean resetLocation) {
-        return locationHelper.getCurrentLocation(resetLocation)
+        return locationHelper.fetchCurrentLocation(resetLocation)
                              .doOnSubscribe(this::removeLocationChip)
                              .doOnNext(this::addLocationChip);
     }

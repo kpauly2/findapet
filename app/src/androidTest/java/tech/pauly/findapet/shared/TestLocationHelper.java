@@ -4,11 +4,6 @@ import android.content.Context;
 import android.support.test.espresso.idling.CountingIdlingResource;
 
 import io.reactivex.Observable;
-import tech.pauly.findapet.data.AnimalRepository;
-import tech.pauly.findapet.data.AnimalService;
-import tech.pauly.findapet.data.ObservableHelper;
-import tech.pauly.findapet.data.models.AnimalListResponse;
-import tech.pauly.findapet.data.models.AnimalType;
 
 public class TestLocationHelper extends LocationHelper {
 
@@ -20,8 +15,8 @@ public class TestLocationHelper extends LocationHelper {
     }
 
     @Override
-    public Observable<String> getCurrentLocation() {
+    public Observable<String> fetchCurrentLocation() {
         countingIdlingResource.increment();
-        return super.getCurrentLocation().doAfterTerminate(() -> countingIdlingResource.decrement());
+        return super.fetchCurrentLocation().doAfterTerminate(() -> countingIdlingResource.decrement());
     }
 }

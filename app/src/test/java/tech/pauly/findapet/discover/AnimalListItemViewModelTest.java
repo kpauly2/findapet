@@ -8,14 +8,17 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.Collections;
 
+import io.reactivex.Single;
 import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Animal;
+import tech.pauly.findapet.data.models.Contact;
 import tech.pauly.findapet.data.models.Media;
 import tech.pauly.findapet.data.models.Photo;
 import tech.pauly.findapet.data.models.PhotoSize;
-import tech.pauly.findapet.shared.events.ActivityEvent;
+import tech.pauly.findapet.shared.LocationHelper;
 import tech.pauly.findapet.shared.ResourceProvider;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
+import tech.pauly.findapet.shared.events.ActivityEvent;
 import tech.pauly.findapet.shared.events.ViewEventBus;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,6 +40,12 @@ public class AnimalListItemViewModelTest {
     @Mock
     private ResourceProvider resourceProvider;
 
+    @Mock
+    private LocationHelper locationHelper;
+
+    @Mock
+    private Contact contact;
+
     private AnimalListItemViewModel subject;
 
     @Before
@@ -49,7 +58,9 @@ public class AnimalListItemViewModelTest {
         Media media = mock(Media.class);
         when(media.getPhotoList()).thenReturn(Collections.emptyList());
         when(animal.getMedia()).thenReturn(media);
+        when(animal.getContact()).thenReturn(contact);
         when(resourceProvider.getString(Age.ADULT.getFormattedName())).thenReturn("Adult");
+        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Single.just(1));
     }
 
     @Test
@@ -71,10 +82,39 @@ public class AnimalListItemViewModelTest {
     }
 
     @Test
-    public void onCreate_distanceVisibilityFalse() {
+    public void onCreate_getsDistanceForContactInfo() {
         createSubject();
-        
-        assertThat(subject.getDistanceVisibility()).isFalse();
+
+        verify(locationHelper).getCurrentDistanceToContactInfo(contact);
+    }
+
+    @Test
+    public void onCreate_getsDistanceForContactInfoAndDistanceLessThanZero_distanceVisibilityFalse() {
+        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Single.just(-1));
+
+        createSubject();
+
+        assertThat(subject.distanceVisibility.get()).isFalse();
+    }
+
+    @Test
+    public void onCreate_getsDistanceForContactInfoAndDistanceZero_setsDistanceAndVisibility() {
+        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Single.just(0));
+
+        createSubject();
+
+        assertThat(subject.distance.get()).isEqualTo("< 1");
+        assertThat(subject.distanceVisibility.get()).isTrue();
+    }
+
+    @Test
+    public void onCreate_getsDistanceForContactInfoAndDistanceMoreThanZero_setsDistanceAndVisibility() {
+        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Single.just(2));
+
+        createSubject();
+
+        assertThat(subject.distance.get()).isEqualTo("2");
+        assertThat(subject.distanceVisibility.get()).isTrue();
     }
 
     @Test
@@ -145,34 +185,7 @@ public class AnimalListItemViewModelTest {
         verify(eventBus).send(ActivityEvent.build(subject).startActivity(AnimalDetailsActivity.class));
     }
 
-    @Test
-    public void distanceLessThanZero_distanceVisibilityFalse() {
-        createSubject();
-
-        subject.distance.set(-1);
-
-        assertThat(subject.getDistanceVisibility()).isFalse();
-    }
-
-    @Test
-    public void distanceZero_distanceVisibilityTrue() {
-        createSubject();
-
-        subject.distance.set(0);
-
-        assertThat(subject.getDistanceVisibility()).isTrue();
-    }
-
-    @Test
-    public void distanceLessMoreThanZero_distanceVisibilityTrue() {
-        createSubject();
-
-        subject.distance.set(1);
-
-        assertThat(subject.getDistanceVisibility()).isTrue();
-    }
-
     private void createSubject() {
-        subject = new AnimalListItemViewModel(animal, eventBus, dataStore, resourceProvider);
+        subject = new AnimalListItemViewModel(animal, eventBus, dataStore, resourceProvider, locationHelper);
     }
 }
