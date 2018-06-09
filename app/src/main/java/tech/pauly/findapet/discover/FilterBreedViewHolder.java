@@ -22,10 +22,12 @@ public class FilterBreedViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(FilterViewModel viewModel) {
         itemFiltersBinding.setViewModel(viewModel);
+        itemFiltersBinding.executePendingBindings();
     }
 
     public void bind(FilterViewModel viewModel, String breed) {
         itemFilterBreedBinding.setBreed(breed);
         itemFilterBreedBinding.setViewModel(viewModel);
+        itemFilterBreedBinding.executePendingBindings();
     }
 }

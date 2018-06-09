@@ -103,6 +103,7 @@ public class DiscoverViewModelTest {
         when(filter.getSex()).thenReturn(Sex.MISSING);
         when(filter.getAge()).thenReturn(Age.MISSING);
         when(filter.getSize()).thenReturn(AnimalSize.MISSING);
+        when(filter.getBreed()).thenReturn("");
         when(resourceProvider.getString(R.string.male)).thenReturn("Male");
         when(resourceProvider.getString(R.string.adult)).thenReturn("Adult");
         when(resourceProvider.getString(R.string.large)).thenReturn("Large");
@@ -227,6 +228,16 @@ public class DiscoverViewModelTest {
 
         assertThat(subject.chipList.size()).isEqualTo(1);
         assertThat(subject.chipList.get(0).getText()).isEqualTo("Large");
+    }
+
+    @Test
+    public void requestPermissionToLoad_getCurrentFilterAndBreedIsNotMissing_addChip() {
+        when(filter.getBreed()).thenReturn("Calico");
+
+        subject.requestPermissionToLoad();
+
+        assertThat(subject.chipList.size()).isEqualTo(1);
+        assertThat(subject.chipList.get(0).getText()).isEqualTo("Calico");
     }
 
     @Test

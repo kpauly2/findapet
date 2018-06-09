@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:background="@drawable/selector_radio_button_background"
             android:layout_height="46dp"
-            android:checked="@{viewModel.selectedBreed == breed}"
+            android:checked="@{viewModel.selectedBreed.equals(breed)}"
             android:onClick="@{(v) -> viewModel.checkBreed(v, breed)}"
             android:paddingEnd="@dimen/standard_margin"
             android:paddingStart="@dimen/standard_margin"
