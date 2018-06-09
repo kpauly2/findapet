@@ -44,6 +44,7 @@ public class AnimalRepositoryTest {
                                         anyInt(),
                                         anyString(),
                                         anyString(),
+                                        anyString(),
                                         anyString())).thenReturn(Single.just(animalListResponse));
         when(observableHelper.applySingleSchedulers()).thenReturn(single -> single);
 
@@ -56,6 +57,7 @@ public class AnimalRepositoryTest {
         filter.setSex(Sex.MALE);
         filter.setAge(Age.ADULT);
         filter.setSize(AnimalSize.LARGE);
+        filter.setBreed("Calico");
         FetchAnimalsRequest request = new FetchAnimalsRequest(AnimalType.CAT, 0, "zipcode", filter);
         TestObserver<AnimalListResponse> observer = subject.fetchAnimals(request).test();
 
@@ -66,7 +68,8 @@ public class AnimalRepositoryTest {
                                            eq(20),
                                            eq("M"),
                                            eq("Adult"),
-                                           eq("L"));
+                                           eq("L"),
+                                           eq("Calico"));
         observer.assertValues(animalListResponse)
                 .assertComplete();
         verify(observableHelper).applySingleSchedulers();

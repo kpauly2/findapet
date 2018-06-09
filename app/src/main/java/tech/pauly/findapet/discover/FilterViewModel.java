@@ -90,6 +90,7 @@ public class FilterViewModel extends BaseViewModel {
         filter.setSex(selectedSex.get());
         filter.setAge(selectedAge.get());
         filter.setSize(selectedSize.get());
+        filter.setBreed(selectedBreed.get());
         subscribeOnLifecycle(filterRepository.insertFilter(filter)
                                              .subscribe(this::finish, Throwable::printStackTrace));
     }
@@ -107,6 +108,7 @@ public class FilterViewModel extends BaseViewModel {
         selectedSex.set(filter.getSex());
         selectedAge.set(filter.getAge());
         selectedSize.set(filter.getSize());
+        selectedBreed.set(filter.getBreed());
     }
 
     private void populateBreedList(BreedListResponse response) {

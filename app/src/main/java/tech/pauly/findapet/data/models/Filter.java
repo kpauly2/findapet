@@ -21,6 +21,8 @@ public class Filter {
     @TypeConverters(AnimalSize.class)
     private AnimalSize size = AnimalSize.MISSING;
 
+    private String breed = "";
+
     public Long getId() {
         return id;
     }
@@ -53,6 +55,14 @@ public class Filter {
         this.size = size;
     }
 
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -62,12 +72,12 @@ public class Filter {
             return false;
         }
         Filter filter = (Filter) o;
-        return Objects.equals(id, filter.id) && sex == filter.sex && age == filter.age && size == filter.size;
+        return Objects.equals(id, filter.id) && sex == filter.sex && age == filter.age && size == filter.size && Objects.equals(breed, filter.breed);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, sex, age, size);
+        return Objects.hash(id, sex, age, size, breed);
     }
 }

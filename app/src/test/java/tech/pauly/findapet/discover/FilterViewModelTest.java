@@ -86,12 +86,14 @@ public class FilterViewModelTest {
         when(filter.getSex()).thenReturn(Sex.MALE);
         when(filter.getAge()).thenReturn(Age.ADULT);
         when(filter.getSize()).thenReturn(AnimalSize.LARGE);
+        when(filter.getBreed()).thenReturn("Calico");
 
         subject.loadCurrentFilter();
 
         assertThat(subject.selectedSex.get()).isEqualTo(Sex.MALE);
         assertThat(subject.selectedAge.get()).isEqualTo(Age.ADULT);
         assertThat(subject.selectedSize.get()).isEqualTo(AnimalSize.LARGE);
+        assertThat(subject.selectedBreed.get()).isEqualTo("Calico");
     }
 
     @Test
@@ -183,7 +185,7 @@ public class FilterViewModelTest {
     }
 
     @Test
-    public void saveFilter_savesUseCaseAndFinishesScreen() {
+    public void saveFilter_finishesScreen() {
         subject.saveFilter(mock(View.class));
 
         verify(eventBus).send(ActivityEvent.build(this).finishActivity());
@@ -194,6 +196,7 @@ public class FilterViewModelTest {
         subject.selectedSex.set(Sex.MALE);
         subject.selectedAge.set(Age.ADULT);
         subject.selectedSize.set(AnimalSize.LARGE);
+        subject.selectedBreed.set("Calico");
         ArgumentCaptor<Filter> captor = ArgumentCaptor.forClass(Filter.class);
 
         subject.saveFilter(mock(View.class));
@@ -202,6 +205,7 @@ public class FilterViewModelTest {
         assertThat(captor.getValue().getSex()).isEqualTo(Sex.MALE);
         assertThat(captor.getValue().getAge()).isEqualTo(Age.ADULT);
         assertThat(captor.getValue().getSize()).isEqualTo(AnimalSize.LARGE);
+        assertThat(captor.getValue().getBreed()).isEqualTo("Calico");
     }
 
     @Test

@@ -7,6 +7,7 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,6 +159,10 @@ public class DiscoverViewModel extends BaseViewModel {
 
         if (filter.getSize() != AnimalSize.MISSING) {
             chipList.add(new Chip(resourceProvider.getString(filter.getSize().getFormattedName())));
+        }
+
+        if (!filter.getBreed().equals("")) {
+            chipList.add(new Chip(filter.getBreed()));
         }
     }
 

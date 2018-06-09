@@ -30,7 +30,8 @@ public class AnimalRepository {
                                           ANIMAL_RETURN_COUNT,
                                           filter.getSex().getServerName(),
                                           filter.getAge().getServerName(),
-                                          filter.getSize().getServerName())
+                                          filter.getSize().getServerName(),
+                                          filter.getBreed())
                             .compose(observableHelper.applySingleSchedulers())
                             .toObservable();
     }
