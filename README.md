@@ -36,7 +36,7 @@ Issues are welcome, just please be sure to search through the [Tracker](https://
 Kevin Pauly - [website](http://www.pauly.tech)
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/kpauly2-ford/findapet/blob/master/LICENSE.md) for details
+This project is licensed under the GNU General Public License - see the [LICENSE](https://github.com/kpauly2-ford/findapet/blob/master/LICENSE) for details
 
 ## Credit
 Petfinder API: https://www.petfinder.com/developers/api-docs
