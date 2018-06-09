@@ -8,7 +8,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.LayoutDirection;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -42,6 +44,15 @@ public class BindingAdapters {
                .centerCrop()
                .transform(transformation)
                .into(view);
+    }
+
+    @BindingAdapter("layoutManager")
+    public static void layoutManager(RecyclerView recyclerView, int orientation) {
+        if (orientation == RecyclerView.HORIZONTAL) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(), RecyclerView.HORIZONTAL, false));
+        } else if (orientation == RecyclerView.VERTICAL) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        }
     }
 
     @BindingAdapter(value = {"recyclerViewGridSpan", "loadMoreListener"})

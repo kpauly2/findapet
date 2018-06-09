@@ -9,13 +9,20 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+import java.util.List;
+
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import tech.pauly.findapet.data.BreedRepository;
 import tech.pauly.findapet.data.FilterRepository;
 import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.AnimalSize;
+import tech.pauly.findapet.data.models.AnimalType;
+import tech.pauly.findapet.data.models.BreedListResponse;
 import tech.pauly.findapet.data.models.Filter;
 import tech.pauly.findapet.data.models.Sex;
+import tech.pauly.findapet.shared.datastore.FilterAnimalTypeUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.shared.events.ActivityEvent;
 import tech.pauly.findapet.shared.events.ViewEventBus;
@@ -23,6 +30,7 @@ import tech.pauly.findapet.shared.events.ViewEventBus;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -32,13 +40,22 @@ public class FilterViewModelTest {
     private FilterRepository filterRepository;
 
     @Mock
+    private BreedRepository breedRepository;
+
+    @Mock
     private ViewEventBus eventBus;
 
     @Mock
     private TransientDataStore dataStore;
 
     @Mock
+    private FilterAdapter filterAdapter;
+
+    @Mock
     private Filter filter;
+
+    @Mock
+    private BreedListResponse breedListResponse;
 
     private FilterViewModel subject;
 
@@ -47,7 +64,18 @@ public class FilterViewModelTest {
         MockitoAnnotations.initMocks(this);
         when(filterRepository.getCurrentFilter()).thenReturn(Single.just(filter));
         when(filterRepository.insertFilter(any(Filter.class))).thenReturn(Completable.complete());
-        subject = new FilterViewModel(filterRepository, eventBus, dataStore);
+        when(breedRepository.getBreedList(any(AnimalType.class))).thenReturn(Single.just(breedListResponse));
+        subject = new FilterViewModel(filterRepository, breedRepository, eventBus, dataStore, filterAdapter);
+    }
+
+    @Test
+    public void create_setViewModelOnAdapter() {
+        verify(filterAdapter).setViewModel(subject);
+    }
+
+    @Test
+    public void getAdapter_returnsAdapter() {
+        assertThat(subject.getAdapter()).isEqualTo(filterAdapter);
     }
 
     @Test
@@ -133,6 +161,28 @@ public class FilterViewModelTest {
     }
 
     @Test
+    public void checkBreed_buttonNotChecked_setBreedToEmpty() {
+        subject.selectedBreed.set("Calico");
+        ToggleButton button = mock(ToggleButton.class);
+        when(button.isChecked()).thenReturn(false);
+
+        subject.checkBreed(button, "Ragdoll");
+
+        assertThat(subject.selectedBreed.get()).isEqualTo("");
+    }
+
+    @Test
+    public void checkBreed_buttonChecked_setBreedToButtonBreed() {
+        subject.selectedBreed.set("Calico");
+        ToggleButton button = mock(ToggleButton.class);
+        when(button.isChecked()).thenReturn(true);
+
+        subject.checkBreed(button, "Ragdoll");
+
+        assertThat(subject.selectedBreed.get()).isEqualTo("Ragdoll");
+    }
+
+    @Test
     public void saveFilter_savesUseCaseAndFinishesScreen() {
         subject.saveFilter(mock(View.class));
 
@@ -152,5 +202,50 @@ public class FilterViewModelTest {
         assertThat(captor.getValue().getSex()).isEqualTo(Sex.MALE);
         assertThat(captor.getValue().getAge()).isEqualTo(Age.ADULT);
         assertThat(captor.getValue().getSize()).isEqualTo(AnimalSize.LARGE);
+    }
+
+    @Test
+    public void updateBreedList_noAnimalType_doNothing() {
+        when(dataStore.get(FilterAnimalTypeUseCase.class)).thenReturn(null);
+
+        subject.updateBreedList();
+
+        verify(breedRepository, never()).getBreedList(any(AnimalType.class));
+    }
+
+    @Test
+    public void updateBreedList_getsBreedListForAnimalType() {
+        when(breedListResponse.getBreedList()).thenReturn(null);
+        setupDataStoreWithUseCase();
+
+        subject.updateBreedList();
+
+        verify(breedRepository).getBreedList(AnimalType.CAT);
+    }
+
+    @Test
+    public void updateBreedList_returnedBreedListNull_doNothing() {
+        when(breedListResponse.getBreedList()).thenReturn(null);
+        setupDataStoreWithUseCase();
+
+        subject.updateBreedList();
+
+        verify(filterAdapter, never()).setBreedItems(any(List.class));
+    }
+
+    @Test
+    public void updateBreedList_returnedBreedListValid_showBreedList() {
+        when(breedListResponse.getBreedList()).thenReturn(Arrays.asList("breed 1", "breed 2"));
+        setupDataStoreWithUseCase();
+
+        subject.updateBreedList();
+
+        verify(filterAdapter).setBreedItems(breedListResponse.getBreedList());
+    }
+
+    private void setupDataStoreWithUseCase() {
+        FilterAnimalTypeUseCase useCase = mock(FilterAnimalTypeUseCase.class);
+        when(useCase.getAnimalType()).thenReturn(AnimalType.CAT);
+        when(dataStore.get(FilterAnimalTypeUseCase.class)).thenReturn(useCase);
     }
 }

@@ -24,6 +24,10 @@ public enum AnimalType {
         this.toolbarName = toolbarName;
     }
 
+    public String getServerName() {
+        return name().toLowerCase();
+    }
+
     static AnimalType fromString(String name) {
         for (AnimalType type : AnimalType.values()) {
             if (type.serverName.equals(name)) {

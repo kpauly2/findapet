@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import tech.pauly.findapet.data.AnimalService;
+import tech.pauly.findapet.data.BreedService;
 import tech.pauly.findapet.data.FilterDatabase;
 import tech.pauly.findapet.data.PetfinderEndpoints;
 
@@ -42,5 +43,22 @@ public class DataModule {
         return Room.databaseBuilder(context, FilterDatabase.class, "filter-database")
                    .fallbackToDestructiveMigration()
                    .build();
+    }
+
+    @Provides
+    BreedService provideBreedService() {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+
+        return new Retrofit.Builder()
+                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(PetfinderEndpoints.getEndpoint())
+                .client(client)
+                .build()
+                .create(BreedService.class);
     }
 }

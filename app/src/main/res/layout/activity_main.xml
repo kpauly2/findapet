@@ -73,22 +73,25 @@
 
                     <TextView
                         android:id="@+id/navigation_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/standard_margin"
-                        android:layout_marginTop="@dimen/large_margin"
+                        android:background="@color/purpleStandard"
+                        android:paddingBottom="@dimen/standard_margin"
+                        android:paddingEnd="@dimen/standard_margin"
+                        android:paddingStart="@dimen/standard_margin"
+                        android:paddingTop="35dp"
                         android:text="@string/app_name"
                         android:textAppearance="@style/FontLargeHeader"
-                        android:textColor="@color/textStandard"
+                        android:textColor="@android:color/white"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:elevation="4dp"/>
 
                     <ToggleButton
                         android:id="@+id/button_discover"
                         style="@style/NavMenuButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/large_margin"
                         android:background="@drawable/nav_bar_dropdown_button_background"
                         android:drawableEnd="@drawable/selector_drop_down"
                         android:drawablePadding="@dimen/large_margin"

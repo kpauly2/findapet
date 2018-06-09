@@ -54,6 +54,10 @@
     <string name="filter_search_button">search with filter</string>
     <string name="chip_near_location">Near %s</string>
     <string name="sex_header">SEX</string>
+    <string name="breed_header">BREED</string>
     <string name="age_header">AGE</string>
     <string name="size_header">SIZE</string>
+    <string name="filter_breed_hint">Filter breed</string>
+    <string name="breed_title">Breeds</string>
+    <string name="breed_search_button">choose breed</string>
 </resources>

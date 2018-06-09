@@ -25,7 +25,7 @@ public class AnimalRepository {
         Filter filter = request.getFilter();
         return animalService.fetchAnimals(request.getLocation(),
                                           BuildConfig.API_KEY,
-                                          request.getAnimalType().name().toLowerCase(),
+                                          request.getAnimalType().getServerName(),
                                           request.getLastOffset(),
                                           ANIMAL_RETURN_COUNT,
                                           filter.getSex().getServerName(),

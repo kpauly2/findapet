@@ -1,6 +1,7 @@
 package tech.pauly.findapet.discover;
 
 import android.support.v7.widget.RecyclerView;
+
 import tech.pauly.findapet.databinding.ItemAnimalListBinding;
 
 public class AnimalListItemViewHolder extends RecyclerView.ViewHolder {
