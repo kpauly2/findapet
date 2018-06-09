@@ -62,10 +62,10 @@ public class AnimalListItemViewModel extends BaseViewModel {
 
     private void setDistance(Contact contactInfo) {
         subscribeOnLifecycle(locationHelper.getCurrentDistanceToContactInfo(contactInfo)
-                                           .subscribe(this::setDistance, Throwable::printStackTrace));
+                                           .subscribe(this::displayDistance, Throwable::printStackTrace));
     }
 
-    private void setDistance(Integer returnDistance) {
+    private void displayDistance(Integer returnDistance) {
         if (returnDistance == -1) {
             distanceVisibility.set(false);
         } else {
