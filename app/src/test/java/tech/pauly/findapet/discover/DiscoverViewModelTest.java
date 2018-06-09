@@ -90,7 +90,7 @@ public class DiscoverViewModelTest {
         when(dataStore.get(DiscoverAnimalTypeUseCase.class)).thenReturn(useCase);
         when(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(true);
         when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.just(animalListResponse));
-        when(locationHelper.getCurrentLocation(anyBoolean())).thenReturn(Observable.just("zipcode"));
+        when(locationHelper.fetchCurrentLocation(anyBoolean())).thenReturn(Observable.just("zipcode"));
         when(resourceProvider.getString(R.string.chip_near_location, "zipcode")).thenReturn("Near zipcode");
         when(resourceProvider.getString(R.string.chip_near_location, "zipcode2")).thenReturn("Near zipcode2");
         when(fetchAnimalsRequest.getAnimalType()).thenReturn(AnimalType.CAT);
@@ -174,7 +174,7 @@ public class DiscoverViewModelTest {
 
         subject.requestPermissionToLoad();
 
-        verify(locationHelper).getCurrentLocation(true);
+        verify(locationHelper).fetchCurrentLocation(true);
         assertThat(subject.locationChip.get()).isNotNull();
         assertThat(subject.locationChip.get().getText()).isEqualTo("Near zipcode");
     }
@@ -183,7 +183,7 @@ public class DiscoverViewModelTest {
     public void requestPermissionToLoad_getCurrentLocationASecondTime_resetsLocationChip() {
         when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.never());
         subject.requestPermissionToLoad();
-        when(locationHelper.getCurrentLocation(anyBoolean())).thenReturn(Observable.just("zipcode2"));
+        when(locationHelper.fetchCurrentLocation(anyBoolean())).thenReturn(Observable.just("zipcode2"));
 
         subject.requestPermissionToLoad();
 
@@ -277,7 +277,7 @@ public class DiscoverViewModelTest {
         subject.loadMoreAnimals();
 
         verify(animalRepository).fetchAnimals(captor.capture());
-        verify(locationHelper).getCurrentLocation(false);
+        verify(locationHelper).fetchCurrentLocation(false);
         assertThat(captor.getValue().getLastOffset()).isEqualTo(10);
     }
 }
