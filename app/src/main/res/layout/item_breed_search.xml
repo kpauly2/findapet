@@ -14,28 +14,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
+        <EditText
             android:id="@+id/button_breed_search"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginEnd="@dimen/standard_margin"
             android:layout_marginStart="@dimen/standard_margin"
             android:layout_marginTop="@dimen/half_margin"
-            android:background="@drawable/selector_rounded_button"
+            android:background="@drawable/shape_filter_button_unselected"
             android:drawableEnd="@drawable/ic_search"
             android:drawableTint="@color/purpleStandard"
-            android:elevation="4dp"
+            android:textCursorDrawable="@null"
             android:gravity="start|center_vertical"
-            android:onClick="@{viewModel::clickBreedSearch}"
+            android:hint="@string/filter_breed_hint"
             android:paddingEnd="@dimen/half_margin"
-            android:paddingStart="@dimen/half_margin"
+            android:paddingStart="@dimen/standard_margin"
             android:singleLine="true"
-            android:text="@string/filter_breed_hint"
+            android:text="@={viewModel.breedSearchText}"
             android:textAppearance="@style/FontSmall"
-            android:textColor="@color/purpleLight"
+            android:textColor="@color/purpleDark"
+            android:textColorHint="@color/purpleLight"
             android:textOff="@string/small"
             android:textOn="@string/small"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:touchListener="@{viewModel::clickBreedSearch}"
+            android:inputType="text" />
 
         <Space
             android:layout_width="match_parent"

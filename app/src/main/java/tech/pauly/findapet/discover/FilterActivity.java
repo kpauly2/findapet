@@ -47,10 +47,10 @@ public class FilterActivity extends BaseActivity {
         super.onResume();
 
         subscribeOnLifecycle(viewModel.getScrollToViewSubject()
-                                      .subscribe(v -> scrollToBreedSearch(), Throwable::printStackTrace));
+                                      .subscribe(this::scrollToBreedSearch, Throwable::printStackTrace));
     }
 
-    private void scrollToBreedSearch() {
+    private void scrollToBreedSearch(Boolean b) {
         RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(this) {
             @Override protected int getVerticalSnapPreference() {
                 return LinearSmoothScroller.SNAP_TO_START;

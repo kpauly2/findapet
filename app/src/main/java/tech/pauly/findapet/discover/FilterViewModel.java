@@ -32,13 +32,14 @@ public class FilterViewModel extends BaseViewModel {
     public ObservableField<Age> selectedAge = new ObservableField<>(Age.MISSING);
     public ObservableField<AnimalSize> selectedSize = new ObservableField<>(AnimalSize.MISSING);
     public ObservableField<String> selectedBreed = new ObservableField<>("");
+    public ObservableField<String> breedSearchText = new ObservableField<>("");
 
     private FilterRepository filterRepository;
     private BreedRepository breedRepository;
     private ViewEventBus eventBus;
     private TransientDataStore dataStore;
     private FilterAdapter adapter;
-    private PublishSubject<View> scrollToViewSubject = PublishSubject.create();
+    private PublishSubject<Boolean> scrollToViewSubject = PublishSubject.create();
 
     @Inject
     FilterViewModel(FilterRepository filterRepository,
@@ -69,8 +70,8 @@ public class FilterViewModel extends BaseViewModel {
         }
     }
 
-    public void clickBreedSearch(View view) {
-        scrollToViewSubject.onNext(view);
+    public void clickBreedSearch() {
+        scrollToViewSubject.onNext(true);
     }
 
     public void checkSex(View view, Sex sex) {
@@ -102,7 +103,7 @@ public class FilterViewModel extends BaseViewModel {
         return adapter;
     }
 
-    public Observable<View> getScrollToViewSubject() {
+    public Observable<Boolean> getScrollToViewSubject() {
         return scrollToViewSubject;
     }
 
