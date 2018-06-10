@@ -2,6 +2,7 @@ package tech.pauly.findapet.discover;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -77,8 +78,14 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterBreedViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void setBreedItems(List<String> items) {
-        breedItems.addAll(items);
-        notifyDataSetChanged();
+    public void setBreedItems(List<String> newItems) {
+        List<String> oldItems = new ArrayList<>(breedItems);
+        breedItems.clear();
+        breedItems.addAll(newItems);
+        if (newItems.size() < oldItems.size()) {
+            int difference = oldItems.size() - newItems.size();
+            notifyItemRangeRemoved(newItems.size() + 2, difference + 2);
+        }
+        notifyItemRangeChanged(2, breedItems.size());
     }
 }

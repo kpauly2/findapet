@@ -9,11 +9,14 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.observers.TestObserver;
 import tech.pauly.findapet.data.BreedRepository;
 import tech.pauly.findapet.data.FilterRepository;
 import tech.pauly.findapet.data.models.Age;
@@ -29,6 +32,7 @@ import tech.pauly.findapet.shared.events.ViewEventBus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -209,7 +213,7 @@ public class FilterViewModelTest {
     }
 
     @Test
-    public void updateBreedList_noAnimalType_doNothing() {
+    public void populateBreedList_noAnimalType_doNothing() {
         when(dataStore.get(FilterAnimalTypeUseCase.class)).thenReturn(null);
 
         subject.updateBreedList();
@@ -218,7 +222,7 @@ public class FilterViewModelTest {
     }
 
     @Test
-    public void updateBreedList_getsBreedListForAnimalType() {
+    public void populateBreedList_getsBreedListForAnimalType() {
         when(breedListResponse.getBreedList()).thenReturn(null);
         setupDataStoreWithUseCase();
 
@@ -228,7 +232,7 @@ public class FilterViewModelTest {
     }
 
     @Test
-    public void updateBreedList_returnedBreedListNull_doNothing() {
+    public void populateBreedList_returnedBreedListNull_doNothing() {
         when(breedListResponse.getBreedList()).thenReturn(null);
         setupDataStoreWithUseCase();
 
@@ -238,13 +242,89 @@ public class FilterViewModelTest {
     }
 
     @Test
-    public void updateBreedList_returnedBreedListValid_showBreedList() {
+    public void populateBreedList_returnedBreedListValid_showBreedList() {
         when(breedListResponse.getBreedList()).thenReturn(Arrays.asList("breed 1", "breed 2"));
         setupDataStoreWithUseCase();
 
         subject.updateBreedList();
 
         verify(filterAdapter).setBreedItems(breedListResponse.getBreedList());
+    }
+
+    @Test
+    public void populateBreedList_returnedBreedListValidAndHaveSelectedBreed_showBreedListWithSelectedBreedFirst() {
+        subject.selectedBreed.set("breed 2");
+        when(breedListResponse.getBreedList()).thenReturn(Arrays.asList("breed 1", "breed 2"));
+        setupDataStoreWithUseCase();
+
+        subject.updateBreedList();
+
+        verify(filterAdapter).setBreedItems(Arrays.asList("breed 2", "breed 1"));
+    }
+
+
+    @Test
+    public void clickBreedSearch_fireScrollSubject() {
+        TestObserver<Boolean> observer = subject.getScrollToViewSubject().test();
+
+        subject.clickBreedSearch();
+
+        observer.assertValue(true);
+    }
+
+    @Test
+    public void onBreedTextChanged_fireScrollSubject() {
+        TestObserver<Boolean> observer = subject.getScrollToViewSubject().test();
+
+        subject.onBreedTextChanged("", 0, 0, 0);
+
+        observer.assertValue(true);
+    }
+
+    @Test
+    public void onBreedTextChanged_hasSelectedBreed_updateBreedItemsWithSelectedBreedFirst() {
+        subject.selectedBreed.set("breed 2");
+        when(breedListResponse.getBreedList()).thenReturn(Arrays.asList("breed 1", "breed 2"));
+        setupDataStoreWithUseCase();
+        subject.updateBreedList();
+        clearInvocations(filterAdapter);
+
+        subject.onBreedTextChanged("breed", 0, 0, 0);
+
+        verify(filterAdapter).setBreedItems(Arrays.asList("breed 2", "breed 1"));
+    }
+
+    @Test
+    public void onBreedTextChanged_updateBreedItems() {
+        when(breedListResponse.getBreedList()).thenReturn(Arrays.asList("abc", "ab", "c"));
+        setupDataStoreWithUseCase();
+        subject.updateBreedList();
+
+        subject.onBreedTextChanged("a", 0, 0, 0);
+
+        verify(filterAdapter).setBreedItems(Arrays.asList("abc", "ab"));
+    }
+
+    @Test
+    public void onBreedTextChanged_inputTextDifferentCapitals_updateBreedItems() {
+        when(breedListResponse.getBreedList()).thenReturn(Arrays.asList("abc", "ab", "c"));
+        setupDataStoreWithUseCase();
+        subject.updateBreedList();
+
+        subject.onBreedTextChanged("A", 0, 0, 0);
+
+        verify(filterAdapter).setBreedItems(Arrays.asList("abc", "ab"));
+    }
+
+    @Test
+    public void onBreedTextChanged_noMatches_updateBreedItems() {
+        when(breedListResponse.getBreedList()).thenReturn(Arrays.asList("abc", "ab", "c"));
+        setupDataStoreWithUseCase();
+        subject.updateBreedList();
+
+        subject.onBreedTextChanged("d", 0, 0, 0);
+
+        verify(filterAdapter).setBreedItems(Collections.emptyList());
     }
 
     private void setupDataStoreWithUseCase() {

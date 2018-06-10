@@ -6,6 +6,7 @@ import android.databinding.ObservableField;
 import android.view.View;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,7 +40,9 @@ public class FilterViewModel extends BaseViewModel {
     private ViewEventBus eventBus;
     private TransientDataStore dataStore;
     private FilterAdapter adapter;
+
     private PublishSubject<Boolean> scrollToViewSubject = PublishSubject.create();
+    private List<String> masterBreedList = new ArrayList<>();
 
     @Inject
     FilterViewModel(FilterRepository filterRepository,
@@ -74,13 +77,24 @@ public class FilterViewModel extends BaseViewModel {
         scrollToViewSubject.onNext(true);
     }
 
+    public void onBreedTextChanged(CharSequence text, int start, int before, int count) {
+        List<String> filteredBreedList = new ArrayList<>();
+        for (String breed : masterBreedList) {
+            if (breed.toLowerCase().contains(text.toString().toLowerCase())) {
+                addBreed(filteredBreedList, breed);
+            }
+        }
+        adapter.setBreedItems(filteredBreedList);
+        scrollToViewSubject.onNext(true);
+    }
+
     public void checkSex(View view, Sex sex) {
         selectedSex.set(isViewChecked(view) ? sex : Sex.MISSING);
     }
+
     public void checkAge(View view, Age age) {
         selectedAge.set(isViewChecked(view) ? age : Age.MISSING);
     }
-
     public void checkSize(View view, AnimalSize size) {
         selectedSize.set(isViewChecked(view) ? size : AnimalSize.MISSING);
     }
@@ -122,7 +136,20 @@ public class FilterViewModel extends BaseViewModel {
     private void populateBreedList(BreedListResponse response) {
         List<String> breedList = response.getBreedList();
         if (breedList != null) {
-            adapter.setBreedItems(breedList);
+            masterBreedList = breedList;
+            List<String> sortedBreedList = new ArrayList<>();
+            for (String breed : breedList) {
+                addBreed(sortedBreedList, breed);
+            }
+            adapter.setBreedItems(sortedBreedList);
+        }
+    }
+
+    private void addBreed(List<String> breedList, String breed) {
+        if (breed.equals(selectedBreed.get())) {
+            breedList.add(0, breed);
+        } else {
+            breedList.add(breed);
         }
     }
 
