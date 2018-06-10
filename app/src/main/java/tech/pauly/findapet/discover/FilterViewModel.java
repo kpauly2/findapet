@@ -6,10 +6,13 @@ import android.databinding.ObservableField;
 import android.view.View;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
 import tech.pauly.findapet.data.BreedRepository;
 import tech.pauly.findapet.data.FilterRepository;
 import tech.pauly.findapet.data.models.Age;
@@ -30,12 +33,16 @@ public class FilterViewModel extends BaseViewModel {
     public ObservableField<Age> selectedAge = new ObservableField<>(Age.MISSING);
     public ObservableField<AnimalSize> selectedSize = new ObservableField<>(AnimalSize.MISSING);
     public ObservableField<String> selectedBreed = new ObservableField<>("");
+    public ObservableField<String> breedSearchText = new ObservableField<>("");
 
     private FilterRepository filterRepository;
     private BreedRepository breedRepository;
     private ViewEventBus eventBus;
     private TransientDataStore dataStore;
     private FilterAdapter adapter;
+
+    private PublishSubject<Boolean> scrollToViewSubject = PublishSubject.create();
+    private List<String> masterBreedList = new ArrayList<>();
 
     @Inject
     FilterViewModel(FilterRepository filterRepository,
@@ -66,17 +73,28 @@ public class FilterViewModel extends BaseViewModel {
         }
     }
 
-    public void clickBreedSearch(View v) {
-        //TODO: https://www.pivotaltracker.com/story/show/157159549
+    public void clickBreedSearch() {
+        scrollToViewSubject.onNext(true);
+    }
+
+    public void onBreedTextChanged(CharSequence text, int start, int before, int count) {
+        List<String> filteredBreedList = new ArrayList<>();
+        for (String breed : masterBreedList) {
+            if (breed.toLowerCase().contains(text.toString().toLowerCase())) {
+                addBreed(filteredBreedList, breed);
+            }
+        }
+        adapter.setBreedItems(filteredBreedList);
+        scrollToViewSubject.onNext(true);
     }
 
     public void checkSex(View view, Sex sex) {
         selectedSex.set(isViewChecked(view) ? sex : Sex.MISSING);
     }
+
     public void checkAge(View view, Age age) {
         selectedAge.set(isViewChecked(view) ? age : Age.MISSING);
     }
-
     public void checkSize(View view, AnimalSize size) {
         selectedSize.set(isViewChecked(view) ? size : AnimalSize.MISSING);
     }
@@ -99,6 +117,10 @@ public class FilterViewModel extends BaseViewModel {
         return adapter;
     }
 
+    public Observable<Boolean> getScrollToViewSubject() {
+        return scrollToViewSubject;
+    }
+
     private void finish() {
         dataStore.save(new FilterUpdatedUseCase());
         eventBus.send(ActivityEvent.build(this).finishActivity());
@@ -114,7 +136,20 @@ public class FilterViewModel extends BaseViewModel {
     private void populateBreedList(BreedListResponse response) {
         List<String> breedList = response.getBreedList();
         if (breedList != null) {
-            adapter.setBreedItems(breedList);
+            masterBreedList = breedList;
+            List<String> sortedBreedList = new ArrayList<>();
+            for (String breed : breedList) {
+                addBreed(sortedBreedList, breed);
+            }
+            adapter.setBreedItems(sortedBreedList);
+        }
+    }
+
+    private void addBreed(List<String> breedList, String breed) {
+        if (breed.equals(selectedBreed.get())) {
+            breedList.add(0, breed);
+        } else {
+            breedList.add(breed);
         }
     }
 

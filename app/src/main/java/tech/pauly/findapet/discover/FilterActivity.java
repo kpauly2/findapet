@@ -1,8 +1,12 @@
 package tech.pauly.findapet.discover;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearSmoothScroller;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import javax.inject.Inject;
 
@@ -21,11 +25,13 @@ public class FilterActivity extends BaseActivity {
     @Inject
     ViewEventBus eventBus;
 
+    private ActivityFilterBinding binding;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        ActivityFilterBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_filter);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_filter);
         getLifecycle().addObserver(viewModel);
         binding.setViewModel(viewModel);
 
@@ -34,6 +40,24 @@ public class FilterActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        subscribeOnLifecycle(viewModel.getScrollToViewSubject()
+                                      .subscribe(this::scrollToBreedSearch, Throwable::printStackTrace));
+    }
+
+    private void scrollToBreedSearch(Boolean b) {
+        RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(this) {
+            @Override protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_START;
+            }
+        };
+        smoothScroller.setTargetPosition(1);
+        binding.filterRecyclerView.getLayoutManager().startSmoothScroll(smoothScroller);
     }
 
     @Nullable

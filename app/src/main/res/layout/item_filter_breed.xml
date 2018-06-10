@@ -28,7 +28,7 @@
             android:drawableStart="@drawable/selector_radio_button"
             android:drawablePadding="@dimen/standard_margin"
             android:text="@{breed}"
-            android:textColor="@color/purpleStandard"
+            android:textColor="@color/textStandard"
             android:textAllCaps="false"
             android:textAppearance="@style/FontBody"
             android:textOff="@{breed}"

@@ -1,5 +1,6 @@
 package tech.pauly.findapet.utils;
 
+import android.annotation.SuppressLint;
 import android.databinding.BindingAdapter;
 import android.net.Uri;
 import android.support.annotation.IdRes;
@@ -10,7 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.LayoutDirection;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -150,6 +151,17 @@ public class BindingAdapters {
         layout.setLocationChip(chip);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    @BindingAdapter("touchListener")
+    public static void setFocusChangeListener(View view, TouchListener touchListener) {
+        view.setOnTouchListener((v, event) -> {
+            if(MotionEvent.ACTION_UP == event.getAction()) {
+                touchListener.onTouch();
+            }
+            return false;
+        });
+    }
+
     @FunctionalInterface
     public interface ViewPagerPageChangeListener {
         void onPageSelected(int position);
@@ -163,5 +175,10 @@ public class BindingAdapters {
     @FunctionalInterface
     public interface SwipeRefreshListener {
         void onRefresh();
+    }
+
+    @FunctionalInterface
+    public interface TouchListener {
+        void onTouch();
     }
 }
