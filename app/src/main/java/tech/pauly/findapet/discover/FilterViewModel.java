@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
 import tech.pauly.findapet.data.BreedRepository;
 import tech.pauly.findapet.data.FilterRepository;
 import tech.pauly.findapet.data.models.Age;
@@ -36,6 +38,7 @@ public class FilterViewModel extends BaseViewModel {
     private ViewEventBus eventBus;
     private TransientDataStore dataStore;
     private FilterAdapter adapter;
+    private PublishSubject<View> scrollToViewSubject = PublishSubject.create();
 
     @Inject
     FilterViewModel(FilterRepository filterRepository,
@@ -66,8 +69,8 @@ public class FilterViewModel extends BaseViewModel {
         }
     }
 
-    public void clickBreedSearch(View v) {
-        //TODO: https://www.pivotaltracker.com/story/show/157159549
+    public void clickBreedSearch(View view) {
+        scrollToViewSubject.onNext(view);
     }
 
     public void checkSex(View view, Sex sex) {
@@ -97,6 +100,10 @@ public class FilterViewModel extends BaseViewModel {
 
     public FilterAdapter getAdapter() {
         return adapter;
+    }
+
+    public Observable<View> getScrollToViewSubject() {
+        return scrollToViewSubject;
     }
 
     private void finish() {

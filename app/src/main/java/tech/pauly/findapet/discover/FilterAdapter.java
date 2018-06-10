@@ -11,13 +11,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 import tech.pauly.findapet.databinding.ItemFilterBreedBinding;
+import tech.pauly.findapet.databinding.ItemBreedSearchBinding;
 import tech.pauly.findapet.databinding.ItemFiltersBinding;
 
 
 public class FilterAdapter extends RecyclerView.Adapter<FilterBreedViewHolder> {
 
     private static final int FILTERS = 0;
-    private static final int BREED = 1;
+    private static final int BREED_SEARCH = 1;
+    private static final int BREED = 2;
 
     private List<String> breedItems = new ArrayList<>();
     private FilterViewModel viewModel;
@@ -32,6 +34,8 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterBreedViewHolder> {
         switch (viewType) {
             case FILTERS:
                 return new FilterBreedViewHolder(ItemFiltersBinding.inflate(inflater, parent, false));
+            case BREED_SEARCH:
+                return new FilterBreedViewHolder(ItemBreedSearchBinding.inflate(inflater, parent, false));
             case BREED:
                 return new FilterBreedViewHolder(ItemFilterBreedBinding.inflate(inflater, parent, false));
             default:
@@ -41,25 +45,31 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterBreedViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FilterBreedViewHolder holder, int position) {
-        if (position == 0) {
-            holder.bind(viewModel);
-        } else {
-            holder.bind(viewModel, breedItems.get(position - 1));
+        switch (position) {
+            case 0:
+            case 1:
+                holder.bind(viewModel);
+                return;
+            default:
+                holder.bind(viewModel, breedItems.get(position - 2));
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return FILTERS;
-        } else {
-            return BREED;
+        switch (position) {
+            case 0:
+                return FILTERS;
+            case 1:
+                return BREED_SEARCH;
+            default:
+                return BREED;
         }
     }
 
     @Override
     public int getItemCount() {
-        return breedItems.size() + 1;
+        return breedItems.size() + 2;
     }
 
     public void setViewModel(FilterViewModel viewModel) {

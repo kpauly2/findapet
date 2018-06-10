@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="tech.pauly.findapet.discover.FilterViewModel" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/button_breed_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/half_margin"
+            android:background="@drawable/selector_rounded_button"
+            android:drawableEnd="@drawable/ic_search"
+            android:drawableTint="@color/purpleStandard"
+            android:elevation="4dp"
+            android:gravity="start|center_vertical"
+            android:onClick="@{viewModel::clickBreedSearch}"
+            android:paddingEnd="@dimen/half_margin"
+            android:paddingStart="@dimen/half_margin"
+            android:singleLine="true"
+            android:text="@string/filter_breed_hint"
+            android:textAppearance="@style/FontSmall"
+            android:textColor="@color/purpleLight"
+            android:textOff="@string/small"
+            android:textOn="@string/small"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/half_margin"
+            app:layout_constraintTop_toBottomOf="@id/button_breed_search" />
+    </android.support.constraint.ConstraintLayout>
+</layout>
