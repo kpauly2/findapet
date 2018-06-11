@@ -9,7 +9,7 @@ You can follow along on my [Pivotal Tracker](https://www.pivotaltracker.com/n/pr
 - Fully featured
 - Test-driven 100%
 - CI/CD using CircleCI
-- Eventually Kotlin
+- Kotlin
 
 ## Built With
 - Android Studio
