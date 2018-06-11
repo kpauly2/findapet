@@ -37,6 +37,9 @@ public class BindingAdapters {
 
     @BindingAdapter("imageUrl")
     public static void loadImageIntoView(ImageView view, String url) {
+        if (url == null) {
+            return;
+        }
         final Transformation transformation = new RoundedCornersTransformation(10, 0);
         Picasso.with(view.getContext())
                .load(Uri.parse(url))
