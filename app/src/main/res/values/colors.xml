@@ -9,7 +9,8 @@
 
     <color name="textStandard">#424242</color>
     <color name="textDark">#303030</color>
-    <color name="textLight">#757575</color>
+    <color name="textLight">#616161</color>
+    <color name="textVeryLight">#757575</color>
 
     <color name="offWhite">#E0E0E0</color>
 </resources>

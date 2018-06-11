@@ -31,10 +31,10 @@
             android:paddingTop="@dimen/half_margin"
             android:visibility="@{viewModel.locationMissing ? View.GONE : View.VISIBLE}"
             app:chipList="@{viewModel.chipList}"
-            app:locationChip="@{viewModel.locationChip}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:locationChip="@{viewModel.locationChip}" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/discover_swipe_layout"
