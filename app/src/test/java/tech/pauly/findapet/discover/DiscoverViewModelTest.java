@@ -14,6 +14,7 @@ import io.reactivex.Single;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.FilterRepository;
+import tech.pauly.findapet.data.PetfinderException;
 import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
@@ -22,6 +23,7 @@ import tech.pauly.findapet.data.models.AnimalType;
 import tech.pauly.findapet.data.models.FetchAnimalsRequest;
 import tech.pauly.findapet.data.models.Filter;
 import tech.pauly.findapet.data.models.Sex;
+import tech.pauly.findapet.data.models.StatusCode;
 import tech.pauly.findapet.shared.LocationHelper;
 import tech.pauly.findapet.shared.PermissionHelper;
 import tech.pauly.findapet.shared.ResourceProvider;
@@ -241,7 +243,7 @@ public class DiscoverViewModelTest {
     }
 
     @Test
-    public void requestPermissionToLoad_fetchAnimalsOnNext_sendAnimalListToAdapterAndStopsRefreshing() {
+    public void requestPermissionToLoad_fetchAnimalsOnNext_sendAnimalListToAdapterAndStopsRefreshingAndAnimalsNotMissing() {
         Animal animal = mock(Animal.class);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
         ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
@@ -251,17 +253,19 @@ public class DiscoverViewModelTest {
         verify(listAdapter).setAnimalItems(argumentCaptor.capture());
         verify(animalListItemFactory).newInstance(animal);
         assertThat(subject.refreshing.get()).isFalse();
+        assertThat(subject.animalsMissing.get()).isFalse();
+        assertThat(subject.getErrorVisible()).isFalse();
     }
 
     @Test
-    public void requestPermissionToLoad_fetchAnimalsOnNextAndAnimalListNull_setsEmptyList() {
-        when(animalListResponse.getAnimalList()).thenReturn(null);
-        ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
+    public void requestPermissionToLoad_fetchAnimalsOnErrorAndErrorIsNoAnimals_setsAnimalsMissing() {
+        when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.error(new PetfinderException(StatusCode.ERR_NO_ANIMALS)));
 
         subject.requestPermissionToLoad();
 
-        verify(listAdapter).setAnimalItems(argumentCaptor.capture());
-        assertThat(argumentCaptor.getValue().size()).isEqualTo(0);
+        assertThat(subject.refreshing.get()).isFalse();
+        assertThat(subject.animalsMissing.get()).isTrue();
+        assertThat(subject.getErrorVisible()).isTrue();
     }
 
     @Test

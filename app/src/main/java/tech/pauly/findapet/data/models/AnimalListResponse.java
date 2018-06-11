@@ -14,7 +14,7 @@ public class AnimalListResponse {
     @Element(name = "header")
     private Header header;
 
-    @Element
+    @Element(required = false)
     private int lastOffset;
 
     @ElementList(name = "pets", entry = "pet", required = false)
@@ -25,6 +25,7 @@ public class AnimalListResponse {
         return animalList;
     }
 
+    @Nullable
     public int getLastOffset() {
         return lastOffset;
     }

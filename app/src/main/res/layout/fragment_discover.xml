@@ -31,10 +31,10 @@
             android:paddingTop="@dimen/half_margin"
             android:visibility="@{viewModel.locationMissing ? View.GONE : View.VISIBLE}"
             app:chipList="@{viewModel.chipList}"
-            app:locationChip="@{viewModel.locationChip}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:locationChip="@{viewModel.locationChip}" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/discover_swipe_layout"
@@ -45,7 +45,7 @@
             android:clipToPadding="false"
             android:elevation="0dp"
             android:paddingTop="@dimen/standard_margin"
-            android:visibility="@{viewModel.locationMissing ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.errorVisible ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -93,6 +93,73 @@
                 android:src="@drawable/ic_arrow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="4dp"
+            android:visibility="@{viewModel.animalsMissing ? View.VISIBLE : View.GONE}"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/missing_animals_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/half_margin"
+                android:layout_marginEnd="100dp"
+                android:layout_marginStart="100dp"
+                android:gravity="center"
+                android:text="@string/missing_animals_header"
+                android:textAppearance="@style/FontStrongHeader"
+                android:textColor="@color/purpleStandard"
+                app:layout_constraintBottom_toTopOf="@+id/missing_animals_body1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/missing_animals_body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="100dp"
+                android:layout_marginStart="100dp"
+                android:gravity="center"
+                android:text="@string/missing_animals_body1"
+                android:textAppearance="@style/FontBody"
+                android:textColor="@color/textLight"
+                app:layout_constraintBottom_toTopOf="@+id/missing_animal_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/missing_animals_header" />
+
+            <ImageView
+                android:id="@+id/missing_animal_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/descriptor_pet_image"
+                android:src="@drawable/ic_cat_dog"
+                app:layout_constraintBottom_toTopOf="@+id/missing_animals_body2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/missing_animals_body1" />
+
+            <TextView
+                android:id="@+id/missing_animals_body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="100dp"
+                android:layout_marginStart="100dp"
+                android:gravity="center"
+                android:text="@string/missing_animals_body2"
+                android:textAppearance="@style/FontBody"
+                android:textColor="@color/textLight"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/missing_animal_image" />
+
         </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>

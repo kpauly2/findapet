@@ -9,7 +9,8 @@ public enum StatusCode {
     PFAPI_ERR_UNAUTHORIZED(300),
     PFAPI_ERR_AUTHFAIL(301),
     PFAPI_ERR_INTERNAL(999),
-    ERR_LOCAL(1000);
+    ERR_LOCAL(1000),
+    ERR_NO_ANIMALS(1001);
 
     private int code;
 

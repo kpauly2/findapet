@@ -60,4 +60,7 @@
     <string name="filter_breed_hint">Filter breed</string>
     <string name="breed_title">Breeds</string>
     <string name="breed_search_button">choose breed</string>
+    <string name="missing_animals_header">No Animals!</string>
+    <string name="missing_animals_body1">We couldn’t find any animals  that match your criteria</string>
+    <string name="missing_animals_body2">Try removing some filters or changing your location</string>
 </resources>
