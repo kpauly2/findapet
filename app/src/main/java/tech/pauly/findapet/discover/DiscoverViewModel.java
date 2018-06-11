@@ -44,6 +44,7 @@ public class DiscoverViewModel extends BaseViewModel {
     public ObservableInt columnCount = new ObservableInt(2);
     public ObservableBoolean refreshing = new ObservableBoolean(false);
     public ObservableBoolean locationMissing = new ObservableBoolean(false);
+    public ObservableBoolean animalsMissing = new ObservableBoolean(false);
     public ObservableList<Chip> chipList = new ObservableArrayList<>();
     public ObservableField<Chip> locationChip = new ObservableField<>();
 
