@@ -18,6 +18,7 @@ import io.reactivex.disposables.Disposable;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.data.AnimalRepository;
 import tech.pauly.findapet.data.FilterRepository;
+import tech.pauly.findapet.data.PetfinderException;
 import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Animal;
 import tech.pauly.findapet.data.models.AnimalListResponse;
@@ -179,20 +180,24 @@ public class DiscoverViewModel extends BaseViewModel {
     }
 
     private void showError(Throwable throwable) {
+        refreshing.set(false);
+        if (throwable instanceof PetfinderException) {
+            switch (((PetfinderException) throwable).getStatusCode()) {
+                case ERR_NO_ANIMALS:
+                    animalsMissing.set(true);
+                    return;
+            }
+        }
         throwable.printStackTrace();
     }
 
     private void setAnimalList(AnimalListResponse animalListResponse) {
         refreshing.set(false);
         List<AnimalListItemViewModel> viewModelList = new ArrayList<>();
-        if (animalListResponse.getAnimalList() == null || animalListResponse.getAnimalList().size() == 0) {
-            animalsMissing.set(true);
-        } else {
-            animalsMissing.set(false);
-            lastOffset = animalListResponse.getLastOffset();
-            for (Animal animal : animalListResponse.getAnimalList()) {
-                viewModelList.add(animalListItemFactory.newInstance(animal));
-            }
+        animalsMissing.set(false);
+        lastOffset = animalListResponse.getLastOffset();
+        for (Animal animal : animalListResponse.getAnimalList()) {
+            viewModelList.add(animalListItemFactory.newInstance(animal));
         }
         listAdapter.setAnimalItems(viewModelList);
     }
