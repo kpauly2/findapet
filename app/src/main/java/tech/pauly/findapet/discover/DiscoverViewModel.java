@@ -123,6 +123,10 @@ public class DiscoverViewModel extends BaseViewModel {
         fetchAnimals(false);
     }
 
+    public boolean getErrorVisible() {
+        return locationMissing.get() || animalsMissing.get();
+    }
+
     private void fetchAnimals(boolean resetLocation) {
         refreshing.set(true);
         subscribeOnLifecycle(Observable.zip(getCurrentLocation(resetLocation),
@@ -181,7 +185,10 @@ public class DiscoverViewModel extends BaseViewModel {
     private void setAnimalList(AnimalListResponse animalListResponse) {
         refreshing.set(false);
         List<AnimalListItemViewModel> viewModelList = new ArrayList<>();
-        if (animalListResponse.getAnimalList() != null) {
+        if (animalListResponse.getAnimalList() == null || animalListResponse.getAnimalList().size() == 0) {
+            animalsMissing.set(true);
+        } else {
+            animalsMissing.set(false);
             lastOffset = animalListResponse.getLastOffset();
             for (Animal animal : animalListResponse.getAnimalList()) {
                 viewModelList.add(animalListItemFactory.newInstance(animal));

@@ -241,7 +241,7 @@ public class DiscoverViewModelTest {
     }
 
     @Test
-    public void requestPermissionToLoad_fetchAnimalsOnNext_sendAnimalListToAdapterAndStopsRefreshing() {
+    public void requestPermissionToLoad_fetchAnimalsOnNext_sendAnimalListToAdapterAndStopsRefreshingAndAnimalsNotMissing() {
         Animal animal = mock(Animal.class);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
         ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
@@ -251,10 +251,12 @@ public class DiscoverViewModelTest {
         verify(listAdapter).setAnimalItems(argumentCaptor.capture());
         verify(animalListItemFactory).newInstance(animal);
         assertThat(subject.refreshing.get()).isFalse();
+        assertThat(subject.animalsMissing.get()).isFalse();
+        assertThat(subject.getErrorVisible()).isFalse();
     }
 
     @Test
-    public void requestPermissionToLoad_fetchAnimalsOnNextAndAnimalListNull_setsEmptyList() {
+    public void requestPermissionToLoad_fetchAnimalsOnNextAndAnimalListNull_setsEmptyListAndAnimalsMissing() {
         when(animalListResponse.getAnimalList()).thenReturn(null);
         ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
 
@@ -262,6 +264,21 @@ public class DiscoverViewModelTest {
 
         verify(listAdapter).setAnimalItems(argumentCaptor.capture());
         assertThat(argumentCaptor.getValue().size()).isEqualTo(0);
+        assertThat(subject.animalsMissing.get()).isTrue();
+        assertThat(subject.getErrorVisible()).isTrue();
+    }
+
+    @Test
+    public void requestPermissionToLoad_fetchAnimalsOnNextAndAnimalListEmpty_setsEmptyListAndAnimalsMissing() {
+        when(animalListResponse.getAnimalList()).thenReturn(Collections.emptyList());
+        ArgumentCaptor<List<AnimalListItemViewModel>> argumentCaptor = ArgumentCaptor.forClass(List.class);
+
+        subject.requestPermissionToLoad();
+
+        verify(listAdapter).setAnimalItems(argumentCaptor.capture());
+        assertThat(argumentCaptor.getValue().size()).isEqualTo(0);
+        assertThat(subject.animalsMissing.get()).isTrue();
+        assertThat(subject.getErrorVisible()).isTrue();
     }
 
     @Test

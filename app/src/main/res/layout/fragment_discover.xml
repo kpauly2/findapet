@@ -45,7 +45,7 @@
             android:clipToPadding="false"
             android:elevation="0dp"
             android:paddingTop="@dimen/standard_margin"
-            android:visibility="@{viewModel.locationMissing ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.errorVisible ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
