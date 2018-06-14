@@ -3,6 +3,11 @@ A pet adoption app using the Petfinder API being made in my free time.
 
 You can follow along on my [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2168363)
 
+![basic app usage](https://gyazo.com/1abcdcad0dabd658468aab8a49e0dcf1.gif)
+![filtering for an animal](https://i.gyazo.com/4ff93b91e82553ddced558d078594cc6.gif)
+![trying to find that one breed](https://gyazo.com/5073aa81e6ee3ee09f44cc80c679e61f.gif)
+![all types of animals](https://gyazo.com/aa022f2d45e74ee1d8c3c5e850032666.gif)
+
 ## Goals
 - Friendly design and UX
 - Strong MVVM
