@@ -42,7 +42,7 @@ public class LocationHelper {
 
     private Context context;
     private ObservableHelper observableHelper;
-    private BehaviorSubject<String> locationSubject = BehaviorSubject.create();
+    private BehaviorSubject<Address> locationSubject = BehaviorSubject.create();
     private Location currentLocation;
 
 
@@ -56,7 +56,7 @@ public class LocationHelper {
         return Single.fromCallable(() -> calculateCurrentDistanceToContactInfo(contactInfo)).compose(observableHelper.applySingleSchedulers());
     }
 
-    public Observable<String> fetchCurrentLocation(boolean resetLocation) {
+    public Observable<Address> fetchCurrentLocation(boolean resetLocation) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return Observable.error(new IllegalAccessException("Requesting location without having granted permission to ACCESS_FINE_LOCATION"));
         }
@@ -66,18 +66,24 @@ public class LocationHelper {
             location.setLatitude(42.459532);
             location.setLongitude(-83.416082);
             currentLocation = location;
-            return Observable.just("48335");
+            Address address = new Address(Locale.getDefault());
+            address.setLatitude(location.getLatitude());
+            address.setLongitude(location.getLongitude());
+            address.setPostalCode("48348");
+            return Observable.just(address);
         }
 
         if (resetLocation) {
             fetchNewLocation();
         }
-        return locationSubject.filter(s -> !s.equals(RESET));
+        return locationSubject.filter(s -> !s.getPostalCode().equals(RESET));
     }
 
     @SuppressLint("MissingPermission")
     private void fetchNewLocation() {
-        locationSubject.onNext(RESET);
+        Address address = new Address(Locale.getDefault());
+        address.setPostalCode(RESET);
+        locationSubject.onNext(address);
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
@@ -105,7 +111,7 @@ public class LocationHelper {
             currentLocation = location;
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            locationSubject.onNext(addresses.get(0).getPostalCode());
+            locationSubject.onNext(addresses.get(0));
         } catch (IOException e) {
             locationSubject.onError(e);
         }

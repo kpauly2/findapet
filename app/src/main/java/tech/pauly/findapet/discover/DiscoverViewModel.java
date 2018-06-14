@@ -7,6 +7,8 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
+import android.location.Address;
+import android.location.Location;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +134,7 @@ public class DiscoverViewModel extends BaseViewModel {
         refreshing.set(true);
         subscribeOnLifecycle(Observable.zip(getCurrentLocation(resetLocation),
                                             getCurrentFilter(),
-                                            (location, filter) -> new FetchAnimalsRequest(animalType, lastOffset, location, filter))
+                                            (location, filter) -> new FetchAnimalsRequest(animalType, lastOffset, location.getPostalCode(), filter))
                                        .flatMap(animalRepository::fetchAnimals)
                                        .subscribe(this::setAnimalList, this::showError));
     }
@@ -143,7 +145,7 @@ public class DiscoverViewModel extends BaseViewModel {
                                .doOnSuccess(this::addFilterChips).toObservable();
     }
 
-    private Observable<String> getCurrentLocation(boolean resetLocation) {
+    private Observable<Address> getCurrentLocation(boolean resetLocation) {
         return locationHelper.fetchCurrentLocation(resetLocation)
                              .doOnSubscribe(this::removeLocationChip)
                              .doOnNext(this::addLocationChip);
@@ -175,8 +177,8 @@ public class DiscoverViewModel extends BaseViewModel {
         locationChip.set(null);
     }
 
-    private void addLocationChip(String location) {
-        locationChip.set(new Chip(resourceProvider.getString(R.string.chip_near_location, location)));
+    private void addLocationChip(Address location) {
+        locationChip.set(new Chip(resourceProvider.getString(R.string.chip_near_location, location.getPostalCode())));
     }
 
     private void showError(Throwable throwable) {
