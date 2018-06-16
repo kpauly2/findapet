@@ -25,7 +25,7 @@ private val defaultNeLatLng = LatLng(49.38, -66.94)
 private val defaultSwLatLng = LatLng(25.82, -124.39)
 
 @Singleton
-open class MapHelper @Inject constructor(@ForApplication val context: Context) : OnMapReadyCallback, LifecycleObserver {
+open class MapWrapper @Inject constructor(@ForApplication val context: Context) : OnMapReadyCallback, LifecycleObserver {
     private lateinit var mapView: MapView
 
     private val defaultLatLngBounds = LatLngBounds(defaultSwLatLng, defaultNeLatLng)

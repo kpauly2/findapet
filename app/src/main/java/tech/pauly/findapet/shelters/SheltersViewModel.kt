@@ -9,7 +9,7 @@ import tech.pauly.findapet.R
 import tech.pauly.findapet.data.ObservableHelper
 import tech.pauly.findapet.shared.BaseViewModel
 import tech.pauly.findapet.shared.LocationHelper
-import tech.pauly.findapet.shared.MapHelper
+import tech.pauly.findapet.shared.MapWrapper
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class SheltersViewModel @Inject
 constructor(private val dataStore: TransientDataStore,
             private val locationHelper: LocationHelper,
             private val observableHelper: ObservableHelper,
-            private val mapHelper: MapHelper) : BaseViewModel() {
+            private val mapWrapper: MapWrapper) : BaseViewModel() {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun updateToolbarTitle() {
@@ -28,12 +28,12 @@ constructor(private val dataStore: TransientDataStore,
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchDataAndMoveMap() {
         Observable.zip(locationHelper.fetchCurrentLocation(true),
-                mapHelper.mapReadyObservable,
+                mapWrapper.mapReadyObservable,
                 BiFunction { location: Address, _: Boolean -> location })
                 .compose(observableHelper.applyObservableSchedulers())
                 .subscribe({
-                    mapHelper.addMarker(it.latitude, it.longitude)
-                    mapHelper.moveCamera(it.latitude, it.longitude, 13f)
+                    mapWrapper.addMarker(it.latitude, it.longitude)
+                    mapWrapper.moveCamera(it.latitude, it.longitude, 13f)
                 }, Throwable::printStackTrace)
     }
 }
