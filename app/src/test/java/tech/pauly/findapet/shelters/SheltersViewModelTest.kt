@@ -4,6 +4,8 @@ import android.location.Address
 import com.nhaarman.mockito_kotlin.*
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
+import io.reactivex.plugins.RxJavaPlugins
+import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
 import org.junit.Test
 import tech.pauly.findapet.R
@@ -12,6 +14,7 @@ import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.MapWrapper
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
+import java.util.concurrent.TimeUnit
 
 class SheltersViewModelTest {
 
@@ -28,7 +31,7 @@ class SheltersViewModelTest {
 
     @Before
     fun setup() {
-        whenever(locationHelper.fetchCurrentLocation(true)).thenReturn(Observable.just(locationResponse))
+        whenever(locationHelper.fetchCurrentLocation()).thenReturn(Observable.just(locationResponse))
         whenever(mapWrapper.mapReadyObservable).thenReturn(Observable.just(true))
         whenever(observableHelper.applyObservableSchedulers<Any>()).thenReturn(ObservableTransformer { it })
         subject = SheltersViewModel(dataStore, locationHelper, observableHelper, mapWrapper)
@@ -43,7 +46,7 @@ class SheltersViewModelTest {
 
     @Test
     fun fetchDataAndMoveMap_whenOnlyMapReadyReturns_doNothing() {
-        whenever(locationHelper.fetchCurrentLocation(true)).thenReturn(Observable.never())
+        whenever(locationHelper.fetchCurrentLocation()).thenReturn(Observable.never())
 
         subject.fetchDataAndMoveMap()
 
@@ -55,7 +58,7 @@ class SheltersViewModelTest {
         whenever(mapWrapper.mapReadyObservable).thenReturn(Observable.never())
 
         subject.fetchDataAndMoveMap()
-        locationHelper.fetchCurrentLocation(true).test().onNext(mock())
+        locationHelper.fetchCurrentLocation().test().onNext(mock())
 
         verify(mapWrapper, never()).addMarker(any(), any())
     }

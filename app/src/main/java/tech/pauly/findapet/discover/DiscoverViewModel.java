@@ -119,20 +119,20 @@ public class DiscoverViewModel extends BaseViewModel {
         dataStore.save(new DiscoverToolbarTitleUseCase(animalType.getToolbarName()));
         listAdapter.clearAnimalItems();
         lastOffset = 0;
-        fetchAnimals(true);
+        fetchAnimals();
     }
 
     public void loadMoreAnimals() {
-        fetchAnimals(false);
+        fetchAnimals();
     }
 
     public boolean getErrorVisible() {
         return locationMissing.get() || animalsMissing.get();
     }
 
-    private void fetchAnimals(boolean resetLocation) {
+    private void fetchAnimals() {
         refreshing.set(true);
-        subscribeOnLifecycle(Observable.zip(getCurrentLocation(resetLocation),
+        subscribeOnLifecycle(Observable.zip(getCurrentLocation(),
                                             getCurrentFilter(),
                                             (location, filter) -> new FetchAnimalsRequest(animalType, lastOffset, location.getPostalCode(), filter))
                                        .flatMap(animalRepository::fetchAnimals)
@@ -145,8 +145,8 @@ public class DiscoverViewModel extends BaseViewModel {
                                .doOnSuccess(this::addFilterChips).toObservable();
     }
 
-    private Observable<Address> getCurrentLocation(boolean resetLocation) {
-        return locationHelper.fetchCurrentLocation(resetLocation)
+    private Observable<Address> getCurrentLocation() {
+        return locationHelper.fetchCurrentLocation()
                              .doOnSubscribe(this::removeLocationChip)
                              .doOnNext(this::addLocationChip);
     }

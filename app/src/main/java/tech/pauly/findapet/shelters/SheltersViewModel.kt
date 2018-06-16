@@ -12,6 +12,7 @@ import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.MapWrapper
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SheltersViewModel @Inject
@@ -27,13 +28,12 @@ constructor(private val dataStore: TransientDataStore,
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchDataAndMoveMap() {
-        Observable.zip(locationHelper.fetchCurrentLocation(true),
-                mapWrapper.mapReadyObservable,
+        subscribeOnLifecycle(Observable.zip(locationHelper.fetchCurrentLocation(), mapWrapper.mapReadyObservable,
                 BiFunction { location: Address, _: Boolean -> location })
                 .compose(observableHelper.applyObservableSchedulers())
                 .subscribe({
                     mapWrapper.addMarker(it.latitude, it.longitude)
                     mapWrapper.moveCamera(it.latitude, it.longitude, 13f)
-                }, Throwable::printStackTrace)
+                }, Throwable::printStackTrace))
     }
 }

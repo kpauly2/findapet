@@ -16,25 +16,19 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import tech.pauly.findapet.R
 import tech.pauly.findapet.dependencyinjection.ForApplication
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
-// United States zoom and corners
-private const val defaultZoom = 2f
-private val defaultNeLatLng = LatLng(49.38, -66.94)
-private val defaultSwLatLng = LatLng(25.82, -124.39)
-
 @Singleton
 open class MapWrapper @Inject constructor(@ForApplication val context: Context) : OnMapReadyCallback, LifecycleObserver {
+
     private lateinit var mapView: MapView
-
-    private val defaultLatLngBounds = LatLngBounds(defaultSwLatLng, defaultNeLatLng)
-
     private lateinit var map: GoogleMap
 
     private val mapReadySubject: BehaviorSubject<Boolean> = BehaviorSubject.create()
     open val mapReadyObservable: Observable<Boolean>
-        get() = mapReadySubject
+        get() = mapReadySubject.delay(100, TimeUnit.MILLISECONDS)
 
     fun setupMap(mapView: MapView) {
         this.mapView = mapView
@@ -45,11 +39,7 @@ open class MapWrapper @Inject constructor(@ForApplication val context: Context) 
 
     override fun onMapReady(map: GoogleMap) {
         this.map = map
-        map.apply {
-            setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.google_maps_style))
-            moveCamera(CameraUpdateFactory.newLatLngBounds(defaultLatLngBounds, 0))
-            moveCamera(CameraUpdateFactory.zoomTo(defaultZoom))
-        }
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.google_maps_style))
         mapReadySubject.onNext(true)
     }
 

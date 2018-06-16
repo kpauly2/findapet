@@ -1,7 +1,6 @@
 package tech.pauly.findapet.discover;
 
 import android.location.Address;
-import android.location.Location;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +10,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -41,7 +39,6 @@ import tech.pauly.findapet.shared.events.ViewEventBus;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -96,7 +93,9 @@ public class DiscoverViewModelTest {
         when(dataStore.get(DiscoverAnimalTypeUseCase.class)).thenReturn(useCase);
         when(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(true);
         when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.just(animalListResponse));
-        when(locationHelper.fetchCurrentLocation(anyBoolean())).thenReturn(Observable.just(new Address(Locale.getDefault())));
+        Address address = mock(Address.class);
+        when(address.getPostalCode()).thenReturn("zipcode");
+        when(locationHelper.fetchCurrentLocation()).thenReturn(Observable.just(address));
         when(resourceProvider.getString(R.string.chip_near_location, "zipcode")).thenReturn("Near zipcode");
         when(resourceProvider.getString(R.string.chip_near_location, "zipcode2")).thenReturn("Near zipcode2");
         when(fetchAnimalsRequest.getAnimalType()).thenReturn(AnimalType.CAT);
@@ -175,12 +174,12 @@ public class DiscoverViewModelTest {
     }
 
     @Test
-    public void requestPermissionToLoad_getCurrentLocation_resetsLocationAndSetsLocationChip() {
+    public void requestPermissionToLoad_getCurrentLocation_fetchesLocationAndSetsLocationChip() {
         when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.never());
 
         subject.requestPermissionToLoad();
 
-        verify(locationHelper).fetchCurrentLocation(true);
+        verify(locationHelper).fetchCurrentLocation();
         assertThat(subject.locationChip.get()).isNotNull();
         assertThat(subject.locationChip.get().getText()).isEqualTo("Near zipcode");
     }
@@ -189,7 +188,9 @@ public class DiscoverViewModelTest {
     public void requestPermissionToLoad_getCurrentLocationASecondTime_resetsLocationChip() {
         when(animalRepository.fetchAnimals(any(FetchAnimalsRequest.class))).thenReturn(Observable.never());
         subject.requestPermissionToLoad();
-        when(locationHelper.fetchCurrentLocation(anyBoolean())).thenReturn(Observable.just(new Address(Locale.getDefault())));
+        Address newAddress = mock(Address.class);
+        when(newAddress.getPostalCode()).thenReturn("zipcode2");
+        when(locationHelper.fetchCurrentLocation()).thenReturn(Observable.just(newAddress));
 
         subject.requestPermissionToLoad();
 
@@ -273,7 +274,7 @@ public class DiscoverViewModelTest {
     }
 
     @Test
-    public void loadMoreAnimals_fetchAnimalsAtCurrentOffsetAndDoesNotResetLocation() {
+    public void loadMoreAnimals_fetchAnimalsAtCurrentOffsetFetchesLocation() {
         Animal animal = mock(Animal.class);
         when(animalListResponse.getLastOffset()).thenReturn(10);
         when(animalListResponse.getAnimalList()).thenReturn(Collections.singletonList(animal));
@@ -281,11 +282,12 @@ public class DiscoverViewModelTest {
         ArgumentCaptor<FetchAnimalsRequest> captor = ArgumentCaptor.forClass(FetchAnimalsRequest.class);
         verify(animalRepository).fetchAnimals(captor.capture());
         clearInvocations(animalRepository);
+        clearInvocations(locationHelper);
 
         subject.loadMoreAnimals();
 
         verify(animalRepository).fetchAnimals(captor.capture());
-        verify(locationHelper).fetchCurrentLocation(false);
+        verify(locationHelper).fetchCurrentLocation();
         assertThat(captor.getValue().getLastOffset()).isEqualTo(10);
     }
 }

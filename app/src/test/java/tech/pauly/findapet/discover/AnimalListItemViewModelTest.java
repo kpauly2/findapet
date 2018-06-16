@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.Collections;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import tech.pauly.findapet.data.models.Age;
 import tech.pauly.findapet.data.models.Animal;
@@ -60,7 +61,7 @@ public class AnimalListItemViewModelTest {
         when(animal.getMedia()).thenReturn(media);
         when(animal.getContact()).thenReturn(contact);
         when(resourceProvider.getString(Age.ADULT.getFormattedName())).thenReturn("Adult");
-        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Single.just(1));
+        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Observable.just(1));
     }
 
     @Test
@@ -90,7 +91,7 @@ public class AnimalListItemViewModelTest {
 
     @Test
     public void onCreate_getsDistanceForContactInfoAndDistanceLessThanZero_distanceVisibilityFalse() {
-        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Single.just(-1));
+        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Observable.just(-1));
 
         createSubject();
 
@@ -99,7 +100,7 @@ public class AnimalListItemViewModelTest {
 
     @Test
     public void onCreate_getsDistanceForContactInfoAndDistanceZero_setsDistanceAndVisibility() {
-        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Single.just(0));
+        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Observable.just(0));
 
         createSubject();
 
@@ -109,7 +110,7 @@ public class AnimalListItemViewModelTest {
 
     @Test
     public void onCreate_getsDistanceForContactInfoAndDistanceMoreThanZero_setsDistanceAndVisibility() {
-        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Single.just(2));
+        when(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Observable.just(2));
 
         createSubject();
 
