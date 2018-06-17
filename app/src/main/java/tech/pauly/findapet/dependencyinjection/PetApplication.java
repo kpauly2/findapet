@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.v4.app.Fragment;
 
+import com.google.android.gms.maps.MapsInitializer;
 import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
@@ -38,6 +39,7 @@ public class PetApplication extends Application implements HasActivityInjector,
                                   .applicationModule(new ApplicationModule(this))
                                   .build();
         component.inject(this);
+        MapsInitializer.initialize(this);
     }
 
     @Override

@@ -60,16 +60,16 @@ public class FilterViewModel extends BaseViewModel {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     public void loadCurrentFilter() {
-        subscribeOnLifecycle(filterRepository.getCurrentFilter()
-                                             .subscribe(this::populateScreenForFilter, Throwable::printStackTrace));
+        onLifecycle(filterRepository.getCurrentFilter()
+                                    .subscribe(this::populateScreenForFilter, Throwable::printStackTrace));
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     public void updateBreedList() {
         FilterAnimalTypeUseCase useCase = dataStore.get(FilterAnimalTypeUseCase.class);
         if (useCase != null) {
-            subscribeOnLifecycle(breedRepository.getBreedList(useCase.getAnimalType())
-                                                .subscribe(this::populateBreedList, Throwable::printStackTrace));
+            onLifecycle(breedRepository.getBreedList(useCase.getAnimalType())
+                                       .subscribe(this::populateBreedList, Throwable::printStackTrace));
         }
     }
 
@@ -109,8 +109,8 @@ public class FilterViewModel extends BaseViewModel {
         filter.setAge(selectedAge.get());
         filter.setSize(selectedSize.get());
         filter.setBreed(selectedBreed.get());
-        subscribeOnLifecycle(filterRepository.insertFilter(filter)
-                                             .subscribe(this::finish, Throwable::printStackTrace));
+        onLifecycle(filterRepository.insertFilter(filter)
+                                    .subscribe(this::finish, Throwable::printStackTrace));
     }
 
     public FilterAdapter getAdapter() {

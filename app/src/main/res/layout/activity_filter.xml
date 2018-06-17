@@ -45,7 +45,8 @@
         <Button
             android:id="@+id/button_search"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="46dp"
+            android:elevation="4dp"
             android:background="@drawable/selector_large_button"
             android:onClick="@{viewModel::saveFilter}"
             android:text="@string/filter_search_button"

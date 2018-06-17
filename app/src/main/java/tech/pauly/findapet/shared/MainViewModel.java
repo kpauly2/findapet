@@ -53,8 +53,8 @@ public class MainViewModel extends BaseViewModel {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void subscribeToDataStore() {
-        subscribeOnLifecycle(dataStore.observeAndGetUseCase(DiscoverToolbarTitleUseCase.class)
-                                      .subscribe(useCase -> toolbarTitle.set(useCase.getTitle()),
+        onLifecycle(dataStore.observeAndGetUseCase(DiscoverToolbarTitleUseCase.class)
+                             .subscribe(useCase -> toolbarTitle.set(useCase.getTitle()),
                                                  Throwable::printStackTrace));
         if (firstLaunch) {
             clickAnimalType(AnimalType.CAT);
