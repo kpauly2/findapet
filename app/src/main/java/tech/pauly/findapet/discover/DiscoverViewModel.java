@@ -8,7 +8,6 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 import android.location.Address;
-import android.location.Location;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,11 +131,11 @@ public class DiscoverViewModel extends BaseViewModel {
 
     private void fetchAnimals() {
         refreshing.set(true);
-        subscribeOnLifecycle(Observable.zip(getCurrentLocation(),
-                                            getCurrentFilter(),
-                                            (location, filter) -> new FetchAnimalsRequest(animalType, lastOffset, location.getPostalCode(), filter))
-                                       .flatMap(animalRepository::fetchAnimals)
-                                       .subscribe(this::setAnimalList, this::showError));
+        onLifecycle(Observable.zip(getCurrentLocation(),
+                                   getCurrentFilter(),
+                                   (location, filter) -> new FetchAnimalsRequest(animalType, lastOffset, location.getPostalCode(), filter))
+                              .flatMap(animalRepository::fetchAnimals)
+                              .subscribe(this::setAnimalList, this::showError));
     }
 
     private Observable<Filter> getCurrentFilter() {

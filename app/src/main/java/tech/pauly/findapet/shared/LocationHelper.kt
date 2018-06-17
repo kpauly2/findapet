@@ -87,6 +87,7 @@ constructor(private val observableHelper: ObservableHelper,
 open class LocationWrapper @Inject
 constructor(@ForApplication private val context: Context,
             private val localeWrapper: LocaleWrapper) {
+    
     open val isEmulator: Boolean
         get() = BuildConfig.DEBUG
                 && (Build.FINGERPRINT.startsWith("generic")
@@ -97,7 +98,6 @@ constructor(@ForApplication private val context: Context,
                 || Build.MANUFACTURER.contains("Genymotion")
                 || Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
                 || "google_sdk" == Build.PRODUCT)
-
 
     @SuppressLint("MissingPermission")
     open fun fetchNewLocation(accuracy: Int, locationChangedListener: (location: Location) -> Unit) {
