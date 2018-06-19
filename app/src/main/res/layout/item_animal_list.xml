@@ -22,6 +22,7 @@
         android:focusable="true"
         android:onClick="@{() -> viewModel.launchAnimalDetails()}"
         app:cardElevation="0dp"
+        android:foreground="?android:attr/selectableItemBackground"
         app:width="@{BindingAdapters.recyclerItemWidth}">
 
         <android.support.constraint.ConstraintLayout
