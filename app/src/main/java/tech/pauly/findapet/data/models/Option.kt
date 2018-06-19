@@ -19,7 +19,7 @@ enum class Option(private val serverName: String,
 
     companion object {
         fun fromString(name: String): Option {
-            return Option.values().single { it.name.equals(name, true) }
+            return Option.values().single { it.serverName.equals(name, true) }
         }
     }
 }

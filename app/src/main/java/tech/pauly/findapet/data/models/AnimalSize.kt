@@ -15,7 +15,7 @@ enum class AnimalSize(val code: Int,
 
     companion object {
         fun fromString(name: String): AnimalSize {
-            return AnimalSize.values().single { it.name.equals(name, true) }
+            return AnimalSize.values().single { it.serverName.equals(name, true) }
         }
     }
 }

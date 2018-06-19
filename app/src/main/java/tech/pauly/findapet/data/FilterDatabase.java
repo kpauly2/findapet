@@ -7,7 +7,7 @@ import android.arch.persistence.room.TypeConverters;
 import tech.pauly.findapet.data.models.Converters;
 import tech.pauly.findapet.data.models.Filter;
 
-@Database(entities = {Filter.class}, version = 5)
+@Database(entities = {Filter.class}, version = 6)
 @TypeConverters(Converters.class)
 public abstract class FilterDatabase extends RoomDatabase {
     public abstract FilterDao filterDao();
