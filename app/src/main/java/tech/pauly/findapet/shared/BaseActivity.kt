@@ -71,4 +71,8 @@ open class BaseActivity : AppCompatActivity() {
             registerViewEvents()?.let { add(it) }
         }
     }
+
+    protected fun Disposable.onLifecycle() {
+        lifecycleSubscriptions.add(this)
+    }
 }

@@ -1,0 +1,147 @@
+package tech.pauly.findapet.shared
+
+import android.widget.ToggleButton
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
+
+import org.junit.Before
+import org.junit.Test
+import org.mockito.Mock
+import org.mockito.MockitoAnnotations
+
+import io.reactivex.Observable
+import io.reactivex.observers.TestObserver
+import tech.pauly.findapet.R
+import tech.pauly.findapet.data.models.AnimalType
+import tech.pauly.findapet.discover.DiscoverFragment
+import tech.pauly.findapet.favorites.FavoritesFragment
+import tech.pauly.findapet.settings.SettingsFragment
+import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase
+import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
+import tech.pauly.findapet.shared.datastore.TransientDataStore
+import tech.pauly.findapet.shared.datastore.UseCase
+import tech.pauly.findapet.shared.events.BaseViewEvent
+import tech.pauly.findapet.shared.events.FragmentEvent
+import tech.pauly.findapet.shared.events.ViewEventBus
+import tech.pauly.findapet.shelters.SheltersFragment
+
+import org.assertj.core.api.Assertions.assertThat
+import org.mockito.Mockito.clearInvocations
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
+
+class MainViewModelTest {
+
+    private val eventBus: ViewEventBus = mock()
+    private val dataStore: TransientDataStore = mock()
+    private val useCase: DiscoverToolbarTitleUseCase = mock()
+
+    private lateinit var subject: MainViewModel
+    private val expandingLayoutObserver = TestObserver<MainViewModel.ExpandingLayoutEvent>()
+    private val drawerCloseObserver = TestObserver<Boolean>()
+
+    @Before
+    fun setup() {
+        MockitoAnnotations.initMocks(this)
+        whenever(useCase.title).thenReturn(R.string.tab_cat)
+        whenever(dataStore.observeAndGetUseCase(DiscoverToolbarTitleUseCase::class.java)).thenReturn(Observable.just(useCase))
+        subject = MainViewModel(eventBus, dataStore)
+        subject.expandingLayoutSubject.subscribe(expandingLayoutObserver)
+        subject.drawerSubject.subscribe(drawerCloseObserver)
+    }
+
+    @Test
+    fun subscribeToDataStore_getToolbarTileUseCase_updateToolbarTitle() {
+        subject.subscribeToDataStore()
+
+        verify(dataStore).observeAndGetUseCase(DiscoverToolbarTitleUseCase::class.java)
+        assertThat(subject.toolbarTitle.get()).isEqualTo(R.string.tab_cat)
+    }
+
+    @Test
+    fun firstLaunch_launchesCatAnimalType() {
+        subject.clickFirstAnimal()
+        subject.subscribeToDataStore()
+
+        verify(dataStore) += DiscoverAnimalTypeUseCase(AnimalType.CAT)
+        verify(eventBus).send(FragmentEvent(subject, DiscoverFragment::class.java, R.id.fragment_content))
+    }
+
+    @Test
+    fun notFirstLaunch_doNotLaunchFragment() {
+        subject.clickFirstAnimal()
+        subject.subscribeToDataStore()
+        clearInvocations(dataStore)
+        clearInvocations(eventBus)
+
+        subject.subscribeToDataStore()
+
+        verify(dataStore, never()) += any()
+        verify(eventBus, never()).send(any())
+    }
+
+    @Test
+    fun clickAnimalType_launchDiscoverFragmentForAnimalTypeAndSetsCurrentAnimalType() {
+        subject.clickAnimalType(AnimalType.BARNYARD)
+
+        assertThat(subject.currentAnimalType.get()).isEqualTo(AnimalType.BARNYARD)
+        verify(dataStore) += DiscoverAnimalTypeUseCase(AnimalType.BARNYARD)
+        verify(eventBus).send(FragmentEvent(subject, DiscoverFragment::class.java, R.id.fragment_content))
+        drawerCloseObserver.assertValue(true)
+    }
+
+    @Test
+    fun clickStandardButton_buttonAlreadyChecked_stayChecked() {
+        val button = mock(ToggleButton::class.java)
+        whenever(button.isChecked).thenReturn(false)
+
+        subject.clickShelters(button)
+
+        verify(button).isChecked = true
+        drawerCloseObserver.assertValue(true)
+        assertThat(subject.currentAnimalType.get()).isNull()
+    }
+
+    @Test
+    fun clickStandardButton_buttonNotChecked_collapseDiscoverViewAndSetCurrentButtonAndResetCurrentAnimal() {
+        val button = mockButton()
+
+        subject.clickShelters(button)
+
+        expandingLayoutObserver.assertValue(MainViewModel.ExpandingLayoutEvent.COLLAPSE)
+        assertThat(subject.currentButton.get()).isEqualTo(1)
+        verify(button, never()).isChecked = true
+        drawerCloseObserver.assertValue(true)
+        assertThat(subject.currentAnimalType.get()).isNull()
+    }
+
+    @Test
+    fun clickShelters_launchesSheltersFragment() {
+        subject.clickShelters(mockButton())
+
+        verify(eventBus).send(FragmentEvent(subject, SheltersFragment::class.java, R.id.fragment_content))
+    }
+
+    @Test
+    fun clickFavoritesButton_launchesFavoritesFragment() {
+        subject.clickFavorites(mockButton())
+
+        verify(eventBus).send(FragmentEvent(subject, FavoritesFragment::class.java, R.id.fragment_content))
+    }
+
+    @Test
+    fun clickSettingsButton_launchesSettingsFragment() {
+        subject.clickSettings(mockButton())
+
+        verify(eventBus).send(FragmentEvent(subject, SettingsFragment::class.java, R.id.fragment_content))
+    }
+
+    private fun mockButton(): ToggleButton {
+        val button = mock(ToggleButton::class.java)
+        whenever(button.isChecked).thenReturn(true)
+        whenever(button.id).thenReturn(1)
+        return button
+    }
+}
