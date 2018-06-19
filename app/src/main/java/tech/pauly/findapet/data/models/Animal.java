@@ -75,7 +75,7 @@ public class Animal {
     }
 
     public AnimalType getType() {
-        return AnimalType.fromString(type);
+        return AnimalType.Companion.fromString(type);
     }
 
     public List<String> getBreedList() {
@@ -87,21 +87,21 @@ public class Animal {
     }
 
     public Age getAge() {
-        return Age.fromString(age);
+        return Age.Companion.fromString(age);
     }
 
     public Sex getSex() {
-        return Sex.fromString(sex);
+        return Sex.Companion.fromString(sex);
     }
 
     public AnimalSize getSize() {
-        return AnimalSize.fromString(size);
+        return AnimalSize.Companion.fromString(size);
     }
 
     public List<Option> getOptions() {
         List<Option> optionList = new ArrayList<>();
         for (String option : options) {
-            optionList.add(Option.fromString(option));
+            optionList.add(Option.Companion.fromString(option));
         }
         return optionList;
     }

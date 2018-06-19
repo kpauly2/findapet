@@ -21,7 +21,7 @@ public class Photo {
     }
 
     public PhotoSize getSize() {
-        return PhotoSize.fromString(size);
+        return PhotoSize.Companion.fromString(size);
     }
 
     public String getUrl() {

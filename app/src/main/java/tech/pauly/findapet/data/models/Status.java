@@ -14,7 +14,7 @@ public class Status {
     private String message;
 
     public StatusCode getCode() {
-        return StatusCode.fromInt(code);
+        return StatusCode.Companion.fromInt(code);
     }
 
     @Nullable

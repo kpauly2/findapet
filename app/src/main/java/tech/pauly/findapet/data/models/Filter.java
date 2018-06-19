@@ -12,13 +12,10 @@ public class Filter {
     @PrimaryKey(autoGenerate = true)
     private Long id;
 
-    @TypeConverters(Sex.class)
     private Sex sex = Sex.MISSING;
 
-    @TypeConverters(Age.class)
     private Age age = Age.MISSING;
 
-    @TypeConverters(AnimalSize.class)
     private AnimalSize size = AnimalSize.MISSING;
 
     private String breed = "";
