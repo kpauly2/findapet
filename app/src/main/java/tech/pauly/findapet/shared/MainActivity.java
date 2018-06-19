@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity {
         switch (id) {
             case R.id.menu_search:
                 dataStore.save(new FilterAnimalTypeUseCase(viewModel.currentAnimalType.get()));
-                activityEvent(ActivityEvent.build(this).startActivity(FilterActivity.class));
+                activityEvent(new ActivityEvent(this, FilterActivity.class, false));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

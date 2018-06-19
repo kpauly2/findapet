@@ -39,9 +39,9 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun fragmentEvent(event: FragmentEvent) {
-        val newFragment = Fragment.instantiate(this, event.fragmentClass.name)
+        val newFragment = Fragment.instantiate(this, event.fragment.name)
         supportFragmentManager.beginTransaction()
-                .replace(event.containerId, newFragment)
+                .replace(event.container, newFragment)
                 .commit()
     }
 
@@ -54,10 +54,10 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     protected fun activityEvent(event: ActivityEvent) {
-        if (event.isFinishActivity) {
+        if (event.finishActivity) {
             finish()
         } else {
-            startActivity(Intent(this, event.startActivityClass))
+            startActivity(Intent(this, event.startActivity))
         }
     }
 

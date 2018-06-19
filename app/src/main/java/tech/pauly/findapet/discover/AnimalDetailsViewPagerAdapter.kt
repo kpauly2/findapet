@@ -21,14 +21,14 @@ internal constructor(@ForApplication private val context: Context) : PagerAdapte
         val inflater = LayoutInflater.from(container.context)
         return when (position) {
             0 -> {
-                ViewAnimalDetailsDetailsBinding.inflate(inflater, container, false).let {
+                ViewAnimalDetailsDetailsBinding.inflate(inflater, container, false).also {
                     it.viewModel = viewModel
                     it.executePendingBindings()
                     container.addView(it.root)
                 }
             }
             1 -> {
-                ViewAnimalDetailsLocationBinding.inflate(inflater, container, false).let {
+                ViewAnimalDetailsLocationBinding.inflate(inflater, container, false).also {
                     it.viewModel = viewModel
                     it.executePendingBindings()
                     container.addView(it.root)

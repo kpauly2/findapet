@@ -192,7 +192,7 @@ public class FilterViewModelTest {
     public void saveFilter_finishesScreen() {
         subject.saveFilter(mock(View.class));
 
-        verify(eventBus).send(ActivityEvent.build(this).finishActivity());
+        verify(eventBus).send(ActivityEvent.Companion.build(this).finishActivity());
     }
 
     @Test

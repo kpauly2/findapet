@@ -1,11 +1,14 @@
 package tech.pauly.findapet.shared.events
 
+import android.support.annotation.IdRes
 import javax.inject.Inject
 import javax.inject.Singleton
 
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import tech.pauly.findapet.shared.BaseFragment
+import tech.pauly.findapet.shared.PermissionHelper
+import java.util.*
 
 /**
  * A Singleton class to manage events that the Presentation layer needs the View layer to handle.
@@ -32,21 +35,62 @@ class ViewEventBus @Inject constructor() {
     }
 
     fun activity(emitterClass: Class<*>): Observable<ActivityEvent> {
-        return bus.filter { event -> event is ActivityEvent && fromEmitter(event, emitterClass) }
+        return bus.filter { event -> event is ActivityEvent && event.fromEmitter(emitterClass) }
                 .map { event -> event as ActivityEvent }
     }
 
     fun fragment(emitterClass: Class<*>): Observable<FragmentEvent> {
-        return bus.filter { event -> event is FragmentEvent && fromEmitter(event, emitterClass) }
+        return bus.filter { event -> event is FragmentEvent && event.fromEmitter(emitterClass) }
                 .map { event -> event as FragmentEvent }
     }
 
     fun permission(emitterClass: Class<*>): Observable<PermissionEvent> {
-        return bus.filter { event -> event is PermissionEvent && fromEmitter(event, emitterClass) }
+        return bus.filter { event -> event is PermissionEvent && event.fromEmitter(emitterClass) }
                 .map { event -> event as PermissionEvent }
     }
+}
 
-    private fun fromEmitter(event: BaseViewEvent, viewModelClass: Class<*>): Boolean {
-        return viewModelClass.name == event.getEmitter().name
+open class BaseViewEvent(private val emitter: Class<*>) {
+    fun fromEmitter(clazz: Class<*>): Boolean {
+        return this.emitter.name == clazz.name
     }
+}
+
+data class ActivityEvent(private val emitter: Any,
+                         val startActivity: Class<*>? = null,
+                         val finishActivity: Boolean = false) : BaseViewEvent(emitter.javaClass)
+
+data class FragmentEvent(private val emitter: Any,
+                         val fragment: Class<*>,
+                         @IdRes val container: Int) : BaseViewEvent(emitter.javaClass)
+
+data class PermissionEvent(private val emitter: Any,
+                           val permissions: Array<String>,
+                           val listener: PermissionListener,
+                           val requestCode: Int) : BaseViewEvent(emitter.javaClass) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PermissionEvent
+
+        if (emitter != other.emitter) return false
+        if (!Arrays.equals(permissions, other.permissions)) return false
+        if (listener != other.listener) return false
+        if (requestCode != other.requestCode) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = emitter.hashCode()
+        result = 31 * result + Arrays.hashCode(permissions)
+        result = 31 * result + listener.hashCode()
+        result = 31 * result + requestCode
+        return result
+    }
+}
+
+interface PermissionListener {
+    fun onPermissionResult(response: PermissionHelper.PermissionRequestResponse)
 }

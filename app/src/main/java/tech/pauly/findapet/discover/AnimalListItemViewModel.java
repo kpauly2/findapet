@@ -48,7 +48,7 @@ public class AnimalListItemViewModel extends BaseViewModel {
 
     public void launchAnimalDetails() {
         dataStore.save(new AnimalDetailsUseCase(animal));
-        eventBus.send(ActivityEvent.build(this).startActivity(AnimalDetailsActivity.class));
+        eventBus.send(new ActivityEvent(this, AnimalDetailsActivity.class, false));
     }
 
     private void populateFields(Animal animal, ResourceProvider resourceProvider) {

@@ -109,9 +109,7 @@ public class MainViewModel extends BaseViewModel {
     }
 
     private void launchFragment(Class clazz) {
-        eventBus.send(FragmentEvent.build(this)
-                                   .container(R.id.fragment_content)
-                                   .fragment(clazz));
+        eventBus.send(new FragmentEvent(this, clazz, R.id.fragment_content));
         drawerSubject.onNext(true);
     }
 }

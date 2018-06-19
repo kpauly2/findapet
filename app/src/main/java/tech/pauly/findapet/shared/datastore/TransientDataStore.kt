@@ -1,9 +1,12 @@
 package tech.pauly.findapet.shared.datastore
 
+import android.support.annotation.StringRes
 import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import tech.pauly.findapet.BuildConfig
+import tech.pauly.findapet.data.models.Animal
+import tech.pauly.findapet.data.models.AnimalType
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 import javax.inject.Inject
@@ -58,10 +61,22 @@ open class TransientDataStore @Inject constructor() {
     }
 
     open fun <T : UseCase> observeAndGetUseCase(useCaseClass: Class<T>): Observable<T> {
-        return observeUseCase(useCaseClass).flatMap { clazz -> Observable.just(get(clazz as Class<T>)) }
+        return observeUseCase(useCaseClass).map { clazz -> get(clazz as Class<T>) }
     }
 
     open fun <T : UseCase> containsUseCase(useCaseClass: Class<T>): Boolean {
         return transientData.containsKey(useCaseClass)
     }
 }
+
+interface UseCase
+
+open class FilterUpdatedUseCase : UseCase
+
+data class FilterAnimalTypeUseCase(val animalType: AnimalType) : UseCase
+
+data class DiscoverToolbarTitleUseCase(@StringRes val title: Int) : UseCase
+
+data class DiscoverAnimalTypeUseCase(val animalType: AnimalType) : UseCase
+
+data class AnimalDetailsUseCase(val animal: Animal) : UseCase

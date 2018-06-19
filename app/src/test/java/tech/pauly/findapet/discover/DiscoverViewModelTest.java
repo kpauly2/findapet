@@ -33,7 +33,6 @@ import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase;
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
 import tech.pauly.findapet.shared.datastore.FilterUpdatedUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
-import tech.pauly.findapet.shared.events.PermissionEvent;
 import tech.pauly.findapet.shared.events.ViewEventBus;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;

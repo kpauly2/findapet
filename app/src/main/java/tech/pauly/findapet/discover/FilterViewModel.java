@@ -123,7 +123,7 @@ public class FilterViewModel extends BaseViewModel {
 
     private void finish() {
         dataStore.save(new FilterUpdatedUseCase());
-        eventBus.send(ActivityEvent.build(this).finishActivity());
+        eventBus.send(new ActivityEvent(this, null, true));
     }
 
     private void populateScreenForFilter(Filter filter) {

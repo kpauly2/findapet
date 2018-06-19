@@ -129,6 +129,7 @@ class TransientDataStoreTest {
     }
 
     // Can't use mocks as Mockito mutates the class name
-    private inner class TestUseCase : UseCase
-    private inner class AnotherTestUseCase : UseCase
+    private inner class TestUseCase
+
+    private inner class AnotherTestUseCase
 }
