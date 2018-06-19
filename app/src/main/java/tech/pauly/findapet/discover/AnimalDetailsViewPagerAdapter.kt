@@ -34,7 +34,7 @@ internal constructor(@ForApplication private val context: Context) : PagerAdapte
                     container.addView(it.root)
                 }
             }
-            else -> throw IllegalStateException(javaClass.canonicalName + " item at position " + position + " not supported")
+            else -> throw IllegalStateException(this::class.simpleName + " item at position " + position + " not supported")
         }
     }
 
@@ -54,7 +54,7 @@ internal constructor(@ForApplication private val context: Context) : PagerAdapte
                     container.removeView(this.root)
                 }
             }
-            else -> throw IllegalStateException(javaClass.canonicalName + " item at position " + position + " not supported")
+            else -> throw IllegalStateException(this::class.simpleName + " item at position " + position + " not supported")
         }
     }
 
@@ -62,7 +62,7 @@ internal constructor(@ForApplication private val context: Context) : PagerAdapte
         return when (position) {
             0 -> context.getString(R.string.animal_details_tab_details)
             1 -> context.getString(R.string.animal_details_tab_location)
-            else -> throw IllegalStateException(javaClass.canonicalName + " item at position " + position + " not supported")
+            else -> throw IllegalStateException(this::class.simpleName + " item at position " + position + " not supported")
         }
     }
 

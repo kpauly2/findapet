@@ -9,7 +9,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -192,7 +191,7 @@ public class FilterViewModelTest {
     public void saveFilter_finishesScreen() {
         subject.saveFilter(mock(View.class));
 
-        verify(eventBus).send(ActivityEvent.Companion.build(this).finishActivity());
+        verify(eventBus).send(new ActivityEvent(subject, null, true));
     }
 
     @Test

@@ -21,10 +21,10 @@ import tech.pauly.findapet.dependencyinjection.ForApplication
  * this class and use the limited set of context APIs implemented in this class.
  */
 @Singleton
-class ResourceProvider @Inject
+open class ResourceProvider @Inject
 internal constructor(@ForApplication private val context: Context) {
 
-    fun getString(@StringRes stringId: Int, vararg formatArgs: Any): String {
+    open fun getString(@StringRes stringId: Int, vararg formatArgs: Any): String {
         return context.getString(stringId, *formatArgs)
     }
 }

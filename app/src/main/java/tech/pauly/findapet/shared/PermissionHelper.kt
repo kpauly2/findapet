@@ -11,32 +11,32 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PermissionHelper @Inject
+open class PermissionHelper @Inject
 constructor(@param:ForApplication private val context: Context) {
 
     val requestMap = HashMap<Int, PermissionEvent>()
 
-    fun requestPermission(activity: SupportActivity, permissionEvent: PermissionEvent) {
+    open fun requestPermission(activity: SupportActivity, permissionEvent: PermissionEvent) {
         requestMap[permissionEvent.requestCode] = permissionEvent
         activity.requestPermissions(permissionEvent.permissions, permissionEvent.requestCode)
     }
 
-    fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    open fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         val permissionEvent = requestMap[requestCode] ?: return
-        permissions.indices.forEach {
-            val result = grantResults[it] == PackageManager.PERMISSION_GRANTED
-            permissionEvent.listener.onPermissionResult(PermissionRequestResponse(permissions[it], result))
+        permissions.forEachIndexed { index, permission ->
+            val result = grantResults[index] == PackageManager.PERMISSION_GRANTED
+            permissionEvent.listener.onPermissionResult(PermissionRequestResponse(permission, result))
         }
         requestMap.remove(requestCode)
     }
 
-    fun hasPermissions(vararg permissions: String): Boolean {
+    open fun hasPermissions(vararg permissions: String): Boolean {
         var hasPermission = true
         hasPermission = permissions.all {
             hasPermission and (ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED)
         }
         return hasPermission
     }
-
-    inner class PermissionRequestResponse(val permission: String, val isGranted: Boolean)
 }
+
+open class PermissionRequestResponse(val permission: String, val isGranted: Boolean)

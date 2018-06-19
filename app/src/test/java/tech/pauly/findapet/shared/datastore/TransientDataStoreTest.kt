@@ -28,6 +28,17 @@ class TransientDataStoreTest {
     }
 
     @Test
+    fun plusAssign_savesUseCaseAndEmitsSubject() {
+        val useCase = TestUseCase()
+
+        subject += useCase
+
+        assertThat(subject.transientData).hasSize(1)
+        assertThat(subject.transientData).containsEntry(TestUseCase::class.java, useCase)
+        dataSubjectObserver.assertValue(TestUseCase::class.java)
+    }
+
+    @Test
     fun save_useCaseExists_overwritesPreviousUseCase() {
         val firstUseCase = TestUseCase()
         val secondUseCase = TestUseCase()
@@ -129,7 +140,7 @@ class TransientDataStoreTest {
     }
 
     // Can't use mocks as Mockito mutates the class name
-    private inner class TestUseCase
+    private inner class TestUseCase : UseCase
 
-    private inner class AnotherTestUseCase
+    private inner class AnotherTestUseCase : UseCase
 }

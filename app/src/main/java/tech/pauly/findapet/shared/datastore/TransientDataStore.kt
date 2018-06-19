@@ -36,6 +36,11 @@ open class TransientDataStore @Inject constructor() {
     val transientData: ConcurrentMap<Class<*>, UseCase> = ConcurrentHashMap()
     val dataSubject: PublishSubject<Class<*>> = PublishSubject.create()
 
+    open operator fun plusAssign(useCase: UseCase) {
+        save(useCase)
+    }
+
+    @Deprecated("for Java use only, otherwise use +=")
     open fun save(useCase: UseCase) {
         val useCaseClass = useCase.javaClass
 
@@ -72,11 +77,3 @@ open class TransientDataStore @Inject constructor() {
 interface UseCase
 
 open class FilterUpdatedUseCase : UseCase
-
-data class FilterAnimalTypeUseCase(val animalType: AnimalType) : UseCase
-
-data class DiscoverToolbarTitleUseCase(@StringRes val title: Int) : UseCase
-
-data class DiscoverAnimalTypeUseCase(val animalType: AnimalType) : UseCase
-
-data class AnimalDetailsUseCase(val animal: Animal) : UseCase

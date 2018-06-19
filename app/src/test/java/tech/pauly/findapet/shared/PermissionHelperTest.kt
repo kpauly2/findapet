@@ -10,6 +10,8 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.verify
 import tech.pauly.findapet.shared.events.PermissionEvent
+import tech.pauly.findapet.shared.events.PermissionListener
+import java.security.acl.Permission
 import java.util.*
 
 class PermissionHelperTest {
@@ -38,31 +40,41 @@ class PermissionHelperTest {
 
     @Test
     fun onRequestPermissionResult_permissionsExistsInMap_fireEventForEachPermissionResultAndRemovePermissionFromMap() {
-        val responses = ArrayList<PermissionHelper.PermissionRequestResponse>()
+        val responses = ArrayList<PermissionRequestResponse>()
         val event = mock<PermissionEvent>()
         val activity = mock<SupportActivity>()
         whenever(event.requestCode).thenReturn(1)
         whenever(event.permissions).thenReturn(Arrays.array("permission1", "permission2"))
-        whenever(event.listener).thenReturn(PermissionEvent.PermissionListener { responses.add(it) })
+        whenever(event.listener).thenReturn(object: PermissionListener {
+            override fun onPermissionResult(response: PermissionRequestResponse) {
+                responses.add(response)
+            }
+        })
         subject.requestPermission(activity, event)
 
         subject.onRequestPermissionsResult(1, Arrays.array("permission1", "permission2"), intArrayOf(0, 1))
 
         assertThat(subject.requestMap.size).isEqualTo(0)
-        assertThat(responses.size).isEqualTo(2)
-        assertThat(responses[0].permission).isEqualTo("permission1")
-        assertThat(responses[0].isGranted).isEqualTo(true)
-        assertThat(responses[1].permission).isEqualTo("permission2")
-        assertThat(responses[1].isGranted).isEqualTo(false)
+        responses.also {
+            assertThat(it.size).isEqualTo(2)
+            assertThat(it[0].permission).isEqualTo("permission1")
+            assertThat(it[0].isGranted).isEqualTo(true)
+            assertThat(it[1].permission).isEqualTo("permission2")
+            assertThat(it[1].isGranted).isEqualTo(false)
+        }
     }
 
     @Test
     fun onRequestPermissionResult_permissionDoesNotExistInMap_doNothing() {
-        val responses = ArrayList<PermissionHelper.PermissionRequestResponse>()
+        val responses = ArrayList<PermissionRequestResponse>()
         val event = mock<PermissionEvent>()
         whenever(event.requestCode).thenReturn(1)
         whenever(event.permissions).thenReturn(Arrays.array("permission1", "permission2"))
-        whenever(event.listener).thenReturn(PermissionEvent.PermissionListener { responses.add(it) })
+        whenever(event.listener).thenReturn(object: PermissionListener {
+            override fun onPermissionResult(response: PermissionRequestResponse) {
+                responses.add(response)
+            }
+        })
 
         subject.onRequestPermissionsResult(1, Arrays.array("permission"), intArrayOf(0, 1))
 
