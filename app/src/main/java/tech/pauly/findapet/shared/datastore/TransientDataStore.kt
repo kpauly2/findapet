@@ -1,17 +1,13 @@
 package tech.pauly.findapet.shared.datastore
 
-import android.support.annotation.VisibleForTesting
 import android.util.Log
-
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ConcurrentMap
-
-import javax.inject.Inject
-import javax.inject.Singleton
-
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import tech.pauly.findapet.BuildConfig
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * A Singleton class to handle data transfer and temporary storage between View Models.
@@ -33,11 +29,11 @@ import tech.pauly.findapet.BuildConfig
  * this interaction. Note the recipient must observe before the sender saves for this to work.
  */
 @Singleton
-class TransientDataStore @Inject constructor() {
+open class TransientDataStore @Inject constructor() {
     val transientData: ConcurrentMap<Class<*>, UseCase> = ConcurrentHashMap()
     val dataSubject: PublishSubject<Class<*>> = PublishSubject.create()
 
-    fun save(useCase: UseCase) {
+    open fun save(useCase: UseCase) {
         val useCaseClass = useCase.javaClass
 
         if (BuildConfig.DEBUG && transientData.containsKey(useCaseClass)) {
@@ -48,7 +44,7 @@ class TransientDataStore @Inject constructor() {
         dataSubject.onNext(useCaseClass)
     }
 
-    operator fun <T : UseCase> get(useCaseClass: Class<T>): T? {
+    open operator fun <T : UseCase> get(useCaseClass: Class<T>): T? {
         if (BuildConfig.DEBUG && !containsUseCase(useCaseClass)) {
             Log.e(javaClass.name, "Expected element for use case " + useCaseClass.name)
         }
@@ -57,15 +53,15 @@ class TransientDataStore @Inject constructor() {
         return useCaseClass.cast(removedUseCase)
     }
 
-    fun <T : UseCase> observeUseCase(useCaseClass: Class<T>): Observable<Class<*>> {
+    open fun <T : UseCase> observeUseCase(useCaseClass: Class<T>): Observable<Class<*>> {
         return dataSubject.filter { clazz -> clazz == useCaseClass }
     }
 
-    fun <T : UseCase> observeAndGetUseCase(useCaseClass: Class<T>): Observable<T> {
+    open fun <T : UseCase> observeAndGetUseCase(useCaseClass: Class<T>): Observable<T> {
         return observeUseCase(useCaseClass).flatMap { clazz -> Observable.just(get(clazz as Class<T>)) }
     }
 
-    fun <T : UseCase> containsUseCase(useCaseClass: Class<T>): Boolean {
+    open fun <T : UseCase> containsUseCase(useCaseClass: Class<T>): Boolean {
         return transientData.containsKey(useCaseClass)
     }
 }
