@@ -6,6 +6,7 @@ import android.support.v4.app.SupportActivity
 import android.support.v4.content.ContextCompat
 import tech.pauly.findapet.dependencyinjection.ForApplication
 import tech.pauly.findapet.shared.events.PermissionEvent
+import tech.pauly.findapet.utils.BindingAdapters
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,6 +29,7 @@ constructor(@param:ForApplication private val context: Context) {
             permissionEvent.listener.onPermissionResult(PermissionRequestResponse(permission, result))
         }
         requestMap.remove(requestCode)
+
     }
 
     open fun hasPermissions(vararg permissions: String): Boolean {

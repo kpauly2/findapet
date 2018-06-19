@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 import tech.pauly.findapet.R;
 import tech.pauly.findapet.databinding.FragmentSettingsBinding;
+import tech.pauly.findapet.utils.BindingAdapters;
 
 public class SettingsFragment extends Fragment {
 
