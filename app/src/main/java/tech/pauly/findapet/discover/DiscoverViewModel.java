@@ -37,6 +37,7 @@ import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase;
 import tech.pauly.findapet.shared.datastore.FilterUpdatedUseCase;
 import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.shared.events.PermissionEvent;
+import tech.pauly.findapet.shared.events.PermissionListener;
 import tech.pauly.findapet.shared.events.ViewEventBus;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -107,10 +108,10 @@ public class DiscoverViewModel extends BaseViewModel {
         if (permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)) {
             loadList();
         } else {
-            eventBus.send(PermissionEvent.build(this)
-                                         .requestPermissions(ACCESS_FINE_LOCATION)
-                                         .listener(locationPermissionResponseListener())
-                                         .code(100));
+            eventBus.send(new PermissionEvent(this,
+                                              new String[] { ACCESS_FINE_LOCATION },
+                                              locationPermissionResponseListener(),
+                                              100));
         }
     }
 
@@ -203,7 +204,7 @@ public class DiscoverViewModel extends BaseViewModel {
         listAdapter.setAnimalItems(viewModelList);
     }
 
-    private PermissionEvent.PermissionListener locationPermissionResponseListener() {
+    private PermissionListener locationPermissionResponseListener() {
         return response -> {
             if (response.getPermission().equals(ACCESS_FINE_LOCATION)) {
                 if (response.isGranted()) {

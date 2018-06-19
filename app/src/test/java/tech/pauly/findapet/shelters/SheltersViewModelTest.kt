@@ -41,7 +41,7 @@ class SheltersViewModelTest {
     fun updateToolbarTitle_savesToolbarTitle() {
         subject.updateToolbarTitle()
 
-        verify(dataStore).save(DiscoverToolbarTitleUseCase(R.string.menu_shelters))
+        verify(dataStore) += DiscoverToolbarTitleUseCase(R.string.menu_shelters)
     }
 
     @Test

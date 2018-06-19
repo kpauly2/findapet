@@ -71,7 +71,7 @@ public class MainViewModelTest {
         subject.subscribeToDataStore();
 
         verify(dataStore).save(new DiscoverAnimalTypeUseCase(AnimalType.CAT));
-        verify(eventBus).send(FragmentEvent.build(subject).container(R.id.fragment_content).fragment(DiscoverFragment.class));
+        verify(eventBus).send(new FragmentEvent(subject, DiscoverFragment.class, R.id.fragment_content));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class MainViewModelTest {
 
         assertThat(subject.currentAnimalType.get()).isEqualTo(AnimalType.BARNYARD);
         verify(dataStore).save(new DiscoverAnimalTypeUseCase(AnimalType.BARNYARD));
-        verify(eventBus).send(FragmentEvent.build(subject).container(R.id.fragment_content).fragment(DiscoverFragment.class));
+        verify(eventBus).send(new FragmentEvent(subject, DiscoverFragment.class, R.id.fragment_content));
         drawerCloseObserver.assertValue(true);
     }
 
@@ -126,27 +126,21 @@ public class MainViewModelTest {
     public void clickShelters_launchesSheltersFragment() {
         subject.clickShelters(mockButton());
 
-        verify(eventBus).send(FragmentEvent.build(subject)
-                                           .container(R.id.fragment_content)
-                                           .fragment(SheltersFragment.class));
+        verify(eventBus).send(new FragmentEvent(subject, SheltersFragment.class, R.id.fragment_content));
     }
 
     @Test
     public void clickFavoritesButton_launchesFavoritesFragment() {
         subject.clickFavorites(mockButton());
 
-        verify(eventBus).send(FragmentEvent.build(subject)
-                                           .container(R.id.fragment_content)
-                                           .fragment(FavoritesFragment.class));
+        verify(eventBus).send(new FragmentEvent(subject, FavoritesFragment.class, R.id.fragment_content));
     }
 
     @Test
     public void clickSettingsButton_launchesSettingsFragment() {
         subject.clickSettings(mockButton());
 
-        verify(eventBus).send(FragmentEvent.build(subject)
-                                           .container(R.id.fragment_content)
-                                           .fragment(SettingsFragment.class));
+        verify(eventBus).send(new FragmentEvent(subject, SettingsFragment.class, R.id.fragment_content));
     }
 
     @NonNull

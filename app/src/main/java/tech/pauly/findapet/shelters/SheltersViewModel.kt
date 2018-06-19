@@ -22,7 +22,7 @@ constructor(private val dataStore: TransientDataStore,
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun updateToolbarTitle() {
-        dataStore.save(DiscoverToolbarTitleUseCase(R.string.menu_shelters))
+        dataStore += DiscoverToolbarTitleUseCase(R.string.menu_shelters)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
