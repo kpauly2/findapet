@@ -15,7 +15,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        permissionHelper = PetApplication.getComponent().permissionHelper()
+        permissionHelper = PetApplication.component.permissionHelper()
     }
 
     override fun onResume() {

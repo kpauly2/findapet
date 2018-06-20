@@ -20,7 +20,7 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        permissionHelper = PetApplication.getComponent().permissionHelper()
+        permissionHelper = PetApplication.component.permissionHelper()
     }
 
     public override fun onResume() {
