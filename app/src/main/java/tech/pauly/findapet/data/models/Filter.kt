@@ -9,11 +9,11 @@ import java.util.Objects
 
 @Entity
 open class Filter(@PrimaryKey(autoGenerate = true)
-                  var id: Long? = null,
-                  var sex: Sex = Sex.MISSING,
-                  var age: Age = Age.MISSING,
-                  var size: AnimalSize = AnimalSize.MISSING,
-                  var breed: String = "") {
+                  open var id: Long? = null,
+                  open var sex: Sex = Sex.MISSING,
+                  open var age: Age = Age.MISSING,
+                  open var size: AnimalSize = AnimalSize.MISSING,
+                  open var breed: String = "") {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

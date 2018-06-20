@@ -31,7 +31,7 @@ public class DataModule {
         return new Retrofit.Builder()
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(PetfinderEndpoints.getEndpoint())
+                .baseUrl(PetfinderEndpoints.INSTANCE.getEndpoint())
                 .client(client)
                 .build()
                 .create(AnimalService.class);
@@ -56,7 +56,7 @@ public class DataModule {
         return new Retrofit.Builder()
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(PetfinderEndpoints.getEndpoint())
+                .baseUrl(PetfinderEndpoints.INSTANCE.getEndpoint())
                 .client(client)
                 .build()
                 .create(BreedService.class);
