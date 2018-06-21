@@ -28,6 +28,9 @@ open class Animal {
     open lateinit var breedList: List<String>
         protected set
 
+    open val formattedBreedList: String
+        get() = breedList.joinToString(" / ")
+
     @field:Element
     open lateinit var mix: String
         protected set

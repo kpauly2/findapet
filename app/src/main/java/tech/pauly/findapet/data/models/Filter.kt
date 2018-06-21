@@ -2,10 +2,6 @@ package tech.pauly.findapet.data.models
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import android.arch.persistence.room.TypeConverters
-import android.util.Size
-
-import java.util.Objects
 
 @Entity
 open class Filter(@PrimaryKey(autoGenerate = true)
