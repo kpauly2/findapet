@@ -39,6 +39,7 @@ import tech.pauly.findapet.shared.datastore.TransientDataStore;
 import tech.pauly.findapet.shared.events.PermissionEvent;
 import tech.pauly.findapet.shared.events.PermissionListener;
 import tech.pauly.findapet.shared.events.ViewEventBus;
+import tech.pauly.findapet.utils.Chip;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 

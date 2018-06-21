@@ -17,7 +17,6 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import tech.pauly.findapet.R
-import tech.pauly.findapet.discover.Chip
 
 object BindingAdapters {
     var recyclerItemWidth: Int = 0

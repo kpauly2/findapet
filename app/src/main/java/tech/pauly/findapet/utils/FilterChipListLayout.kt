@@ -8,7 +8,6 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import tech.pauly.findapet.R
-import tech.pauly.findapet.discover.Chip
 import java.util.*
 
 class FilterChipListLayout : LinearLayout {
@@ -50,3 +49,5 @@ class FilterChipListLayout : LinearLayout {
         }
     }
 }
+
+data class Chip(val text: String)
