@@ -11,10 +11,14 @@ import javax.inject.Inject
 
 import tech.pauly.findapet.R
 
-class AnimalListAdapter @Inject
+open class AnimalListAdapter @Inject
 internal constructor() : RecyclerView.Adapter<AnimalListItemViewHolder>() {
 
-    private val animalItems = ArrayList<AnimalListItemViewModel>()
+    open var animalItems = ArrayList<AnimalListItemViewModel>()
+        set(value) {
+            field.addAll(value)
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalListItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -29,12 +33,7 @@ internal constructor() : RecyclerView.Adapter<AnimalListItemViewHolder>() {
         return animalItems.size
     }
 
-    fun setAnimalItems(items: List<AnimalListItemViewModel>) {
-        animalItems.addAll(items)
-        notifyDataSetChanged()
-    }
-
-    fun clearAnimalItems() {
+    open fun clearAnimalItems() {
         animalItems.clear()
         notifyDataSetChanged()
     }

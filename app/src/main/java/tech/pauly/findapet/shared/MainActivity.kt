@@ -57,7 +57,9 @@ class MainActivity : BaseActivity() {
 
         return when (id) {
             R.id.menu_search -> {
-                dataStore += FilterAnimalTypeUseCase(viewModel.currentAnimalType.get())
+                viewModel.currentAnimalType.get()?.let {
+                    dataStore += FilterAnimalTypeUseCase(it)
+                }
                 activityEvent(ActivityEvent(this, FilterActivity::class.java, false))
                 true
             }

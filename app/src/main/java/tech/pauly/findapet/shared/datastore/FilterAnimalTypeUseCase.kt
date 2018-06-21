@@ -2,7 +2,7 @@ package tech.pauly.findapet.shared.datastore
 
 import tech.pauly.findapet.data.models.AnimalType
 
-open class FilterAnimalTypeUseCase(open val animalType: AnimalType?) : UseCase {
+open class FilterAnimalTypeUseCase(open val animalType: AnimalType) : UseCase {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -15,6 +15,6 @@ open class FilterAnimalTypeUseCase(open val animalType: AnimalType?) : UseCase {
     }
 
     override fun hashCode(): Int {
-        return animalType?.hashCode() ?: 0
+        return animalType.hashCode()
     }
 }

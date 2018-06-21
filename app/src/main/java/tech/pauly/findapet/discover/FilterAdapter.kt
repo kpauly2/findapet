@@ -21,7 +21,7 @@ open class FilterAdapter @Inject
 internal constructor() : RecyclerView.Adapter<FilterBreedViewHolder>() {
 
     private val breedItems = ArrayList<String>()
-    var viewModel: FilterViewModel? = null
+    open var viewModel: FilterViewModel? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -61,7 +61,8 @@ internal constructor() : RecyclerView.Adapter<FilterBreedViewHolder>() {
         return breedItems.size + 2
     }
 
-    fun setBreedItems(newItems: List<String>) {
+    open fun setBreedItems(newItems: List<String>?) {
+        if (newItems == null) return
         val oldItems = ArrayList(breedItems)
         breedItems.clear()
         breedItems.addAll(newItems)
