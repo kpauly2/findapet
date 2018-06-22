@@ -1,16 +1,15 @@
 package tech.pauly.findapet.shared.datastore
 
-import android.support.annotation.StringRes
 import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import tech.pauly.findapet.BuildConfig
-import tech.pauly.findapet.data.models.Animal
-import tech.pauly.findapet.data.models.AnimalType
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.reflect.KClass
+import kotlin.reflect.full.cast
 
 /**
  * A Singleton class to handle data transfer and temporary storage between View Models.
@@ -33,16 +32,11 @@ import javax.inject.Singleton
  */
 @Singleton
 open class TransientDataStore @Inject constructor() {
-    val transientData: ConcurrentMap<Class<*>, UseCase> = ConcurrentHashMap()
-    val dataSubject: PublishSubject<Class<*>> = PublishSubject.create()
+    val transientData: ConcurrentMap<KClass<*>, UseCase> = ConcurrentHashMap()
+    val dataSubject: PublishSubject<KClass<*>> = PublishSubject.create()
 
     open operator fun plusAssign(useCase: UseCase) {
-        save(useCase)
-    }
-
-    @Deprecated("for Java use only, otherwise use +=")
-    open fun save(useCase: UseCase) {
-        val useCaseClass = useCase.javaClass
+        val useCaseClass = useCase::class
 
         if (BuildConfig.DEBUG && transientData.containsKey(useCaseClass)) {
             Log.e(javaClass.name, "Element of type $useCaseClass already exists")
@@ -52,24 +46,24 @@ open class TransientDataStore @Inject constructor() {
         dataSubject.onNext(useCaseClass)
     }
 
-    open operator fun <T : UseCase> get(useCaseClass: Class<T>): T? {
+    open operator fun <T : UseCase> get(useCaseClass: KClass<T>): T? {
         if (BuildConfig.DEBUG && !containsUseCase(useCaseClass)) {
-            Log.e(javaClass.name, "Expected element for use case " + useCaseClass.name)
+            Log.e(javaClass.name, "Expected element for use case " + useCaseClass.simpleName)
         }
 
         val removedUseCase = transientData.remove(useCaseClass)
-        return useCaseClass.cast(removedUseCase)
+        return if (removedUseCase == null) null else useCaseClass.cast(removedUseCase)
     }
 
-    open fun <T : UseCase> observeUseCase(useCaseClass: Class<T>): Observable<Class<*>> {
+    open fun <T : UseCase> observeUseCase(useCaseClass: KClass<T>): Observable<KClass<*>> {
         return dataSubject.filter { clazz -> clazz == useCaseClass }
     }
 
-    open fun <T : UseCase> observeAndGetUseCase(useCaseClass: Class<T>): Observable<T> {
-        return observeUseCase(useCaseClass).map { clazz -> get(clazz as Class<T>) }
+    open fun <T : UseCase> observeAndGetUseCase(useCaseClass: KClass<T>): Observable<T> {
+        return observeUseCase(useCaseClass).map { clazz -> get(clazz as KClass<T>) }
     }
 
-    open fun <T : UseCase> containsUseCase(useCaseClass: Class<T>): Boolean {
+    open fun <T : UseCase> containsUseCase(useCaseClass: KClass<T>): Boolean {
         return transientData.containsKey(useCaseClass)
     }
 }

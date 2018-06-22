@@ -16,11 +16,12 @@ internal constructor(private val database: FilterDatabase,
     internal var _currentFilter: Long? = null
     open val currentFilter
         get(): Single<Filter> {
-            return if (_currentFilter == null) {
-                Single.error(IllegalStateException("Can't get current filter as current filter ID wasn't set"))
-            } else database.filterDao()
-                    .findById(_currentFilter)
-                    .compose(observableHelper.applySingleSchedulers())
+            _currentFilter?.also {
+                return database.filterDao()
+                        .findById(_currentFilter)
+                        .compose(observableHelper.applySingleSchedulers())
+            }
+            return Single.error(IllegalStateException("Can't get current filter as current filter ID wasn't set"))
         }
 
     open val currentFilterAndNoFilterIfEmpty: Single<Filter>

@@ -4,10 +4,11 @@ import io.reactivex.observers.TestObserver
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import kotlin.reflect.KClass
 
 class TransientDataStoreTest {
 
-    private val dataSubjectObserver = TestObserver<Class<*>>()
+    private val dataSubjectObserver = TestObserver<KClass<*>>()
 
     private val subject = TransientDataStore()
 
@@ -17,99 +18,88 @@ class TransientDataStoreTest {
     }
 
     @Test
-    fun save_savesUseCaseAndEmitsSubject() {
-        val useCase = TestUseCase()
-
-        subject.save(useCase)
-
-        assertThat(subject.transientData).hasSize(1)
-        assertThat(subject.transientData).containsEntry(TestUseCase::class.java, useCase)
-        dataSubjectObserver.assertValue(TestUseCase::class.java)
-    }
-
-    @Test
     fun plusAssign_savesUseCaseAndEmitsSubject() {
         val useCase = TestUseCase()
 
         subject += useCase
 
         assertThat(subject.transientData).hasSize(1)
-        assertThat(subject.transientData).containsEntry(TestUseCase::class.java, useCase)
-        dataSubjectObserver.assertValue(TestUseCase::class.java)
+        assertThat(subject.transientData).containsEntry(TestUseCase::class, useCase)
+        dataSubjectObserver.assertValue(TestUseCase::class)
     }
 
     @Test
-    fun save_useCaseExists_overwritesPreviousUseCase() {
+    fun plusAssign_useCaseExists_overwritesPreviousUseCase() {
         val firstUseCase = TestUseCase()
         val secondUseCase = TestUseCase()
 
-        subject.save(firstUseCase)
-        subject.save(secondUseCase)
+        subject += firstUseCase
+        subject += secondUseCase
 
         val transientData = subject.transientData
         assertThat(transientData).hasSize(1)
-        assertThat(transientData[TestUseCase::class.java]).isEqualToComparingFieldByField(secondUseCase)
+        assertThat(transientData[TestUseCase::class]).isEqualToComparingFieldByField(secondUseCase)
     }
 
     @Test
     fun containsUseCase_useCaseExists_returnsTrue() {
         val useCase = TestUseCase()
-        subject.save(useCase)
+        subject += useCase
 
-        assertThat(subject.containsUseCase(TestUseCase::class.java)).isTrue()
+        assertThat(subject.containsUseCase(TestUseCase::class)).isTrue()
     }
 
     @Test
     fun containsUseCase_useCaseDoesNotExist_returnsFalse() {
-        assertThat(subject.containsUseCase(TestUseCase::class.java)).isFalse()
+        assertThat(subject.containsUseCase(TestUseCase::class)).isFalse()
 
         val useCase = TestUseCase()
-        subject.save(useCase)
+        subject += useCase
 
-        assertThat(subject.containsUseCase(AnotherTestUseCase::class.java)).isFalse()
+        assertThat(subject.containsUseCase(AnotherTestUseCase::class)).isFalse()
     }
 
     @Test
     fun get_useCaseDoesNotExist_returnsNull() {
-        assertThat(subject[TestUseCase::class.java]).isEqualTo(null)
+        assertThat(subject[TestUseCase::class]).isEqualTo(null)
 
         val useCase = TestUseCase()
-        subject.save(useCase)
+        subject += useCase
 
-        assertThat(subject[AnotherTestUseCase::class.java]).isEqualTo(null)
+        assertThat(subject[AnotherTestUseCase::class]).isEqualTo(null)
     }
 
     @Test
     fun get_useCaseExists_getsUseCaseAndRemovesFromMap() {
         val useCase = TestUseCase()
-        subject.save(useCase)
+        subject += useCase
 
-        val receivedUseCase = subject[TestUseCase::class.java]
+        val receivedUseCase = subject[TestUseCase::class]
 
         assertThat(receivedUseCase).isEqualToComparingFieldByField(useCase)
         assertThat(subject.transientData).hasSize(0)
-        assertThat(subject.transientData).doesNotContainEntry(TestUseCase::class.java, useCase)
+        assertThat(subject.transientData).doesNotContainEntry(TestUseCase::class, useCase)
     }
 
     @Test
     fun observeUseCase_useCaseSaved_returnsClassOfUseCaseSaved() {
-        val observer = TestObserver<Class<*>>()
+        val observer = TestObserver<KClass<*>>()
         val useCase = TestUseCase()
 
-        subject.observeUseCase(TestUseCase::class.java).subscribe(observer)
-        subject.save(useCase)
+        subject.observeUseCase(TestUseCase::class).subscribe(observer)
+        subject += useCase
 
-        observer.assertValue(TestUseCase::class.java)
+        observer.assertValue(TestUseCase::class)
                 .assertNotComplete()
     }
 
     @Test
     fun observeUseCase_differentUseCaseSaved_fireNoEvent() {
-        val observer = TestObserver<Class<*>>()
+        val observer = TestObserver<KClass<*>>()
         val useCase = TestUseCase()
 
-        subject.observeUseCase(AnotherTestUseCase::class.java).subscribe(observer)
-        subject.save(useCase)
+        subject.observeUseCase(AnotherTestUseCase::class).subscribe(observer)
+        subject += useCase
 
         observer.assertNoValues()
                 .assertNotComplete()
@@ -120,8 +110,8 @@ class TransientDataStoreTest {
         val observer = TestObserver<UseCase>()
         val useCase = TestUseCase()
 
-        subject.observeAndGetUseCase(TestUseCase::class.java).subscribe(observer)
-        subject.save(useCase)
+        subject.observeAndGetUseCase(TestUseCase::class).subscribe(observer)
+        subject += useCase
 
         observer.assertValue(useCase)
                 .assertNotComplete()
@@ -132,8 +122,8 @@ class TransientDataStoreTest {
         val observer = TestObserver<UseCase>()
         val useCase = TestUseCase()
 
-        subject.observeAndGetUseCase(AnotherTestUseCase::class.java).subscribe(observer)
-        subject.save(useCase)
+        subject.observeAndGetUseCase(AnotherTestUseCase::class).subscribe(observer)
+        subject += useCase
 
         observer.assertNoValues()
                 .assertNotComplete()

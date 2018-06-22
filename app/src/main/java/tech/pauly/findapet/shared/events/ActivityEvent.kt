@@ -1,8 +1,10 @@
 package tech.pauly.findapet.shared.events
 
+import kotlin.reflect.KClass
+
 open class ActivityEvent(private val emitter: Any,
-                         open val startActivity: Class<*>? = null,
-                         open val finishActivity: Boolean = false) : BaseViewEvent(emitter.javaClass) {
+                         open val startActivity: KClass<*>? = null,
+                         open val finishActivity: Boolean = false) : BaseViewEvent(emitter::class) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

@@ -76,7 +76,7 @@ class FilterViewModelTest {
     @Test
     fun checkSex_buttonNotChecked_setSexToU() {
         subject.selectedSex.set(Sex.FEMALE)
-        val button = mock(ToggleButton::class.java)
+        val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(false)
 
         subject.checkSex(button, Sex.MALE)
@@ -87,7 +87,7 @@ class FilterViewModelTest {
     @Test
     fun checkSex_buttonChecked_setSexToButtonSex() {
         subject.selectedSex.set(Sex.FEMALE)
-        val button = mock(ToggleButton::class.java)
+        val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(true)
 
         subject.checkSex(button, Sex.MALE)
@@ -98,7 +98,7 @@ class FilterViewModelTest {
     @Test
     fun checkAge_buttonNotChecked_setAgeToMissing() {
         subject.selectedAge.set(Age.YOUNG)
-        val button = mock(ToggleButton::class.java)
+        val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(false)
 
         subject.checkAge(button, Age.ADULT)
@@ -109,7 +109,7 @@ class FilterViewModelTest {
     @Test
     fun checkAge_buttonChecked_setAgeToButtonAge() {
         subject.selectedAge.set(Age.YOUNG)
-        val button = mock(ToggleButton::class.java)
+        val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(true)
 
         subject.checkAge(button, Age.ADULT)
@@ -120,7 +120,7 @@ class FilterViewModelTest {
     @Test
     fun checkSize_buttonNotChecked_setSizeToMissing() {
         subject.selectedSize.set(AnimalSize.MEDIUM)
-        val button = mock(ToggleButton::class.java)
+        val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(false)
 
         subject.checkSize(button, AnimalSize.SMALL)
@@ -131,7 +131,7 @@ class FilterViewModelTest {
     @Test
     fun checkSize_buttonChecked_setSizeToButtonSize() {
         subject.selectedSize.set(AnimalSize.MEDIUM)
-        val button = mock(ToggleButton::class.java)
+        val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(true)
 
         subject.checkSize(button, AnimalSize.SMALL)
@@ -142,7 +142,7 @@ class FilterViewModelTest {
     @Test
     fun checkBreed_buttonNotChecked_setBreedToEmpty() {
         subject.selectedBreed.set("Calico")
-        val button = mock(ToggleButton::class.java)
+        val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(false)
 
         subject.checkBreed(button, "Ragdoll")
@@ -153,7 +153,7 @@ class FilterViewModelTest {
     @Test
     fun checkBreed_buttonChecked_setBreedToButtonBreed() {
         subject.selectedBreed.set("Calico")
-        val button = mock(ToggleButton::class.java)
+        val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(true)
 
         subject.checkBreed(button, "Ragdoll")
@@ -163,9 +163,9 @@ class FilterViewModelTest {
 
     @Test
     fun saveFilter_finishesScreen() {
-        subject.saveFilter(mock(View::class.java))
+        subject.saveFilter(mock())
 
-        verify(eventBus).send(ActivityEvent(subject, null, true))
+        verify(eventBus) += ActivityEvent(subject, null, true)
     }
 
     @Test
@@ -177,7 +177,7 @@ class FilterViewModelTest {
             selectedBreed.set("Calico")
         }
 
-        subject.saveFilter(mock(View::class.java))
+        subject.saveFilter(mock())
 
         verify(filterRepository).insertFilter(check {
             assertThat(it.sex).isEqualTo(Sex.MALE)
@@ -189,7 +189,7 @@ class FilterViewModelTest {
 
     @Test
     fun populateBreedList_noAnimalType_doNothing() {
-        whenever(dataStore[FilterAnimalTypeUseCase::class.java]).thenReturn(null)
+        whenever(dataStore[FilterAnimalTypeUseCase::class]).thenReturn(null)
 
         subject.updateBreedList()
 
@@ -305,6 +305,6 @@ class FilterViewModelTest {
     private fun setupDataStoreWithUseCase() {
         val useCase: FilterAnimalTypeUseCase = mock()
         whenever(useCase.animalType).thenReturn(AnimalType.CAT)
-        whenever(dataStore[FilterAnimalTypeUseCase::class.java]).thenReturn(useCase)
+        whenever(dataStore[FilterAnimalTypeUseCase::class]).thenReturn(useCase)
     }
 }

@@ -7,7 +7,9 @@ import tech.pauly.findapet.databinding.ItemAnimalListBinding
 class AnimalListItemViewHolder(private val binding: ItemAnimalListBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(viewModel: AnimalListItemViewModel) {
-        binding.viewModel = viewModel
-        binding.executePendingBindings()
+        binding.also {
+            it.viewModel = viewModel
+            it.executePendingBindings()
+        }
     }
 }

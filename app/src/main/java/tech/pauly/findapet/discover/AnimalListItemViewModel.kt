@@ -29,17 +29,18 @@ class AnimalListItemViewModel(private val animal: Animal,
     var distanceVisibility = ObservableBoolean(false)
 
     init {
-        name.set(animal.name)
-        age.set(resourceProvider.getString(animal.age.formattedName))
-        breeds.set(animal.formattedBreedList)
-
-        setPhoto(animal.media)
-        setDistance(animal.contact)
+        animal.also {
+            name.set(it.name)
+            age.set(resourceProvider.getString(it.age.formattedName))
+            breeds.set(it.formattedBreedList)
+            setPhoto(it.media)
+            setDistance(it.contact)
+        }
     }
 
     fun launchAnimalDetails() {
         dataStore += AnimalDetailsUseCase(animal)
-        eventBus.send(ActivityEvent(this, AnimalDetailsActivity::class.java, false))
+        eventBus += ActivityEvent(this, AnimalDetailsActivity::class, false)
     }
 
     private fun setDistance(contactInfo: Contact) {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearSmoothScroller
 import dagger.android.AndroidInjection
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.ActivityFilterBinding
 import tech.pauly.findapet.shared.BaseActivity
@@ -53,7 +54,7 @@ class FilterActivity : BaseActivity() {
     override fun registerViewEvents(): CompositeDisposable? {
         val viewEvents = CompositeDisposable()
 
-        viewEvents.add(eventBus.activity(FilterViewModel::class.java).subscribe(this::activityEvent))
+        viewEvents += eventBus.activity(FilterViewModel::class).subscribe(this::activityEvent)
 
         return viewEvents
     }

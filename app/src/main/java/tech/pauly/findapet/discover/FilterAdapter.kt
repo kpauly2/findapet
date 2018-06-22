@@ -40,10 +40,7 @@ internal constructor() : RecyclerView.Adapter<FilterBreedViewHolder>() {
     override fun onBindViewHolder(holder: FilterBreedViewHolder, position: Int) {
         viewModel?.let {
             when (position) {
-                0, 1 -> {
-                    holder.bind(it)
-                    return
-                }
+                0, 1 -> holder.bind(it)
                 else -> holder.bind(it, breedItems[position - 2])
             }
         }

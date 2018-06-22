@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 import dagger.android.AndroidInjection
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.ActivityMainBinding
 import tech.pauly.findapet.discover.FilterActivity
@@ -60,7 +61,7 @@ class MainActivity : BaseActivity() {
                 viewModel.currentAnimalType.get()?.let {
                     dataStore += FilterAnimalTypeUseCase(it)
                 }
-                activityEvent(ActivityEvent(this, FilterActivity::class.java, false))
+                activityEvent(ActivityEvent(this, FilterActivity::class, false))
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -70,13 +71,15 @@ class MainActivity : BaseActivity() {
     override fun registerViewEvents(): CompositeDisposable? {
         val viewEvents = CompositeDisposable()
 
-        viewEvents.add(eventBus.fragment(MainViewModel::class.java).subscribe(this::fragmentEvent))
+        viewEvents += eventBus.fragment(MainViewModel::class).subscribe(this::fragmentEvent)
 
         return viewEvents
     }
 
     private fun subscribeToDrawerChange() {
-        viewModel.drawerSubject.subscribe({ binding.drawerLayout.closeDrawers() }, Throwable::printStackTrace).onLifecycle()
+        viewModel.drawerSubject
+                .subscribe({ binding.drawerLayout.closeDrawers() }, Throwable::printStackTrace)
+                .onLifecycle()
     }
 
     private fun subscribeToExpandingLayoutChange() {

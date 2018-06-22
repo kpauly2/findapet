@@ -10,6 +10,8 @@ import android.widget.TextView
 import tech.pauly.findapet.R
 import java.util.*
 
+data class Chip(val text: String)
+
 class FilterChipListLayout : LinearLayout {
 
     private var locationChip: Chip? = null
@@ -49,5 +51,3 @@ class FilterChipListLayout : LinearLayout {
         }
     }
 }
-
-data class Chip(val text: String)

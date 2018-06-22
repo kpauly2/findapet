@@ -55,7 +55,7 @@ internal constructor(private val filterRepository: FilterRepository,
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun updateBreedList() {
-        dataStore[FilterAnimalTypeUseCase::class.java]?.let {
+        dataStore[FilterAnimalTypeUseCase::class]?.let {
             breedRepository.getBreedList(it.animalType)
                     .subscribe(this::populateBreedList, Throwable::printStackTrace)
                     .onLifecycle()
@@ -91,11 +91,12 @@ internal constructor(private val filterRepository: FilterRepository,
     }
 
     fun saveFilter(v: View) {
-        val filter = Filter()
-        selectedSex.get()?.let {  filter.sex = it }
-        selectedAge.get()?.let {  filter.age = it }
-        selectedSize.get()?.let {  filter.size = it }
-        selectedBreed.get()?.let {  filter.breed = it }
+        val filter = Filter().apply {
+            selectedSex.get()?.let { sex = it }
+            selectedAge.get()?.let { age = it }
+            selectedSize.get()?.let { size = it }
+            selectedBreed.get()?.let { breed = it }
+        }
         filterRepository.insertFilter(filter)
                 .subscribe(this::finish, Throwable::printStackTrace)
                 .onLifecycle()
@@ -103,14 +104,16 @@ internal constructor(private val filterRepository: FilterRepository,
 
     private fun finish() {
         dataStore += FilterUpdatedUseCase()
-        eventBus.send(ActivityEvent(this, null, true))
+        eventBus += ActivityEvent(this, null, true)
     }
 
     private fun populateScreenForFilter(filter: Filter) {
-        selectedSex.set(filter.sex)
-        selectedAge.set(filter.age)
-        selectedSize.set(filter.size)
-        selectedBreed.set(filter.breed)
+        filter.apply {
+            selectedSex.set(sex)
+            selectedAge.set(age)
+            selectedSize.set(size)
+            selectedBreed.set(breed)
+        }
     }
 
     private fun populateBreedList(response: BreedListResponse) {

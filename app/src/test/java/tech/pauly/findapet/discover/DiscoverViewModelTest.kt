@@ -62,7 +62,7 @@ class DiscoverViewModelTest {
         val useCase: DiscoverAnimalTypeUseCase = mock {
             on { animalType }.thenReturn(AnimalType.CAT)
         }
-        whenever(dataStore[DiscoverAnimalTypeUseCase::class.java]).thenReturn(useCase)
+        whenever(dataStore[DiscoverAnimalTypeUseCase::class]).thenReturn(useCase)
         whenever(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(true)
         whenever(animalRepository.fetchAnimals(any())).thenReturn(Observable.just(animalListResponse))
         val address: Address = mock {
@@ -76,7 +76,7 @@ class DiscoverViewModelTest {
             whenever(it.filter).thenReturn(filter)
         }
         whenever(filterRepository.currentFilterAndNoFilterIfEmpty).thenReturn(Single.just(filter))
-        whenever(dataStore[FilterUpdatedUseCase::class.java]).thenReturn(null)
+        whenever(dataStore[FilterUpdatedUseCase::class]).thenReturn(null)
 
         subject = DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus, locationHelper, resourceProvider, filterRepository)
     }
@@ -92,7 +92,7 @@ class DiscoverViewModelTest {
     fun onResume_notFirstLoadButFilterUpdated_loadList() {
         subject.onResume()
         clearInvocations<AnimalRepository>(animalRepository)
-        whenever(dataStore[FilterUpdatedUseCase::class.java]).thenReturn(mock(FilterUpdatedUseCase::class.java))
+        whenever(dataStore[FilterUpdatedUseCase::class]).thenReturn(mock())
 
         subject.onResume()
 
@@ -115,10 +115,10 @@ class DiscoverViewModelTest {
 
         subject.requestPermissionToLoad()
 
-        verify(eventBus).send(check {
+        verify(eventBus) += check {
             assertThat((it as PermissionEvent).requestCode).isEqualTo(100)
             assertThat(it.permissions[0]).isEqualTo(ACCESS_FINE_LOCATION)
-        })
+        }
     }
 
     @Test
@@ -152,7 +152,7 @@ class DiscoverViewModelTest {
     fun requestPermissionToLoad_getCurrentLocationASecondTime_resetsLocationChip() {
         whenever(animalRepository.fetchAnimals(any())).thenReturn(Observable.never())
         subject.requestPermissionToLoad()
-        val newAddress = mock(Address::class.java)
+        val newAddress: Address = mock()
         whenever(newAddress.postalCode).thenReturn("zipcode2")
         whenever(locationHelper.fetchCurrentLocation()).thenReturn(Observable.just(newAddress))
 
@@ -237,7 +237,7 @@ class DiscoverViewModelTest {
 
     @Test
     fun loadMoreAnimals_fetchAnimalsAtCurrentOffsetFetchesLocation() {
-        val animal = mock(Animal::class.java)
+        val animal: Animal = mock()
         whenever(animalListResponse.lastOffset).thenReturn(10)
         whenever(animalListResponse.animalList).thenReturn(listOf(animal))
         subject.requestPermissionToLoad()

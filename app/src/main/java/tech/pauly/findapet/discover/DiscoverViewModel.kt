@@ -61,15 +61,14 @@ constructor(val listAdapter: AnimalListAdapter,
                 .doOnNext(this::addLocationChip)
 
     init {
-        dataStore[DiscoverAnimalTypeUseCase::class.java]?.let {
+        dataStore[DiscoverAnimalTypeUseCase::class]?.let {
             animalType = it.animalType
         }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
-        val useCase = dataStore[FilterUpdatedUseCase::class.java]
-        if (firstLoad || useCase != null) {
+        if (firstLoad || dataStore[FilterUpdatedUseCase::class] != null) {
             firstLoad = false
             requestPermissionToLoad()
         }
@@ -79,10 +78,10 @@ constructor(val listAdapter: AnimalListAdapter,
         if (permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)) {
             loadList()
         } else {
-            eventBus.send(PermissionEvent(this,
+            eventBus += PermissionEvent(this,
                     arrayOf(ACCESS_FINE_LOCATION),
                     locationPermissionResponseListener(),
-                    100))
+                    100)
         }
     }
 
@@ -111,20 +110,19 @@ constructor(val listAdapter: AnimalListAdapter,
     }
 
     private fun addFilterChips(filter: Filter) {
-        if (filter.sex !== Sex.MISSING) {
-            chipList.add(Chip(resourceProvider.getString(filter.sex.formattedName)))
-        }
-
-        if (filter.age !== Age.MISSING) {
-            chipList.add(Chip(resourceProvider.getString(filter.age.formattedName)))
-        }
-
-        if (filter.size !== AnimalSize.MISSING) {
-            chipList.add(Chip(resourceProvider.getString(filter.size.formattedName)))
-        }
-
-        if (filter.breed != "") {
-            chipList.add(Chip(filter.breed))
+        filter.apply {
+            if (sex !== Sex.MISSING) {
+                chipList.add(Chip(resourceProvider.getString(sex.formattedName)))
+            }
+            if (age !== Age.MISSING) {
+                chipList.add(Chip(resourceProvider.getString(age.formattedName)))
+            }
+            if (size !== AnimalSize.MISSING) {
+                chipList.add(Chip(resourceProvider.getString(size.formattedName)))
+            }
+            if (breed != "") {
+                chipList.add(Chip(filter.breed))
+            }
         }
     }
 

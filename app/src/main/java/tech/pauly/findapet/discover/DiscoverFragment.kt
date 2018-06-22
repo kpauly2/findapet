@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.AndroidSupportInjection
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.FragmentDiscoverBinding
 import tech.pauly.findapet.shared.BaseFragment
@@ -37,8 +38,8 @@ class DiscoverFragment : BaseFragment() {
     override fun registerViewEvents(): CompositeDisposable? {
         val viewEvents = CompositeDisposable()
 
-        viewEvents.add(eventBus.activity(AnimalListItemViewModel::class.java).subscribe(this::activityEvent))
-        viewEvents.add(eventBus.permission(DiscoverViewModel::class.java).subscribe(this::permissionEvent))
+        viewEvents += eventBus.activity(AnimalListItemViewModel::class).subscribe(this::activityEvent)
+        viewEvents += eventBus.permission(DiscoverViewModel::class).subscribe(this::permissionEvent)
 
         return viewEvents
     }

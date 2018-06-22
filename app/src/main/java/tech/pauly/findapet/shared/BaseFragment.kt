@@ -33,7 +33,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun activityEvent(event: ActivityEvent) {
-        startActivity(Intent(context, event.startActivity))
+        startActivity(Intent(context, event.startActivity?.java))
     }
 
     fun permissionEvent(permissionEvent: PermissionEvent) {

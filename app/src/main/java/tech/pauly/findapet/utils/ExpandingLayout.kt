@@ -44,8 +44,8 @@ class ExpandingLayout : LinearLayout {
     }
 
     private fun setup(context: Context, attrs: AttributeSet?) {
-        if (attrs != null) {
-            val a = context.obtainStyledAttributes(attrs, R.styleable.ExpandingLayout)
+        attrs?.apply {
+            val a = context.obtainStyledAttributes(this, R.styleable.ExpandingLayout)
             try {
                 duration = a.getInt(R.styleable.ExpandingLayout_duration, DEFAULT_DURATION).toLong()
             } finally {

@@ -154,7 +154,7 @@ class AnimalListItemViewModelTest {
 
         subject.launchAnimalDetails()
 
-        verify(eventBus).send(ActivityEvent(subject, AnimalDetailsActivity::class.java, false))
+        verify(eventBus) += ActivityEvent(subject, AnimalDetailsActivity::class, false)
     }
 
     private fun createSubject() {

@@ -21,6 +21,7 @@ import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.FragmentEvent
 import tech.pauly.findapet.shared.events.ViewEventBus
 import tech.pauly.findapet.shelters.SheltersFragment
+import kotlin.reflect.KClass
 
 private const val NO_SELECTION = 0
 
@@ -48,8 +49,9 @@ constructor(private val eventBus: ViewEventBus,
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun subscribeToDataStore() {
-        dataStore.observeAndGetUseCase(DiscoverToolbarTitleUseCase::class.java)
-                .subscribe({ useCase -> toolbarTitle.set(useCase.title) }, Throwable::printStackTrace).onLifecycle()
+        dataStore.observeAndGetUseCase(DiscoverToolbarTitleUseCase::class)
+                .subscribe({ useCase -> toolbarTitle.set(useCase.title) }, Throwable::printStackTrace)
+                .onLifecycle()
         if (firstLaunch) {
             clickAnimalType(AnimalType.CAT)
             firstLaunch = false
@@ -63,15 +65,15 @@ constructor(private val eventBus: ViewEventBus,
     }
 
     fun clickShelters(view: View) {
-        clickStandardButton(view, SheltersFragment::class.java)
+        clickStandardButton(view, SheltersFragment::class)
     }
 
     fun clickFavorites(view: View) {
-        clickStandardButton(view, FavoritesFragment::class.java)
+        clickStandardButton(view, FavoritesFragment::class)
     }
 
     fun clickSettings(view: View) {
-        clickStandardButton(view, SettingsFragment::class.java)
+        clickStandardButton(view, SettingsFragment::class)
     }
 
     fun clickAnimalType(type: AnimalType) {
@@ -79,10 +81,10 @@ constructor(private val eventBus: ViewEventBus,
         currentButton.set(NO_SELECTION)
 
         dataStore += DiscoverAnimalTypeUseCase(type)
-        launchFragment(DiscoverFragment::class.java)
+        launchFragment(DiscoverFragment::class)
     }
 
-    private fun clickStandardButton(view: View, fragmentClass: Class<*>) {
+    private fun clickStandardButton(view: View, fragmentClass: KClass<*>) {
         val button = view as ToggleButton
         if (!button.isChecked) {
             button.isChecked = true
@@ -94,8 +96,8 @@ constructor(private val eventBus: ViewEventBus,
         currentAnimalType.set(null)
     }
 
-    private fun launchFragment(clazz: Class<*>) {
-        eventBus.send(FragmentEvent(this, clazz, R.id.fragment_content))
+    private fun launchFragment(clazz: KClass<*>) {
+        eventBus += FragmentEvent(this, clazz, R.id.fragment_content)
         drawerSubject.onNext(true)
     }
 }

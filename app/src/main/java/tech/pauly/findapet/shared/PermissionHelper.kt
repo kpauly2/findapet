@@ -29,7 +29,6 @@ constructor(@param:ForApplication private val context: Context) {
             permissionEvent.listener.onPermissionResult(PermissionRequestResponse(permission, result))
         }
         requestMap.remove(requestCode)
-
     }
 
     open fun hasPermissions(vararg permissions: String): Boolean {

@@ -151,7 +151,7 @@ class AnimalDetailsViewModelTest {
     }
 
     private fun createSubjectWithUseCase(useCase: AnimalDetailsUseCase?) {
-        whenever(dataStore[AnimalDetailsUseCase::class.java]).thenReturn(useCase)
+        whenever(dataStore[AnimalDetailsUseCase::class]).thenReturn(useCase)
         whenever(resourceProvider.getString(R.string.altered)).thenReturn("Altered")
         whenever(resourceProvider.getString(R.string.house_broken)).thenReturn("House Broken")
         whenever(resourceProvider.getString(Age.ADULT.formattedName)).thenReturn("Adult")

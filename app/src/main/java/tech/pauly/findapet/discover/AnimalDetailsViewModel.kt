@@ -35,7 +35,7 @@ internal constructor(dataStore: TransientDataStore,
     init {
         this.detailsPagerAdapter.setViewModel(this)
 
-        dataStore[AnimalDetailsUseCase::class.java]?.let {
+        dataStore[AnimalDetailsUseCase::class]?.let {
             val animal = it.animal
             name.set(animal.name)
             sex.set(animal.sex.formattedName)
