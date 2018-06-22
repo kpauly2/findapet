@@ -6,7 +6,7 @@ import java.util.*
 open class PermissionEvent(private val emitter: Any,
                            open val permissions: Array<String>,
                            open val listener: PermissionListener,
-                           open val requestCode: Int) : BaseViewEvent(emitter.javaClass) {
+                           open val requestCode: Int) : BaseViewEvent(emitter::class) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

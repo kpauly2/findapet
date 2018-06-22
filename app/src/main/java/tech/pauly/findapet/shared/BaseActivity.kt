@@ -20,7 +20,7 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        permissionHelper = PetApplication.getComponent().permissionHelper()
+        permissionHelper = PetApplication.component.permissionHelper()
     }
 
     public override fun onResume() {
@@ -39,7 +39,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun fragmentEvent(event: FragmentEvent) {
-        val newFragment = Fragment.instantiate(this, event.fragment.name)
+        val newFragment = Fragment.instantiate(this, event.fragment.qualifiedName)
         supportFragmentManager.beginTransaction()
                 .replace(event.container, newFragment)
                 .commit()
@@ -56,8 +56,8 @@ open class BaseActivity : AppCompatActivity() {
     protected fun activityEvent(event: ActivityEvent) {
         if (event.finishActivity) {
             finish()
-        } else {
-            startActivity(Intent(this, event.startActivity))
+        } else if (event.startActivity != null) {
+            startActivity(Intent(this, event.startActivity?.java))
         }
     }
 
@@ -70,5 +70,9 @@ open class BaseActivity : AppCompatActivity() {
             clear()
             registerViewEvents()?.let { add(it) }
         }
+    }
+
+    protected fun Disposable.onLifecycle() {
+        lifecycleSubscriptions.add(this)
     }
 }

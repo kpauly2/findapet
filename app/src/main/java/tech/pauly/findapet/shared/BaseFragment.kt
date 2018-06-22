@@ -15,7 +15,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        permissionHelper = PetApplication.getComponent().permissionHelper()
+        permissionHelper = PetApplication.component.permissionHelper()
     }
 
     override fun onResume() {
@@ -33,7 +33,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun activityEvent(event: ActivityEvent) {
-        startActivity(Intent(context, event.startActivity))
+        startActivity(Intent(context, event.startActivity?.java))
     }
 
     fun permissionEvent(permissionEvent: PermissionEvent) {

@@ -92,13 +92,6 @@ class AnimalDetailsViewModelTest {
     }
 
     @Test
-    fun onCreate_animalHasMultipleBreeds_setsAllBreeds() {
-        createSubjectWithUseCase(setupFullAnimalUseCase())
-
-        assertThat(subject.breeds.get()).isEqualTo("breed1 / breed2")
-    }
-
-    @Test
     fun onCreate_animalHasNoOptions_optionsNotVisible() {
         val useCase = setupFullAnimalUseCase()
         whenever(useCase.animal.options).thenReturn(emptyList())
@@ -147,7 +140,7 @@ class AnimalDetailsViewModelTest {
             on { age }.thenReturn(Age.ADULT)
             on { description }.thenReturn("")
             on { this.media }.thenReturn(media)
-            on { breedList }.thenReturn(Arrays.asList("breed1", "breed2"))
+            on { formattedBreedList }.thenReturn("breeds")
             on { options }.thenReturn(Arrays.asList(Option.ALTERED, Option.HOUSE_BROKEN))
             on { description }.thenReturn("description")
         }
@@ -158,7 +151,7 @@ class AnimalDetailsViewModelTest {
     }
 
     private fun createSubjectWithUseCase(useCase: AnimalDetailsUseCase?) {
-        whenever(dataStore[AnimalDetailsUseCase::class.java]).thenReturn(useCase)
+        whenever(dataStore[AnimalDetailsUseCase::class]).thenReturn(useCase)
         whenever(resourceProvider.getString(R.string.altered)).thenReturn("Altered")
         whenever(resourceProvider.getString(R.string.house_broken)).thenReturn("House Broken")
         whenever(resourceProvider.getString(Age.ADULT.formattedName)).thenReturn("Adult")

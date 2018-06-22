@@ -1,10 +1,11 @@
 package tech.pauly.findapet.shared.events
 
 import android.support.annotation.IdRes
+import kotlin.reflect.KClass
 
 open class FragmentEvent(private val emitter: Any,
-                         open val fragment: Class<*>,
-                         @IdRes open val container: Int) : BaseViewEvent(emitter.javaClass) {
+                         open val fragment: KClass<*>,
+                         @IdRes open val container: Int) : BaseViewEvent(emitter::class) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

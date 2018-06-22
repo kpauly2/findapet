@@ -7,7 +7,7 @@ import org.simpleframework.xml.Root;
 
 import java.util.List;
 
-@Root(name = "media")
+@Root(name = "media", strict = false)
 public class Media {
 
     @ElementList(name = "photos", entry = "photo", required = false)

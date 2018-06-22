@@ -6,6 +6,7 @@ import android.support.v4.app.SupportActivity
 import android.support.v4.content.ContextCompat
 import tech.pauly.findapet.dependencyinjection.ForApplication
 import tech.pauly.findapet.shared.events.PermissionEvent
+import tech.pauly.findapet.utils.BindingAdapters
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton

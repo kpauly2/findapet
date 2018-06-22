@@ -35,15 +35,15 @@ internal constructor(dataStore: TransientDataStore,
     init {
         this.detailsPagerAdapter.setViewModel(this)
 
-        dataStore[AnimalDetailsUseCase::class.java]?.let {
+        dataStore[AnimalDetailsUseCase::class]?.let {
             val animal = it.animal
             name.set(animal.name)
             sex.set(animal.sex.formattedName)
             size.set(animal.size.formattedName)
             age.set(animal.age.formattedName)
+            breeds.set(animal.formattedBreedList)
 
             setPhotos(animal.media)
-            setBreeds(animal.breedList)
             setOptions(animal.options)
             setDescription(animal.description)
         }
@@ -67,10 +67,6 @@ internal constructor(dataStore: TransientDataStore,
                 resourceProvider.getString(it.formattedName)
             })
         }
-    }
-
-    private fun setBreeds(breedList: List<String>) {
-        this.breeds.set(breedList.joinToString(" / "))
     }
 
     private fun setPhotos(media: Media?) {

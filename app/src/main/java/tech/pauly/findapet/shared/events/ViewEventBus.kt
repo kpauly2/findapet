@@ -1,13 +1,11 @@
 package tech.pauly.findapet.shared.events
 
-import android.support.annotation.IdRes
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import tech.pauly.findapet.shared.BaseFragment
-import tech.pauly.findapet.shared.PermissionRequestResponse
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.reflect.KClass
 
 /**
  * A Singleton class to manage events that the Presentation layer needs the View layer to handle.
@@ -29,28 +27,28 @@ open class ViewEventBus @Inject constructor() {
 
     private val bus = PublishSubject.create<BaseViewEvent>()
 
-    open fun send(event: BaseViewEvent) {
+    open operator fun plusAssign(event: BaseViewEvent) {
         bus.onNext(event)
     }
 
-    open fun activity(emitterClass: Class<*>): Observable<ActivityEvent> {
+    open fun activity(emitterClass: KClass<*>): Observable<ActivityEvent> {
         return bus.filter { event -> event is ActivityEvent && event.fromEmitter(emitterClass) }
                 .map { event -> event as ActivityEvent }
     }
 
-    open fun fragment(emitterClass: Class<*>): Observable<FragmentEvent> {
+    open fun fragment(emitterClass: KClass<*>): Observable<FragmentEvent> {
         return bus.filter { event -> event is FragmentEvent && event.fromEmitter(emitterClass) }
                 .map { event -> event as FragmentEvent }
     }
 
-    open fun permission(emitterClass: Class<*>): Observable<PermissionEvent> {
+    open fun permission(emitterClass: KClass<*>): Observable<PermissionEvent> {
         return bus.filter { event -> event is PermissionEvent && event.fromEmitter(emitterClass) }
                 .map { event -> event as PermissionEvent }
     }
 }
 
-open class BaseViewEvent(private val emitter: Class<*>) {
-    fun fromEmitter(clazz: Class<*>): Boolean {
-        return this.emitter.name == clazz.name
+open class BaseViewEvent(private val emitter: KClass<*>) {
+    fun fromEmitter(clazz: KClass<*>): Boolean {
+        return this.emitter.qualifiedName == clazz.qualifiedName
     }
 }
