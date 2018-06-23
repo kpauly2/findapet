@@ -16,7 +16,7 @@ internal constructor(private val database: FilterDatabase,
     internal var _currentFilter: Long? = null
     open val currentFilter
         get(): Single<Filter> {
-            _currentFilter?.also {
+            _currentFilter?.let {
                 return database.filterDao()
                         .findById(_currentFilter)
                         .compose(observableHelper.applySingleSchedulers())
@@ -29,7 +29,7 @@ internal constructor(private val database: FilterDatabase,
 
     open fun insertFilter(filter: Filter): Completable {
         return Single.fromCallable { database.filterDao().insert(filter) }
-                .map { id -> _currentFilter = id }
+                .map { _currentFilter = it }
                 .compose(observableHelper.applySingleSchedulers())
                 .ignoreElement()
     }

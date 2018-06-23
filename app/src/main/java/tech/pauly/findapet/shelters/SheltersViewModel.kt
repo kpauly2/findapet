@@ -3,10 +3,12 @@ package tech.pauly.findapet.shelters
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
 import android.location.Address
+import com.google.android.gms.maps.model.LatLng
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.ObservableHelper
+import tech.pauly.findapet.data.ShelterRepository
 import tech.pauly.findapet.shared.BaseViewModel
 import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.MapWrapper
@@ -18,7 +20,8 @@ class SheltersViewModel @Inject
 constructor(private val dataStore: TransientDataStore,
             private val locationHelper: LocationHelper,
             private val observableHelper: ObservableHelper,
-            private val mapWrapper: MapWrapper) : BaseViewModel() {
+            private val mapWrapper: MapWrapper,
+            private val shelterRepository: ShelterRepository) : BaseViewModel() {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun updateToolbarTitle() {
@@ -28,11 +31,20 @@ constructor(private val dataStore: TransientDataStore,
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchDataAndMoveMap() {
         Observable.zip(locationHelper.fetchCurrentLocation(), mapWrapper.mapReadyObservable,
-                BiFunction { location: Address, _: Boolean -> location })
+                BiFunction { showMyLocation: Address, _: Boolean -> showMyLocation })
                 .compose(observableHelper.applyObservableSchedulers())
+                .flatMap {
+                    val latLng = LatLng(it.latitude, it.longitude)
+                    mapWrapper.showMyLocation(latLng)
+                    mapWrapper.moveCamera(latLng, 13f)
+                    shelterRepository.fetchShelters(it.postalCode)
+                }
                 .subscribe({
-                    mapWrapper.addMarker(it.latitude, it.longitude)
-                    mapWrapper.moveCamera(it.latitude, it.longitude, 13f)
-                }, Throwable::printStackTrace).onLifecycle()
+                    it.shelterList
+                            ?.map { LatLng(it.latitude, it.longitude) }
+                            ?.also(mapWrapper::zoomToFitPoints)
+                            ?.forEach(mapWrapper::addShelterMarker)
+                }, Throwable::printStackTrace)
+                .onLifecycle()
     }
 }

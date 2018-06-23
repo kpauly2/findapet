@@ -58,7 +58,6 @@ class DiscoverViewModelTest {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
         val useCase: DiscoverAnimalTypeUseCase = mock {
             on { animalType }.thenReturn(AnimalType.CAT)
         }
