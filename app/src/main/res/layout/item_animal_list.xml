@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@{@string/age_breed(viewModel.age, viewModel.breeds)}"
-                android:textAppearance="@style/FontStrongBody"
+                android:textAppearance="@style/FontBody"
                 android:textColor="@color/purpleStandard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
