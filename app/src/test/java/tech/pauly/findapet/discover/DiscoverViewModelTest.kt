@@ -12,7 +12,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.*
-import org.mockito.MockitoAnnotations
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.AnimalRepository
 import tech.pauly.findapet.data.FilterRepository
@@ -29,7 +28,7 @@ import tech.pauly.findapet.shared.events.OptionsMenuEvent
 import tech.pauly.findapet.shared.events.OptionsMenuState
 import tech.pauly.findapet.shared.events.PermissionEvent
 import tech.pauly.findapet.shared.events.ViewEventBus
-import java.util.ArrayList
+import java.util.*
 
 class DiscoverViewModelTest {
 

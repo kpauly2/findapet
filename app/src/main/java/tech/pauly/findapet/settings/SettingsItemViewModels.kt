@@ -35,7 +35,6 @@ open class SettingsTitleViewModel(val title: Int) : SettingsItemViewModel() {
 
 sealed class SettingsBasicViewModel(open val text: Int) : SettingsItemViewModel() {
     abstract fun onClick(v: View)
-
 }
 
 open class SettingsLinkOutViewModel(override val text: Int,

@@ -3,6 +3,7 @@ package tech.pauly.findapet.settings
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
 import tech.pauly.findapet.R
+import tech.pauly.findapet.data.SettingsEndpoints
 import tech.pauly.findapet.shared.BaseViewModel
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
@@ -26,7 +27,7 @@ internal constructor(private val dataStore: TransientDataStore,
     fun populateAdapterItems() {
         adapter.viewModels = arrayListOf(
                 SettingsTitleViewModel(R.string.about),
-                SettingsLinkOutViewModel(R.string.app_name, "https://github.com/kpauly2-ford/findapet", eventBus),
-                SettingsLinkOutViewModel(R.string.made_by, "https://www.pauly.tech", eventBus))
+                SettingsLinkOutViewModel(R.string.app_name, SettingsEndpoints.sourceCodeEndpoint, eventBus),
+                SettingsLinkOutViewModel(R.string.made_by, SettingsEndpoints.personalSiteEndpoint, eventBus))
     }
 }
