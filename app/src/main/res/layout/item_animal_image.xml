@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:background="@color/purpleVeryLight"
             android:contentDescription="@string/descriptor_pet_image"
+            app:cornerRadius="@{0}"
             app:imageUrl="@{viewModel.imageUrl}" />
-
     </FrameLayout>
 </layout>

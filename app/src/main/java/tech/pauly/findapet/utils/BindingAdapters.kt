@@ -1,6 +1,7 @@
 package tech.pauly.findapet.utils
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.databinding.BindingAdapter
 import android.net.Uri
 import android.support.annotation.IdRes
@@ -20,7 +21,6 @@ import tech.pauly.findapet.R
 
 object BindingAdapters {
     var recyclerItemWidth: Int = 0
-        get() = field
 }
 
 @BindingAdapter(value = ["navigationItemSelectedListener", "defaultSelectedItem"])
@@ -31,12 +31,12 @@ fun setupBottomNavigationView(bottomNavigationView: BottomNavigationView,
     bottomNavigationView.selectedItemId = selectedItemResId
 }
 
-@BindingAdapter("imageUrl")
-fun loadImageIntoView(view: ImageView, url: String?) {
+@BindingAdapter(value = ["imageUrl", "cornerRadius"])
+fun loadImageIntoView(view: ImageView, url: String?, cornerRadius: Int) {
     if (url == null) {
         return
     }
-    val transformation = RoundedCornersTransformation(10, 0)
+    val transformation = RoundedCornersTransformation(view.context.dp2px(cornerRadius.toFloat()), 0)
     Picasso.with(view.context)
             .load(Uri.parse(url))
             .error(R.drawable.shape_animal_image)
@@ -172,4 +172,9 @@ interface SwipeRefreshListener {
 @FunctionalInterface
 interface TouchListener {
     fun onTouch()
+}
+
+fun Context.dp2px(dp: Float): Int {
+    val scale = resources.displayMetrics.density
+    return (dp * scale + 0.5f).toInt()
 }

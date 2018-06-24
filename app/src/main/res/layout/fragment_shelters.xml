@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/standard_margin"
                 android:layout_marginEnd="@dimen/standard_margin"
-                android:layout_marginTop="@dimen/half_margin"
+                android:layout_marginTop="@dimen/standard_margin"
                 android:text="@{viewModel.selectedShelterName}"
                 android:textAppearance="@style/FontLargeHeader"
                 android:textColor="@color/textDark"
