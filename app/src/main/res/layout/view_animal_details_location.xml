@@ -16,7 +16,7 @@
         android:id="@+id/animal_item_layout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@android:color/white"
+        android:background="@color/white"
         android:paddingEnd="@dimen/standard_margin"
         android:paddingStart="@dimen/standard_margin">
 
