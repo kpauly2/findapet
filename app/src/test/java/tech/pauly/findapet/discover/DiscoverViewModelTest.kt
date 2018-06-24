@@ -132,6 +132,7 @@ class DiscoverViewModelTest {
             assertThat(it.animalType).isEqualTo(AnimalType.CAT)
             assertThat(it.lastOffset).isEqualTo(0)
         })
+        verify(dataStore) += DiscoverErrorUseCase(null)
         verify(listAdapter).clearAnimalItems()
         assertThat(subject.refreshing.get()).isTrue()
     }
@@ -211,7 +212,7 @@ class DiscoverViewModelTest {
     }
 
     @Test
-    fun requestPermissionToLoad_fetchAnimalsOnNext_sendAnimalListToAdapterAndStopsRefreshingAndAnimalsNotMissing() {
+    fun requestPermissionToLoad_fetchAnimalsOnNext_sendAnimalListToAdapterAndStopsRefreshingAndNoErrors() {
         val animal: Animal = mock()
         whenever(animalListResponse.animalList).thenReturn(listOf(animal))
 
@@ -219,19 +220,17 @@ class DiscoverViewModelTest {
 
         verify(animalListItemFactory).newInstance(animal)
         assertThat(subject.refreshing.get()).isFalse()
-        assertThat(subject.animalsMissing.get()).isFalse()
-        assertThat(subject.errorVisible).isFalse()
+        verify(dataStore, times(2)) += DiscoverErrorUseCase(null)
     }
 
     @Test
-    fun requestPermissionToLoad_fetchAnimalsOnErrorAndErrorIsNoAnimals_setsAnimalsMissing() {
+    fun requestPermissionToLoad_fetchAnimalsOnError_sendsErrorToDataStore() {
         whenever(animalRepository.fetchAnimals(any())).thenReturn(Observable.error(PetfinderException(StatusCode.ERR_NO_ANIMALS)))
 
         subject.requestPermissionToLoad()
 
         assertThat(subject.refreshing.get()).isFalse()
-        assertThat(subject.animalsMissing.get()).isTrue()
-        assertThat(subject.errorVisible).isTrue()
+        verify(dataStore) += DiscoverErrorUseCase(StatusCode.ERR_NO_ANIMALS)
     }
 
     @Test

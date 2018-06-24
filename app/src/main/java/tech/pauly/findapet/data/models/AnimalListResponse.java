@@ -29,4 +29,8 @@ public class AnimalListResponse {
     public int getLastOffset() {
         return lastOffset;
     }
+
+    public Header getHeader() {
+        return header;
+    }
 }

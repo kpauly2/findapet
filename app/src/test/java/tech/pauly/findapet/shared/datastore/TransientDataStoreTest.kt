@@ -94,6 +94,18 @@ class TransientDataStoreTest {
     }
 
     @Test
+    fun useCaseSaved_observeUseCase_returnsClassOfLastUseCaseSaved() {
+        val observer = TestObserver<KClass<*>>()
+        val useCase = TestUseCase()
+
+        subject += useCase
+        subject.observeUseCase(TestUseCase::class).subscribe(observer)
+
+        observer.assertValue(TestUseCase::class)
+                .assertNotComplete()
+    }
+
+    @Test
     fun observeUseCase_differentUseCaseSaved_fireNoEvent() {
         val observer = TestObserver<KClass<*>>()
         val useCase = TestUseCase()

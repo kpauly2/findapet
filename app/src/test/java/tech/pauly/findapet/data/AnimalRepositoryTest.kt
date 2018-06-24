@@ -13,12 +13,14 @@ class AnimalRepositoryTest {
     private val observableHelper: ObservableHelper = mock()
 
     private var animalListResponse: AnimalListResponse = mock()
+    private var header: Header = mock()
     private lateinit var subject: AnimalRepository
 
     @Before
     fun setup() {
         whenever(animalService.fetchAnimals(any(), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(Single.just(animalListResponse))
         whenever(observableHelper.applySingleSchedulers<Any>()).thenReturn(SingleTransformer { it })
+        whenever(animalListResponse.header).thenReturn(header)
 
         subject = AnimalRepository(animalService, observableHelper)
     }
@@ -41,6 +43,34 @@ class AnimalRepositoryTest {
                 eq("Calico"))
         observer.assertValues(animalListResponse).assertComplete()
         verify(observableHelper).applySingleSchedulers<Any>()
+    }
+
+    @Test
+    fun fetchAnimals_statusCodeOK_returnsOnNext() {
+        val request = setupFilterRequest()
+        whenever(animalListResponse.animalList).thenReturn(listOf(mock()))
+        val status: Status = mock {
+            on { code }.thenReturn(StatusCode.PFAPI_OK)
+        }
+        whenever(header.status).thenReturn(status)
+
+        val observer = subject.fetchAnimals(request).test()
+
+        observer.assertValues(animalListResponse).assertComplete()
+    }
+
+    @Test
+    fun fetchAnimals_statusCodeNotOK_returnsPetfinderExceptionForStatusCode() {
+        val request = setupFilterRequest()
+        whenever(animalListResponse.animalList).thenReturn(listOf(mock()))
+        val status: Status = mock {
+            on { code }.thenReturn(StatusCode.PFAPI_ERR_INTERNAL)
+        }
+        whenever(header.status).thenReturn(status)
+
+        val observer = subject.fetchAnimals(request).test()
+
+        observer.assertError(PetfinderException(StatusCode.PFAPI_ERR_INTERNAL))
     }
 
     @Test

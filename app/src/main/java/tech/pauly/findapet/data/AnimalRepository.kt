@@ -28,6 +28,9 @@ constructor(private val animalService: AnimalService,
                 filter.size.serverName,
                 filter.breed)
                 .map {
+                    it.header.status?.code?.let {
+                        if (it != StatusCode.PFAPI_OK) throw PetfinderException(it)
+                    }
                     if (it.animalList == null || it.animalList?.size == 0) {
                         throw PetfinderException(StatusCode.ERR_NO_ANIMALS)
                     }

@@ -21,6 +21,9 @@ class DiscoverFragment : BaseFragment() {
     lateinit var viewModel: DiscoverViewModel
 
     @Inject
+    lateinit var errorViewModel: DiscoverErrorViewModel
+
+    @Inject
     lateinit var eventBus: ViewEventBus
 
     override fun onAttach(context: Context?) {
@@ -31,7 +34,9 @@ class DiscoverFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentDiscoverBinding>(inflater, R.layout.fragment_discover, container, false)
         binding.viewModel = viewModel
+        binding.errorViewModel = errorViewModel
         lifecycle.addObserver(viewModel)
+        lifecycle.addObserver(errorViewModel)
         return binding.root
     }
 

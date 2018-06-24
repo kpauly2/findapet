@@ -11,7 +11,9 @@ enum class StatusCode(private val code: Int) {
     PFAPI_ERR_AUTHFAIL(301),
     PFAPI_ERR_INTERNAL(999),
     ERR_LOCAL(1000),
-    ERR_NO_ANIMALS(1001);
+    ERR_NO_ANIMALS(1001),
+    ERR_NO_LOCATION(1002),
+    ERR_FETCH_LOCATION(1002);
 
     companion object {
         fun fromInt(code: Int): StatusCode {

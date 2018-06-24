@@ -38,17 +38,12 @@ constructor(val listAdapter: AnimalListAdapter,
 
     var columnCount = ObservableInt(2)
     var refreshing = ObservableBoolean(false)
-    var locationMissing = ObservableBoolean(false)
-    var animalsMissing = ObservableBoolean(false)
     var chipList: ObservableList<Chip> = ObservableArrayList()
     var locationChip = ObservableField<Chip>()
 
     private var animalType = AnimalType.CAT
     private var lastOffset = 0
     private var firstLoad = true
-
-    val errorVisible: Boolean
-        get() = locationMissing.get() || animalsMissing.get()
 
     private val currentFilter: Observable<Filter>
         get() = filterRepository.currentFilterAndNoFilterIfEmpty
@@ -98,6 +93,7 @@ constructor(val listAdapter: AnimalListAdapter,
 
     private fun fetchAnimals() {
         refreshing.set(true)
+        dataStore += DiscoverErrorUseCase(null)
         Observable.zip<Address, Filter, FetchAnimalsRequest>(currentLocation,
                 currentFilter, BiFunction { location, filter -> FetchAnimalsRequest(animalType, lastOffset, location.postalCode, filter) })
                 .flatMap(animalRepository::fetchAnimals)
@@ -137,20 +133,14 @@ constructor(val listAdapter: AnimalListAdapter,
     private fun showError(throwable: Throwable) {
         refreshing.set(false)
         if (throwable is PetfinderException) {
-            return when (throwable.statusCode) {
-                StatusCode.ERR_NO_ANIMALS -> {
-                    animalsMissing.set(true)
-                }
-                else -> {
-                }
-            }
+            dataStore += DiscoverErrorUseCase(throwable.statusCode)
         }
         throwable.printStackTrace()
     }
 
     private fun setAnimalList(animalListResponse: AnimalListResponse) {
         refreshing.set(false)
-        animalsMissing.set(false)
+        dataStore += DiscoverErrorUseCase(null)
         lastOffset = animalListResponse.lastOffset
         animalListResponse.animalList?.let { animalList ->
             listAdapter.animalItems = animalList.map { animalListItemFactory.newInstance(it) } as ArrayList<AnimalListItemViewModel>
@@ -162,10 +152,10 @@ constructor(val listAdapter: AnimalListAdapter,
             override fun onPermissionResult(response: PermissionRequestResponse) {
                 if (response.permission == ACCESS_FINE_LOCATION) {
                     if (response.isGranted) {
-                        locationMissing.set(false)
+                        dataStore += DiscoverErrorUseCase(null)
                         requestPermissionToLoad()
                     } else {
-                        locationMissing.set(true)
+                        dataStore += DiscoverErrorUseCase(StatusCode.ERR_NO_LOCATION)
                     }
                 }
             }

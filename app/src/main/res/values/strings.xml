@@ -47,7 +47,6 @@
     <string name="senior">Senior</string>
     <string name="drawer">Navigation Drawer</string>
     <string name="drawer_content">Navigation drawer content</string>
-    <string name="location_missing">Pick a location to start searching for pets</string>
     <string name="missing_location_arrow">missing location arrow</string>
     <string name="search">Search</string>
     <string name="filter_title">Filters</string>
@@ -60,7 +59,19 @@
     <string name="filter_breed_hint">Filter breed</string>
     <string name="breed_title">Breeds</string>
     <string name="breed_search_button">choose breed</string>
-    <string name="missing_animals_header">No Animals!</string>
-    <string name="missing_animals_body1">We couldn’t find any animals  that match your criteria</string>
-    <string name="missing_animals_body2">Try removing some filters or changing your location</string>
+    <string name="no_animals_title">No Animals!</string>
+    <string name="no_animals_body1">We couldn\'t find any animals that match your criteria</string>
+    <string name="no_animals_body2">Try removing some filters or changing your location</string>
+    <string name="no_location_title">Location Missing</string>
+    <string name="no_location_body1">We can\'t search for pets until you choose a location</string>
+    <string name="no_location_body2">set a location above to start searching for pets</string>
+    <string name="location_error_title">Location Error!</string>
+    <string name="location_error_body1">We had trouble finding your location</string>
+    <string name="location_error_body2">Try manually setting your location above instead</string>
+    <string name="backend_error_title">Sorry!</string>
+    <string name="backend_error_body1">Something went wrong with the Petfinder server</string>
+    <string name="backend_error_body2">Please try again later</string>
+    <string name="generic_error_title">Sorry!</string>
+    <string name="generic_error_body1">Something\'s messed up right now</string>
+    <string name="generic_error_body2">Please try again later</string>
 </resources>

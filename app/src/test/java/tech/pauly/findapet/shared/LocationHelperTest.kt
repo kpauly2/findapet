@@ -8,6 +8,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import tech.pauly.findapet.data.ObservableHelper
+import tech.pauly.findapet.data.PetfinderException
+import tech.pauly.findapet.data.models.StatusCode
+import java.io.IOException
 import java.util.*
 
 class LocationHelperTest {
@@ -52,6 +55,18 @@ class LocationHelperTest {
         val observable = subject.fetchCurrentLocation().test()
 
         observable.assertValue(address)
+    }
+
+    @Test
+    fun fetchCurrentLocation_fetchNewLocationThrowsError_fireLocationSubjectWithFetchError() {
+        whenever(locationWrapper.getAddressFromLocation(any())).thenThrow(IOException())
+        whenever(locationWrapper.fetchNewLocation(eq(Criteria.ACCURACY_FINE), any())).then {
+            subject.updateForNewLocation(mock())
+        }
+
+        val observable = subject.fetchCurrentLocation().test()
+
+        observable.assertError(PetfinderException(StatusCode.ERR_FETCH_LOCATION))
     }
 
     @Test
