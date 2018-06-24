@@ -30,6 +30,9 @@ internal constructor(private val dataStore: TransientDataStore,
                 SettingsLinkOutViewModel(R.string.app_name, SettingsEndpoints.sourceCode, eventBus),
                 SettingsLinkOutViewModel(R.string.made_by, SettingsEndpoints.personalSite, eventBus),
                 SettingsTitleViewModel(R.string.give_back),
-                SettingsEmailViewModel(R.string.feedback, eventBus))
+                SettingsEmailViewModel(R.string.feedback, eventBus),
+                SettingsTitleViewModel(R.string.references),
+                SettingsLinkOutViewModel(R.string.thanks, SettingsEndpoints.thanksAndReferences, eventBus),
+                SettingsLinkOutViewModel(R.string.licenses, SettingsEndpoints.licenses, eventBus))
     }
 }

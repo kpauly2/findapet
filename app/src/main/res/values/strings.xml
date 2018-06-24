@@ -79,4 +79,7 @@
     <string name="give_back">GIVE BACK</string>
     <string name="feedback">Send Feedback</string>
     <string name="email_choice">Send email</string>
+    <string name="references">REFERENCES</string>
+    <string name="thanks">Thanks and Attributions</string>
+    <string name="licenses">Licenses</string>
 </resources>

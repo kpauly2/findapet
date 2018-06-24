@@ -52,6 +52,27 @@ open class SettingsEmailViewModel(override val text: Int,
                     putExtra(Intent.EXTRA_SUBJECT, "Find a Pet feedback")
                 })
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as SettingsEmailViewModel
+
+        if (text != other.text) return false
+        if (eventBus != other.eventBus) return false
+        if (viewType != other.viewType) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = text
+        result = 31 * result + eventBus.hashCode()
+        result = 31 * result + viewType
+        return result
+    }
+
 }
 
 open class SettingsLinkOutViewModel(override val text: Int,
