@@ -46,6 +46,7 @@ class SettingsFragment : BaseFragment() {
         val viewEvents = CompositeDisposable()
 
         viewEvents += eventBus.activity(SettingsLinkOutViewModel::class).subscribe(this::activityEvent)
+        viewEvents += eventBus.activity(SettingsEmailViewModel::class).subscribe(this::activityEvent)
 
         return viewEvents
     }

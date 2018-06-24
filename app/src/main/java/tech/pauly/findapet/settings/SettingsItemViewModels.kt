@@ -3,6 +3,8 @@ package tech.pauly.findapet.settings
 import android.content.Intent
 import android.net.Uri
 import android.view.View
+import tech.pauly.findapet.R
+import tech.pauly.findapet.data.SettingsEndpoints
 import tech.pauly.findapet.shared.BaseViewModel
 import tech.pauly.findapet.shared.events.ActivityEvent
 import tech.pauly.findapet.shared.events.ViewEventBus
@@ -35,6 +37,42 @@ open class SettingsTitleViewModel(val title: Int) : SettingsItemViewModel() {
 
 sealed class SettingsBasicViewModel(open val text: Int) : SettingsItemViewModel() {
     abstract fun onClick(v: View)
+}
+
+open class SettingsEmailViewModel(override val text: Int,
+                                  private val eventBus: ViewEventBus) : SettingsBasicViewModel(text) {
+    override var viewType = LINK_OUT
+
+    override fun onClick(v: View) {
+        eventBus += ActivityEvent(this,
+                customIntent = Intent(Intent.ACTION_SENDTO).apply {
+                    type = "text/plain"
+                    data = Uri.parse("mailto:${SettingsEndpoints.personalEmail}")
+                    flags += Intent.FLAG_ACTIVITY_NEW_TASK
+                    putExtra(Intent.EXTRA_SUBJECT, "Find a Pet feedback")
+                })
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as SettingsEmailViewModel
+
+        if (text != other.text) return false
+        if (eventBus != other.eventBus) return false
+        if (viewType != other.viewType) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = text
+        result = 31 * result + eventBus.hashCode()
+        result = 31 * result + viewType
+        return result
+    }
+
 }
 
 open class SettingsLinkOutViewModel(override val text: Int,

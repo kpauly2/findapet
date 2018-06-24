@@ -5,6 +5,7 @@ import com.nhaarman.mockito_kotlin.verify
 import org.junit.Before
 import org.junit.Test
 import tech.pauly.findapet.R
+import tech.pauly.findapet.data.SettingsEndpoints
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.OptionsMenuEvent
@@ -39,7 +40,12 @@ class SettingsViewModelTest {
         verify(adapter).viewModels = arrayListOf(
                 SettingsTitleViewModel(R.string.about),
                 SettingsLinkOutViewModel(R.string.app_name, "https://github.com/kpauly2-ford/findapet", eventBus),
-                SettingsLinkOutViewModel(R.string.made_by, "https://www.pauly.tech", eventBus))
+                SettingsLinkOutViewModel(R.string.made_by, "https://www.pauly.tech", eventBus),
+                SettingsTitleViewModel(R.string.give_back),
+                SettingsEmailViewModel(R.string.feedback, eventBus),
+                SettingsTitleViewModel(R.string.references),
+                SettingsLinkOutViewModel(R.string.thanks, "https://kpauly2-ford.github.io/findapet/pages/attributions.html", eventBus),
+                SettingsLinkOutViewModel(R.string.licenses, "https://kpauly2-ford.github.io/findapet/pages/licenses.html", eventBus))
 
     }
 }
