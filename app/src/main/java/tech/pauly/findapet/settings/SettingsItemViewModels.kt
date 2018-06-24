@@ -3,6 +3,8 @@ package tech.pauly.findapet.settings
 import android.content.Intent
 import android.net.Uri
 import android.view.View
+import tech.pauly.findapet.R
+import tech.pauly.findapet.data.SettingsEndpoints
 import tech.pauly.findapet.shared.BaseViewModel
 import tech.pauly.findapet.shared.events.ActivityEvent
 import tech.pauly.findapet.shared.events.ViewEventBus
@@ -35,6 +37,21 @@ open class SettingsTitleViewModel(val title: Int) : SettingsItemViewModel() {
 
 sealed class SettingsBasicViewModel(open val text: Int) : SettingsItemViewModel() {
     abstract fun onClick(v: View)
+}
+
+open class SettingsEmailViewModel(override val text: Int,
+                                  private val eventBus: ViewEventBus) : SettingsBasicViewModel(text) {
+    override var viewType = LINK_OUT
+
+    override fun onClick(v: View) {
+        eventBus += ActivityEvent(this,
+                customIntent = Intent(Intent.ACTION_SENDTO).apply {
+                    type = "text/plain"
+                    data = Uri.parse("mailto:${SettingsEndpoints.personalEmail}")
+                    flags += Intent.FLAG_ACTIVITY_NEW_TASK
+                    putExtra(Intent.EXTRA_SUBJECT, "Find a Pet feedback")
+                })
+    }
 }
 
 open class SettingsLinkOutViewModel(override val text: Int,

@@ -76,4 +76,7 @@
     <string name="generic_error_body2">Please try again later</string>
     <string name="about">ABOUT</string>
     <string name="made_by">Made by Kevin Pauly</string>
+    <string name="give_back">GIVE BACK</string>
+    <string name="feedback">Send Feedback</string>
+    <string name="email_choice">Send email</string>
 </resources>

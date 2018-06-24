@@ -39,7 +39,9 @@ class SettingsViewModelTest {
         verify(adapter).viewModels = arrayListOf(
                 SettingsTitleViewModel(R.string.about),
                 SettingsLinkOutViewModel(R.string.app_name, "https://github.com/kpauly2-ford/findapet", eventBus),
-                SettingsLinkOutViewModel(R.string.made_by, "https://www.pauly.tech", eventBus))
+                SettingsLinkOutViewModel(R.string.made_by, "https://www.pauly.tech", eventBus),
+                SettingsTitleViewModel(R.string.give_back),
+                SettingsEmailViewModel(R.string.feedback, eventBus))
 
     }
 }

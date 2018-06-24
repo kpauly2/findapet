@@ -15,6 +15,7 @@ import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.ActivityMainBinding
 import tech.pauly.findapet.discover.DiscoverViewModel
 import tech.pauly.findapet.discover.FilterActivity
+import tech.pauly.findapet.favorites.FavoritesViewModel
 import tech.pauly.findapet.settings.SettingsViewModel
 import tech.pauly.findapet.shared.datastore.FilterAnimalTypeUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
@@ -75,6 +76,7 @@ class MainActivity : BaseActivity() {
         viewEvents += eventBus.fragment(MainViewModel::class).subscribe(this::fragmentEvent)
         viewEvents += eventBus.optionsMenu(DiscoverViewModel::class).subscribe(this::optionsMenuEvent)
         viewEvents += eventBus.optionsMenu(SheltersViewModel::class).subscribe(this::optionsMenuEvent)
+        viewEvents += eventBus.optionsMenu(FavoritesViewModel::class).subscribe(this::optionsMenuEvent)
         viewEvents += eventBus.optionsMenu(SettingsViewModel::class).subscribe(this::optionsMenuEvent)
 
         return viewEvents

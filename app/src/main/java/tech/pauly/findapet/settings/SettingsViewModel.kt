@@ -27,7 +27,9 @@ internal constructor(private val dataStore: TransientDataStore,
     fun populateAdapterItems() {
         adapter.viewModels = arrayListOf(
                 SettingsTitleViewModel(R.string.about),
-                SettingsLinkOutViewModel(R.string.app_name, SettingsEndpoints.sourceCodeEndpoint, eventBus),
-                SettingsLinkOutViewModel(R.string.made_by, SettingsEndpoints.personalSiteEndpoint, eventBus))
+                SettingsLinkOutViewModel(R.string.app_name, SettingsEndpoints.sourceCode, eventBus),
+                SettingsLinkOutViewModel(R.string.made_by, SettingsEndpoints.personalSite, eventBus),
+                SettingsTitleViewModel(R.string.give_back),
+                SettingsEmailViewModel(R.string.feedback, eventBus))
     }
 }
