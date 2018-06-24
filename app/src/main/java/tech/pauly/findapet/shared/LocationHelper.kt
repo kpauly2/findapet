@@ -13,7 +13,9 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import tech.pauly.findapet.BuildConfig
 import tech.pauly.findapet.data.ObservableHelper
+import tech.pauly.findapet.data.PetfinderException
 import tech.pauly.findapet.data.models.Contact
+import tech.pauly.findapet.data.models.StatusCode
 import tech.pauly.findapet.dependencyinjection.ForApplication
 import java.io.IOException
 import javax.inject.Inject
@@ -51,7 +53,11 @@ constructor(private val observableHelper: ObservableHelper,
     }
 
     open fun updateForNewLocation(location: Location) {
-        locationSubject.onNext(locationWrapper.getAddressFromLocation(location))
+        try {
+            locationSubject.onNext(locationWrapper.getAddressFromLocation(location))
+        } catch (e: IOException) {
+            locationSubject.onError(PetfinderException(StatusCode.ERR_FETCH_LOCATION))
+        }
     }
 
     private fun calculateDistanceBetween(userAddress: Address, contactInfo: Contact?): Int? {
@@ -106,6 +112,7 @@ constructor(@ForApplication private val context: Context,
         fusedLocationClient.lastLocation.addOnSuccessListener(locationChangedListener)
     }
 
+    @Throws(IOException::class)
     open fun getAddressFromLocation(location: Location): Address {
         return Geocoder(context, localeWrapper.getLocale()).getFromLocation(location.latitude, location.longitude, 1)[0]
     }
