@@ -1,12 +1,14 @@
 package tech.pauly.findapet.shared
 
 import android.annotation.SuppressLint
-
 import android.content.Context
-import android.location.*
+import android.location.Address
+import android.location.Criteria
+import android.location.Geocoder
+import android.location.Location
 import android.os.Build
-import android.os.Bundle
 import android.support.annotation.VisibleForTesting
+import com.google.android.gms.location.LocationServices
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import tech.pauly.findapet.BuildConfig
@@ -14,7 +16,6 @@ import tech.pauly.findapet.data.ObservableHelper
 import tech.pauly.findapet.data.models.Contact
 import tech.pauly.findapet.dependencyinjection.ForApplication
 import java.io.IOException
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -87,7 +88,7 @@ constructor(private val observableHelper: ObservableHelper,
 open class LocationWrapper @Inject
 constructor(@ForApplication private val context: Context,
             private val localeWrapper: LocaleWrapper) {
-    
+
     open val isEmulator: Boolean
         get() = BuildConfig.DEBUG
                 && (Build.FINGERPRINT.startsWith("generic")
@@ -101,19 +102,8 @@ constructor(@ForApplication private val context: Context,
 
     @SuppressLint("MissingPermission")
     open fun fetchNewLocation(accuracy: Int, locationChangedListener: (location: Location) -> Unit) {
-        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val criteria = Criteria().also { it.accuracy = accuracy }
-        locationManager.requestSingleUpdate(criteria, object : LocationListener {
-            override fun onLocationChanged(location: Location) {
-                locationChangedListener(location)
-            }
-
-            override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
-
-            override fun onProviderEnabled(provider: String) {}
-
-            override fun onProviderDisabled(provider: String) {}
-        }, null)
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+        fusedLocationClient.lastLocation.addOnSuccessListener(locationChangedListener)
     }
 
     open fun getAddressFromLocation(location: Location): Address {

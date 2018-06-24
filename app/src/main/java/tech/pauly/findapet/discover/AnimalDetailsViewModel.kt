@@ -33,7 +33,7 @@ internal constructor(dataStore: TransientDataStore,
     var currentImagePosition = ObservableInt(0)
 
     init {
-        this.detailsPagerAdapter.setViewModel(this)
+        detailsPagerAdapter.setViewModel(this)
 
         dataStore[AnimalDetailsUseCase::class]?.let {
             val animal = it.animal

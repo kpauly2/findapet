@@ -21,6 +21,7 @@
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
+                android:id="@+id/collapsing_toolbar_layout"
                 android:layout_height="match_parent"
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -49,7 +50,6 @@
                     android:theme="@style/ToolbarTheme"
                     app:layout_collapseMode="pin"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:titleTextAppearance="@style/FontStrongHeader"
                     app:title="@{viewModel.name}" />
 
             </android.support.design.widget.CollapsingToolbarLayout>

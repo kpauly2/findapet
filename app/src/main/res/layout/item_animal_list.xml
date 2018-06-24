@@ -20,9 +20,9 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:onClick="@{() -> viewModel.launchAnimalDetails()}"
         app:cardElevation="0dp"
-        android:foreground="?android:attr/selectableItemBackground"
         app:width="@{BindingAdapters.INSTANCE.recyclerItemWidth}">
 
         <android.support.constraint.ConstraintLayout
@@ -38,6 +38,7 @@
                 android:background="@drawable/shape_animal_image"
                 android:contentDescription="@string/menu_shelters"
                 android:elevation="2dp"
+                app:cornerRadius="@{10}"
                 app:height="@{BindingAdapters.INSTANCE.recyclerItemWidth}"
                 app:imageUrl="@{viewModel.imageUrl}"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@{@string/age_breed(viewModel.age, viewModel.breeds)}"
-                android:textAppearance="@style/FontStrongBody"
+                android:textAppearance="@style/FontBody"
                 android:textColor="@color/purpleStandard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

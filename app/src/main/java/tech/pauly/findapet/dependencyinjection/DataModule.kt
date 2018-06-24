@@ -9,31 +9,28 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
-import tech.pauly.findapet.data.AnimalService
-import tech.pauly.findapet.data.BreedService
-import tech.pauly.findapet.data.FilterDatabase
-import tech.pauly.findapet.data.PetfinderEndpoints
+import tech.pauly.findapet.data.*
 import javax.inject.Singleton
 
 @Module
 class DataModule {
 
     @Provides
+    @Singleton
     internal fun provideAnimalService(): AnimalService {
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-        val client = OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build()
+        return petfinderRetrofit.create(AnimalService::class.java)
+    }
 
-        return Retrofit.Builder()
-                .addConverterFactory(SimpleXmlConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(PetfinderEndpoints.endpoint)
-                .client(client)
-                .build()
-                .create(AnimalService::class.java)
+    @Provides
+    @Singleton
+    internal fun provideBreedService(): BreedService {
+        return petfinderRetrofit.create(BreedService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideShelterService(): ShelterService {
+        return petfinderRetrofit.create(ShelterService::class.java)
     }
 
     @Provides
@@ -44,21 +41,21 @@ class DataModule {
                 .build()
     }
 
-    @Provides
-    internal fun provideBreedService(): BreedService {
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-        val client = OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build()
+    private val petfinderRetrofit: Retrofit
+        get() {
+            val loggingInterceptor = HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
 
-        return Retrofit.Builder()
-                .addConverterFactory(SimpleXmlConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(PetfinderEndpoints.endpoint)
-                .client(client)
-                .build()
-                .create(BreedService::class.java)
-    }
+            val client = OkHttpClient.Builder()
+                    .addInterceptor(loggingInterceptor)
+                    .build()
+
+            return Retrofit.Builder()
+                    .addConverterFactory(SimpleXmlConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .baseUrl(PetfinderEndpoints.endpoint)
+                    .client(client)
+                    .build()
+        }
 }

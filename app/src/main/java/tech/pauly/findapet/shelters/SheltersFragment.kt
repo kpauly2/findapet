@@ -31,6 +31,7 @@ class SheltersFragment : BaseFragment() {
         lifecycle.addObserver(viewModel)
         lifecycle.addObserver(mapWrapper)
         mapWrapper.setupMap(binding.mapView)
+        binding.viewModel = viewModel
         return binding.root
     }
 }

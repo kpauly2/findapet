@@ -2,6 +2,7 @@ package tech.pauly.findapet.discover
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.content.res.ResourcesCompat
 import dagger.android.AndroidInjection
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.ActivityAnimalDetailsBinding
@@ -22,5 +23,9 @@ class AnimalDetailsActivity : BaseActivity() {
 
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val typeface = ResourcesCompat.getFont(this, R.font.quicksand_bold)
+        binding.collapsingToolbarLayout.setCollapsedTitleTypeface(typeface)
+        binding.collapsingToolbarLayout.setExpandedTitleTypeface(typeface)
     }
 }

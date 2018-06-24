@@ -102,6 +102,7 @@ dependencies {
     //Play Services
     def playServicesVersion = '15.0.1'
     implementation "com.google.android.gms:play-services-maps:${playServicesVersion}"
+    implementation "com.google.android.gms:play-services-location:${playServicesVersion}"
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'

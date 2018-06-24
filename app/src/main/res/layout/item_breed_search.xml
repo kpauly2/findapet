@@ -12,7 +12,9 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:clipChildren="false">
 
         <EditText
             android:id="@+id/button_breed_search"
@@ -26,6 +28,7 @@
             android:drawableTint="@color/purpleStandard"
             android:gravity="start|center_vertical"
             android:hint="@string/filter_breed_hint"
+            android:elevation="2dp"
             android:imeOptions="flagNoAccessoryAction"
             android:inputType="text"
             android:onTextChanged="@{viewModel::onBreedTextChanged}"

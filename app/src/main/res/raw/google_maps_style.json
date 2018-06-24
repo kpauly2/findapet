@@ -3,7 +3,7 @@
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#fbfbfb"
+        "color": "#ffffff"
       }
     ]
   },
@@ -82,7 +82,10 @@
     "featureType": "road.arterial",
     "stylers": [
       {
-        "color": "#e7e8fb"
+        "color": "#eeeefb"
+      },
+      {
+        "visibility": "simplified"
       }
     ]
   },
@@ -100,7 +103,7 @@
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#b6b8fd"
+        "color": "#dadcfb"
       }
     ]
   },
@@ -110,6 +113,17 @@
     "stylers": [
       {
         "color": "#616161"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "stylers": [
+      {
+        "color": "#eeeefb"
+      },
+      {
+        "visibility": "simplified"
       }
     ]
   },
