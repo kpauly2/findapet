@@ -29,7 +29,7 @@ constructor(private val dataStore: TransientDataStore,
     var shelterDetailsVisibility = ObservableBoolean(false)
     var selectedShelterName = ObservableField<String>("")
     var selectedShelterAddress = ObservableField<String>("")
-    var shelterList: List<Shelter>? = null
+    private var shelterList: List<Shelter>? = null
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun updateToolbarTitle() {
@@ -39,7 +39,7 @@ constructor(private val dataStore: TransientDataStore,
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun fetchDataAndMoveMap() {
         Observable.zip(locationHelper.fetchCurrentLocation(), mapWrapper.mapReadyObservable,
-                BiFunction { showMyLocation: Address, _: Boolean -> showMyLocation })
+                BiFunction { location: Address, _: Boolean -> location })
                 .compose(observableHelper.applyObservableSchedulers())
                 .flatMap {
                     val latLng = LatLng(it.latitude, it.longitude)

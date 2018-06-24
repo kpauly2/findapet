@@ -35,19 +35,17 @@ constructor(@ForApplication val context: Context) : OnMapReadyCallback, Lifecycl
         get() = mapReadySubject.delay(100, TimeUnit.MILLISECONDS)
 
     private val mapReadySubject: BehaviorSubject<Boolean> = BehaviorSubject.create()
-    private lateinit var selectedMarkerStandIn: Marker
-    private var selectedMarker: Marker? = null
+    private lateinit var selectedShelterStandIn: Marker
+    private var selectedShelter: Marker? = null
         set(value) {
             field?.isVisible = true
             value?.also {
                 it.isVisible = false
-                selectedMarkerStandIn.position = it.position
-                selectedMarkerStandIn.isVisible = true
+                selectedShelterStandIn.position = it.position
+                selectedShelterStandIn.isVisible = true
             }
             field = value
         }
-    private val shelterBitmap = context.getBitmapForDrawableId(R.drawable.ic_shelter)
-    private val selectedShelterBitmap = context.getBitmapForDrawableId(R.drawable.ic_shelter_selected)
 
     fun setupMap(mapView: MapView) {
         this.mapView = mapView
@@ -62,11 +60,11 @@ constructor(@ForApplication val context: Context) : OnMapReadyCallback, Lifecycl
         map.uiSettings.isMapToolbarEnabled = false
         map.setOnMarkerClickListener(this::onMarkerClick)
         map.setOnMapClickListener(this::onMapClick)
-        selectedMarkerStandIn = map.addMarker(MarkerOptions()
+        selectedShelterStandIn = map.addMarker(MarkerOptions()
                 .title("Selected Marker Stand-In")
                 .visible(false)
                 .position(LatLng(0.0, 0.0))
-                .icon(selectedShelterBitmap))
+                .icon(context.getBitmapForDrawableId(R.drawable.ic_shelter_selected)))
         mapReadySubject.onNext(true)
     }
 
@@ -82,17 +80,15 @@ constructor(@ForApplication val context: Context) : OnMapReadyCallback, Lifecycl
     open fun addShelterMarker(latLng: LatLng) {
         map.addMarker(MarkerOptions()
                 .position(latLng)
-                .icon(shelterBitmap))
+                .icon(context.getBitmapForDrawableId(R.drawable.ic_shelter)))
     }
 
-    @SuppressLint("MissingPermission")
     open fun showMyLocation(latLng: LatLng) {
         map.addMarker(MarkerOptions()
                 .position(latLng)
                 .title("My Location")
                 .icon(context.getBitmapForDrawableId(R.drawable.ic_user_location)))
     }
-
 
     open fun zoomToFitPoints(points: List<LatLng>) {
         val latLngBounds = LatLngBounds.Builder().also { builder ->
@@ -103,7 +99,7 @@ constructor(@ForApplication val context: Context) : OnMapReadyCallback, Lifecycl
 
     private fun onMarkerClick(marker: Marker): Boolean {
         return if (marker.title != "My Location" && marker.title != "Selected Marker Stand-In") {
-            selectedMarker = marker
+            selectedShelter = marker
             shelterClickSubject.onNext(marker.position)
             false
         } else {
@@ -113,7 +109,7 @@ constructor(@ForApplication val context: Context) : OnMapReadyCallback, Lifecycl
 
     private fun onMapClick(latLng: LatLng) {
         mapClickSubject.onNext(latLng)
-        selectedMarker = null
+        selectedShelter = null
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
