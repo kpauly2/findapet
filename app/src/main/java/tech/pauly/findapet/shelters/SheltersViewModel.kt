@@ -17,6 +17,9 @@ import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.MapWrapper
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
+import tech.pauly.findapet.shared.events.OptionsMenuEvent
+import tech.pauly.findapet.shared.events.OptionsMenuState
+import tech.pauly.findapet.shared.events.ViewEventBus
 import javax.inject.Inject
 
 class SheltersViewModel @Inject
@@ -24,7 +27,8 @@ constructor(private val dataStore: TransientDataStore,
             private val locationHelper: LocationHelper,
             private val observableHelper: ObservableHelper,
             private val mapWrapper: MapWrapper,
-            private val shelterRepository: ShelterRepository) : BaseViewModel() {
+            private val shelterRepository: ShelterRepository,
+            private val eventBus: ViewEventBus) : BaseViewModel() {
 
     var shelterDetailsVisibility = ObservableBoolean(false)
     var selectedShelterName = ObservableField<String>("")
@@ -32,8 +36,9 @@ constructor(private val dataStore: TransientDataStore,
     private var shelterList: List<Shelter>? = null
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun updateToolbarTitle() {
+    fun updateToolbar() {
         dataStore += DiscoverToolbarTitleUseCase(R.string.menu_shelters)
+        eventBus += OptionsMenuEvent(this, OptionsMenuState.EMPTY)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)

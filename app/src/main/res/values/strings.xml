@@ -74,4 +74,6 @@
     <string name="generic_error_title">Sorry!</string>
     <string name="generic_error_body1">Something\'s messed up right now</string>
     <string name="generic_error_body2">Please try again later</string>
+    <string name="about">ABOUT</string>
+    <string name="made_by">Made by Kevin Pauly</string>
 </resources>

@@ -25,8 +25,11 @@ import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.FilterUpdatedUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
+import tech.pauly.findapet.shared.events.OptionsMenuEvent
+import tech.pauly.findapet.shared.events.OptionsMenuState
 import tech.pauly.findapet.shared.events.PermissionEvent
 import tech.pauly.findapet.shared.events.ViewEventBus
+import java.util.ArrayList
 
 class DiscoverViewModelTest {
 
@@ -81,6 +84,14 @@ class DiscoverViewModelTest {
     }
 
     @Test
+    fun updateToolbar_updatesToolbarTitleAndOptionsMenu() {
+        subject.updateToolbar()
+
+        verify(dataStore) += DiscoverToolbarTitleUseCase(AnimalType.CAT.toolbarName)
+        verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.DISCOVER)
+    }
+
+    @Test
     fun onResume_firstLoad_loadList() {
         subject.onResume()
 
@@ -126,7 +137,6 @@ class DiscoverViewModelTest {
 
         subject.requestPermissionToLoad()
 
-        verify(dataStore) += DiscoverToolbarTitleUseCase(AnimalType.CAT.toolbarName)
         verify(animalRepository).fetchAnimals(check {
             assertThat(it.location).isEqualTo("zipcode")
             assertThat(it.animalType).isEqualTo(AnimalType.CAT)
@@ -214,12 +224,14 @@ class DiscoverViewModelTest {
     @Test
     fun requestPermissionToLoad_fetchAnimalsOnNext_sendAnimalListToAdapterAndStopsRefreshingAndNoErrors() {
         val animal: Animal = mock()
-        whenever(animalListResponse.animalList).thenReturn(listOf(animal))
+        val animalList = listOf(animal)
+        whenever(animalListResponse.animalList).thenReturn(animalList)
 
         subject.requestPermissionToLoad()
 
         verify(animalListItemFactory).newInstance(animal)
         assertThat(subject.refreshing.get()).isFalse()
+        verify(listAdapter).animalItems = animalList.map { animalListItemFactory.newInstance(it) } as ArrayList<AnimalListItemViewModel>
         verify(dataStore, times(2)) += DiscoverErrorUseCase(null)
     }
 

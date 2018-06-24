@@ -13,11 +13,16 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.ActivityMainBinding
+import tech.pauly.findapet.discover.DiscoverViewModel
 import tech.pauly.findapet.discover.FilterActivity
+import tech.pauly.findapet.settings.SettingsViewModel
 import tech.pauly.findapet.shared.datastore.FilterAnimalTypeUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.ActivityEvent
+import tech.pauly.findapet.shared.events.OptionsMenuEvent
+import tech.pauly.findapet.shared.events.OptionsMenuState
 import tech.pauly.findapet.shared.events.ViewEventBus
+import tech.pauly.findapet.shelters.SheltersViewModel
 
 class MainActivity : BaseActivity() {
 
@@ -31,6 +36,7 @@ class MainActivity : BaseActivity() {
     internal lateinit var dataStore: TransientDataStore
 
     private lateinit var binding: ActivityMainBinding
+    private var currentMenuState = OptionsMenuState.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -46,11 +52,6 @@ class MainActivity : BaseActivity() {
         super.onResume()
         subscribeToDrawerChange()
         subscribeToExpandingLayoutChange()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_search, menu)
-        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -72,8 +73,24 @@ class MainActivity : BaseActivity() {
         val viewEvents = CompositeDisposable()
 
         viewEvents += eventBus.fragment(MainViewModel::class).subscribe(this::fragmentEvent)
+        viewEvents += eventBus.optionsMenu(DiscoverViewModel::class).subscribe(this::optionsMenuEvent)
+        viewEvents += eventBus.optionsMenu(SheltersViewModel::class).subscribe(this::optionsMenuEvent)
+        viewEvents += eventBus.optionsMenu(SettingsViewModel::class).subscribe(this::optionsMenuEvent)
 
         return viewEvents
+    }
+
+    private fun optionsMenuEvent(event: OptionsMenuEvent) {
+        currentMenuState = event.state
+        invalidateOptionsMenu()
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        when (currentMenuState) {
+            OptionsMenuState.DISCOVER -> menuInflater.inflate(R.menu.menu_search, menu)
+            OptionsMenuState.EMPTY -> menu.clear()
+        }
+        return super.onPrepareOptionsMenu(menu)
     }
 
     private fun subscribeToDrawerChange() {

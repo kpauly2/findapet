@@ -10,7 +10,6 @@ import java.util.ArrayList
 
 import javax.inject.Inject
 
-import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import tech.pauly.findapet.data.BreedRepository
 import tech.pauly.findapet.data.FilterRepository
