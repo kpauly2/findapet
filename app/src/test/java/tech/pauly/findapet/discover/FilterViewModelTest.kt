@@ -1,6 +1,5 @@
 package tech.pauly.findapet.discover
 
-import android.view.View
 import android.widget.ToggleButton
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.check

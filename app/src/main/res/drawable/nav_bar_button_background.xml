@@ -7,7 +7,7 @@
                 <color android:color="@color/purpleStandard" />
             </item>
             <item>
-                <color android:color="@android:color/white" />
+                <color android:color="@color/white" />
             </item>
         </selector>
     </item>

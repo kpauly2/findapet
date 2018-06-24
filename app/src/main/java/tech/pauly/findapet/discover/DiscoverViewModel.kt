@@ -18,9 +18,7 @@ import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.FilterUpdatedUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
-import tech.pauly.findapet.shared.events.PermissionEvent
-import tech.pauly.findapet.shared.events.PermissionListener
-import tech.pauly.findapet.shared.events.ViewEventBus
+import tech.pauly.findapet.shared.events.*
 import tech.pauly.findapet.utils.Chip
 import java.util.*
 import javax.inject.Inject
@@ -61,6 +59,12 @@ constructor(val listAdapter: AnimalListAdapter,
         }
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun updateToolbar() {
+        dataStore += DiscoverToolbarTitleUseCase(animalType.toolbarName)
+        eventBus += OptionsMenuEvent(this, OptionsMenuState.DISCOVER)
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
         if (firstLoad || dataStore[FilterUpdatedUseCase::class] != null) {
@@ -81,7 +85,6 @@ constructor(val listAdapter: AnimalListAdapter,
     }
 
     private fun loadList() {
-        dataStore += DiscoverToolbarTitleUseCase(animalType.toolbarName)
         listAdapter.clearAnimalItems()
         lastOffset = 0
         fetchAnimals()

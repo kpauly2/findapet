@@ -33,6 +33,10 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun activityEvent(event: ActivityEvent) {
+        event.customIntent?.let {
+            startActivity(it)
+            return
+        }
         startActivity(Intent(context, event.startActivity?.java))
     }
 

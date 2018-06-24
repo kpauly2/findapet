@@ -24,6 +24,7 @@ class FavoritesFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentFavoritesBinding>(inflater, R.layout.fragment_favorites, container, false)
+        binding.viewModel = viewModel
         lifecycle.addObserver(viewModel)
         return binding.root
     }

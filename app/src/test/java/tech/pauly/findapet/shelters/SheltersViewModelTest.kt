@@ -18,6 +18,9 @@ import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.MapWrapper
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
+import tech.pauly.findapet.shared.events.OptionsMenuEvent
+import tech.pauly.findapet.shared.events.OptionsMenuState
+import tech.pauly.findapet.shared.events.ViewEventBus
 
 class SheltersViewModelTest {
 
@@ -26,19 +29,20 @@ class SheltersViewModelTest {
     private val observableHelper: ObservableHelper = mock()
     private val mapWrapper: MapWrapper = mock()
     private val shelterRepository: ShelterRepository = mock()
+    private val eventBus: ViewEventBus = mock()
 
     private val locationResponse: Address = mock {
         on { latitude }.thenReturn(10.0)
         on { longitude }.thenReturn(20.0)
         on { postalCode }.thenReturn("zipcode")
     }
-    val shelter1: Shelter = mock {
+    private val shelter1: Shelter = mock {
         on { id }.thenReturn("id1")
         on { name }.thenReturn("Shelter 1")
         on { latitude }.thenReturn(10.1)
         on { longitude }.thenReturn(20.1)
     }
-    val shelter2: Shelter = mock {
+    private val shelter2: Shelter = mock {
         on { id }.thenReturn("id2")
         on { name }.thenReturn("Shelter 2")
         on { latitude }.thenReturn(10.2)
@@ -60,14 +64,15 @@ class SheltersViewModelTest {
         whenever(mapWrapper.shelterClickSubject).thenReturn(shelterClickSubject)
         whenever(mapWrapper.mapClickSubject).thenReturn(mapClickSubject)
 
-        subject = SheltersViewModel(dataStore, locationHelper, observableHelper, mapWrapper, shelterRepository)
+        subject = SheltersViewModel(dataStore, locationHelper, observableHelper, mapWrapper, shelterRepository, eventBus)
     }
 
     @Test
-    fun updateToolbarTitle_savesToolbarTitle() {
-        subject.updateToolbarTitle()
+    fun updateToolbar_updatesToolbarTitleAndOptionsMenu() {
+        subject.updateToolbar()
 
         verify(dataStore) += DiscoverToolbarTitleUseCase(R.string.menu_shelters)
+        verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.EMPTY)
     }
 
     @Test

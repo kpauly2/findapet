@@ -54,6 +54,10 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     protected fun activityEvent(event: ActivityEvent) {
+        event.customIntent?.let {
+            startActivity(it)
+            return
+        }
         if (event.finishActivity) {
             finish()
         } else if (event.startActivity != null) {

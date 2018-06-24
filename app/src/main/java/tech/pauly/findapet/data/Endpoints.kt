@@ -13,3 +13,8 @@ object PetfinderEndpoints {
             }
         }
 }
+
+object SettingsEndpoints {
+    val sourceCodeEndpoint = "https://github.com/kpauly2-ford/findapet"
+    val personalSiteEndpoint = "https://www.pauly.tech"
+}

@@ -19,7 +19,7 @@
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white">
+            android:background="@color/white">
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                         app:layout_collapseMode="pin"
                         app:title="@{viewModel.toolbarTitle}"
                         app:titleTextAppearance="@style/FontStrongHeader"
-                        app:titleTextColor="@android:color/white" />
+                        app:titleTextColor="@color/white" />
                 </android.support.design.widget.CollapsingToolbarLayout>
             </android.support.design.widget.AppBarLayout>
 
@@ -60,7 +60,7 @@
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="@android:color/white">
+            android:background="@color/white">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                         android:paddingTop="40dp"
                         android:text="@string/app_name"
                         android:textAppearance="@style/FontExtraLargeHeader"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         android:elevation="4dp"/>
