@@ -25,7 +25,8 @@ You can follow along on my [Pivotal Tracker](https://www.pivotaltracker.com/n/pr
 
 ### Tested with
 - JUnit 4
-- Espressp
+- Mockito
+- Espresso
 - CircleCI
 
 ### Designed with
