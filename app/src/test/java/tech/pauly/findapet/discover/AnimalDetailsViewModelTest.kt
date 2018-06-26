@@ -14,6 +14,7 @@ import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.OptionsMenuEvent
 import tech.pauly.findapet.shared.events.OptionsMenuState
+import tech.pauly.findapet.shared.events.SnackbarEvent
 import tech.pauly.findapet.shared.events.ViewEventBus
 import java.util.*
 
@@ -137,7 +138,7 @@ class AnimalDetailsViewModelTest {
     }
 
     @Test
-    fun checkFavorite_animalIdPresentAnimalIsFavorited_sendFavoriteEvent() {
+    fun checkFavorite_animalIdPresentAnimalIsFavorited_sendFavoriteEventAndDoNotShowSnackbar() {
         createSubjectWithUseCase(setupFullAnimalUseCase())
         whenever(favoriteRepository.isAnimalFavorited(any())).thenReturn(Single.just(true))
 
@@ -145,10 +146,11 @@ class AnimalDetailsViewModelTest {
 
         verify(favoriteRepository).isAnimalFavorited(10)
         verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.FAVORITE)
+        verify(eventBus, never()) += SnackbarEvent(subject, any())
     }
 
     @Test
-    fun checkFavorite_animalIdPresentAnimalIsNotFavorited_sendNotFavoriteEvent() {
+    fun checkFavorite_animalIdPresentAnimalIsNotFavorited_sendNotFavoriteEventAndDoNotShowSnackbar() {
         createSubjectWithUseCase(setupFullAnimalUseCase())
         whenever(favoriteRepository.isAnimalFavorited(any())).thenReturn(Single.just(false))
 
@@ -156,6 +158,7 @@ class AnimalDetailsViewModelTest {
 
         verify(favoriteRepository).isAnimalFavorited(10)
         verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.NOT_FAVORITE)
+        verify(eventBus, never()) += SnackbarEvent(subject, any())
     }
 
     @Test
@@ -176,6 +179,7 @@ class AnimalDetailsViewModelTest {
 
         verify(favoriteRepository).favoriteAnimal(10)
         verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.FAVORITE)
+        verify(eventBus) += SnackbarEvent(subject, R.string.favorite_snackbar_message)
     }
 
     @Test
@@ -196,6 +200,7 @@ class AnimalDetailsViewModelTest {
 
         verify(favoriteRepository).unfavoriteAnimal(10)
         verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.NOT_FAVORITE)
+        verify(eventBus) += SnackbarEvent(subject, R.string.unfavorite_snackbar_message)
     }
 
     private fun setupFullAnimalUseCase(): AnimalDetailsUseCase {

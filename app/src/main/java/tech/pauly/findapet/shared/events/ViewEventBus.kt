@@ -46,9 +46,14 @@ open class ViewEventBus @Inject constructor() {
                 .map { event -> event as PermissionEvent }
     }
 
-    fun optionsMenu(emitterClass: KClass<*>): Observable<OptionsMenuEvent> {
+    open fun optionsMenu(emitterClass: KClass<*>): Observable<OptionsMenuEvent> {
         return bus.filter { event -> event is OptionsMenuEvent && event.fromEmitter(emitterClass) }
                 .map { event -> event as OptionsMenuEvent }
+    }
+
+    open fun snackbar(emitterClass: KClass<*>): Observable<SnackbarEvent> {
+        return bus.filter { event -> event is SnackbarEvent && event.fromEmitter(emitterClass) }
+                .map { event -> event as SnackbarEvent }
     }
 }
 

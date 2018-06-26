@@ -16,6 +16,7 @@ import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.OptionsMenuEvent
 import tech.pauly.findapet.shared.events.OptionsMenuState
+import tech.pauly.findapet.shared.events.SnackbarEvent
 import tech.pauly.findapet.shared.events.ViewEventBus
 import javax.inject.Inject
 
@@ -64,16 +65,15 @@ internal constructor(dataStore: TransientDataStore,
     fun checkFavorite() {
         animalId?.let {
             favoriteRepository.isAnimalFavorited(it)
-                    .subscribe(this::showFavorite, Throwable::printStackTrace)
+                    .subscribe({ showFavorite(it, false) }, Throwable::printStackTrace)
                     .onLifecycle()
         }
     }
 
-    private fun showFavorite(favorited: Boolean) {
-        eventBus += if (favorited) {
-            OptionsMenuEvent(this, OptionsMenuState.FAVORITE)
-        } else {
-            OptionsMenuEvent(this, OptionsMenuState.NOT_FAVORITE)
+    private fun showFavorite(favorited: Boolean, fromAction: Boolean) {
+        eventBus += OptionsMenuEvent(this, if (favorited) OptionsMenuState.FAVORITE else OptionsMenuState.NOT_FAVORITE)
+        if (fromAction) {
+            eventBus += SnackbarEvent(this, if (favorited) R.string.favorite_snackbar_message else R.string.unfavorite_snackbar_message)
         }
     }
 
@@ -83,11 +83,14 @@ internal constructor(dataStore: TransientDataStore,
 
     internal fun changeFavorite(favorite: Boolean) {
         animalId?.let {
-            val update =
-                    if (favorite) favoriteRepository.favoriteAnimal(it)
-                    else favoriteRepository.unfavoriteAnimal(it)
-            update.subscribe().onLifecycle()
-            showFavorite(favorite)
+            val update = if (favorite) {
+                favoriteRepository.favoriteAnimal(it)
+            } else {
+                favoriteRepository.unfavoriteAnimal(it)
+            }
+            update.subscribe({
+                showFavorite(favorite, true)
+            }, Throwable::printStackTrace).onLifecycle()
         }
     }
 
