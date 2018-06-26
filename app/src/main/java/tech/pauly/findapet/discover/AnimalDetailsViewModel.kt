@@ -1,9 +1,12 @@
 package tech.pauly.findapet.discover
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import tech.pauly.findapet.R
+import tech.pauly.findapet.data.FavoriteRepository
 import tech.pauly.findapet.data.models.Media
 import tech.pauly.findapet.data.models.Option
 import tech.pauly.findapet.data.models.PhotoSize
@@ -11,13 +14,18 @@ import tech.pauly.findapet.shared.BaseViewModel
 import tech.pauly.findapet.shared.ResourceProvider
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
+import tech.pauly.findapet.shared.events.OptionsMenuEvent
+import tech.pauly.findapet.shared.events.OptionsMenuState
+import tech.pauly.findapet.shared.events.ViewEventBus
 import javax.inject.Inject
 
 class AnimalDetailsViewModel @Inject
 internal constructor(dataStore: TransientDataStore,
                      val detailsPagerAdapter: AnimalDetailsViewPagerAdapter,
                      val imagesPagerAdapter: AnimalImagesPagerAdapter,
-                     private val resourceProvider: ResourceProvider) : BaseViewModel() {
+                     private val resourceProvider: ResourceProvider,
+                     private val favoriteRepository: FavoriteRepository,
+                     private val eventBus: ViewEventBus) : BaseViewModel() {
 
     var name = ObservableField("")
     var age = ObservableInt(R.string.missing)
@@ -32,11 +40,14 @@ internal constructor(dataStore: TransientDataStore,
     var imagesCount = ObservableInt(0)
     var currentImagePosition = ObservableInt(0)
 
+    private var animalId: Int? = null
+
     init {
         detailsPagerAdapter.setViewModel(this)
 
         dataStore[AnimalDetailsUseCase::class]?.let {
             val animal = it.animal
+            animalId = animal.id
             name.set(animal.name)
             sex.set(animal.sex.formattedName)
             size.set(animal.size.formattedName)
@@ -49,8 +60,35 @@ internal constructor(dataStore: TransientDataStore,
         }
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun checkFavorite() {
+        animalId?.let {
+            favoriteRepository.isAnimalFavorited(it)
+                    .subscribe(this::showFavorite, Throwable::printStackTrace)
+                    .onLifecycle()
+        }
+    }
+
+    private fun showFavorite(favorited: Boolean) {
+        eventBus += if (favorited) {
+            OptionsMenuEvent(this, OptionsMenuState.FAVORITE)
+        } else {
+            OptionsMenuEvent(this, OptionsMenuState.NOT_FAVORITE)
+        }
+    }
+
     fun imagePageChange(position: Int) {
         currentImagePosition.set(position)
+    }
+
+    internal fun changeFavorite(favorite: Boolean) {
+        animalId?.let {
+            val update =
+                    if (favorite) favoriteRepository.favoriteAnimal(it)
+                    else favoriteRepository.unfavoriteAnimal(it)
+            update.subscribe().onLifecycle()
+            showFavorite(favorite)
+        }
     }
 
     private fun setDescription(description: String?) {

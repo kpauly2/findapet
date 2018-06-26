@@ -1,17 +1,20 @@
 package tech.pauly.findapet.discover
 
-import com.nhaarman.mockito_kotlin.check
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockito_kotlin.*
+import io.reactivex.Completable
+import io.reactivex.Single
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyList
-import org.mockito.Mockito.*
 import tech.pauly.findapet.R
+import tech.pauly.findapet.data.FavoriteRepository
 import tech.pauly.findapet.data.models.*
 import tech.pauly.findapet.shared.ResourceProvider
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
+import tech.pauly.findapet.shared.events.OptionsMenuEvent
+import tech.pauly.findapet.shared.events.OptionsMenuState
+import tech.pauly.findapet.shared.events.ViewEventBus
 import java.util.*
 
 class AnimalDetailsViewModelTest {
@@ -19,7 +22,13 @@ class AnimalDetailsViewModelTest {
     private val dataStore: TransientDataStore = mock()
     private val viewPagerAdapter: AnimalDetailsViewPagerAdapter = mock()
     private val imagesPagerAdapter: AnimalImagesPagerAdapter = mock()
-    private val resourceProvider: ResourceProvider = mock()
+    private val resourceProvider: ResourceProvider = mock {
+        on { getString(R.string.altered) }.thenReturn("Altered")
+        on { getString(R.string.house_broken) }.thenReturn("House Broken")
+        on { getString(Age.ADULT.formattedName) }.thenReturn("Adult")
+    }
+    private val favoriteRepository: FavoriteRepository = mock()
+    private val eventBus: ViewEventBus = mock()
 
     private lateinit var subject: AnimalDetailsViewModel
 
@@ -118,6 +127,77 @@ class AnimalDetailsViewModelTest {
         assertThat(subject.currentImagePosition.get()).isEqualTo(1)
     }
 
+    @Test
+    fun checkFavorite_animalIdNull_doNothing() {
+        createSubject()
+
+        subject.checkFavorite()
+
+        verify(favoriteRepository, never()).isAnimalFavorited(any())
+    }
+
+    @Test
+    fun checkFavorite_animalIdPresentAnimalIsFavorited_sendFavoriteEvent() {
+        createSubjectWithUseCase(setupFullAnimalUseCase())
+        whenever(favoriteRepository.isAnimalFavorited(any())).thenReturn(Single.just(true))
+
+        subject.checkFavorite()
+
+        verify(favoriteRepository).isAnimalFavorited(10)
+        verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.FAVORITE)
+    }
+
+    @Test
+    fun checkFavorite_animalIdPresentAnimalIsNotFavorited_sendNotFavoriteEvent() {
+        createSubjectWithUseCase(setupFullAnimalUseCase())
+        whenever(favoriteRepository.isAnimalFavorited(any())).thenReturn(Single.just(false))
+
+        subject.checkFavorite()
+
+        verify(favoriteRepository).isAnimalFavorited(10)
+        verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.NOT_FAVORITE)
+    }
+
+    @Test
+    fun doFavorite_animalIdNull_doNothing() {
+        createSubject()
+
+        subject.changeFavorite(true)
+
+        verify(favoriteRepository, never()).favoriteAnimal(any())
+    }
+
+    @Test
+    fun doFavorite_animalIdNotNull_favoriteAnimalAndShowFavorite() {
+        createSubjectWithUseCase(setupFullAnimalUseCase())
+        whenever(favoriteRepository.favoriteAnimal(10)).thenReturn(Completable.complete())
+
+        subject.changeFavorite(true)
+
+        verify(favoriteRepository).favoriteAnimal(10)
+        verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.FAVORITE)
+    }
+
+    @Test
+    fun doUnfavorite_animalIdNull_doNothing() {
+        createSubject()
+
+        subject.changeFavorite(false)
+
+        verify(favoriteRepository, never()).unfavoriteAnimal(any())
+    }
+
+    @Test
+    fun doUnfavorite_animalIdNotNull_unfavoriteAnimalAndShowNotFavorite() {
+        createSubjectWithUseCase(setupFullAnimalUseCase())
+        whenever(favoriteRepository.unfavoriteAnimal(10)).thenReturn(Completable.complete())
+
+        subject.changeFavorite(false)
+
+        verify(favoriteRepository).unfavoriteAnimal(10)
+        verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.NOT_FAVORITE)
+    }
+
     private fun setupFullAnimalUseCase(): AnimalDetailsUseCase {
         val photo: Photo = mock {
             on { url }.thenReturn("http://url.com")
@@ -134,6 +214,7 @@ class AnimalDetailsViewModelTest {
         }
 
         val animal: Animal = mock {
+            on { id }.thenReturn(10)
             on { name }.thenReturn("name")
             on { sex }.thenReturn(Sex.MALE)
             on { size }.thenReturn(AnimalSize.LARGE)
@@ -152,9 +233,10 @@ class AnimalDetailsViewModelTest {
 
     private fun createSubjectWithUseCase(useCase: AnimalDetailsUseCase?) {
         whenever(dataStore[AnimalDetailsUseCase::class]).thenReturn(useCase)
-        whenever(resourceProvider.getString(R.string.altered)).thenReturn("Altered")
-        whenever(resourceProvider.getString(R.string.house_broken)).thenReturn("House Broken")
-        whenever(resourceProvider.getString(Age.ADULT.formattedName)).thenReturn("Adult")
-        subject = AnimalDetailsViewModel(dataStore, viewPagerAdapter, imagesPagerAdapter, resourceProvider)
+        createSubject()
+    }
+
+    private fun createSubject() {
+        subject = AnimalDetailsViewModel(dataStore, viewPagerAdapter, imagesPagerAdapter, resourceProvider, favoriteRepository, eventBus)
     }
 }

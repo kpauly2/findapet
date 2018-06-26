@@ -41,6 +41,14 @@ class DataModule {
                 .build()
     }
 
+    @Provides
+    @Singleton
+    internal fun provideFavoriteDatabase(@ForApplication context: Context): FavoriteDatabase {
+        return Room.databaseBuilder(context, FavoriteDatabase::class.java, "favorite-database")
+                .fallbackToDestructiveMigration()
+                .build()
+    }
+
     private val petfinderRetrofit: Retrofit
         get() {
             val loggingInterceptor = HttpLoggingInterceptor().apply {

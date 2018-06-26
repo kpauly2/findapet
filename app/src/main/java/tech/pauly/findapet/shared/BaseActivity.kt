@@ -8,15 +8,15 @@ import android.support.v7.app.AppCompatActivity
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import tech.pauly.findapet.dependencyinjection.PetApplication
-import tech.pauly.findapet.shared.events.ActivityEvent
-import tech.pauly.findapet.shared.events.FragmentEvent
-import tech.pauly.findapet.shared.events.PermissionEvent
+import tech.pauly.findapet.shared.events.*
 
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
 
     private val lifecycleSubscriptions = CompositeDisposable()
     private lateinit var permissionHelper: PermissionHelper
+
+    protected var currentMenuState = OptionsMenuState.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +48,13 @@ open class BaseActivity : AppCompatActivity() {
     fun permissionEvent(permissionEvent: PermissionEvent) {
         permissionHelper.requestPermission(this, permissionEvent)
     }
+
+
+    protected fun optionsMenuEvent(event: OptionsMenuEvent) {
+        currentMenuState = event.state
+        invalidateOptionsMenu()
+    }
+
 
     protected open fun registerViewEvents(): CompositeDisposable? {
         return null

@@ -1,7 +1,7 @@
 package tech.pauly.findapet.shared.events
 
 enum class OptionsMenuState {
-    DISCOVER, EMPTY
+    DISCOVER, EMPTY, NOT_FAVORITE, FAVORITE
 }
 
 open class OptionsMenuEvent(private val emitter: Any,

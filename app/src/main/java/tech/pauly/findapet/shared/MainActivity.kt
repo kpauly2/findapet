@@ -37,7 +37,6 @@ class MainActivity : BaseActivity() {
     internal lateinit var dataStore: TransientDataStore
 
     private lateinit var binding: ActivityMainBinding
-    private var currentMenuState = OptionsMenuState.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -82,15 +81,11 @@ class MainActivity : BaseActivity() {
         return viewEvents
     }
 
-    private fun optionsMenuEvent(event: OptionsMenuEvent) {
-        currentMenuState = event.state
-        invalidateOptionsMenu()
-    }
-
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         when (currentMenuState) {
             OptionsMenuState.DISCOVER -> menuInflater.inflate(R.menu.menu_search, menu)
             OptionsMenuState.EMPTY -> menu.clear()
+            else -> throw IllegalStateException("OptionsMenuState $currentMenuState not supported in MainActivity")
         }
         return super.onPrepareOptionsMenu(menu)
     }
