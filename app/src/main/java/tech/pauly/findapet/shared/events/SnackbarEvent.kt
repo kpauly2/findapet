@@ -1,26 +1,24 @@
 package tech.pauly.findapet.shared.events
 
-enum class OptionsMenuState {
-    DISCOVER, EMPTY, NOT_FAVORITE, FAVORITE
-}
+import android.support.annotation.StringRes
 
-open class OptionsMenuEvent(private val emitter: Any,
-                            open val state: OptionsMenuState) : BaseViewEvent(emitter::class) {
+open class SnackbarEvent(private val emitter: Any,
+                         @StringRes val text: Int) : BaseViewEvent(emitter::class) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as OptionsMenuEvent
+        other as SnackbarEvent
 
         if (emitter != other.emitter) return false
-        if (state != other.state) return false
+        if (text != other.text) return false
 
         return true
     }
 
     override fun hashCode(): Int {
         var result = emitter.hashCode()
-        result = 31 * result + state.hashCode()
+        result = 31 * result + text
         return result
     }
 }

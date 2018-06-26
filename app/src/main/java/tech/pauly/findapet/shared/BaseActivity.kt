@@ -3,20 +3,24 @@ package tech.pauly.findapet.shared
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.TextView
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import tech.pauly.findapet.R
 import tech.pauly.findapet.dependencyinjection.PetApplication
-import tech.pauly.findapet.shared.events.ActivityEvent
-import tech.pauly.findapet.shared.events.FragmentEvent
-import tech.pauly.findapet.shared.events.PermissionEvent
+import tech.pauly.findapet.shared.events.*
 
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
 
     private val lifecycleSubscriptions = CompositeDisposable()
     private lateinit var permissionHelper: PermissionHelper
+
+    protected var currentMenuState = OptionsMenuState.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +42,21 @@ open class BaseActivity : AppCompatActivity() {
         permissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    fun fragmentEvent(event: FragmentEvent) {
+    protected fun fragmentEvent(event: FragmentEvent) {
         val newFragment = Fragment.instantiate(this, event.fragment.qualifiedName)
         supportFragmentManager.beginTransaction()
                 .replace(event.container, newFragment)
                 .commit()
     }
 
-    fun permissionEvent(permissionEvent: PermissionEvent) {
+    protected fun permissionEvent(permissionEvent: PermissionEvent) {
         permissionHelper.requestPermission(this, permissionEvent)
+    }
+
+
+    protected fun optionsMenuEvent(event: OptionsMenuEvent) {
+        currentMenuState = event.state
+        invalidateOptionsMenu()
     }
 
     protected open fun registerViewEvents(): CompositeDisposable? {
@@ -63,6 +73,13 @@ open class BaseActivity : AppCompatActivity() {
         } else if (event.startActivity != null) {
             startActivity(Intent(this, event.startActivity?.java))
         }
+    }
+
+    protected fun snackbarEvent(event: SnackbarEvent) {
+        Snackbar.make(findViewById<View>(android.R.id.content), event.text, Snackbar.LENGTH_SHORT).apply {
+            view.setBackgroundColor(getColor(R.color.purpleStandardDark))
+            view.findViewById<TextView>(android.support.design.R.id.snackbar_text)?.setTextColor(getColor(R.color.white))
+        }.show()
     }
 
     protected fun subscribeOnLifecycle(subscription: Disposable) {

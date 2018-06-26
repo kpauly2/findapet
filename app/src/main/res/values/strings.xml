@@ -82,4 +82,7 @@
     <string name="references">REFERENCES</string>
     <string name="thanks">Thanks and Attributions</string>
     <string name="licenses">Licenses</string>
+    <string name="unfavorite">Unfavorite</string>
+    <string name="favorite_snackbar_message">Pet added to favorites</string>
+    <string name="unfavorite_snackbar_message">Pet removed from favorites</string>
 </resources>
