@@ -1,9 +1,7 @@
 package tech.pauly.findapet.data.models
 
-import android.arch.persistence.room.Entity
 import org.simpleframework.xml.Element
 
-@Entity
 open class Contact {
 
     @field:Element(required = false)
