@@ -14,14 +14,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/menu_favorites"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/favorites_swipe_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:elevation="0dp"
+            android:paddingTop="@dimen/standard_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:refreshing="@{viewModel.refreshing}"
+            app:swipeRefreshListener="@{viewModel::loadFavorites}">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/favorite_list_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:adapter="@{viewModel.listAdapter}"
+                app:recyclerViewGridSpan="@{viewModel.columnCount}" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

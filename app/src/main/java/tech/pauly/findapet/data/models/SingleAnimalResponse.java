@@ -9,7 +9,7 @@ import org.simpleframework.xml.Root;
 import java.util.List;
 
 @Root(name = "petfinder", strict = false)
-public class AnimalListResponse {
+public class SingleAnimalResponse {
 
     @Element(name = "header")
     private Header header;
@@ -17,12 +17,12 @@ public class AnimalListResponse {
     @Element(required = false)
     private int lastOffset;
 
-    @ElementList(name = "pets", entry = "pet", required = false)
-    private List<InternetAnimal> animalList;
+    @Element(name = "pet", required = false)
+    private InternetAnimal animal;
 
     @Nullable
-    public List<InternetAnimal> getAnimalList() {
-        return animalList;
+    public InternetAnimal getAnimal() {
+        return animal;
     }
 
     @Nullable

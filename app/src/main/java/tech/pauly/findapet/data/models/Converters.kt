@@ -48,4 +48,14 @@ class Converters {
     fun toCode(sex: Sex): Int {
         return sex.code
     }
+
+    @TypeConverter
+    fun toStringList(string: String): List<String>? {
+        return if (string.isEmpty()) emptyList() else string.split(";")
+    }
+
+    @TypeConverter
+    fun listToString(list: List<String>): String {
+        return list.joinToString(";")
+    }
 }

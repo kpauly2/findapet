@@ -7,12 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.AndroidSupportInjection
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.FragmentFavoritesBinding
+import tech.pauly.findapet.discover.AnimalListItemViewModel
+import tech.pauly.findapet.discover.DiscoverViewModel
 import tech.pauly.findapet.shared.BaseFragment
+import tech.pauly.findapet.shared.events.ViewEventBus
 import javax.inject.Inject
 
 class FavoritesFragment : BaseFragment() {
+
+    @Inject
+    lateinit var eventBus: ViewEventBus
 
     @Inject
     lateinit var viewModel: FavoritesViewModel
@@ -27,5 +35,13 @@ class FavoritesFragment : BaseFragment() {
         binding.viewModel = viewModel
         lifecycle.addObserver(viewModel)
         return binding.root
+    }
+
+    override fun registerViewEvents(): CompositeDisposable? {
+        val viewEvents = CompositeDisposable()
+
+        viewEvents += eventBus.activity(AnimalListItemViewModel::class).subscribe(this::activityEvent)
+
+        return viewEvents
     }
 }

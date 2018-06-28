@@ -1,15 +1,13 @@
 package tech.pauly.findapet.shared
 
 import android.content.Context
-import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.support.annotation.StringRes
-import android.support.v4.content.ContextCompat
-
+import com.squareup.picasso.Picasso
+import tech.pauly.findapet.dependencyinjection.ForApplication
 import javax.inject.Inject
 import javax.inject.Singleton
-
-import tech.pauly.findapet.dependencyinjection.ForApplication
-
 
 /**
  * A Singleton class to handle things that need context.
@@ -26,5 +24,28 @@ internal constructor(@ForApplication private val context: Context) {
 
     open fun getString(@StringRes stringId: Int, vararg formatArgs: Any): String {
         return context.getString(stringId, *formatArgs)
+    }
+
+    open fun getBitmapFromUrl(url: String): Bitmap {
+        return Picasso.with(context).load(url).get()
+    }
+
+    open fun saveBitmapToFile(filename: String, bitmap: Bitmap): String {
+        context.openFileOutput(filename, Context.MODE_PRIVATE).use {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+            it.close()
+        }
+        return context.getFileStreamPath(filename).absolutePath
+    }
+
+    open fun openBitmapFromFile(filename: String): Bitmap {
+        context.openFileInput(filename).use {
+            return BitmapFactory.decodeStream(it)
+        }
+    }
+
+    open fun deleteFile(path: String) {
+        val filename = path.substring(path.lastIndexOf('/') + 1)
+        context.deleteFile(filename)
     }
 }

@@ -5,10 +5,7 @@ import javax.inject.Inject
 import io.reactivex.Observable
 import io.reactivex.Single
 import tech.pauly.findapet.BuildConfig
-import tech.pauly.findapet.data.models.AnimalListResponse
-import tech.pauly.findapet.data.models.FetchAnimalsRequest
-import tech.pauly.findapet.data.models.Filter
-import tech.pauly.findapet.data.models.StatusCode
+import tech.pauly.findapet.data.models.*
 
 private const val ANIMAL_RETURN_COUNT = 20
 
@@ -33,6 +30,18 @@ constructor(private val animalService: AnimalService,
                     }
                     if (it.animalList == null || it.animalList?.size == 0) {
                         throw PetfinderException(StatusCode.ERR_NO_ANIMALS)
+                    }
+                    it
+                }
+                .compose(observableHelper.applySingleSchedulers())
+                .toObservable()
+    }
+
+    open fun fetchAnimal(id: Int): Observable<SingleAnimalResponse> {
+        return animalService.fetchAnimal(BuildConfig.API_KEY, id.toString())
+                .map {
+                    it.header.status?.code?.let {
+                        if (it == StatusCode.PFAPI_ERR_NOENT) throw PetfinderException(it)
                     }
                     it
                 }
