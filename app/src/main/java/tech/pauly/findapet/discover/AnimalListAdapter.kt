@@ -37,4 +37,9 @@ internal constructor() : RecyclerView.Adapter<AnimalListItemViewHolder>() {
         animalItems.clear()
         notifyDataSetChanged()
     }
+
+    open fun addAnimalItem(item: AnimalListItemViewModel) {
+        animalItems.add(item)
+        notifyDataSetChanged()
+    }
 }

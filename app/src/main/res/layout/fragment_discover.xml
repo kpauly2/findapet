@@ -61,8 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:adapter="@{viewModel.listAdapter}"
-                app:loadMoreListener="@{viewModel::loadMoreAnimals}"
-                app:recyclerViewGridSpan="@{viewModel.columnCount}" />
+                app:recyclerViewGridSpan="@{viewModel.columnCount}"
+                app:loadMoreListener="@{viewModel::loadMoreAnimals}" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
 

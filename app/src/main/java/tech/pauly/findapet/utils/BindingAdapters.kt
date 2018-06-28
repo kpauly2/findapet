@@ -3,7 +3,6 @@ package tech.pauly.findapet.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.BindingAdapter
-import android.net.Uri
 import android.support.annotation.IdRes
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
@@ -37,8 +36,13 @@ fun loadImageIntoView(view: ImageView, url: String?, cornerRadius: Int) {
         return
     }
     val transformation = RoundedCornersTransformation(view.context.dp2px(cornerRadius.toFloat()), 0)
+
+    var fullUrl = url
+    if (url.contains("-") && url.contains(".png")) {
+        fullUrl = "file://$fullUrl"
+    }
     Picasso.with(view.context)
-            .load(Uri.parse(url))
+            .load(fullUrl)
             .error(R.drawable.shape_animal_image)
             .fit()
             .centerCrop()
@@ -56,14 +60,7 @@ fun layoutManager(recyclerView: RecyclerView, orientation: Int) {
 
 @BindingAdapter(value = ["recyclerViewGridSpan", "loadMoreListener"])
 fun setupRecyclerView(recyclerView: RecyclerView, span: Int, listener: RecyclerViewLoadMoreDataListener) {
-    recyclerView.layoutManager = GridLayoutManager(recyclerView.context, span)
-    recyclerView.addItemDecoration(GridItemDecoration(recyclerView.context, GridLayoutManager.HORIZONTAL))
-
-    val widthInDp = recyclerView.resources.displayMetrics.widthPixels.toFloat()
-    val edgeMargin = 16
-    val centerMargin = 8
-    val marginSize = (edgeMargin * span + centerMargin) * recyclerView.resources.displayMetrics.density
-    BindingAdapters.recyclerItemWidth = (widthInDp - marginSize).toInt() / span
+    setupBaseRecyclerViewLayout(recyclerView, span)
 
     val scrollListener = object : EndlessRecyclerViewScrollListener(recyclerView.layoutManager as GridLayoutManager) {
         override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
@@ -71,6 +68,11 @@ fun setupRecyclerView(recyclerView: RecyclerView, span: Int, listener: RecyclerV
         }
     }
     recyclerView.addOnScrollListener(scrollListener)
+}
+
+@BindingAdapter("recyclerViewGridSpan")
+fun setupRecyclerView(recyclerView: RecyclerView, span: Int) {
+    setupBaseRecyclerViewLayout(recyclerView, span)
 }
 
 @BindingAdapter("height")
@@ -177,4 +179,15 @@ interface TouchListener {
 fun Context.dp2px(dp: Float): Int {
     val scale = resources.displayMetrics.density
     return (dp * scale + 0.5f).toInt()
+}
+
+private fun setupBaseRecyclerViewLayout(recyclerView: RecyclerView, span: Int) {
+    recyclerView.layoutManager = GridLayoutManager(recyclerView.context, span)
+    recyclerView.addItemDecoration(GridItemDecoration(recyclerView.context, GridLayoutManager.HORIZONTAL))
+
+    val widthInDp = recyclerView.resources.displayMetrics.widthPixels.toFloat()
+    val edgeMargin = 16
+    val centerMargin = 8
+    val marginSize = (edgeMargin * span + centerMargin) * recyclerView.resources.displayMetrics.density
+    BindingAdapters.recyclerItemWidth = (widthInDp - marginSize).toInt() / span
 }

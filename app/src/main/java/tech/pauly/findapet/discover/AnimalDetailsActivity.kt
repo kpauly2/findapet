@@ -60,6 +60,7 @@ class AnimalDetailsActivity : BaseActivity() {
         when (currentMenuState) {
             OptionsMenuState.FAVORITE -> menuInflater.inflate(R.menu.menu_favorite_selected, menu)
             OptionsMenuState.NOT_FAVORITE -> menuInflater.inflate(R.menu.menu_favorite, menu)
+            OptionsMenuState.EMPTY -> menu.clear()
             else -> throw IllegalStateException("OptionsMenuState $currentMenuState not supported in AnimalDetailsActivity")
         }
         return super.onPrepareOptionsMenu(menu)

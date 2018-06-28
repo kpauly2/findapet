@@ -7,9 +7,7 @@ import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.FavoriteRepository
-import tech.pauly.findapet.data.models.Media
-import tech.pauly.findapet.data.models.Option
-import tech.pauly.findapet.data.models.PhotoSize
+import tech.pauly.findapet.data.models.*
 import tech.pauly.findapet.shared.BaseViewModel
 import tech.pauly.findapet.shared.ResourceProvider
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
@@ -41,40 +39,41 @@ internal constructor(dataStore: TransientDataStore,
     var imagesCount = ObservableInt(0)
     var currentImagePosition = ObservableInt(0)
 
-    private var animalId: Int? = null
+    private var animal: Animal? = null
 
     init {
         detailsPagerAdapter.setViewModel(this)
 
         dataStore[AnimalDetailsUseCase::class]?.let {
             val animal = it.animal
-            animalId = animal.id
             name.set(animal.name)
             sex.set(animal.sex.formattedName)
             size.set(animal.size.formattedName)
             age.set(animal.age.formattedName)
             breeds.set(animal.formattedBreedList)
 
-            setPhotos(animal.media)
+            setPhotos(animal.photoUrlList)
             setOptions(animal.options)
             setDescription(animal.description)
+            this.animal = animal
         }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun checkFavorite() {
-        animalId?.let {
-            favoriteRepository.isAnimalFavorited(it)
-                    .subscribe({ showFavorite(it, false) }, Throwable::printStackTrace)
+        animal?.let {
+            favoriteRepository.isAnimalFavorited(it.id)
+                    .subscribe({ showFavoriteInOptions(it) }, Throwable::printStackTrace)
                     .onLifecycle()
         }
     }
 
-    private fun showFavorite(favorited: Boolean, fromAction: Boolean) {
+    private fun showFavoriteInOptions(favorited: Boolean) {
         eventBus += OptionsMenuEvent(this, if (favorited) OptionsMenuState.FAVORITE else OptionsMenuState.NOT_FAVORITE)
-        if (fromAction) {
-            eventBus += SnackbarEvent(this, if (favorited) R.string.favorite_snackbar_message else R.string.unfavorite_snackbar_message)
-        }
+    }
+
+    private fun showFavoriteSnackbar(favorited: Boolean) {
+        eventBus += SnackbarEvent(this, if (favorited) R.string.favorite_snackbar_message else R.string.unfavorite_snackbar_message)
     }
 
     fun imagePageChange(position: Int) {
@@ -82,15 +81,15 @@ internal constructor(dataStore: TransientDataStore,
     }
 
     internal fun changeFavorite(favorite: Boolean) {
-        animalId?.let {
+        animal?.let {
+            showFavoriteInOptions(favorite)
             val update = if (favorite) {
                 favoriteRepository.favoriteAnimal(it)
             } else {
                 favoriteRepository.unfavoriteAnimal(it)
             }
-            update.subscribe({
-                showFavorite(favorite, true)
-            }, Throwable::printStackTrace).onLifecycle()
+            update.subscribe({ showFavoriteSnackbar(favorite) }, Throwable::printStackTrace)
+                    .onLifecycle()
         }
     }
 
@@ -110,11 +109,9 @@ internal constructor(dataStore: TransientDataStore,
         }
     }
 
-    private fun setPhotos(media: Media?) {
-        media?.photoList?.mapNotNull { photo ->
-            AnimalImageViewModel(photo).takeIf {
-                photo.size == PhotoSize.LARGE
-            }
+    private fun setPhotos(photoList: List<String>?) {
+        photoList?.map {
+            AnimalImageViewModel(it)
         }?.also {
             imagesCount.set(it.size)
             imagesPagerAdapter.setAnimalImages(it)

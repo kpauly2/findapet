@@ -81,20 +81,21 @@ class AnimalDetailsViewModelTest {
     }
 
     @Test
-    fun onCreate_animalPhotoPresent_addsImagesToPagerAdapter() {
+    fun onCreate_photoListPresent_addsImagesToPagerAdapter() {
         createSubjectWithUseCase(setupFullAnimalUseCase())
 
         verify(imagesPagerAdapter).setAnimalImages(check {
-            assertThat(it).hasSize(1)
-            assertThat(it[0].imageUrl.get()).isEqualTo("http://url.com")
+            assertThat(it).hasSize(2)
+            assertThat(it[0].imageUrl.get()).isEqualTo("photo1.jpg")
+            assertThat(it[1].imageUrl.get()).isEqualTo("photo2.jpg")
         })
-        assertThat(subject.imagesCount.get()).isEqualTo(1)
+        assertThat(subject.imagesCount.get()).isEqualTo(2)
     }
 
     @Test
     fun onCreate_largeAnimalPhotoNotPresent_addsNoImagesToAdapter() {
         val useCase = setupFullAnimalUseCase()
-        whenever(useCase.animal.media).thenReturn(null)
+        whenever(useCase.animal.photoUrlList).thenReturn(null)
         createSubjectWithUseCase(useCase)
 
         verify(imagesPagerAdapter, never()).setAnimalImages(anyList())
@@ -172,12 +173,13 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun doFavorite_animalIdNotNull_favoriteAnimalAndShowFavorite() {
-        createSubjectWithUseCase(setupFullAnimalUseCase())
-        whenever(favoriteRepository.favoriteAnimal(10)).thenReturn(Completable.complete())
+        val useCase = setupFullAnimalUseCase()
+        createSubjectWithUseCase(useCase)
+        whenever(favoriteRepository.favoriteAnimal(any())).thenReturn(Completable.complete())
 
         subject.changeFavorite(true)
 
-        verify(favoriteRepository).favoriteAnimal(10)
+        verify(favoriteRepository).favoriteAnimal(useCase.animal)
         verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.FAVORITE)
         verify(eventBus) += SnackbarEvent(subject, R.string.favorite_snackbar_message)
     }
@@ -193,31 +195,18 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun doUnfavorite_animalIdNotNull_unfavoriteAnimalAndShowNotFavorite() {
-        createSubjectWithUseCase(setupFullAnimalUseCase())
-        whenever(favoriteRepository.unfavoriteAnimal(10)).thenReturn(Completable.complete())
+        val useCase = setupFullAnimalUseCase()
+        createSubjectWithUseCase(useCase)
+        whenever(favoriteRepository.unfavoriteAnimal(useCase.animal)).thenReturn(Completable.complete())
 
         subject.changeFavorite(false)
 
-        verify(favoriteRepository).unfavoriteAnimal(10)
+        verify(favoriteRepository).unfavoriteAnimal(useCase.animal)
         verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.NOT_FAVORITE)
         verify(eventBus) += SnackbarEvent(subject, R.string.unfavorite_snackbar_message)
     }
 
     private fun setupFullAnimalUseCase(): AnimalDetailsUseCase {
-        val photo: Photo = mock {
-            on { url }.thenReturn("http://url.com")
-            on { size }.thenReturn(PhotoSize.LARGE)
-        }
-
-        val photo2: Photo = mock {
-            on { url }.thenReturn("http://url2.com")
-            on { size }.thenReturn(PhotoSize.PET_NOTE_THUMBNAIL)
-        }
-
-        val media: Media = mock {
-            on { photoList }.thenReturn(Arrays.asList(photo, photo2))
-        }
-
         val animal: Animal = mock {
             on { id }.thenReturn(10)
             on { name }.thenReturn("name")
@@ -225,7 +214,7 @@ class AnimalDetailsViewModelTest {
             on { size }.thenReturn(AnimalSize.LARGE)
             on { age }.thenReturn(Age.ADULT)
             on { description }.thenReturn("")
-            on { this.media }.thenReturn(media)
+            on { photoUrlList }.thenReturn(listOf("photo1.jpg", "photo2.jpg"))
             on { formattedBreedList }.thenReturn("breeds")
             on { options }.thenReturn(Arrays.asList(Option.ALTERED, Option.HOUSE_BROKEN))
             on { description }.thenReturn("description")

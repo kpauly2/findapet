@@ -222,7 +222,7 @@ class DiscoverViewModelTest {
 
     @Test
     fun requestPermissionToLoad_fetchAnimalsOnNext_sendAnimalListToAdapterAndStopsRefreshingAndNoErrors() {
-        val animal: Animal = mock()
+        val animal: InternetAnimal = mock()
         val animalList = listOf(animal)
         whenever(animalListResponse.animalList).thenReturn(animalList)
 
@@ -246,7 +246,7 @@ class DiscoverViewModelTest {
 
     @Test
     fun loadMoreAnimals_fetchAnimalsAtCurrentOffsetFetchesLocation() {
-        val animal: Animal = mock()
+        val animal: InternetAnimal = mock()
         whenever(animalListResponse.lastOffset).thenReturn(10)
         whenever(animalListResponse.animalList).thenReturn(listOf(animal))
         subject.requestPermissionToLoad()

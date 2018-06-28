@@ -69,18 +69,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/animal_name"
                 tools:text="Adult - Ragamuffin" />
 
-            <TextView
-                android:id="@+id/animal_distance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{@string/animal_distance(viewModel.distance)}"
-                android:textAppearance="@style/FontVerySmall"
-                android:textColor="@color/textStandard"
-                android:visibility="@{viewModel.distanceVisibility ? View.VISIBLE : View.GONE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/animal_age_breed" />
-
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </layout>
