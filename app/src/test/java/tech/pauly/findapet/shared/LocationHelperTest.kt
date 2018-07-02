@@ -96,66 +96,10 @@ class LocationHelperTest {
         whenever(locationWrapper.locationBetweenAddresses(userAddress, petAddress)).thenReturn(10)
 
         val observable = subject.getCurrentDistanceToContactInfo(mock {
-            on { city }.thenReturn("city")
-            on { state }.thenReturn("state")
+            on { geocodingAddress }.thenReturn("city, state")
         }).test()
 
         observable.assertValue(10)
-    }
-
-    @Test
-    fun parseContactInfo_stateNullAndZipNotNull_returnZip() {
-        val returnedValue = subject.parseContactInfo(mock {
-            on { city }.thenReturn("city")
-            on { state }.thenReturn(null)
-            on { zip }.thenReturn("zip")
-        })
-
-        assertThat(returnedValue).isEqualTo("zip")
-    }
-
-    @Test
-    fun parseContactInfo_cityNullAndZipNotNull_returnZip() {
-        val returnedValue = subject.parseContactInfo(mock {
-            on { city }.thenReturn(null)
-            on { state }.thenReturn("state")
-            on { zip }.thenReturn("zip")
-        })
-
-        assertThat(returnedValue).isEqualTo("zip")
-    }
-
-    @Test
-    fun parseContactInfo_cityAndStateNullAndZipNull_returnEmptyString() {
-        val returnedValue = subject.parseContactInfo(mock {
-            on { city }.thenReturn(null)
-            on { state }.thenReturn(null)
-            on { zip }.thenReturn(null)
-        })
-
-        assertThat(returnedValue).isEqualTo("")
-    }
-
-    @Test
-    fun parseContactInfo_cityAndStateAndAddressLineNotNull_returnConcatenatedString() {
-        val returnedValue = subject.parseContactInfo(mock {
-            on { city }.thenReturn("city")
-            on { state }.thenReturn("state")
-            on { address1 }.thenReturn("address")
-        })
-
-        assertThat(returnedValue).isEqualTo("address city, state")
-    }
-
-    @Test
-    fun parseContactInfo_cityAndStateNotNullAndAddressLineNull_returnConcatenatedString() {
-        val returnedValue = subject.parseContactInfo(mock {
-            on { city }.thenReturn("city")
-            on { state }.thenReturn("state")
-            on { address1 }.thenReturn(null)
-        })
-
-        assertThat(returnedValue).isEqualTo("city, state")
     }
 
     private fun setupExistingLocation(): Address {

@@ -2,13 +2,17 @@ package tech.pauly.findapet.discover
 
 import com.nhaarman.mockito_kotlin.*
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyList
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.FavoriteRepository
+import tech.pauly.findapet.data.ShelterRepository
 import tech.pauly.findapet.data.models.*
+import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.ResourceProvider
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
@@ -30,12 +34,24 @@ class AnimalDetailsViewModelTest {
     }
     private val favoriteRepository: FavoriteRepository = mock()
     private val eventBus: ViewEventBus = mock()
+    private val shelterRepository: ShelterRepository = mock()
+    private val locationHelper: LocationHelper = mock()
 
     private lateinit var subject: AnimalDetailsViewModel
 
+    @Before
+    fun setup() {
+        whenever(shelterRepository.fetchShelter(any())).thenReturn(Observable.never())
+        whenever(resourceProvider.getString(R.string.empty_string)).thenReturn("")
+        whenever(resourceProvider.getString(R.string.distance_less_than_one)).thenReturn("< 1 mile")
+        whenever(resourceProvider.getQuantityString(eq(R.plurals.distance), any())).thenReturn("plural miles")
+
+        subject = AnimalDetailsViewModel(viewPagerAdapter, imagesPagerAdapter, dataStore, resourceProvider, favoriteRepository, eventBus, shelterRepository, locationHelper)
+    }
+
     @Test
     fun onCreate_getAnimalFromUseCase_setAllBasicValues() {
-        createSubjectWithUseCase(setupFullAnimalUseCase())
+        setupPageWithUseCase(setupFullAnimalUseCase())
 
         subject.apply {
             assertThat(name.get()).isEqualTo("name")
@@ -47,7 +63,7 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun onCreate_noUseCaseReceived_fieldsShowDefaultValues() {
-        createSubjectWithUseCase(null)
+        setupPageWithUseCase(null)
 
         subject.apply {
             assertThat(name.get()).isEqualTo("")
@@ -64,7 +80,7 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun onCreate_animalDescriptionFieldIsNotNull_setDescriptionAndVisibility() {
-        createSubjectWithUseCase(setupFullAnimalUseCase())
+        setupPageWithUseCase(setupFullAnimalUseCase())
 
         assertThat(subject.descriptionVisibility.get()).isEqualTo(true)
         assertThat(subject.description.get()).isEqualTo("description")
@@ -75,14 +91,14 @@ class AnimalDetailsViewModelTest {
         val useCase = setupFullAnimalUseCase()
         whenever(useCase.animal.description).thenReturn("")
 
-        createSubjectWithUseCase(useCase)
+        setupPageWithUseCase(useCase)
 
         assertThat(subject.descriptionVisibility.get()).isEqualTo(false)
     }
 
     @Test
     fun onCreate_photoListPresent_addsImagesToPagerAdapter() {
-        createSubjectWithUseCase(setupFullAnimalUseCase())
+        setupPageWithUseCase(setupFullAnimalUseCase())
 
         verify(imagesPagerAdapter).setAnimalImages(check {
             assertThat(it).hasSize(2)
@@ -96,7 +112,7 @@ class AnimalDetailsViewModelTest {
     fun onCreate_largeAnimalPhotoNotPresent_addsNoImagesToAdapter() {
         val useCase = setupFullAnimalUseCase()
         whenever(useCase.animal.photoUrlList).thenReturn(null)
-        createSubjectWithUseCase(useCase)
+        setupPageWithUseCase(useCase)
 
         verify(imagesPagerAdapter, never()).setAnimalImages(anyList())
         assertThat(subject.imagesCount.get()).isEqualTo(0)
@@ -107,14 +123,14 @@ class AnimalDetailsViewModelTest {
         val useCase = setupFullAnimalUseCase()
         whenever(useCase.animal.options).thenReturn(emptyList())
 
-        createSubjectWithUseCase(useCase)
+        setupPageWithUseCase(useCase)
 
         assertThat(subject.optionsVisibility.get()).isEqualTo(false)
     }
 
     @Test
     fun onCreate_animalHasOptions_optionsListShown() {
-        createSubjectWithUseCase(setupFullAnimalUseCase())
+        setupPageWithUseCase(setupFullAnimalUseCase())
 
         assertThat(subject.optionsVisibility.get()).isEqualTo(true)
         assertThat(subject.options.get()).isEqualTo("Altered\nHouse Broken")
@@ -122,7 +138,7 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun imagePageChange_updateCurrentImagePosition() {
-        createSubjectWithUseCase(setupFullAnimalUseCase())
+        setupPageWithUseCase(setupFullAnimalUseCase())
 
         subject.imagePageChange(1)
 
@@ -131,7 +147,7 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun checkFavorite_animalIdNull_doNothing() {
-        createSubject()
+        subject.setupPage()
 
         subject.checkFavorite()
 
@@ -140,7 +156,7 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun checkFavorite_animalIdPresentAnimalIsFavorited_sendFavoriteEventAndDoNotShowSnackbar() {
-        createSubjectWithUseCase(setupFullAnimalUseCase())
+        setupPageWithUseCase(setupFullAnimalUseCase())
         whenever(favoriteRepository.isAnimalFavorited(any())).thenReturn(Single.just(true))
 
         subject.checkFavorite()
@@ -152,7 +168,7 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun checkFavorite_animalIdPresentAnimalIsNotFavorited_sendNotFavoriteEventAndDoNotShowSnackbar() {
-        createSubjectWithUseCase(setupFullAnimalUseCase())
+        setupPageWithUseCase(setupFullAnimalUseCase())
         whenever(favoriteRepository.isAnimalFavorited(any())).thenReturn(Single.just(false))
 
         subject.checkFavorite()
@@ -164,7 +180,7 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun doFavorite_animalIdNull_doNothing() {
-        createSubject()
+        subject.setupPage()
 
         subject.changeFavorite(true)
 
@@ -174,7 +190,7 @@ class AnimalDetailsViewModelTest {
     @Test
     fun doFavorite_animalIdNotNull_favoriteAnimalAndShowFavorite() {
         val useCase = setupFullAnimalUseCase()
-        createSubjectWithUseCase(useCase)
+        setupPageWithUseCase(useCase)
         whenever(favoriteRepository.favoriteAnimal(any())).thenReturn(Completable.complete())
 
         subject.changeFavorite(true)
@@ -186,7 +202,7 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun doUnfavorite_animalIdNull_doNothing() {
-        createSubject()
+        subject.setupPage()
 
         subject.changeFavorite(false)
 
@@ -196,7 +212,7 @@ class AnimalDetailsViewModelTest {
     @Test
     fun doUnfavorite_animalIdNotNull_unfavoriteAnimalAndShowNotFavorite() {
         val useCase = setupFullAnimalUseCase()
-        createSubjectWithUseCase(useCase)
+        setupPageWithUseCase(useCase)
         whenever(favoriteRepository.unfavoriteAnimal(useCase.animal)).thenReturn(Completable.complete())
 
         subject.changeFavorite(false)
@@ -204,6 +220,81 @@ class AnimalDetailsViewModelTest {
         verify(favoriteRepository).unfavoriteAnimal(useCase.animal)
         verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.NOT_FAVORITE)
         verify(eventBus) += SnackbarEvent(subject, R.string.unfavorite_snackbar_message)
+    }
+
+    @Test
+    fun updateShelter_allFieldsPresent_setsFieldsAndGetsDistance() {
+        val shelter: Shelter = mock {
+            on { name }.thenReturn("name")
+            on { formattedAddress }.thenReturn("address")
+            on { phone }.thenReturn("phone")
+            on { email }.thenReturn("email")
+        }
+        whenever(shelterRepository.fetchShelter(any())).thenReturn(Observable.just(shelter))
+        whenever(locationHelper.getCurrentDistanceToContactInfo(any())).thenReturn(Observable.never())
+
+        setupPageWithUseCase(setupFullAnimalUseCase())
+
+        subject.apply {
+            assertThat(contactName.get()).isEqualTo("name")
+            assertThat(contactAddress.get()).isEqualTo("address")
+            assertThat(contactPhone.get()).isEqualTo("phone")
+            assertThat(contactEmail.get()).isEqualTo("email")
+            assertThat(partialContact.get()).isFalse()
+            assertThat(contactPhoneVisibility.get()).isTrue()
+            assertThat(contactEmailVisibility.get()).isTrue()
+        }
+        verify(locationHelper).getCurrentDistanceToContactInfo(shelter)
+    }
+
+    @Test
+    fun updateShelter_missingFields_setsFields() {
+        val shelter: Shelter = mock {
+            on { name }.thenReturn(null)
+            on { formattedAddress }.thenReturn("address")
+            on { phone }.thenReturn(null)
+            on { email }.thenReturn(null)
+        }
+        whenever(shelterRepository.fetchShelter(any())).thenReturn(Observable.just(shelter))
+        whenever(locationHelper.getCurrentDistanceToContactInfo(any())).thenReturn(Observable.never())
+
+        setupPageWithUseCase(setupFullAnimalUseCase())
+
+        subject.apply {
+            assertThat(contactAddress.get()).isEqualTo("address")
+            assertThat(contactPhoneVisibility.get()).isFalse()
+            assertThat(contactEmailVisibility.get()).isFalse()
+        }
+    }
+
+    @Test
+    fun updateShelter_distanceNegativeOne_setsTextToEmpty() {
+        whenever(shelterRepository.fetchShelter(any())).thenReturn(Observable.just(mock()))
+        whenever(locationHelper.getCurrentDistanceToContactInfo(any())).thenReturn(Observable.just(-1))
+
+        setupPageWithUseCase(setupFullAnimalUseCase())
+
+        assertThat(subject.contactDistance.get()).isEqualTo("")
+    }
+
+    @Test
+    fun updateShelter_distanceZero_setsTextToLessThanOne() {
+        whenever(shelterRepository.fetchShelter(any())).thenReturn(Observable.just(mock()))
+        whenever(locationHelper.getCurrentDistanceToContactInfo(any())).thenReturn(Observable.just(0))
+
+        setupPageWithUseCase(setupFullAnimalUseCase())
+
+        assertThat(subject.contactDistance.get()).isEqualTo("< 1 mile")
+    }
+
+    @Test
+    fun updateShelter_distanceOverZero_setsTextToPluralsEntry() {
+        whenever(shelterRepository.fetchShelter(any())).thenReturn(Observable.just(mock()))
+        whenever(locationHelper.getCurrentDistanceToContactInfo(any())).thenReturn(Observable.just(1))
+
+        setupPageWithUseCase(setupFullAnimalUseCase())
+
+        assertThat(subject.contactDistance.get()).isEqualTo("plural miles")
     }
 
     private fun setupFullAnimalUseCase(): AnimalDetailsUseCase {
@@ -225,12 +316,8 @@ class AnimalDetailsViewModelTest {
         }
     }
 
-    private fun createSubjectWithUseCase(useCase: AnimalDetailsUseCase?) {
+    private fun setupPageWithUseCase(useCase: AnimalDetailsUseCase?) {
         whenever(dataStore[AnimalDetailsUseCase::class]).thenReturn(useCase)
-        createSubject()
-    }
-
-    private fun createSubject() {
-        subject = AnimalDetailsViewModel(dataStore, viewPagerAdapter, imagesPagerAdapter, resourceProvider, favoriteRepository, eventBus)
+        subject.setupPage()
     }
 }

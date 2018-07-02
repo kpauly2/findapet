@@ -55,7 +55,7 @@ constructor(private val dataStore: TransientDataStore,
                 .subscribe({
                     it.shelterList
                             ?.also { this.shelterList = it }
-                            ?.map { LatLng(it.latitude, it.longitude) }
+                            ?.map { LatLng(it.latitude!!, it.longitude!!) }
                             ?.also(mapWrapper::zoomToFitPoints)
                             ?.forEach(mapWrapper::addShelterMarker)
                 }, Throwable::printStackTrace)
@@ -75,7 +75,7 @@ constructor(private val dataStore: TransientDataStore,
     private fun showShelterDetails(latLng: LatLng) {
         shelterForLatLng(latLng)?.run {
             selectedShelterName.set(name)
-            selectedShelterAddress.set(formattedAddress())
+            selectedShelterAddress.set(formattedAddress)
             shelterDetailsVisibility.set(true)
         }
     }
@@ -88,7 +88,4 @@ constructor(private val dataStore: TransientDataStore,
         return shelterList?.find { it.latitude == latLng.latitude && it.longitude == latLng.longitude }
     }
 
-    private fun Shelter.formattedAddress(): String {
-        return "${address1?.let { "$it${address2?.let { " $it" } ?: ""}\n" } ?: ""}$city, $state $zip"
-    }
 }

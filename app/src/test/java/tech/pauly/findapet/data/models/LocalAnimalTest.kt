@@ -10,7 +10,6 @@ import tech.pauly.findapet.shared.ResourceProvider
 class LocalAnimalTest {
 
     private val resourceProvider: ResourceProvider = mock()
-    private val contact: Contact = mock()
 
     private var subject = LocalAnimal()
 
@@ -63,7 +62,7 @@ class LocalAnimalTest {
 
     @Test
     fun fromInternalAnimal_assignsBasicValuesFromInternetAnimal() {
-        val internetAnimal = setupInternetAnimal(contact)
+        val internetAnimal = setupInternetAnimal()
 
         val observer = subject.fromInternetAnimal(internetAnimal, resourceProvider).test()
 
@@ -78,14 +77,15 @@ class LocalAnimalTest {
         assertThat(value._sex).isEqualTo("sex")
         assertThat(value._size).isEqualTo("size")
         assertThat(value._options).isEqualTo(listOf("options"))
-        assertThat(value.contact).isEqualTo(contact)
+        assertThat(value.contact).isEqualToComparingFieldByField(Shelter().apply { id = "shelterid" })
+        assertThat(value.contact.id).isEqualTo("shelterid")
         assertThat(value.shelterPetId).isEqualTo("shelterpetid")
         assertThat(value.description).isEqualTo("description")
     }
 
     @Test
     fun fromInternalAnimal_photoUrlListNull_setPhotoListNull() {
-        val internetAnimal = setupInternetAnimal(contact)
+        val internetAnimal = setupInternetAnimal()
 
         val observer = subject.fromInternetAnimal(internetAnimal, resourceProvider).test()
 
@@ -109,7 +109,7 @@ class LocalAnimalTest {
             on { size }.thenReturn(PhotoSize.LARGE)
             on { url }.thenReturn("photo6.jpg")
         }
-        val internetAnimal = setupInternetAnimal(contact)
+        val internetAnimal = setupInternetAnimal()
         internetAnimal.media = mock {
             on { photoList }.thenReturn(listOf(photo5, photo6))
         }
@@ -124,7 +124,7 @@ class LocalAnimalTest {
         assertThat(value.photoList).isEqualTo(listOf("local/10-0.png", "local/10-1.png"))
     }
 
-    private fun setupInternetAnimal(contact: Contact): InternetAnimal {
+    private fun setupInternetAnimal(): InternetAnimal {
         return InternetAnimal().apply {
             id = 10
             shelterId = "shelterid"
@@ -136,7 +136,7 @@ class LocalAnimalTest {
             _sex = "sex"
             _size = "size"
             _options = listOf("options")
-            this.contact = contact
+            this.contact = Shelter().apply { id = "shelterid" }
             shelterPetId = "shelterpetid"
             description = "description"
             media = null

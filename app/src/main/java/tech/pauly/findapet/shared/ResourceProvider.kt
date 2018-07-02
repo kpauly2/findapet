@@ -3,6 +3,7 @@ package tech.pauly.findapet.shared
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.support.annotation.PluralsRes
 import android.support.annotation.StringRes
 import com.squareup.picasso.Picasso
 import tech.pauly.findapet.dependencyinjection.ForApplication
@@ -24,6 +25,10 @@ internal constructor(@ForApplication private val context: Context) {
 
     open fun getString(@StringRes stringId: Int, vararg formatArgs: Any): String {
         return context.getString(stringId, *formatArgs)
+    }
+
+    open fun getQuantityString(@PluralsRes stringId: Int, quantity: Int): String {
+        return context.resources.getQuantityString(stringId, quantity, quantity)
     }
 
     open fun getBitmapFromUrl(url: String): Bitmap {

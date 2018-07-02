@@ -63,4 +63,9 @@
         <item name="android:fontFamily">@font/quicksand_medium</item>
         <item name="android:textSize">30sp</item>
     </style>
+
+    <style name="FontStrongTiny" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/quicksand_bold</item>
+        <item name="android:textSize">11sp</item>
+    </style>
 </resources>

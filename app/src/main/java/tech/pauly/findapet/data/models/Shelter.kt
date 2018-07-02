@@ -1,60 +1,65 @@
 package tech.pauly.findapet.data.models
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
+@Entity
 @Root(name = "shelter", strict = false)
 open class Shelter {
 
-    @field:Element
+    @PrimaryKey
+    @field:Element(required = false)
     open lateinit var id: String
-        protected set
 
-    @field:Element
-    open lateinit var name: String
-        protected set
+    @field:Element(required = false)
+    open var name: String? = null
 
     @field:Element(required = false)
     open var address1: String? = null
-        protected set
 
     @field:Element(required = false)
     open var address2: String? = null
-        protected set
-
-    @field:Element
-    open lateinit var city: String
-        protected set
-
-    @field:Element
-    open lateinit var state: String
-        protected set
-
-    @field:Element
-    open lateinit var zip: String
-        protected set
-
-    @field:Element
-    open lateinit var country: String
-        protected set
-
-    @field:Element
-    open var latitude: Double = 0.0
-        protected set
-
-    @field:Element
-    open var longitude: Double = 0.0
-        protected set
 
     @field:Element(required = false)
-    open lateinit var phone: String
-        protected set
+    open var city: String? = null
 
     @field:Element(required = false)
-    open lateinit var fax: String
-        protected set
+    open var state: String? = null
 
     @field:Element(required = false)
-    open lateinit var email: String
-        protected set
+    open var zip: String? = null
+
+    @field:Element(required = false)
+    open var country: String? = null
+
+    @field:Element(required = false)
+    open var latitude: Double? = null
+
+    @field:Element(required = false)
+    open var longitude: Double? = null
+
+    @field:Element(required = false)
+    open var phone: String? = null
+
+    @field:Element(required = false)
+    open var fax: String? = null
+
+    @field:Element(required = false)
+    open var email: String? = null
+
+    open val geocodingAddress: String?
+        get() {
+            return if (city == null || state == null) {
+                "$zip"
+            } else if (address1 != null) {
+                "$address1 $city, $state"
+            } else {
+                "$city, $state"
+            }
+        }
+
+    open val formattedAddress: String
+        get() = "${address1?.let { "$it${address2?.let { " $it" } ?: ""}\n" } ?: ""}$city, $state $zip"
 }

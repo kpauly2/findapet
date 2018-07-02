@@ -14,7 +14,7 @@ import io.reactivex.subjects.BehaviorSubject
 import tech.pauly.findapet.BuildConfig
 import tech.pauly.findapet.data.ObservableHelper
 import tech.pauly.findapet.data.PetfinderException
-import tech.pauly.findapet.data.models.Contact
+import tech.pauly.findapet.data.models.Shelter
 import tech.pauly.findapet.data.models.StatusCode
 import tech.pauly.findapet.dependencyinjection.ForApplication
 import java.io.IOException
@@ -47,7 +47,7 @@ constructor(private val observableHelper: ObservableHelper,
         return locationSubject
     }
 
-    open fun getCurrentDistanceToContactInfo(contactInfo: Contact?): Observable<Int> {
+    open fun getCurrentDistanceToContactInfo(contactInfo: Shelter?): Observable<Int> {
         return locationSubject.map { address -> calculateDistanceBetween(address, contactInfo) }
                 .compose(observableHelper.applyObservableSchedulers())
     }
@@ -60,34 +60,18 @@ constructor(private val observableHelper: ObservableHelper,
         }
     }
 
-    private fun calculateDistanceBetween(userAddress: Address, contactInfo: Contact?): Int? {
+    private fun calculateDistanceBetween(userAddress: Address, contactInfo: Shelter?): Int? {
         val distance = -1
         if (contactInfo == null) {
             return distance
         }
         return try {
-            val contactAddressName: String? = parseContactInfo(contactInfo)
-            val petAddress = locationWrapper.getAddressFromName(contactAddressName)
+            val petAddress = locationWrapper.getAddressFromName(contactInfo.geocodingAddress)
             locationWrapper.locationBetweenAddresses(userAddress, petAddress)
         } catch (e: IOException) {
             e.printStackTrace()
             distance
         }
-    }
-
-    @VisibleForTesting
-    fun parseContactInfo(contactInfo: Contact): String? {
-        var contactAddressName: String? = ""
-        if (contactInfo.city != null && contactInfo.state != null) {
-            contactAddressName = if (contactInfo.address1 != null) {
-                "${contactInfo.address1} ${contactInfo.city}, ${contactInfo.state}"
-            } else {
-                "${contactInfo.city}, ${contactInfo.state}"
-            }
-        } else if (contactInfo.zip != null) {
-            contactAddressName = contactInfo.zip
-        }
-        return contactAddressName
     }
 }
 

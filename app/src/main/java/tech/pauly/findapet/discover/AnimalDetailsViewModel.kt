@@ -5,10 +5,14 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import android.view.View
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.FavoriteRepository
-import tech.pauly.findapet.data.models.*
+import tech.pauly.findapet.data.ShelterRepository
+import tech.pauly.findapet.data.models.Animal
+import tech.pauly.findapet.data.models.Option
 import tech.pauly.findapet.shared.BaseViewModel
+import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.ResourceProvider
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
@@ -19,12 +23,14 @@ import tech.pauly.findapet.shared.events.ViewEventBus
 import javax.inject.Inject
 
 class AnimalDetailsViewModel @Inject
-internal constructor(dataStore: TransientDataStore,
-                     val detailsPagerAdapter: AnimalDetailsViewPagerAdapter,
+internal constructor(val detailsPagerAdapter: AnimalDetailsViewPagerAdapter,
                      val imagesPagerAdapter: AnimalImagesPagerAdapter,
+                     private val dataStore: TransientDataStore,
                      private val resourceProvider: ResourceProvider,
                      private val favoriteRepository: FavoriteRepository,
-                     private val eventBus: ViewEventBus) : BaseViewModel() {
+                     private val eventBus: ViewEventBus,
+                     private val shelterRepository: ShelterRepository,
+                     private val locationHelper: LocationHelper) : BaseViewModel() {
 
     var name = ObservableField("")
     var age = ObservableInt(R.string.missing)
@@ -38,10 +44,19 @@ internal constructor(dataStore: TransientDataStore,
     var imagesPageLimit = ObservableInt(4)
     var imagesCount = ObservableInt(0)
     var currentImagePosition = ObservableInt(0)
+    var contactName = ObservableField("")
+    var contactAddress = ObservableField("")
+    var contactPhone = ObservableField("")
+    var contactEmail = ObservableField("")
+    var contactDistance = ObservableField("")
+    var contactPhoneVisibility = ObservableBoolean(false)
+    var contactEmailVisibility = ObservableBoolean(false)
+    var partialContact = ObservableBoolean(false)
 
     private var animal: Animal? = null
 
-    init {
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun setupPage() {
         detailsPagerAdapter.setViewModel(this)
 
         dataStore[AnimalDetailsUseCase::class]?.let {
@@ -55,6 +70,7 @@ internal constructor(dataStore: TransientDataStore,
             setPhotos(animal.photoUrlList)
             setOptions(animal.options)
             setDescription(animal.description)
+            updateShelter(animal)
             this.animal = animal
         }
     }
@@ -68,16 +84,28 @@ internal constructor(dataStore: TransientDataStore,
         }
     }
 
+    fun imagePageChange(position: Int) {
+        currentImagePosition.set(position)
+    }
+
+    fun clickAddress(v: View) {
+        //TODO: https://www.pivotaltracker.com/story/show/157158656
+    }
+
+    fun clickPhone(v: View) {
+        //TODO: https://www.pivotaltracker.com/story/show/157158656
+    }
+
+    fun clickEmail(v: View) {
+        //TODO: https://www.pivotaltracker.com/story/show/157158656
+    }
+
     private fun showFavoriteInOptions(favorited: Boolean) {
         eventBus += OptionsMenuEvent(this, if (favorited) OptionsMenuState.FAVORITE else OptionsMenuState.NOT_FAVORITE)
     }
 
     private fun showFavoriteSnackbar(favorited: Boolean) {
         eventBus += SnackbarEvent(this, if (favorited) R.string.favorite_snackbar_message else R.string.unfavorite_snackbar_message)
-    }
-
-    fun imagePageChange(position: Int) {
-        currentImagePosition.set(position)
     }
 
     internal fun changeFavorite(favorite: Boolean) {
@@ -116,5 +144,25 @@ internal constructor(dataStore: TransientDataStore,
             imagesCount.set(it.size)
             imagesPagerAdapter.setAnimalImages(it)
         }
+    }
+
+    private fun updateShelter(animal: Animal) {
+        shelterRepository.fetchShelter(animal)
+                .flatMap {
+                    this.partialContact.set(it.name == null)
+                    contactName.set(it.name)
+                    contactAddress.set(it.formattedAddress)
+                    contactPhoneVisibility.set(it.phone != null)
+                    contactPhone.set(it.phone)
+                    contactEmailVisibility.set(it.email != null)
+                    contactEmail.set(it.email)
+                    locationHelper.getCurrentDistanceToContactInfo(it)
+                }.subscribe({
+                    contactDistance.set(when (it) {
+                        -1 -> resourceProvider.getString(R.string.empty_string)
+                        0 -> resourceProvider.getString(R.string.distance_less_than_one)
+                        else -> resourceProvider.getQuantityString(R.plurals.distance, it)
+                    })
+                }, Throwable::printStackTrace)
     }
 }
