@@ -6,6 +6,10 @@
         <item name="colorAccent">@color/purpleVeryLight</item>
     </style>
 
+    <style name="LauncherTheme" parent="AppTheme">
+        <item name="android:background">@drawable/background_launcher</item>
+    </style>
+
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/white</item>
     </style>

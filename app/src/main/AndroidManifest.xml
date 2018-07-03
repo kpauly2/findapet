@@ -20,14 +20,20 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".shared.MainActivity"
-            android:launchMode="singleTop"
+        <activity android:name=".shared.LauncherActivity"
+            android:theme="@style/LauncherTheme"
             android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".shared.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".discover.AnimalDetailsActivity"
