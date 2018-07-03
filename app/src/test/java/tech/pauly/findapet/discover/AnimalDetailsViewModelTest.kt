@@ -1,5 +1,7 @@
 package tech.pauly.findapet.discover
 
+import android.content.Intent
+import android.net.Uri
 import com.nhaarman.mockito_kotlin.*
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -16,10 +18,7 @@ import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.ResourceProvider
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
-import tech.pauly.findapet.shared.events.OptionsMenuEvent
-import tech.pauly.findapet.shared.events.OptionsMenuState
-import tech.pauly.findapet.shared.events.SnackbarEvent
-import tech.pauly.findapet.shared.events.ViewEventBus
+import tech.pauly.findapet.shared.events.*
 import java.util.*
 
 class AnimalDetailsViewModelTest {
@@ -224,13 +223,7 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun updateShelter_allFieldsPresent_setsFieldsAndGetsDistance() {
-        val shelter: Shelter = mock {
-            on { name }.thenReturn("name")
-            on { formattedAddress }.thenReturn("address")
-            on { phone }.thenReturn("phone")
-            on { email }.thenReturn("email")
-        }
-        whenever(shelterRepository.fetchShelter(any())).thenReturn(Observable.just(shelter))
+        val shelter: Shelter = getFullShelterFromNetwork()
         whenever(locationHelper.getCurrentDistanceToContactInfo(any())).thenReturn(Observable.never())
 
         setupPageWithUseCase(setupFullAnimalUseCase())
@@ -295,6 +288,85 @@ class AnimalDetailsViewModelTest {
         setupPageWithUseCase(setupFullAnimalUseCase())
 
         assertThat(subject.contactDistance.get()).isEqualTo("plural miles")
+    }
+
+    @Test
+    fun clickAddress_contactHasLasLatLong_launchesMapWithLatLongAndAddress() {
+        whenever(locationHelper.getCurrentDistanceToContactInfo(any())).thenReturn(Observable.never())
+        getFullShelterFromNetwork()
+        setupPageWithUseCase(setupFullAnimalUseCase())
+
+        subject.clickAddress(mock())
+
+        val expectedIntent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:40,-80?q=address+and+city"))
+        verify(eventBus) += check {
+            assertThat((it as ActivityEvent).customIntent).isEqualToComparingFieldByField(expectedIntent)
+        }
+    }
+
+    @Test
+    fun clickAddress_contactHasNoLasLatLong_launchesMapWithAddress() {
+        val shelter: Shelter = mock {
+            on { formattedAddress }.thenReturn("address and city")
+            on { latitude }.thenReturn(null)
+            on { longitude }.thenReturn(null)
+        }
+        whenever(shelterRepository.fetchShelter(any())).thenReturn(Observable.just(shelter))
+        whenever(locationHelper.getCurrentDistanceToContactInfo(any())).thenReturn(Observable.never())
+        setupPageWithUseCase(setupFullAnimalUseCase())
+
+        subject.clickAddress(mock())
+
+        val expectedIntent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=address+and+city"))
+        verify(eventBus) += check {
+            assertThat((it as ActivityEvent).customIntent).isEqualToComparingFieldByField(expectedIntent)
+        }
+    }
+
+    @Test
+    fun clickPhone_launchesDialerActivityWithContactPhone() {
+        whenever(locationHelper.getCurrentDistanceToContactInfo(any())).thenReturn(Observable.never())
+        getFullShelterFromNetwork()
+        setupPageWithUseCase(setupFullAnimalUseCase())
+
+        subject.clickPhone(mock())
+
+        val expectedIntent = Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:phone")
+        }
+        verify(eventBus) += check {
+            assertThat((it as ActivityEvent).customIntent).isEqualToComparingFieldByField(expectedIntent)
+        }
+    }
+
+    @Test
+    fun clickEmail_launchEmailWithContactEmailAndPetName() {
+        whenever(locationHelper.getCurrentDistanceToContactInfo(any())).thenReturn(Observable.never())
+        getFullShelterFromNetwork()
+        setupPageWithUseCase(setupFullAnimalUseCase())
+
+        subject.clickEmail(mock())
+
+        val expectedIntent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:email")
+            putExtra(Intent.EXTRA_SUBJECT, "Interested in adoption - name")
+        }
+        verify(eventBus) += check {
+            assertThat((it as ActivityEvent).customIntent).isEqualToComparingFieldByField(expectedIntent)
+        }
+    }
+
+    private fun getFullShelterFromNetwork(): Shelter {
+        val shelter: Shelter = mock {
+            on { name }.thenReturn("name")
+            on { formattedAddress }.thenReturn("address")
+            on { phone }.thenReturn("phone")
+            on { email }.thenReturn("email")
+            on { latitude }.thenReturn(40.0)
+            on { longitude }.thenReturn(-80.0)
+        }
+        whenever(shelterRepository.fetchShelter(any())).thenReturn(Observable.just(shelter))
+        return shelter
     }
 
     private fun setupFullAnimalUseCase(): AnimalDetailsUseCase {

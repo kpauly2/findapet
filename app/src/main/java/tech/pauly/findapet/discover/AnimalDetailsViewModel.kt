@@ -2,10 +2,13 @@ package tech.pauly.findapet.discover
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
+import android.content.Intent
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import android.net.Uri
 import android.view.View
+import com.google.android.gms.maps.model.LatLng
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.FavoriteRepository
 import tech.pauly.findapet.data.ShelterRepository
@@ -16,10 +19,7 @@ import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.ResourceProvider
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
-import tech.pauly.findapet.shared.events.OptionsMenuEvent
-import tech.pauly.findapet.shared.events.OptionsMenuState
-import tech.pauly.findapet.shared.events.SnackbarEvent
-import tech.pauly.findapet.shared.events.ViewEventBus
+import tech.pauly.findapet.shared.events.*
 import javax.inject.Inject
 
 class AnimalDetailsViewModel @Inject
@@ -54,6 +54,7 @@ internal constructor(val detailsPagerAdapter: AnimalDetailsViewPagerAdapter,
     var partialContact = ObservableBoolean(false)
 
     private var animal: Animal? = null
+    private var latLng: LatLng? = null
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun setupPage() {
@@ -89,15 +90,32 @@ internal constructor(val detailsPagerAdapter: AnimalDetailsViewPagerAdapter,
     }
 
     fun clickAddress(v: View) {
-        //TODO: https://www.pivotaltracker.com/story/show/157158656
+        val uriString = "geo:" + if (latLng != null) {
+            "${latLng?.latitude},${latLng?.longitude}"
+        } else {
+            "0,0"
+        } + "?q=${Uri.encode(contactAddress.get())}"
+
+        eventBus += ActivityEvent(this,
+                customIntent = Intent(Intent.ACTION_VIEW,
+                        Uri.parse(uriString)))
     }
 
     fun clickPhone(v: View) {
-        //TODO: https://www.pivotaltracker.com/story/show/157158656
+        eventBus += ActivityEvent(this,
+                customIntent = Intent(Intent.ACTION_DIAL).apply {
+                    data = Uri.parse("tel:${contactPhone.get()}")
+                })
     }
 
     fun clickEmail(v: View) {
-        //TODO: https://www.pivotaltracker.com/story/show/157158656
+        eventBus += ActivityEvent(this,
+                customIntent = Intent(Intent.ACTION_SENDTO).apply {
+                    type = "text/plain"
+                    data = Uri.parse("mailto:${contactEmail.get()}")
+                    flags += Intent.FLAG_ACTIVITY_NEW_TASK
+                    putExtra(Intent.EXTRA_SUBJECT, "Interested in adoption - ${animal?.name}")
+                })
     }
 
     private fun showFavoriteInOptions(favorited: Boolean) {
@@ -156,6 +174,9 @@ internal constructor(val detailsPagerAdapter: AnimalDetailsViewPagerAdapter,
                     contactPhone.set(it.phone)
                     contactEmailVisibility.set(it.email != null)
                     contactEmail.set(it.email)
+                    if (it.latitude != null && it.longitude != null) {
+                        latLng = LatLng(it.latitude!!, it.longitude!!)
+                    }
                     locationHelper.getCurrentDistanceToContactInfo(it)
                 }.subscribe({
                     contactDistance.set(when (it) {

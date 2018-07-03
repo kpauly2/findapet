@@ -43,6 +43,7 @@ class AnimalDetailsActivity : BaseActivity() {
 
         viewEvents += eventBus.optionsMenu(AnimalDetailsViewModel::class).subscribe(this::optionsMenuEvent)
         viewEvents += eventBus.snackbar(AnimalDetailsViewModel::class).subscribe(this::snackbarEvent)
+        viewEvents += eventBus.activity(AnimalDetailsViewModel::class).subscribe(this::activityEvent)
 
         return viewEvents
     }
