@@ -31,6 +31,9 @@ class AnimalDetailsViewModelTest {
         on { getString(R.string.altered) }.thenReturn("Altered")
         on { getString(R.string.house_broken) }.thenReturn("House Broken")
         on { getString(Age.ADULT.formattedName) }.thenReturn("Adult")
+        on { getString(R.string.empty_string) }.thenReturn("")
+        on { getString(R.string.distance_less_than_one) }.thenReturn("< 1 mile")
+        on { getQuantityString(eq(R.plurals.distance), any()) }.thenReturn("plural miles")
     }
     private val favoriteRepository: FavoriteRepository = mock()
     private val eventBus: ViewEventBus = mock()
@@ -42,9 +45,6 @@ class AnimalDetailsViewModelTest {
     @Before
     fun setup() {
         whenever(shelterRepository.fetchShelter(any())).thenReturn(Observable.never())
-        whenever(resourceProvider.getString(R.string.empty_string)).thenReturn("")
-        whenever(resourceProvider.getString(R.string.distance_less_than_one)).thenReturn("< 1 mile")
-        whenever(resourceProvider.getQuantityString(eq(R.plurals.distance), any())).thenReturn("plural miles")
 
         subject = AnimalDetailsViewModel(viewPagerAdapter, imagesPagerAdapter, dataStore, resourceProvider, favoriteRepository, eventBus, shelterRepository, locationHelper)
     }

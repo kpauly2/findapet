@@ -37,7 +37,6 @@ internal constructor(private val database: FavoriteDatabase,
                             .compose(observableHelper.applyCompletableSchedulers())
                             .mergeWith(shelterRepository.insertShelterRecordForAnimal(it))
                 }
-                .compose(observableHelper.applyCompletableSchedulers())
     }
 
     open fun unfavoriteAnimal(animal: Animal): Completable {
@@ -48,7 +47,6 @@ internal constructor(private val database: FavoriteDatabase,
                             .compose(observableHelper.applyCompletableSchedulers())
                             .mergeWith(deleteShelterIfNecessary(it, animal))
                 }
-                .compose(observableHelper.applyCompletableSchedulers())
     }
 
     open fun getFavoritedAnimals(): Observable<List<LocalAnimal>> {

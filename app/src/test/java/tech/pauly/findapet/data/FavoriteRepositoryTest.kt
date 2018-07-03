@@ -83,7 +83,7 @@ class FavoriteRepositoryTest {
         verify(shelterRepository).insertShelterRecordForAnimal(check {
             assertThat(it.id).isEqualTo(10)
         })
-        verify(observableHelper, times(2)).applyCompletableSchedulers()
+        verify(observableHelper).applyCompletableSchedulers()
     }
 
     @Test
@@ -100,7 +100,7 @@ class FavoriteRepositoryTest {
         verify(shelterRepository).insertShelterRecordForAnimal(check {
             assertThat(it.id).isEqualTo(10)
         })
-        verify(observableHelper, times(2)).applyCompletableSchedulers()
+        verify(observableHelper).applyCompletableSchedulers()
     }
 
     @Test
@@ -119,7 +119,7 @@ class FavoriteRepositoryTest {
         verify(favoriteDao).delete(10)
         verify(animal).deleteLocalPhotos(resourceProvider)
         verify(shelterRepository).deleteShelterIfNecessary(listOf("10"), "20")
-        verify(observableHelper, times(2)).applyCompletableSchedulers()
+        verify(observableHelper).applyCompletableSchedulers()
     }
 
     @Test
