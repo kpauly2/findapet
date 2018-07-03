@@ -57,9 +57,9 @@ sealed class Animal {
     open val options: List<Option>
         get() = _options.map { Option.fromString(it) }
 
-    @Ignore //TODO: Don't ignore https://www.pivotaltracker.com/story/show/157158560
+    @Ignore
     @field:Element
-    open lateinit var contact: Contact
+    open lateinit var contact: Shelter
         internal set
 
     @field:Element(required = false)
@@ -139,6 +139,7 @@ open class LocalAnimal(@PrimaryKey(autoGenerate = true)
         this._size = other._size
         this._options = other._options
         this.contact = other.contact
+        this.contact.id = other.shelterId
         this.shelterPetId = other.shelterPetId
         this.description = other.description
 

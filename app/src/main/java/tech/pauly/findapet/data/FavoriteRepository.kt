@@ -3,6 +3,8 @@ package tech.pauly.findapet.data
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.functions.BiFunction
+import org.simpleframework.xml.core.Complete
 import tech.pauly.findapet.data.models.Animal
 import tech.pauly.findapet.data.models.InternetAnimal
 import tech.pauly.findapet.data.models.LocalAnimal
@@ -14,7 +16,8 @@ import javax.inject.Singleton
 open class FavoriteRepository @Inject
 internal constructor(private val database: FavoriteDatabase,
                      private val observableHelper: ObservableHelper,
-                     private val resourceProvider: ResourceProvider) {
+                     private val resourceProvider: ResourceProvider,
+                     private val shelterRepository: ShelterRepository) {
 
     open fun isAnimalFavorited(animalId: Int): Single<Boolean> {
         return database.favoriteDao()
@@ -28,18 +31,22 @@ internal constructor(private val database: FavoriteDatabase,
         } else {
             Single.just(animal as LocalAnimal)
         }
-        return save.map { saveLocalAnimal(it) }
-                .compose(observableHelper.applySingleSchedulers())
-                .ignoreElement()
+        return save.compose(observableHelper.applySingleSchedulers())
+                .flatMapCompletable {
+                    Completable.fromCallable { database.favoriteDao().insert(it) }
+                            .compose(observableHelper.applyCompletableSchedulers())
+                            .mergeWith(shelterRepository.insertShelterRecordForAnimal(it))
+                }
     }
 
     open fun unfavoriteAnimal(animal: Animal): Completable {
-        return Single.fromCallable {
-            database.favoriteDao().delete(animalId = animal.id)
-            animal.deleteLocalPhotos(resourceProvider)
-        }
-                .compose(observableHelper.applySingleSchedulers())
-                .ignoreElement()
+        return getFavoritedAnimals()
+                .flatMapCompletable {
+                    animal.deleteLocalPhotos(resourceProvider)
+                    Completable.fromCallable { database.favoriteDao().delete(animal.id) }
+                            .compose(observableHelper.applyCompletableSchedulers())
+                            .mergeWith(deleteShelterIfNecessary(it, animal))
+                }
     }
 
     open fun getFavoritedAnimals(): Observable<List<LocalAnimal>> {
@@ -49,7 +56,7 @@ internal constructor(private val database: FavoriteDatabase,
                 .toObservable()
     }
 
-    private fun saveLocalAnimal(localAnimal: LocalAnimal): Long {
-        return database.favoriteDao().insert(localAnimal)
+    private fun deleteShelterIfNecessary(it: List<LocalAnimal>, animal: Animal): Completable {
+        return shelterRepository.deleteShelterIfNecessary(it.map { it.shelterId }.distinct(), animal.shelterId)
     }
 }

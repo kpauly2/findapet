@@ -29,7 +29,7 @@ class AnimalListItemViewModelTest {
     }
     private val locationHelper: LocationHelper = mock()
 
-    private val contact: Contact = mock()
+    private val contact: Shelter = mock()
     private lateinit var subject: AnimalListItemViewModel
 
     @Before

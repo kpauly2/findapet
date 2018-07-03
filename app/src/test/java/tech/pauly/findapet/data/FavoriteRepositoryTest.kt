@@ -1,9 +1,8 @@
 package tech.pauly.findapet.data
 
-import com.nhaarman.mockito_kotlin.check
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockito_kotlin.*
+import io.reactivex.Completable
+import io.reactivex.CompletableTransformer
 import io.reactivex.Single
 import io.reactivex.SingleTransformer
 import org.assertj.core.api.Assertions.assertThat
@@ -20,15 +19,19 @@ class FavoriteRepositoryTest {
     private val observableHelper: ObservableHelper = mock()
     private val favoriteDao: FavoriteDao = mock()
     private val resourceProvider: ResourceProvider = mock()
+    private val shelterRepository: ShelterRepository = mock()
 
     private lateinit var subject: FavoriteRepository
 
     @Before
     fun setup() {
         whenever(observableHelper.applySingleSchedulers<Any>()).thenReturn(SingleTransformer { it })
+        whenever(observableHelper.applyCompletableSchedulers()).thenReturn(CompletableTransformer { it })
         whenever(database.favoriteDao()).thenReturn(favoriteDao)
+        whenever(shelterRepository.insertShelterRecordForAnimal(any())).thenReturn(Completable.complete())
+        whenever(shelterRepository.deleteShelterIfNecessary(any(), any())).thenReturn(Completable.complete())
 
-        subject = FavoriteRepository(database, observableHelper, resourceProvider)
+        subject = FavoriteRepository(database, observableHelper, resourceProvider, shelterRepository)
     }
 
     @Test
@@ -77,7 +80,10 @@ class FavoriteRepositoryTest {
         verify(favoriteDao).insert(check {
             assertThat(it.id).isEqualTo(10)
         })
-        verify(observableHelper).applySingleSchedulers<Any>()
+        verify(shelterRepository).insertShelterRecordForAnimal(check {
+            assertThat(it.id).isEqualTo(10)
+        })
+        verify(observableHelper).applyCompletableSchedulers()
     }
 
     @Test
@@ -91,13 +97,20 @@ class FavoriteRepositoryTest {
         verify(favoriteDao).insert(check {
             assertThat(it.id).isEqualTo(10)
         })
-        verify(observableHelper).applySingleSchedulers<Any>()
+        verify(shelterRepository).insertShelterRecordForAnimal(check {
+            assertThat(it.id).isEqualTo(10)
+        })
+        verify(observableHelper).applyCompletableSchedulers()
     }
 
     @Test
-    fun unfavoriteAnimal_deleteAnimalFromDatabaseAndAnimalPhotos() {
+    fun unfavoriteAnimal_deleteAnimalAndShelterFromDatabaseAndAnimalPhotos() {
+        val dbAnimal = LocalAnimal().apply { shelterId = "10" }
+        val favoritedAnimals = listOf(dbAnimal, dbAnimal)
+        whenever(favoriteDao.getAll()).thenReturn(Single.just(favoritedAnimals))
         val animal: Animal = mock {
             on { id }.thenReturn(10)
+            on { shelterId }.thenReturn("20")
         }
 
         val observer = subject.unfavoriteAnimal(animal).test()
@@ -105,7 +118,8 @@ class FavoriteRepositoryTest {
         observer.assertComplete()
         verify(favoriteDao).delete(10)
         verify(animal).deleteLocalPhotos(resourceProvider)
-        verify(observableHelper).applySingleSchedulers<Any>()
+        verify(shelterRepository).deleteShelterIfNecessary(listOf("10"), "20")
+        verify(observableHelper).applyCompletableSchedulers()
     }
 
     @Test

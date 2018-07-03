@@ -1,5 +1,6 @@
 package tech.pauly.findapet.data
 
+import io.reactivex.CompletableTransformer
 import io.reactivex.ObservableTransformer
 import io.reactivex.Scheduler
 import io.reactivex.SingleTransformer
@@ -19,6 +20,12 @@ constructor(@IoScheduler private val ioScheduler: Scheduler,
 
     open fun <T> applySingleSchedulers(): SingleTransformer<T, T> {
         return SingleTransformer {
+            it.subscribeOn(ioScheduler).observeOn(mainThreadScheduler)
+        }
+    }
+
+    open fun applyCompletableSchedulers(): CompletableTransformer {
+        return CompletableTransformer {
             it.subscribeOn(ioScheduler).observeOn(mainThreadScheduler)
         }
     }

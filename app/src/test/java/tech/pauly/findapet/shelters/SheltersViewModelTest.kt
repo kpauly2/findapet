@@ -134,54 +134,6 @@ class SheltersViewModelTest {
     }
 
     @Test
-    fun shelterClicked_hasFullAddress_formatsAddress() {
-        shelter1.apply {
-            whenever(address1).thenReturn("address1")
-            whenever(address2).thenReturn("address2")
-            whenever(city).thenReturn("city")
-            whenever(state).thenReturn("state")
-            whenever(zip).thenReturn("zip")
-        }
-        subject.fetchDataAndMoveMap()
-        subject.subscribeToMapEvents()
-
-        shelterClickSubject.onNext(LatLng(10.1, 20.1))
-
-        assertThat(subject.selectedShelterAddress.get()).isEqualTo("address1 address2\ncity, state zip")
-    }
-
-    @Test
-    fun shelterClicked_missingAddress2_formatsAddress() {
-        shelter1.apply {
-            whenever(address1).thenReturn("address1")
-            whenever(city).thenReturn("city")
-            whenever(state).thenReturn("state")
-            whenever(zip).thenReturn("zip")
-        }
-        subject.fetchDataAndMoveMap()
-        subject.subscribeToMapEvents()
-
-        shelterClickSubject.onNext(LatLng(10.1, 20.1))
-
-        assertThat(subject.selectedShelterAddress.get()).isEqualTo("address1\ncity, state zip")
-    }
-
-    @Test
-    fun shelterClicked_missingAddress1_formatsAddress() {
-        shelter1.apply {
-            whenever(city).thenReturn("city")
-            whenever(state).thenReturn("state")
-            whenever(zip).thenReturn("zip")
-        }
-        subject.fetchDataAndMoveMap()
-        subject.subscribeToMapEvents()
-
-        shelterClickSubject.onNext(LatLng(10.1, 20.1))
-
-        assertThat(subject.selectedShelterAddress.get()).isEqualTo("city, state zip")
-    }
-
-    @Test
     fun clickMap_hidesShelterDetails() {
         subject.fetchDataAndMoveMap()
         subject.subscribeToMapEvents()
