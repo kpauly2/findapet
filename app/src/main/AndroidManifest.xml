@@ -20,6 +20,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="ac010aedbee817b616dbe116799e2eb3b2e30599" />
+
         <activity android:name=".shared.LauncherActivity"
             android:theme="@style/LauncherTheme"
             android:screenOrientation="portrait">
