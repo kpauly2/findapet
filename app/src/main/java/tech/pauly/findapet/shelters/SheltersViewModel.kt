@@ -80,6 +80,7 @@ constructor(private val dataStore: TransientDataStore,
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun hideShelterDetails(latLng: LatLng) {
         shelterDetailsVisibility.set(false)
     }

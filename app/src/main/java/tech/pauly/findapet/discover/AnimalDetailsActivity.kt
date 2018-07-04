@@ -21,6 +21,12 @@ class AnimalDetailsActivity : BaseActivity() {
     internal lateinit var eventBus: ViewEventBus
 
     @Inject
+    internal lateinit var detailsPagerAdapter: AnimalDetailsViewPagerAdapter
+
+    @Inject
+    internal lateinit var imagesPagerAdapter: AnimalImagesPagerAdapter
+
+    @Inject
     internal lateinit var viewModel: AnimalDetailsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,13 +35,12 @@ class AnimalDetailsActivity : BaseActivity() {
         val binding = DataBindingUtil.setContentView<ActivityAnimalDetailsBinding>(this, R.layout.activity_animal_details)
         lifecycle.addObserver(viewModel)
         binding.viewModel = viewModel
+        detailsPagerAdapter.viewModel = viewModel
+        binding.animalImagesViewPager.adapter = imagesPagerAdapter
+        binding.animalDetailsViewPager.adapter = detailsPagerAdapter
 
-        setSupportActionBar(findViewById(R.id.toolbar))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        val typeface = ResourcesCompat.getFont(this, R.font.quicksand_bold)
-        binding.collapsingToolbarLayout.setCollapsedTitleTypeface(typeface)
-        binding.collapsingToolbarLayout.setExpandedTitleTypeface(typeface)
+        subscribeToImagesEvents()
+        setupToolbar(binding)
     }
 
     override fun registerViewEvents(): CompositeDisposable? {
@@ -65,5 +70,20 @@ class AnimalDetailsActivity : BaseActivity() {
             else -> throw IllegalStateException("OptionsMenuState $currentMenuState not supported in AnimalDetailsActivity")
         }
         return super.onPrepareOptionsMenu(menu)
+    }
+
+    private fun setupToolbar(binding: ActivityAnimalDetailsBinding) {
+        setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val typeface = ResourcesCompat.getFont(this, R.font.quicksand_bold)
+        binding.collapsingToolbarLayout.setCollapsedTitleTypeface(typeface)
+        binding.collapsingToolbarLayout.setExpandedTitleTypeface(typeface)
+    }
+
+    private fun subscribeToImagesEvents() {
+        viewModel.animalImagesSubject.subscribe({
+            imagesPagerAdapter.setAnimalImages(it)
+        }, Throwable::printStackTrace).onLifecycle()
     }
 }

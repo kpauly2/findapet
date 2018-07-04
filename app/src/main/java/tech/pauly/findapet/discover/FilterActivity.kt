@@ -41,6 +41,7 @@ class FilterActivity : BaseActivity() {
         viewModel.scrollToViewSubject.subscribe(this::scrollToBreedSearch, Throwable::printStackTrace).onLifecycle()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun scrollToBreedSearch(b: Boolean?) {
         val smoothScroller = object : LinearSmoothScroller(this) {
             override fun getVerticalSnapPreference(): Int {

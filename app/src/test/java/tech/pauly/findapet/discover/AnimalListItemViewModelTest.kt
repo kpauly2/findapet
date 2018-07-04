@@ -17,6 +17,7 @@ import tech.pauly.findapet.shared.events.ViewEventBus
 class AnimalListItemViewModelTest {
 
     private val animal: Animal = mock {
+        on { id }.thenReturn(10)
         on { name }.thenReturn("name")
         on { age }.thenReturn(Age.ADULT)
         on { formattedBreedList }.thenReturn("breeds")
@@ -45,6 +46,7 @@ class AnimalListItemViewModelTest {
         createSubject()
 
         subject.also {
+            assertThat(it.id).isEqualTo(10)
             assertThat(it.name.get()).isEqualTo("name")
             assertThat(it.age.get()).isEqualTo("Adult")
             assertThat(it.breeds.get()).isEqualTo("breeds")

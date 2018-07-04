@@ -24,6 +24,8 @@ import tech.pauly.findapet.shared.events.OptionsMenuEvent
 import tech.pauly.findapet.shared.events.OptionsMenuState
 import tech.pauly.findapet.shared.events.ViewEventBus
 import tech.pauly.findapet.shelters.SheltersViewModel
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
 
 class MainActivity : BaseActivity() {
 
@@ -41,6 +43,9 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
+        Fabric.with(this, Crashlytics())
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         lifecycle.addObserver(viewModel)
         binding.viewModel = viewModel

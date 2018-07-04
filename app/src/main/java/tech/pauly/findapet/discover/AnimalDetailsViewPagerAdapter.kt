@@ -15,7 +15,7 @@ import javax.inject.Inject
 open class AnimalDetailsViewPagerAdapter @Inject
 internal constructor(@ForApplication private val context: Context) : PagerAdapter() {
 
-    private var viewModel: AnimalDetailsViewModel? = null
+    var viewModel: AnimalDetailsViewModel? = null
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val inflater = LayoutInflater.from(container.context)
@@ -72,9 +72,5 @@ internal constructor(@ForApplication private val context: Context) : PagerAdapte
 
     override fun isViewFromObject(view: View, obj: Any): Boolean {
         return (obj as? ViewDataBinding)?.root === view
-    }
-
-    open fun setViewModel(viewModel: AnimalDetailsViewModel) {
-        this.viewModel = viewModel
     }
 }

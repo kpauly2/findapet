@@ -109,6 +109,8 @@ open class InternetAnimal : Animal() {
 open class LocalAnimal(@PrimaryKey(autoGenerate = true)
                        open var dbId: Long? = null) : Animal() {
 
+    @Ignore constructor() : this(null)
+
     open var photoList: List<String>? = null
 
     override val photoUrlList: List<String>?
