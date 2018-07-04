@@ -108,6 +108,7 @@ constructor(val listAdapter: AnimalListAdapter,
                 .onLifecycle()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun removeFilterChips(disposable: Disposable) {
         chipList.clear()
     }
@@ -129,6 +130,7 @@ constructor(val listAdapter: AnimalListAdapter,
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun removeLocationChip(disposable: Disposable) {
         locationChip.set(null)
     }

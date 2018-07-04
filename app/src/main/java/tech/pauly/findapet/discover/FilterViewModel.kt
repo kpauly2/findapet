@@ -65,6 +65,7 @@ internal constructor(private val filterRepository: FilterRepository,
         scrollToViewSubject.onNext(true)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun onBreedTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
         val filteredBreedList = masterBreedList.filter {
             it.toLowerCase().contains(text.toString().toLowerCase())
@@ -89,6 +90,7 @@ internal constructor(private val filterRepository: FilterRepository,
         selectedBreed.set(if (view.isToggleChecked) breed else "")
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun saveFilter(v: View) {
         val filter = Filter().apply {
             selectedSex.get()?.let { sex = it }

@@ -148,7 +148,7 @@ fun locationChip(layout: FilterChipListLayout, chip: Chip?) {
 @SuppressLint("ClickableViewAccessibility")
 @BindingAdapter("touchListener")
 fun setFocusChangeListener(view: View, touchListener: TouchListener) {
-    view.setOnTouchListener { v, event ->
+    view.setOnTouchListener { _, event ->
         if (MotionEvent.ACTION_UP == event.action) {
             touchListener.onTouch()
         }

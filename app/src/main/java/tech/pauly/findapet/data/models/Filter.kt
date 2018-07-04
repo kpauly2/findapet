@@ -1,6 +1,7 @@
 package tech.pauly.findapet.data.models
 
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 
 @Entity
@@ -10,6 +11,8 @@ open class Filter(@PrimaryKey(autoGenerate = true)
                   open var age: Age = Age.MISSING,
                   open var size: AnimalSize = AnimalSize.MISSING,
                   open var breed: String = "") {
+
+    @Ignore constructor() : this(null, Sex.MISSING, Age.MISSING, AnimalSize.MISSING, "")
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

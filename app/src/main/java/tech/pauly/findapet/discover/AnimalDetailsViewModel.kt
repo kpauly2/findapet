@@ -88,6 +88,7 @@ internal constructor(private val dataStore: TransientDataStore,
         currentImagePosition.set(position)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun clickAddress(v: View) {
         val uriString = "geo:" + if (latLng != null) {
             "${latLng?.latitude},${latLng?.longitude}"
@@ -100,6 +101,7 @@ internal constructor(private val dataStore: TransientDataStore,
                         Uri.parse(uriString)))
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun clickPhone(v: View) {
         eventBus += ActivityEvent(this,
                 customIntent = Intent(Intent.ACTION_DIAL).apply {
@@ -107,6 +109,7 @@ internal constructor(private val dataStore: TransientDataStore,
                 })
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun clickEmail(v: View) {
         eventBus += ActivityEvent(this,
                 customIntent = Intent(Intent.ACTION_SENDTO).apply {
