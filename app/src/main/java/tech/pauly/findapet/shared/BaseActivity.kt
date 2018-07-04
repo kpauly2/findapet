@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
@@ -76,9 +77,11 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     protected fun snackbarEvent(event: SnackbarEvent) {
-        Snackbar.make(findViewById<View>(android.R.id.content), event.text, Snackbar.LENGTH_SHORT).apply {
-            view.setBackgroundColor(getColor(R.color.purpleStandardDark))
-            view.findViewById<TextView>(android.support.design.R.id.snackbar_text)?.setTextColor(getColor(R.color.white))
+        Snackbar.make(findViewById<View>(android.R.id.content), event.text, Snackbar.LENGTH_SHORT).also { snackbar ->
+            snackbar.view.setBackgroundColor(getColor(R.color.purpleStandardDark))
+            val textView = snackbar.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
+            textView?.setTextColor(getColor(R.color.white))
+            textView?.typeface = ResourcesCompat.getFont(this, R.font.quicksand_medium)
         }.show()
     }
 
