@@ -9,6 +9,7 @@ import android.databinding.ObservableInt
 import android.net.Uri
 import android.view.View
 import com.google.android.gms.maps.model.LatLng
+import io.reactivex.subjects.PublishSubject
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.FavoriteRepository
 import tech.pauly.findapet.data.ShelterRepository
@@ -23,9 +24,7 @@ import tech.pauly.findapet.shared.events.*
 import javax.inject.Inject
 
 class AnimalDetailsViewModel @Inject
-internal constructor(val detailsPagerAdapter: AnimalDetailsViewPagerAdapter,
-                     val imagesPagerAdapter: AnimalImagesPagerAdapter,
-                     private val dataStore: TransientDataStore,
+internal constructor(private val dataStore: TransientDataStore,
                      private val resourceProvider: ResourceProvider,
                      private val favoriteRepository: FavoriteRepository,
                      private val eventBus: ViewEventBus,
@@ -53,13 +52,13 @@ internal constructor(val detailsPagerAdapter: AnimalDetailsViewPagerAdapter,
     var contactEmailVisibility = ObservableBoolean(false)
     var partialContact = ObservableBoolean(false)
 
+    var animalImagesSubject = PublishSubject.create<List<AnimalImageViewModel>>()
+
     private var animal: Animal? = null
     private var latLng: LatLng? = null
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun setupPage() {
-        detailsPagerAdapter.setViewModel(this)
-
         dataStore[AnimalDetailsUseCase::class]?.let {
             val animal = it.animal
             name.set(animal.name)
@@ -160,7 +159,7 @@ internal constructor(val detailsPagerAdapter: AnimalDetailsViewPagerAdapter,
             AnimalImageViewModel(it)
         }?.also {
             imagesCount.set(it.size)
-            imagesPagerAdapter.setAnimalImages(it)
+            animalImagesSubject.onNext(it)
         }
     }
 

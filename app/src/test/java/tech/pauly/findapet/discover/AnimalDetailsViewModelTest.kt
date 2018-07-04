@@ -24,8 +24,6 @@ import java.util.*
 class AnimalDetailsViewModelTest {
 
     private val dataStore: TransientDataStore = mock()
-    private val viewPagerAdapter: AnimalDetailsViewPagerAdapter = mock()
-    private val imagesPagerAdapter: AnimalImagesPagerAdapter = mock()
     private val resourceProvider: ResourceProvider = mock {
         on { getString(R.string.altered) }.thenReturn("Altered")
         on { getString(R.string.house_broken) }.thenReturn("House Broken")
@@ -45,7 +43,7 @@ class AnimalDetailsViewModelTest {
     fun setup() {
         whenever(shelterRepository.fetchShelter(any())).thenReturn(Observable.never())
 
-        subject = AnimalDetailsViewModel(viewPagerAdapter, imagesPagerAdapter, dataStore, resourceProvider, favoriteRepository, eventBus, shelterRepository, locationHelper)
+        subject = AnimalDetailsViewModel(dataStore, resourceProvider, favoriteRepository, eventBus, shelterRepository, locationHelper)
     }
 
     @Test
@@ -97,23 +95,24 @@ class AnimalDetailsViewModelTest {
 
     @Test
     fun onCreate_photoListPresent_addsImagesToPagerAdapter() {
+        val observer = subject.animalImagesSubject.test()
         setupPageWithUseCase(setupFullAnimalUseCase())
 
-        verify(imagesPagerAdapter).setAnimalImages(check {
-            assertThat(it).hasSize(2)
-            assertThat(it[0].imageUrl.get()).isEqualTo("photo1.jpg")
-            assertThat(it[1].imageUrl.get()).isEqualTo("photo2.jpg")
-        })
+        val imageList = observer.values()[0]
+        assertThat(imageList.count()).isEqualTo(2)
+        assertThat(imageList[0].imageUrl.get()).isEqualTo("photo1.jpg")
+        assertThat(imageList[1].imageUrl.get()).isEqualTo("photo2.jpg")
         assertThat(subject.imagesCount.get()).isEqualTo(2)
     }
 
     @Test
     fun onCreate_largeAnimalPhotoNotPresent_addsNoImagesToAdapter() {
+        val observer = subject.animalImagesSubject.test()
         val useCase = setupFullAnimalUseCase()
         whenever(useCase.animal.photoUrlList).thenReturn(null)
         setupPageWithUseCase(useCase)
 
-        verify(imagesPagerAdapter, never()).setAnimalImages(anyList())
+        observer.assertNoValues()
         assertThat(subject.imagesCount.get()).isEqualTo(0)
     }
 
