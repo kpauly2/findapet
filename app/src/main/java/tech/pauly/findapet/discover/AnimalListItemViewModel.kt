@@ -17,6 +17,7 @@ open class AnimalListItemViewModel(private val animal: Animal,
                               private val dataStore: TransientDataStore,
                               resourceProvider: ResourceProvider) : BaseViewModel() {
 
+    open var id: Int = 0
     var name = ObservableField("")
     var imageUrl = ObservableField("")
     var age = ObservableField("")
@@ -25,6 +26,7 @@ open class AnimalListItemViewModel(private val animal: Animal,
 
     init {
         animal.also {
+            id = it.id
             name.set(it.name)
             age.set(resourceProvider.getString(it.age.formattedName))
             breeds.set(it.formattedBreedList)

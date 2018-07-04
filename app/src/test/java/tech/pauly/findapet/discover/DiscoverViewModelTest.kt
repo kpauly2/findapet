@@ -261,4 +261,23 @@ class DiscoverViewModelTest {
         })
         verify(locationHelper).fetchCurrentLocation()
     }
+
+    @Test
+    fun loadMoreAnimals_getsSameAnimalsAgain_loadMoreAnimalsDoesNotFetchAgain() {
+        val animal: InternetAnimal = mock {
+            on { id }.thenReturn(10)
+        }
+        val animalViewModel: AnimalListItemViewModel = mock {
+            on { id }.thenReturn(10)
+        }
+        whenever(animalListResponse.lastOffset).thenReturn(10)
+        whenever(animalListResponse.animalList).thenReturn(listOf(animal))
+        whenever(listAdapter.animalItems).thenReturn(arrayListOf(animalViewModel))
+        subject.requestPermissionToLoad()
+        clearInvocations<AnimalRepository>(animalRepository)
+
+        subject.loadMoreAnimals()
+
+        verify(animalRepository, never()).fetchAnimals(any())
+    }
 }

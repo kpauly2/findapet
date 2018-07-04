@@ -41,6 +41,7 @@ constructor(val listAdapter: AnimalListAdapter,
 
     private var animalType = AnimalType.CAT
     private var lastOffset = 0
+    private var loadMoreAnimals = true
     private var firstLoad = true
 
     private val currentFilter: Observable<Filter>
@@ -87,11 +88,14 @@ constructor(val listAdapter: AnimalListAdapter,
     private fun loadList() {
         listAdapter.clearAnimalItems()
         lastOffset = 0
+        loadMoreAnimals = true
         fetchAnimals()
     }
 
     fun loadMoreAnimals() {
-        fetchAnimals()
+        if (loadMoreAnimals) {
+            fetchAnimals()
+        }
     }
 
     private fun fetchAnimals() {
@@ -146,7 +150,13 @@ constructor(val listAdapter: AnimalListAdapter,
         dataStore += DiscoverErrorUseCase(null)
         lastOffset = animalListResponse.lastOffset
         animalListResponse.animalList?.let { animalList ->
-            listAdapter.animalItems = animalList.map { animalListItemFactory.newInstance(it) } as ArrayList<AnimalListItemViewModel>
+            if (animalList.size > 0
+                    && listAdapter.animalItems.size > 0
+                    && animalList[animalList.size - 1].id == listAdapter.animalItems[listAdapter.animalItems.size - 1].id) {
+                loadMoreAnimals = false
+            } else {
+                listAdapter.animalItems = animalList.map { animalListItemFactory.newInstance(it) } as ArrayList<AnimalListItemViewModel>
+            }
         }
     }
 
