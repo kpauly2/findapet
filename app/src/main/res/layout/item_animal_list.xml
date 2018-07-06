@@ -12,11 +12,13 @@
         <import type="tech.pauly.findapet.utils.BindingAdapters" />
 
         <import type="android.view.View" />
+
+        <import type="tech.pauly.findapet.utils.DrawablePosition" />
     </data>
 
     <android.support.v7.widget.CardView
         android:id="@+id/animal_item_card"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
@@ -45,13 +47,16 @@
 
             <TextView
                 android:id="@+id/animal_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@{viewModel.name}"
                 android:textAppearance="@style/FontLargeHeader"
                 android:textColor="@color/textDark"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:drawablePadding="@dimen/half_margin"
+                app:drawablePosition="@{DrawablePosition.END}"
+                app:dynamicDrawable="@{@drawable/ic_warning}"
+                app:dynamicDrawableVisibility="@{viewModel.warning}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/animal_image"
                 tools:text="Mozart" />

@@ -3,6 +3,7 @@ package tech.pauly.findapet.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.BindingAdapter
+import android.graphics.drawable.Drawable
 import android.support.annotation.IdRes
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
@@ -14,12 +15,17 @@ import android.support.v7.widget.RecyclerView
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import tech.pauly.findapet.R
 
 object BindingAdapters {
     var recyclerItemWidth: Int = 0
+}
+
+enum class DrawablePosition {
+    START, TOP, END, BOTTOM
 }
 
 @BindingAdapter(value = ["navigationItemSelectedListener", "defaultSelectedItem"])
@@ -153,6 +159,20 @@ fun setFocusChangeListener(view: View, touchListener: TouchListener) {
             touchListener.onTouch()
         }
         false
+    }
+}
+
+@BindingAdapter(value = ["dynamicDrawable", "dynamicDrawableVisibility", "drawablePosition"])
+fun toggleDynamicTextViewDrawable(view: TextView, drawable: Drawable, visible: Boolean, position: DrawablePosition) {
+    if (visible) {
+        view.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                if (position == DrawablePosition.START) drawable else null,
+                if (position == DrawablePosition.TOP) drawable else null,
+                if (position == DrawablePosition.END) drawable else null,
+                if (position == DrawablePosition.BOTTOM) drawable else null)
+        view.invalidate()
+    } else {
+        view.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
     }
 }
 

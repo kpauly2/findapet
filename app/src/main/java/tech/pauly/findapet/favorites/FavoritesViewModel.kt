@@ -7,7 +7,6 @@ import android.databinding.ObservableInt
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.AnimalRepository
 import tech.pauly.findapet.data.FavoriteRepository
-import tech.pauly.findapet.data.PetfinderException
 import tech.pauly.findapet.data.models.LocalAnimal
 import tech.pauly.findapet.data.models.StatusCode
 import tech.pauly.findapet.discover.AnimalListAdapter
@@ -43,9 +42,15 @@ internal constructor(val listAdapter: AnimalListAdapter,
         listAdapter.clearAnimalItems()
         favoriteRepository.getFavoritedAnimals()
                 .flatMapIterable { it }
-                .subscribe(this::showAnimal, this::animalFetchFailure) {
-                    refreshing.set(false)
+                .flatMap {
+                    showAnimal(it)
+                    animalRepository.fetchAnimal(it.id)
                 }
+                .subscribe({ responseWrapper ->
+                    responseWrapper.response.header.status?.code?.let {
+                        animalFetchFailure(it, responseWrapper.animalId)
+                    }
+                }, Throwable::printStackTrace) { refreshing.set(false) }
                 .onLifecycle()
     }
 
@@ -53,11 +58,9 @@ internal constructor(val listAdapter: AnimalListAdapter,
         listAdapter.addAnimalItem(animalListItemFactory.newInstance(animal))
     }
 
-    private fun animalFetchFailure(throwable: Throwable) {
-        if ((throwable as? PetfinderException)?.statusCode == StatusCode.PFAPI_ERR_NOENT) {
-            // TODO: show adopted messages: https://www.pivotaltracker.com/story/show/157159241
-        } else {
-            throwable.printStackTrace()
+    private fun animalFetchFailure(statusCode: StatusCode, animalId: Int) {
+        if (statusCode == StatusCode.PFAPI_ERR_UNAUTHORIZED) {
+            listAdapter.markAnimalWarning(animalId)
         }
     }
 }

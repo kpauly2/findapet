@@ -1,9 +1,6 @@
 package tech.pauly.findapet.favorites
 
-import com.nhaarman.mockito_kotlin.check
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockito_kotlin.*
 import io.reactivex.Observable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -11,7 +8,7 @@ import org.junit.Test
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.AnimalRepository
 import tech.pauly.findapet.data.FavoriteRepository
-import tech.pauly.findapet.data.models.LocalAnimal
+import tech.pauly.findapet.data.models.*
 import tech.pauly.findapet.discover.AnimalListAdapter
 import tech.pauly.findapet.discover.AnimalListItemViewModel
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
@@ -29,8 +26,18 @@ class FavoritesViewModelTest {
     private val favoriteRepository: FavoriteRepository = mock()
     private val animalRepository: AnimalRepository = mock()
 
-    private var favorite1: LocalAnimal = mock()
-    private var favorite2: LocalAnimal = mock()
+    private var favorite1: LocalAnimal = mock {
+        on { id }.thenReturn(1)
+    }
+    private var favorite2: LocalAnimal = mock {
+        on { id }.thenReturn(2)
+    }
+    private var favorite3: LocalAnimal = mock {
+        on { id }.thenReturn(3)
+    }
+    private val favoriteVm1: AnimalListItemViewModel = mock()
+    private val favoriteVm2: AnimalListItemViewModel = mock()
+    private val favoriteVm3: AnimalListItemViewModel = mock()
     private lateinit var subject: FavoritesViewModel
 
     @Before
@@ -60,16 +67,46 @@ class FavoritesViewModelTest {
     }
 
     @Test
-    fun loadFavorites_addAnimalItemForEachAnimalThenSetRefreshingFalse() {
-        val favoriteVm1: AnimalListItemViewModel = mock()
-        val favoriteVm2: AnimalListItemViewModel = mock()
+    fun loadFavorites_getsFavoritedAnimals_showAllAnimalsAndFetchEachAnimalFromNetwork() {
         whenever(animalListItemFactory.newInstance(favorite1)).thenReturn(favoriteVm1)
         whenever(animalListItemFactory.newInstance(favorite2)).thenReturn(favoriteVm2)
+        whenever(animalRepository.fetchAnimal(any())).thenReturn(Observable.never())
 
         subject.loadFavorites()
 
         verify(listAdapter).addAnimalItem(favoriteVm1)
         verify(listAdapter).addAnimalItem(favoriteVm2)
-        assertThat(subject.refreshing.get()).isFalse()
+        verify(animalRepository).fetchAnimal(1)
+        verify(animalRepository).fetchAnimal(2)
+    }
+
+    @Test
+    fun loadFavorites_fetchAnimalsFromNetwork_showAllWarningsForUnauthorizedAnimals() {
+        val status: Status = mock {
+            on { code }.thenReturn(StatusCode.PFAPI_ERR_UNAUTHORIZED)
+        }
+        val header: Header = mock { header ->
+            on { header.status }.thenReturn(status)
+        }
+        val errorResponse: SingleAnimalResponse = mock { response ->
+            on { response.header }.thenReturn(header)
+        }
+        val successResponse: SingleAnimalResponse = mock { response ->
+            on { response.header }.thenReturn(mock())
+            on { response.animal }.thenReturn(mock())
+        }
+        whenever(animalListItemFactory.newInstance(favorite1)).thenReturn(favoriteVm1)
+        whenever(animalListItemFactory.newInstance(favorite2)).thenReturn(favoriteVm2)
+        whenever(animalListItemFactory.newInstance(favorite3)).thenReturn(favoriteVm3)
+        whenever(animalRepository.fetchAnimal(1)).thenReturn(Observable.just(SingleAnimalResponseWrapper(errorResponse, 1)))
+        whenever(animalRepository.fetchAnimal(2)).thenReturn(Observable.just(SingleAnimalResponseWrapper(successResponse, 2)))
+        whenever(animalRepository.fetchAnimal(3)).thenReturn(Observable.just(SingleAnimalResponseWrapper(errorResponse, 3)))
+        whenever(favoriteRepository.getFavoritedAnimals()).thenReturn(Observable.just(listOf(favorite1, favorite2, favorite3)))
+
+        subject.loadFavorites()
+
+        verify(listAdapter).markAnimalWarning(1)
+        verify(listAdapter, never()).markAnimalWarning(2)
+        verify(listAdapter).markAnimalWarning(3)
     }
 }

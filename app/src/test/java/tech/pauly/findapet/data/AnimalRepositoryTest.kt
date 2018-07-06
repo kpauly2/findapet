@@ -96,7 +96,7 @@ class AnimalRepositoryTest {
     }
 
     @Test
-    fun fetchAnimal_animalIdFound_returnAnimal() {
+    fun fetchAnimal_animalIdFound_returnAnimalInWrapper() {
         whenever(animalService.fetchAnimal(any(), eq("10"))).thenReturn(Single.just(singleAnimalResponse))
         val status: Status = mock {
             on { code }.thenReturn(StatusCode.PFAPI_OK)
@@ -105,21 +105,9 @@ class AnimalRepositoryTest {
 
         val observer = subject.fetchAnimal(10).test()
 
-        observer.assertValues(singleAnimalResponse).assertComplete()
+        observer.assertValues(SingleAnimalResponseWrapper(singleAnimalResponse, 10))
+                .assertComplete()
         verify(observableHelper).applySingleSchedulers<Any>()
-    }
-
-    @Test
-    fun fetchAnimal_animalIdNoEntry_throwExceptionForNoEntry() {
-        whenever(animalService.fetchAnimal(any(), eq("10"))).thenReturn(Single.just(singleAnimalResponse))
-        val status: Status = mock {
-            on { code }.thenReturn(StatusCode.PFAPI_ERR_NOENT)
-        }
-        whenever(header.status).thenReturn(status)
-
-        val observer = subject.fetchAnimal(10).test()
-
-        observer.assertError(PetfinderException(StatusCode.PFAPI_ERR_NOENT))
     }
 
     private fun setupFilterRequest(): FetchAnimalsRequest {

@@ -23,6 +23,7 @@ open class AnimalListItemViewModel(private val animal: Animal,
     var age = ObservableField("")
     var breeds = ObservableField("")
     var distanceVisibility = ObservableBoolean(false)
+    var warning = ObservableBoolean(false)
 
     init {
         animal.also {
