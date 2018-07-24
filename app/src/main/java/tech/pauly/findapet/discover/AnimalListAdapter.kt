@@ -43,7 +43,7 @@ internal constructor() : RecyclerView.Adapter<AnimalListItemViewHolder>() {
         notifyDataSetChanged()
     }
 
-    open fun markAnimalWarning(petId: Int) {
+    fun markAnimalWarning(petId: Int) {
         animalItems.find { it.id == petId }?.warning?.set(true)
     }
 }

@@ -69,8 +69,8 @@ sealed class Animal {
     open var description: String? = null
 
     abstract val formattedBreedList: String
-    abstract val primaryPhotoUrl: String?
-    abstract val photoUrlList: List<String>?
+    abstract val primaryPhotoUrl: AnimalUrl?
+    abstract val photoUrlList: List<AnimalUrl>?
     abstract fun deleteLocalPhotos(resourceProvider: ResourceProvider)
 }
 
@@ -87,7 +87,7 @@ open class InternetAnimal : Animal() {
     override val formattedBreedList: String
         get() = breedList.joinToString(" / ")
 
-    override val primaryPhotoUrl: String?
+    override val primaryPhotoUrl: AnimalUrl?
         get() = photoUrlList?.get(0)
 
     override fun deleteLocalPhotos(resourceProvider: ResourceProvider) {
@@ -97,7 +97,7 @@ open class InternetAnimal : Animal() {
         }
     }
 
-    override val photoUrlList: List<String>?
+    override val photoUrlList: List<AnimalUrl>?
         get() = media?.photoList?.mapNotNull { photo ->
             photo.url.takeIf { photo.size == PhotoSize.LARGE }
         }.also {
@@ -111,12 +111,12 @@ open class LocalAnimal(@PrimaryKey(autoGenerate = true)
 
     @Ignore constructor() : this(null)
 
-    open var photoList: List<String>? = null
+    open var photoList: List<AnimalUrl>? = null
 
-    override val photoUrlList: List<String>?
+    override val photoUrlList: List<AnimalUrl>?
         get() = photoList
 
-    override val primaryPhotoUrl: String?
+    override val primaryPhotoUrl: AnimalUrl?
         get() = photoList?.get(0)
 
     internal lateinit var _formattedBreedList: String

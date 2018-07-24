@@ -14,6 +14,8 @@
         <import type="android.view.View" />
 
         <import type="tech.pauly.findapet.utils.DrawablePosition" />
+
+        <import type="tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase.Tab" />
     </data>
 
     <android.support.v7.widget.CardView
@@ -23,7 +25,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:onClick="@{() -> viewModel.launchAnimalDetails()}"
+        android:onClick="@{() -> viewModel.launchAnimalDetails(Tab.DETAILS)}"
         app:cardElevation="0dp"
         app:width="@{BindingAdapters.INSTANCE.recyclerItemWidth}">
 
@@ -50,10 +52,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:clickable="true"
+                android:drawablePadding="@dimen/half_margin"
+                android:focusable="true"
+                android:onClick="@{viewModel::showPetWarningDialog}"
                 android:text="@{viewModel.name}"
                 android:textAppearance="@style/FontLargeHeader"
                 android:textColor="@color/textDark"
-                android:drawablePadding="@dimen/half_margin"
                 app:drawablePosition="@{DrawablePosition.END}"
                 app:dynamicDrawable="@{@drawable/ic_warning}"
                 app:dynamicDrawableVisibility="@{viewModel.warning}"

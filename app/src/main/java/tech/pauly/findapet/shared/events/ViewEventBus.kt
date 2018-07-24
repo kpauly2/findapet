@@ -55,6 +55,11 @@ open class ViewEventBus @Inject constructor() {
         return bus.filter { event -> event is SnackbarEvent && event.fromEmitter(emitterClass) }
                 .map { event -> event as SnackbarEvent }
     }
+
+    open fun dialog(emitterClass: KClass<*>): Observable<DialogEvent> {
+        return bus.filter { event -> event is DialogEvent && event.fromEmitter(emitterClass) }
+                .map { event -> event as DialogEvent }
+    }
 }
 
 open class BaseViewEvent(private val emitter: KClass<*>) {

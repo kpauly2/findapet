@@ -89,4 +89,13 @@
     <string name="debug_settings">DEBUG SETTINGS</string>
     <string name="hardcode_location">Hardcode location to 48335</string>
     <string name="animal_warning_description">animal warning</string>
+    <string name="pet_warning_dialog_title">Info missing!</string>
+    <string name="pet_warning_dialog_body">%s\'s shelter does not allow for us to search for %s directly, so we can\'t tell if %s is still available for adoption, sorry!</string>
+    <string name="pet_warning_dialog_contact">CONTACT SHELTER</string>
+    <string name="dialog_cancel">CANCEL</string>
+    <string name="pronoun_male_subject">he</string>
+    <string name="pronoun_female_subject">she</string>
+    <string name="pronoun_male_object">him</string>
+    <string name="pronoun_female_object">her</string>
+    <string name="pronoun_missing">it</string>
 </resources>

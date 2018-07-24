@@ -30,10 +30,12 @@ class AnimalDetailsActivity : BaseActivity() {
     @Inject
     internal lateinit var viewModel: AnimalDetailsViewModel
 
+    private lateinit var binding: ActivityAnimalDetailsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityAnimalDetailsBinding>(this, R.layout.activity_animal_details)
+        binding = DataBindingUtil.setContentView<ActivityAnimalDetailsBinding>(this, R.layout.activity_animal_details)
         lifecycle.addObserver(viewModel)
         binding.viewModel = viewModel
         detailsPagerAdapter.viewModel = viewModel
@@ -41,6 +43,7 @@ class AnimalDetailsActivity : BaseActivity() {
         animal_details_view_pager.adapter = detailsPagerAdapter
 
         subscribeToImagesEvents()
+        subscribeToTabEvents()
         setupToolbar()
     }
 
@@ -82,6 +85,12 @@ class AnimalDetailsActivity : BaseActivity() {
     private fun subscribeToImagesEvents() {
         viewModel.animalImagesSubject.subscribe({
             imagesPagerAdapter.setAnimalImages(it)
+        }, Throwable::printStackTrace).onLifecycle()
+    }
+
+    private fun subscribeToTabEvents() {
+        viewModel.tabSwitchSubject.subscribe({
+            binding.animalDetailsViewPager.currentItem = it
         }, Throwable::printStackTrace).onLifecycle()
     }
 }

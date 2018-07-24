@@ -14,6 +14,7 @@ import io.reactivex.disposables.Disposable
 import tech.pauly.findapet.R
 import tech.pauly.findapet.dependencyinjection.PetApplication
 import tech.pauly.findapet.shared.events.*
+import tech.pauly.findapet.utils.AnimalDialogFragment
 
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
@@ -86,6 +87,10 @@ open class BaseActivity : AppCompatActivity() {
             textView?.setTextColor(getColor(R.color.white))
             textView?.typeface = ResourcesCompat.getFont(this, R.font.quicksand_medium)
         }.show()
+    }
+
+    protected fun dialogEvent(event: DialogEvent) {
+        AnimalDialogFragment().init(event).show(supportFragmentManager, "dialog")
     }
 
     protected fun subscribeOnLifecycle(subscription: Disposable) {
