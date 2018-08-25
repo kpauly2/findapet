@@ -2,8 +2,6 @@ package tech.pauly.findapet.settings
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
-import android.location.LocationManager
-import tech.pauly.findapet.BuildConfig
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.SettingsEndpoints
 import tech.pauly.findapet.shared.BaseViewModel
@@ -13,6 +11,7 @@ import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.OptionsMenuEvent
 import tech.pauly.findapet.shared.events.OptionsMenuState
 import tech.pauly.findapet.shared.events.ViewEventBus
+import tech.pauly.findapet.shared.isDebug
 import javax.inject.Inject
 
 class SettingsViewModel @Inject
@@ -38,7 +37,7 @@ internal constructor(private val dataStore: TransientDataStore,
                 SettingsTitleViewModel(R.string.references),
                 SettingsLinkOutViewModel(R.string.thanks, SettingsEndpoints.thanksAndReferences, eventBus),
                 SettingsLinkOutViewModel(R.string.licenses, SettingsEndpoints.licenses, eventBus))
-        if (BuildConfig.DEBUG) {
+        if (isDebug()) {
             viewModels += arrayListOf(SettingsTitleViewModel(R.string.debug_settings),
                     SettingsCustomViewModel(R.string.hardcode_location) { locationHelper.debugLocation = true })
         }

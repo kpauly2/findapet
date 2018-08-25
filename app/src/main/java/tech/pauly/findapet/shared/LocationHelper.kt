@@ -81,7 +81,7 @@ constructor(@ForApplication private val context: Context,
             private val localeWrapper: LocaleWrapper) {
 
     open val isEmulator: Boolean
-        get() = BuildConfig.DEBUG
+        get() = isDebug()
                 && (Build.FINGERPRINT.startsWith("generic")
                 || Build.FINGERPRINT.startsWith("unknown")
                 || Build.MODEL.contains("google_sdk")
