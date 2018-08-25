@@ -141,21 +141,4 @@ dependencies {
     testImplementation deps.mockito_kotlin
     testImplementation deps.mockk
     testImplementation deps.room_testing
-
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    androidTestImplementation('com.android.support.test:runner:1.0.0') {
-        exclude module: 'support-annotations'
-    }
-    androidTestImplementation('com.android.support.test.espresso:espresso-contrib:3.0.0') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation('com.android.support.test.espresso:espresso-intents:3.0.0') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.google.code.findbugs'
-    }
-    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.14.1'
-    kaptAndroidTest 'com.google.dagger:dagger-android-processor:2.14.1'
-    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.9.0'
 }
