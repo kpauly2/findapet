@@ -60,19 +60,22 @@ open class BaseActivity : AppCompatActivity() {
         invalidateOptionsMenu()
     }
 
-    protected open fun registerViewEvents(): CompositeDisposable? {
-        return null
-    }
+    protected open val viewEvents: CompositeDisposable?
+        get() = null
 
     protected fun activityEvent(event: ActivityEvent) {
         event.customIntent?.let {
             startActivity(it)
             return
         }
+
         if (event.finishActivity) {
             finish()
-        } else if (event.startActivity != null) {
-            startActivity(Intent(this, event.startActivity?.java))
+            return
+        }
+
+        event.startActivity?.let {
+            startActivity(Intent(this, it.java))
         }
     }
 
@@ -92,7 +95,7 @@ open class BaseActivity : AppCompatActivity() {
     private fun subscribeToEventBus() {
         lifecycleSubscriptions.run {
             clear()
-            registerViewEvents()?.let { add(it) }
+            viewEvents?.let { add(it) }
         }
     }
 

@@ -3,7 +3,6 @@ package tech.pauly.findapet.settings
 import android.content.Intent
 import android.net.Uri
 import android.view.View
-import tech.pauly.findapet.R
 import tech.pauly.findapet.data.SettingsEndpoints
 import tech.pauly.findapet.shared.BaseViewModel
 import tech.pauly.findapet.shared.events.ActivityEvent
@@ -105,5 +104,15 @@ open class SettingsLinkOutViewModel(override val text: Int,
         result = 31 * result + eventBus.hashCode()
         result = 31 * result + viewType
         return result
+    }
+}
+
+open class SettingsCustomViewModel(override val text: Int,
+                                   private val onClickListener: () -> Unit) : SettingsBasicViewModel(text) {
+
+    override var viewType = CUSTOM
+
+    override fun onClick(v: View) {
+        onClickListener()
     }
 }

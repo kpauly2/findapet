@@ -78,7 +78,7 @@ class FilterViewModelTest {
         val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(false)
 
-        subject.checkSex(button, Sex.MALE)
+        subject.checkToggle(button, Sex.MALE)
 
         assertThat(subject.selectedSex.get()).isEqualTo(Sex.MISSING)
     }
@@ -89,7 +89,7 @@ class FilterViewModelTest {
         val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(true)
 
-        subject.checkSex(button, Sex.MALE)
+        subject.checkToggle(button, Sex.MALE)
 
         assertThat(subject.selectedSex.get()).isEqualTo(Sex.MALE)
     }
@@ -100,7 +100,7 @@ class FilterViewModelTest {
         val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(false)
 
-        subject.checkAge(button, Age.ADULT)
+        subject.checkToggle(button, Age.ADULT)
 
         assertThat(subject.selectedAge.get()).isEqualTo(Age.MISSING)
     }
@@ -111,7 +111,7 @@ class FilterViewModelTest {
         val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(true)
 
-        subject.checkAge(button, Age.ADULT)
+        subject.checkToggle(button, Age.ADULT)
 
         assertThat(subject.selectedAge.get()).isEqualTo(Age.ADULT)
     }
@@ -122,7 +122,7 @@ class FilterViewModelTest {
         val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(false)
 
-        subject.checkSize(button, AnimalSize.SMALL)
+        subject.checkToggle(button, AnimalSize.SMALL)
 
         assertThat(subject.selectedSize.get()).isEqualTo(AnimalSize.MISSING)
     }
@@ -133,7 +133,7 @@ class FilterViewModelTest {
         val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(true)
 
-        subject.checkSize(button, AnimalSize.SMALL)
+        subject.checkToggle(button, AnimalSize.SMALL)
 
         assertThat(subject.selectedSize.get()).isEqualTo(AnimalSize.SMALL)
     }
@@ -144,7 +144,7 @@ class FilterViewModelTest {
         val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(false)
 
-        subject.checkBreed(button, "Ragdoll")
+        subject.checkToggle(button, "Ragdoll")
 
         assertThat(subject.selectedBreed.get()).isEqualTo("")
     }
@@ -155,7 +155,7 @@ class FilterViewModelTest {
         val button: ToggleButton = mock()
         whenever(button.isChecked).thenReturn(true)
 
-        subject.checkBreed(button, "Ragdoll")
+        subject.checkToggle(button, "Ragdoll")
 
         assertThat(subject.selectedBreed.get()).isEqualTo("Ragdoll")
     }

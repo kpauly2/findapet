@@ -2,9 +2,12 @@ package tech.pauly.findapet.settings
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
+import android.location.LocationManager
+import tech.pauly.findapet.BuildConfig
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.SettingsEndpoints
 import tech.pauly.findapet.shared.BaseViewModel
+import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.OptionsMenuEvent
@@ -15,6 +18,7 @@ import javax.inject.Inject
 class SettingsViewModel @Inject
 internal constructor(private val dataStore: TransientDataStore,
                      private val eventBus: ViewEventBus,
+                     private val locationHelper: LocationHelper,
                      val adapter: SettingsAdapter) : BaseViewModel() {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -25,7 +29,7 @@ internal constructor(private val dataStore: TransientDataStore,
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun populateAdapterItems() {
-        adapter.viewModels = arrayListOf(
+        val viewModels = arrayListOf(
                 SettingsTitleViewModel(R.string.about),
                 SettingsLinkOutViewModel(R.string.app_name, SettingsEndpoints.sourceCode, eventBus),
                 SettingsLinkOutViewModel(R.string.made_by, SettingsEndpoints.personalSite, eventBus),
@@ -34,5 +38,10 @@ internal constructor(private val dataStore: TransientDataStore,
                 SettingsTitleViewModel(R.string.references),
                 SettingsLinkOutViewModel(R.string.thanks, SettingsEndpoints.thanksAndReferences, eventBus),
                 SettingsLinkOutViewModel(R.string.licenses, SettingsEndpoints.licenses, eventBus))
+        if (BuildConfig.DEBUG) {
+            viewModels += arrayListOf(SettingsTitleViewModel(R.string.debug_settings),
+                    SettingsCustomViewModel(R.string.hardcode_location) { locationHelper.debugLocation = true })
+        }
+        adapter.viewModels = viewModels
     }
 }

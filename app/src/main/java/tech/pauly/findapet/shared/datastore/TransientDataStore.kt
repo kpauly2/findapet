@@ -61,6 +61,7 @@ open class TransientDataStore @Inject constructor() {
         return dataSubject.filter { clazz -> clazz == useCaseClass }
     }
 
+    @Suppress("UNCHECKED_CAST")
     open fun <T : UseCase> observeAndGetUseCase(useCaseClass: KClass<T>): Observable<T> {
         return observeUseCase(useCaseClass).map { clazz -> get(clazz as KClass<T>) }
     }

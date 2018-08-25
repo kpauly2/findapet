@@ -10,6 +10,7 @@ import javax.inject.Inject
 const val TITLE = 0
 const val LINK_OUT = 1
 const val EMAIL = 2
+const val CUSTOM = 3
 
 open class SettingsAdapter @Inject
 internal constructor() : RecyclerView.Adapter<SettingsViewHolder>() {
@@ -24,7 +25,7 @@ internal constructor() : RecyclerView.Adapter<SettingsViewHolder>() {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             TITLE -> SettingsViewHolder(ItemSettingsTitleBinding.inflate(inflater, parent, false))
-            LINK_OUT, EMAIL -> SettingsViewHolder(ItemSettingsBasicBinding.inflate(inflater, parent, false))
+            LINK_OUT, EMAIL, CUSTOM -> SettingsViewHolder(ItemSettingsBasicBinding.inflate(inflater, parent, false))
             else -> throw IllegalStateException("Settings adapter view type not supported")
         }
     }
@@ -34,6 +35,7 @@ internal constructor() : RecyclerView.Adapter<SettingsViewHolder>() {
             when (it.viewType) {
                 TITLE -> holder.bind(it as SettingsTitleViewModel)
                 LINK_OUT -> holder.bind(it as SettingsBasicViewModel)
+                CUSTOM -> holder.bind(it as SettingsCustomViewModel)
                 else -> throw IllegalStateException("Settings adapter view type not supported")
             }
         }

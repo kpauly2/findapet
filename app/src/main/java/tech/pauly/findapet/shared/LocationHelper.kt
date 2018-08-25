@@ -30,9 +30,10 @@ constructor(private val observableHelper: ObservableHelper,
             private val localeWrapper: LocaleWrapper) {
 
     private val locationSubject = BehaviorSubject.create<Address>()
+    var debugLocation = false
 
     open fun fetchCurrentLocation(): Observable<Address> {
-        if (locationWrapper.isEmulator) {
+        if (locationWrapper.isEmulator || debugLocation) {
             val address = Address(localeWrapper.getLocale()).apply {
                 latitude = 42.465513
                 longitude = -83.434321

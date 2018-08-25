@@ -54,11 +54,7 @@ internal constructor(private val filterRepository: FilterRepository,
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun updateBreedList() {
-        dataStore[FilterAnimalTypeUseCase::class]?.let {
-            breedRepository.getBreedList(it.animalType)
-                    .subscribe(this::populateBreedList, Throwable::printStackTrace)
-                    .onLifecycle()
-        }
+        dataStore[FilterAnimalTypeUseCase::class]?.let(this::updateBreedList)
     }
 
     fun clickBreedSearch() {
@@ -74,20 +70,13 @@ internal constructor(private val filterRepository: FilterRepository,
         scrollToViewSubject.onNext(true)
     }
 
-    fun checkSex(view: View, sex: Sex) {
-        selectedSex.set(if (view.isToggleChecked) sex else Sex.MISSING)
-    }
-
-    fun checkAge(view: View, age: Age) {
-        selectedAge.set(if (view.isToggleChecked) age else Age.MISSING)
-    }
-
-    fun checkSize(view: View, size: AnimalSize) {
-        selectedSize.set(if (view.isToggleChecked) size else AnimalSize.MISSING)
-    }
-
-    fun checkBreed(view: View, breed: String) {
-        selectedBreed.set(if (view.isToggleChecked) breed else "")
+    fun checkToggle(view: View, choice: Any) {
+        when (choice) {
+            is Sex -> selectedSex.set(if (view.isToggleChecked) choice else Sex.MISSING)
+            is Age -> selectedAge.set(if (view.isToggleChecked) choice else Age.MISSING)
+            is AnimalSize -> selectedSize.set(if (view.isToggleChecked) choice else AnimalSize.MISSING)
+            is String -> selectedBreed.set(if (view.isToggleChecked) choice else "")
+        }
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -100,6 +89,12 @@ internal constructor(private val filterRepository: FilterRepository,
         }
         filterRepository.insertFilter(filter)
                 .subscribe(this::finish, Throwable::printStackTrace)
+                .onLifecycle()
+    }
+
+    private fun updateBreedList(useCase: FilterAnimalTypeUseCase) {
+        breedRepository.getBreedList(useCase.animalType)
+                .subscribe(this::populateBreedList, Throwable::printStackTrace)
                 .onLifecycle()
     }
 

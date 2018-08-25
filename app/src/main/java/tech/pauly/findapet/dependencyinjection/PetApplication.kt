@@ -31,9 +31,8 @@ open class PetApplication : Application(), HasActivityInjector, HasSupportFragme
 
         component = DaggerApplicationComponent.builder()
                 .applicationModule(ApplicationModule(this))
-                .build().also {
-                    it.inject(this)
-                }
+                .build()
+                .also { it.inject(this) }
         MapsInitializer.initialize(this)
     }
 
