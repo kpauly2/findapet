@@ -30,9 +30,10 @@ constructor(private val observableHelper: ObservableHelper,
             private val localeWrapper: LocaleWrapper) {
 
     private val locationSubject = BehaviorSubject.create<Address>()
+    var debugLocation = false
 
     open fun fetchCurrentLocation(): Observable<Address> {
-        if (locationWrapper.isEmulator) {
+        if (locationWrapper.isEmulator || debugLocation) {
             val address = Address(localeWrapper.getLocale()).apply {
                 latitude = 42.465513
                 longitude = -83.434321
@@ -80,7 +81,7 @@ constructor(@ForApplication private val context: Context,
             private val localeWrapper: LocaleWrapper) {
 
     open val isEmulator: Boolean
-        get() = BuildConfig.DEBUG
+        get() = isDebug()
                 && (Build.FINGERPRINT.startsWith("generic")
                 || Build.FINGERPRINT.startsWith("unknown")
                 || Build.MODEL.contains("google_sdk")

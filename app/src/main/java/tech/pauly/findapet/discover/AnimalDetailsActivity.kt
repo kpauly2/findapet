@@ -8,6 +8,7 @@ import android.view.MenuItem
 import dagger.android.AndroidInjection
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import kotlinx.android.synthetic.main.activity_animal_details.*
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.ActivityAnimalDetailsBinding
 import tech.pauly.findapet.shared.BaseActivity
@@ -36,22 +37,19 @@ class AnimalDetailsActivity : BaseActivity() {
         lifecycle.addObserver(viewModel)
         binding.viewModel = viewModel
         detailsPagerAdapter.viewModel = viewModel
-        binding.animalImagesViewPager.adapter = imagesPagerAdapter
-        binding.animalDetailsViewPager.adapter = detailsPagerAdapter
+        animal_images_view_pager.adapter = imagesPagerAdapter
+        animal_details_view_pager.adapter = detailsPagerAdapter
 
         subscribeToImagesEvents()
-        setupToolbar(binding)
+        setupToolbar()
     }
 
-    override fun registerViewEvents(): CompositeDisposable? {
-        val viewEvents = CompositeDisposable()
-
-        viewEvents += eventBus.optionsMenu(AnimalDetailsViewModel::class).subscribe(this::optionsMenuEvent)
-        viewEvents += eventBus.snackbar(AnimalDetailsViewModel::class).subscribe(this::snackbarEvent)
-        viewEvents += eventBus.activity(AnimalDetailsViewModel::class).subscribe(this::activityEvent)
-
-        return viewEvents
-    }
+    override val viewEvents: CompositeDisposable?
+        get() = CompositeDisposable().also {
+            it += eventBus.optionsMenu(AnimalDetailsViewModel::class).subscribe(this::optionsMenuEvent)
+            it += eventBus.snackbar(AnimalDetailsViewModel::class).subscribe(this::snackbarEvent)
+            it += eventBus.activity(AnimalDetailsViewModel::class).subscribe(this::activityEvent)
+        }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -72,13 +70,13 @@ class AnimalDetailsActivity : BaseActivity() {
         return super.onPrepareOptionsMenu(menu)
     }
 
-    private fun setupToolbar(binding: ActivityAnimalDetailsBinding) {
-        setSupportActionBar(findViewById(R.id.toolbar))
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val typeface = ResourcesCompat.getFont(this, R.font.quicksand_bold)
-        binding.collapsingToolbarLayout.setCollapsedTitleTypeface(typeface)
-        binding.collapsingToolbarLayout.setExpandedTitleTypeface(typeface)
+        collapsing_toolbar_layout.setCollapsedTitleTypeface(typeface)
+        collapsing_toolbar_layout.setExpandedTitleTypeface(typeface)
     }
 
     private fun subscribeToImagesEvents() {

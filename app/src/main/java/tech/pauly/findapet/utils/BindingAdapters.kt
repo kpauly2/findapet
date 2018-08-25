@@ -41,7 +41,7 @@ fun loadImageIntoView(view: ImageView, url: String?, cornerRadius: Int) {
     if (url.contains("-") && url.contains(".png")) {
         fullUrl = "file://$fullUrl"
     }
-    Picasso.with(view.context)
+    Picasso.get()
             .load(fullUrl)
             .error(R.drawable.shape_animal_image)
             .fit()

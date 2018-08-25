@@ -37,11 +37,8 @@ class FavoritesFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun registerViewEvents(): CompositeDisposable? {
-        val viewEvents = CompositeDisposable()
-
-        viewEvents += eventBus.activity(AnimalListItemViewModel::class).subscribe(this::activityEvent)
-
-        return viewEvents
-    }
+    override val viewEvents: CompositeDisposable?
+        get() = CompositeDisposable().also {
+            it += eventBus.activity(AnimalListItemViewModel::class).subscribe(this::activityEvent)
+        }
 }

@@ -28,9 +28,8 @@ abstract class BaseFragment : Fragment() {
         super.onPause()
     }
 
-    protected open fun registerViewEvents(): CompositeDisposable? {
-        return null
-    }
+    protected open val viewEvents: CompositeDisposable?
+        get() = null
 
     protected fun activityEvent(event: ActivityEvent) {
         event.customIntent?.let {
@@ -46,6 +45,6 @@ abstract class BaseFragment : Fragment() {
 
     private fun subscribeToEventBus() {
         lifecycleSubscriptions.clear()
-        registerViewEvents()?.let { lifecycleSubscriptions.add(it) }
+        viewEvents?.let { lifecycleSubscriptions.add(it) }
     }
 }

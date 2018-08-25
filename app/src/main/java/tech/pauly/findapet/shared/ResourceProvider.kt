@@ -32,7 +32,7 @@ internal constructor(@ForApplication private val context: Context) {
     }
 
     open fun getBitmapFromUrl(url: String): Bitmap {
-        return Picasso.with(context).load(url).get()
+        return Picasso.get().load(url).get()
     }
 
     open fun saveBitmapToFile(filename: String, bitmap: Bitmap): String {

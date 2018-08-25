@@ -16,6 +16,7 @@ import io.reactivex.rxkotlin.plusAssign
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.FragmentSettingsBinding
 import tech.pauly.findapet.discover.DiscoverViewModel
+import tech.pauly.findapet.favorites.FavoritesViewModel
 import tech.pauly.findapet.shared.BaseFragment
 import tech.pauly.findapet.shared.MainViewModel
 import tech.pauly.findapet.shared.events.ViewEventBus
@@ -42,12 +43,9 @@ class SettingsFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun registerViewEvents(): CompositeDisposable? {
-        val viewEvents = CompositeDisposable()
-
-        viewEvents += eventBus.activity(SettingsLinkOutViewModel::class).subscribe(this::activityEvent)
-        viewEvents += eventBus.activity(SettingsEmailViewModel::class).subscribe(this::activityEvent)
-
-        return viewEvents
-    }
+    override val viewEvents: CompositeDisposable?
+        get() = CompositeDisposable().also {
+            it += eventBus.activity(SettingsLinkOutViewModel::class).subscribe(this::activityEvent)
+            it += eventBus.activity(SettingsEmailViewModel::class).subscribe(this::activityEvent)
+        }
 }

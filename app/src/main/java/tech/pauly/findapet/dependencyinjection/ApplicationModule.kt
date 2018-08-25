@@ -19,17 +19,4 @@ internal class ApplicationModule(private val application: Application) {
     fun provideContext(): Context {
         return application
     }
-
-    @Provides
-    @IoScheduler
-    fun provideIoScheduler(): Scheduler {
-        return Schedulers.io()
-    }
-
-    @Provides
-    @Singleton
-    @MainThreadScheduler
-    fun provideMainScheduler(): Scheduler {
-        return AndroidSchedulers.mainThread()
-    }
 }

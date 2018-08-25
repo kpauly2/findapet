@@ -6,6 +6,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.ReplaySubject
 import tech.pauly.findapet.BuildConfig
+import tech.pauly.findapet.shared.isDebug
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 import javax.inject.Inject
@@ -40,7 +41,7 @@ open class TransientDataStore @Inject constructor() {
     open operator fun plusAssign(useCase: UseCase) {
         val useCaseClass = useCase::class
 
-        if (BuildConfig.DEBUG && transientData.containsKey(useCaseClass)) {
+        if (isDebug() && transientData.containsKey(useCaseClass)) {
             Log.e(javaClass.name, "Element of type $useCaseClass already exists")
         }
 
@@ -49,7 +50,7 @@ open class TransientDataStore @Inject constructor() {
     }
 
     open operator fun <T : UseCase> get(useCaseClass: KClass<T>): T? {
-        if (BuildConfig.DEBUG && !containsUseCase(useCaseClass)) {
+        if (isDebug() && !containsUseCase(useCaseClass)) {
             Log.e(javaClass.name, "Expected element for use case " + useCaseClass.simpleName)
         }
 
@@ -61,6 +62,7 @@ open class TransientDataStore @Inject constructor() {
         return dataSubject.filter { clazz -> clazz == useCaseClass }
     }
 
+    @Suppress("UNCHECKED_CAST")
     open fun <T : UseCase> observeAndGetUseCase(useCaseClass: KClass<T>): Observable<T> {
         return observeUseCase(useCaseClass).map { clazz -> get(clazz as KClass<T>) }
     }

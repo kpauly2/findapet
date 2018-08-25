@@ -40,12 +40,9 @@ class DiscoverFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun registerViewEvents(): CompositeDisposable? {
-        val viewEvents = CompositeDisposable()
-
-        viewEvents += eventBus.activity(AnimalListItemViewModel::class).subscribe(this::activityEvent)
-        viewEvents += eventBus.permission(DiscoverViewModel::class).subscribe(this::permissionEvent)
-
-        return viewEvents
-    }
+    override val viewEvents: CompositeDisposable?
+        get() = CompositeDisposable().also {
+            it += eventBus.activity(AnimalListItemViewModel::class).subscribe(this::activityEvent)
+            it += eventBus.permission(DiscoverViewModel::class).subscribe(this::permissionEvent)
+        }
 }

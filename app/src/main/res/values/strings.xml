@@ -86,4 +86,6 @@
     <string name="favorite_snackbar_message">Pet added to favorites</string>
     <string name="unfavorite_snackbar_message">Pet removed from favorites</string>
     <string name="partial_shelter_note">This shelter does not allow us to determine its precise name and location. We apologize for any inconvenience.</string>
+    <string name="debug_settings">DEBUG SETTINGS</string>
+    <string name="hardcode_location">Hardcode location to 48335</string>
 </resources>
