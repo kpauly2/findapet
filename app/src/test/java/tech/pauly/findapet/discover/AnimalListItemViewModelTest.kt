@@ -1,62 +1,90 @@
 package tech.pauly.findapet.discover
 
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
+import io.mockk.*
+import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import io.reactivex.Observable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.verify
-import tech.pauly.findapet.data.models.*
+import tech.pauly.findapet.R
+import tech.pauly.findapet.data.models.Age
+import tech.pauly.findapet.data.models.Animal
+import tech.pauly.findapet.data.models.Sex
+import tech.pauly.findapet.data.models.Shelter
 import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.ResourceProvider
+import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.ActivityEvent
+import tech.pauly.findapet.shared.events.DialogEvent
 import tech.pauly.findapet.shared.events.ViewEventBus
 
 class AnimalListItemViewModelTest {
 
-    private val animal: Animal = mock {
-        on { id }.thenReturn(10)
-        on { name }.thenReturn("name")
-        on { age }.thenReturn(Age.ADULT)
-        on { formattedBreedList }.thenReturn("breeds")
-        on { primaryPhotoUrl }.thenReturn("photo.jpg")
-    }
-    private val eventBus: ViewEventBus = mock()
-    private val dataStore: TransientDataStore = mock()
-    private val resourceProvider: ResourceProvider = mock {
-        on { getString(Age.ADULT.formattedName) }.thenReturn("Adult")
-    }
-    private val locationHelper: LocationHelper = mock()
+    @MockK
+    private lateinit var animal: Animal
 
-    private val contact: Shelter = mock()
+    @RelaxedMockK
+    private lateinit var eventBus: ViewEventBus
+
+    @RelaxedMockK
+    private lateinit var dataStore: TransientDataStore
+
+    @MockK
+    private lateinit var resourceProvider: ResourceProvider
+
+    @MockK
+    private lateinit var locationHelper: LocationHelper
+
+    @MockK
+    private lateinit var contact: Shelter
+
+    @MockK
+
     private lateinit var subject: AnimalListItemViewModel
 
     @Before
     fun setup() {
-        val media: Media = mock()
-        whenever(media.photoList).thenReturn(emptyList())
-        whenever(animal.contact).thenReturn(contact)
-        whenever(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Observable.just(1))
+        MockKAnnotations.init(this)
+        animal.apply {
+            every { id } returns 10
+            every { name } returns "name"
+            every { age } returns Age.ADULT
+            every { formattedBreedList } returns "breeds"
+            every { primaryPhotoUrl } returns "photo.jpg"
+            every { sex } returns Sex.MISSING
+        }
+
+        resourceProvider.apply {
+            every { getString(Age.ADULT.formattedName) } returns "Adult"
+            every { getString(R.string.pronoun_male_subject) } returns "he"
+            every { getString(R.string.pronoun_female_subject) } returns "she"
+            every { getString(R.string.pronoun_missing) } returns "it"
+            every { getString(R.string.pronoun_male_object) } returns "him"
+            every { getString(R.string.pronoun_female_object) } returns "her"
+        }
+
+        every { animal.contact } returns contact
+        every { locationHelper.getCurrentDistanceToContactInfo(contact) } returns Observable.just(1)
     }
 
     @Test
     fun onCreate_setAllBasicValuesForInputAnimal() {
         createSubject()
 
-        subject.also {
-            assertThat(it.id).isEqualTo(10)
-            assertThat(it.name.get()).isEqualTo("name")
-            assertThat(it.age.get()).isEqualTo("Adult")
-            assertThat(it.breeds.get()).isEqualTo("breeds")
-            assertThat(it.imageUrl.get()).isEqualTo("photo.jpg")
+        subject.apply {
+            assertThat(id).isEqualTo(10)
+            assertThat(name.get()).isEqualTo("name")
+            assertThat(age.get()).isEqualTo("Adult")
+            assertThat(breeds.get()).isEqualTo("breeds")
+            assertThat(imageUrl.get()).isEqualTo("photo.jpg")
         }
     }
 
     @Test
     fun onCreate_getsDistanceForContactInfoAndDistanceLessThanZero_distanceVisibilityFalse() {
-        whenever(locationHelper.getCurrentDistanceToContactInfo(contact)).thenReturn(Observable.just(-1))
+        every { locationHelper.getCurrentDistanceToContactInfo(contact) } returns Observable.just(-1)
 
         createSubject()
 
@@ -64,12 +92,103 @@ class AnimalListItemViewModelTest {
     }
 
     @Test
-    fun launchAnimalDetails_launchesAnimalDetails() {
+    fun launchAnimalDetails_launchesAnimalDetailsToDetailsTab() {
         createSubject()
 
-        subject.launchAnimalDetails()
+        subject.launchAnimalDetails(AnimalDetailsUseCase.Tab.DETAILS)
 
-        verify(eventBus) += ActivityEvent(subject, AnimalDetailsActivity::class, false)
+        verify { dataStore += AnimalDetailsUseCase(animal, AnimalDetailsUseCase.Tab.DETAILS) }
+        verify { eventBus += ActivityEvent(subject, AnimalDetailsActivity::class, false) }
+    }
+
+    @Test
+    fun showPetWarningDialog_noWarning_launchAnimalDetailsToDetailsTab() {
+        createSubject()
+        subject = spyk(subject)
+        subject.warning.set(false)
+
+        subject.showPetWarningDialog(mockk())
+
+        verify { subject.launchAnimalDetails(AnimalDetailsUseCase.Tab.DETAILS) }
+    }
+
+    @Test
+    fun showPetWarningDialog_malePet_firesDialogEventWithProperGrammar() {
+        every { animal.sex } returns Sex.MALE
+        every { resourceProvider.getString(R.string.pet_warning_dialog_body, "name", "him", "he") } returns "name's shelter does not allow for us to search for him directly, so we can\'t tell if he is still available for adoption, sorry!"
+        createSubject()
+        subject.warning.set(true)
+        val slot = slot<DialogEvent>()
+        every { eventBus += capture(slot) } answers { nothing }
+
+        subject.showPetWarningDialog(mockk())
+
+        slot.captured.apply {
+            assertThat(titleText).isEqualTo(R.string.pet_warning_dialog_title)
+            assertThat(bodyText).isEqualTo("name's shelter does not allow for us to search for him directly, so we can\'t tell if he is still available for adoption, sorry!")
+            assertThat(positiveButtonText).isEqualTo(R.string.pet_warning_dialog_contact)
+            assertThat(negativeButtonText).isEqualTo(R.string.dialog_cancel)
+            assertThat(imageUrl).isEqualTo("photo.jpg")
+            assertThat(primaryColor).isEqualTo(R.color.warning)
+        }
+    }
+
+    @Test
+    fun showPetWarningDialog_femalePet_firesDialogEventWithProperGrammar() {
+        every { animal.sex } returns Sex.FEMALE
+        every { resourceProvider.getString(R.string.pet_warning_dialog_body, "name", "her", "she") } returns "name's shelter does not allow for us to search for her directly, so we can\'t tell if she is still available for adoption, sorry!"
+        createSubject()
+        subject.warning.set(true)
+        val slot = slot<DialogEvent>()
+        every { eventBus += capture(slot) } answers { nothing }
+
+        subject.showPetWarningDialog(mockk())
+
+        slot.captured.apply {
+            assertThat(titleText).isEqualTo(R.string.pet_warning_dialog_title)
+            assertThat(bodyText).isEqualTo("name's shelter does not allow for us to search for her directly, so we can\'t tell if she is still available for adoption, sorry!")
+            assertThat(positiveButtonText).isEqualTo(R.string.pet_warning_dialog_contact)
+            assertThat(negativeButtonText).isEqualTo(R.string.dialog_cancel)
+            assertThat(imageUrl).isEqualTo("photo.jpg")
+            assertThat(primaryColor).isEqualTo(R.color.warning)
+        }
+    }
+
+    @Test
+    fun showPetWarningDialog_petUnknownGender_firesDialogEventWithProperGrammar() {
+        every { animal.sex } returns Sex.UNKNOWN
+        every { resourceProvider.getString(R.string.pet_warning_dialog_body, "name", "it", "it") } returns "name's shelter does not allow for us to search for it directly, so we can\'t tell if it is still available for adoption, sorry!"
+        createSubject()
+        subject.warning.set(true)
+        val slot = slot<DialogEvent>()
+        every { eventBus += capture(slot) } answers { nothing }
+
+        subject.showPetWarningDialog(mockk())
+
+        slot.captured.apply {
+            assertThat(titleText).isEqualTo(R.string.pet_warning_dialog_title)
+            assertThat(bodyText).isEqualTo("name's shelter does not allow for us to search for it directly, so we can\'t tell if it is still available for adoption, sorry!")
+            assertThat(positiveButtonText).isEqualTo(R.string.pet_warning_dialog_contact)
+            assertThat(negativeButtonText).isEqualTo(R.string.dialog_cancel)
+            assertThat(imageUrl).isEqualTo("photo.jpg")
+            assertThat(primaryColor).isEqualTo(R.color.warning)
+        }
+    }
+
+    @Test
+    fun showPetWarningDialog_clickPositiveButton_launchAnimalDetailsToContactTab() {
+        every { animal.sex } returns Sex.UNKNOWN
+        every { resourceProvider.getString(R.string.pet_warning_dialog_body, "name", "it", "it") } returns "name's shelter does not allow for us to search for it directly, so we can\'t tell if it is still available for adoption, sorry!"
+        createSubject()
+        subject.warning.set(true)
+        val slot = slot<DialogEvent>()
+        every { eventBus += capture(slot) } answers { nothing }
+        subject = spyk(subject)
+
+        subject.showPetWarningDialog(mockk())
+        slot.captured.positiveButtonCallback?.invoke()
+
+        verify { subject.launchAnimalDetails(AnimalDetailsUseCase.Tab.CONTACT) }
     }
 
     private fun createSubject() {

@@ -15,12 +15,14 @@ import tech.pauly.findapet.data.FavoriteRepository
 import tech.pauly.findapet.data.ShelterRepository
 import tech.pauly.findapet.data.models.Animal
 import tech.pauly.findapet.data.models.Option
+import tech.pauly.findapet.data.models.AnimalUrl
 import tech.pauly.findapet.shared.BaseViewModel
 import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.ResourceProvider
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.*
+import tech.pauly.findapet.utils.ObservableString
 import javax.inject.Inject
 
 class AnimalDetailsViewModel @Inject
@@ -31,28 +33,29 @@ internal constructor(private val dataStore: TransientDataStore,
                      private val shelterRepository: ShelterRepository,
                      private val locationHelper: LocationHelper) : BaseViewModel() {
 
-    var name = ObservableField("")
+    var name = ObservableString()
     var age = ObservableInt(R.string.missing)
-    var breeds = ObservableField("")
+    var breeds = ObservableString()
     var sex = ObservableInt(R.string.missing)
     var size = ObservableInt(R.string.missing)
-    var options = ObservableField("")
-    var description = ObservableField("")
+    var options = ObservableString()
+    var description = ObservableString()
     var descriptionVisibility = ObservableBoolean(false)
     var optionsVisibility = ObservableBoolean(false)
     var imagesPageLimit = ObservableInt(4)
     var imagesCount = ObservableInt(0)
     var currentImagePosition = ObservableInt(0)
-    var contactName = ObservableField("")
-    var contactAddress = ObservableField("")
-    var contactPhone = ObservableField("")
-    var contactEmail = ObservableField("")
-    var contactDistance = ObservableField("")
+    var contactName = ObservableString()
+    var contactAddress = ObservableString()
+    var contactPhone = ObservableString()
+    var contactEmail = ObservableString()
+    var contactDistance = ObservableString()
     var contactPhoneVisibility = ObservableBoolean(false)
     var contactEmailVisibility = ObservableBoolean(false)
     var partialContact = ObservableBoolean(false)
 
     var animalImagesSubject = PublishSubject.create<List<AnimalImageViewModel>>()
+    var tabSwitchSubject = PublishSubject.create<Int>()
 
     private var animal: Animal? = null
     private var latLng: LatLng? = null
@@ -72,6 +75,10 @@ internal constructor(private val dataStore: TransientDataStore,
             setDescription(animal.description)
             updateShelter(animal)
             this.animal = animal
+
+            if (it.tab == AnimalDetailsUseCase.Tab.CONTACT) {
+                tabSwitchSubject.onNext(1)
+            }
         }
     }
 
@@ -157,7 +164,7 @@ internal constructor(private val dataStore: TransientDataStore,
         }
     }
 
-    private fun setPhotos(photoList: List<String>?) {
+    private fun setPhotos(photoList: List<AnimalUrl>?) {
         photoList?.map {
             AnimalImageViewModel(it)
         }?.also {

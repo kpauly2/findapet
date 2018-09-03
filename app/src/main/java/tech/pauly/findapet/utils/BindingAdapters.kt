@@ -3,6 +3,8 @@ package tech.pauly.findapet.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.BindingAdapter
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.support.annotation.IdRes
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.TabLayout
@@ -14,12 +16,18 @@ import android.support.v7.widget.RecyclerView
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import tech.pauly.findapet.R
+import tech.pauly.findapet.data.models.fullUrl
 
 object BindingAdapters {
     var recyclerItemWidth: Int = 0
+}
+
+enum class DrawablePosition {
+    START, TOP, END, BOTTOM
 }
 
 @BindingAdapter(value = ["navigationItemSelectedListener", "defaultSelectedItem"])
@@ -36,13 +44,8 @@ fun loadImageIntoView(view: ImageView, url: String?, cornerRadius: Int) {
         return
     }
     val transformation = RoundedCornersTransformation(view.context.dp2px(cornerRadius.toFloat()), 0)
-
-    var fullUrl = url
-    if (url.contains("-") && url.contains(".png")) {
-        fullUrl = "file://$fullUrl"
-    }
     Picasso.get()
-            .load(fullUrl)
+            .load(url.fullUrl)
             .error(R.drawable.shape_animal_image)
             .fit()
             .centerCrop()
@@ -154,6 +157,25 @@ fun setFocusChangeListener(view: View, touchListener: TouchListener) {
         }
         false
     }
+}
+
+@BindingAdapter(value = ["dynamicDrawable", "dynamicDrawableVisibility", "drawablePosition"])
+fun toggleDynamicTextViewDrawable(view: TextView, drawable: Drawable, visible: Boolean, position: DrawablePosition) {
+    if (visible) {
+        view.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                if (position == DrawablePosition.START) drawable else null,
+                if (position == DrawablePosition.TOP) drawable else null,
+                if (position == DrawablePosition.END) drawable else null,
+                if (position == DrawablePosition.BOTTOM) drawable else null)
+        view.invalidate()
+    } else {
+        view.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
+    }
+}
+
+@BindingAdapter("backgroundColorFilter")
+fun setBackgroundColorFilter(view: View, color: Int) {
+    view.background.setColorFilter(view.context.getColor(color), PorterDuff.Mode.SRC_ATOP)
 }
 
 @FunctionalInterface

@@ -24,6 +24,7 @@ import tech.pauly.findapet.shared.datastore.FilterUpdatedUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.ActivityEvent
 import tech.pauly.findapet.shared.events.ViewEventBus
+import tech.pauly.findapet.utils.ObservableString
 
 class FilterViewModel @Inject
 internal constructor(private val filterRepository: FilterRepository,
@@ -35,8 +36,8 @@ internal constructor(private val filterRepository: FilterRepository,
     var selectedSex = ObservableField(Sex.MISSING)
     var selectedAge = ObservableField(Age.MISSING)
     var selectedSize = ObservableField(AnimalSize.MISSING)
-    var selectedBreed = ObservableField("")
-    var breedSearchText = ObservableField("")
+    var selectedBreed = ObservableString()
+    var breedSearchText = ObservableString()
 
     val scrollToViewSubject = PublishSubject.create<Boolean>()
     private var masterBreedList: List<String> = ArrayList()

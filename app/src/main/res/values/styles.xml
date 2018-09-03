@@ -19,7 +19,7 @@
         <item name="colorControlHighlight">@color/purpleVeryLight</item>
     </style>
 
-    <style name="NavMenuButton" parent="Widget.AppCompat.Button.Borderless">
+    <style name="NavMenuButton" parent="Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:textAppearance">@style/FontStrongBody</item>
     </style>
 

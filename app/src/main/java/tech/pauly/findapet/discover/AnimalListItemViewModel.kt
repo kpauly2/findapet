@@ -2,27 +2,36 @@ package tech.pauly.findapet.discover
 
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import tech.pauly.findapet.data.models.*
+import android.view.View
+import tech.pauly.findapet.R
+import tech.pauly.findapet.data.models.Animal
+import tech.pauly.findapet.data.models.AnimalUrl
+import tech.pauly.findapet.data.models.Sex
 import tech.pauly.findapet.shared.BaseViewModel
-import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.ResourceProvider
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
+import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase.Tab
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.ActivityEvent
+import tech.pauly.findapet.shared.events.DialogEvent
 import tech.pauly.findapet.shared.events.ViewEventBus
+import tech.pauly.findapet.utils.ObservableString
+import tech.pauly.findapet.utils.safeGet
 import javax.inject.Inject
 
 open class AnimalListItemViewModel(private val animal: Animal,
-                              private val eventBus: ViewEventBus,
-                              private val dataStore: TransientDataStore,
-                              resourceProvider: ResourceProvider) : BaseViewModel() {
-
+                                   private val eventBus: ViewEventBus,
+                                   private val dataStore: TransientDataStore,
+                                   private val resourceProvider: ResourceProvider) : BaseViewModel() {
     open var id: Int = 0
-    var name = ObservableField("")
-    var imageUrl = ObservableField("")
-    var age = ObservableField("")
-    var breeds = ObservableField("")
+    var name = ObservableString()
+    var imageUrl = ObservableField<AnimalUrl>()
+    var age = ObservableString()
+    var breeds = ObservableString()
     var distanceVisibility = ObservableBoolean(false)
+    var warning = ObservableBoolean(false)
+
+    private var sex = Sex.MISSING
 
     init {
         animal.also {
@@ -31,12 +40,41 @@ open class AnimalListItemViewModel(private val animal: Animal,
             age.set(resourceProvider.getString(it.age.formattedName))
             breeds.set(it.formattedBreedList)
             imageUrl.set(animal.primaryPhotoUrl)
+            sex = it.sex
         }
     }
 
-    fun launchAnimalDetails() {
-        dataStore += AnimalDetailsUseCase(animal)
+    fun launchAnimalDetails(tab: Tab) {
+        dataStore += AnimalDetailsUseCase(animal, tab)
         eventBus += ActivityEvent(this, AnimalDetailsActivity::class, false)
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    fun showPetWarningDialog(v: View) {
+        if (!warning.get()) {
+            launchAnimalDetails(Tab.DETAILS)
+            return
+        }
+        val sexSubject = resourceProvider.getString(when (sex) {
+            Sex.MALE -> R.string.pronoun_male_subject
+            Sex.FEMALE -> R.string.pronoun_female_subject
+            else -> R.string.pronoun_missing
+        })
+        val sexObject = resourceProvider.getString(when (sex) {
+            Sex.MALE -> R.string.pronoun_male_object
+            Sex.FEMALE -> R.string.pronoun_female_object
+            else -> R.string.pronoun_missing
+        })
+        val bodyText = resourceProvider.getString(R.string.pet_warning_dialog_body, name.safeGet(), sexObject, sexSubject)
+        eventBus += DialogEvent(this,
+                R.string.pet_warning_dialog_title,
+                bodyText,
+                R.string.pet_warning_dialog_contact,
+                R.string.dialog_cancel,
+                { launchAnimalDetails(Tab.CONTACT) },
+                null,
+                imageUrl.get(),
+                R.color.warning)
     }
 
     open class Factory @Inject

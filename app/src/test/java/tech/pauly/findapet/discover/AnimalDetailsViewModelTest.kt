@@ -63,16 +63,32 @@ class AnimalDetailsViewModelTest {
         setupPageWithUseCase(null)
 
         subject.apply {
-            assertThat(name.get()).isEqualTo("")
+            assertThat(name.get()).isNull()
             assertThat(age.get()).isEqualTo(R.string.missing)
-            assertThat(breeds.get()).isEqualTo("")
+            assertThat(breeds.get()).isNull()
             assertThat(sex.get()).isEqualTo(R.string.missing)
             assertThat(size.get()).isEqualTo(R.string.missing)
-            assertThat(options.get()).isEqualTo("")
-            assertThat(description.get()).isEqualTo("")
+            assertThat(options.get()).isNull()
+            assertThat(description.get()).isNull()
             assertThat(descriptionVisibility.get()).isEqualTo(false)
             assertThat(optionsVisibility.get()).isEqualTo(false)
         }
+    }
+
+    @Test
+    fun onCreate_useCaseTabIsContact_switchToContactTab() {
+        val observer = subject.tabSwitchSubject.test()
+        setupPageWithUseCase(setupFullAnimalUseCase(AnimalDetailsUseCase.Tab.CONTACT))
+
+        observer.assertValue(1)
+    }
+
+    @Test
+        fun onCreate_useCaseTabIsDetails_doNothing() {
+        val observer = subject.tabSwitchSubject.test()
+        setupPageWithUseCase(setupFullAnimalUseCase(AnimalDetailsUseCase.Tab.DETAILS))
+
+        observer.assertNoValues()
     }
 
     @Test
@@ -368,7 +384,7 @@ class AnimalDetailsViewModelTest {
         return shelter
     }
 
-    private fun setupFullAnimalUseCase(): AnimalDetailsUseCase {
+    private fun setupFullAnimalUseCase(tab: AnimalDetailsUseCase.Tab? = AnimalDetailsUseCase.Tab.DETAILS): AnimalDetailsUseCase {
         val animal: Animal = mock {
             on { id }.thenReturn(10)
             on { name }.thenReturn("name")
@@ -384,6 +400,7 @@ class AnimalDetailsViewModelTest {
 
         return mock {
             on { this.animal }.thenReturn(animal)
+            on { this.tab }.thenReturn(tab)
         }
     }
 

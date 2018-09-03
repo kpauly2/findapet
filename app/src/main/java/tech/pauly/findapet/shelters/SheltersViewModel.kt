@@ -20,6 +20,7 @@ import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.OptionsMenuEvent
 import tech.pauly.findapet.shared.events.OptionsMenuState
 import tech.pauly.findapet.shared.events.ViewEventBus
+import tech.pauly.findapet.utils.ObservableString
 import javax.inject.Inject
 
 class SheltersViewModel @Inject
@@ -31,8 +32,8 @@ constructor(private val dataStore: TransientDataStore,
             private val eventBus: ViewEventBus) : BaseViewModel() {
 
     var shelterDetailsVisibility = ObservableBoolean(false)
-    var selectedShelterName = ObservableField<String>("")
-    var selectedShelterAddress = ObservableField<String>("")
+    var selectedShelterName = ObservableString("")
+    var selectedShelterAddress = ObservableString("")
     private var shelterList: List<Shelter>? = null
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -88,5 +89,4 @@ constructor(private val dataStore: TransientDataStore,
     private fun shelterForLatLng(latLng: LatLng): Shelter? {
         return shelterList?.find { it.latitude == latLng.latitude && it.longitude == latLng.longitude }
     }
-
 }

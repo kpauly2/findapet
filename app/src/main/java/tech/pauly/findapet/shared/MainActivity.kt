@@ -13,6 +13,7 @@ import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.activity_main.*
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.ActivityMainBinding
+import tech.pauly.findapet.discover.AnimalListItemViewModel
 import tech.pauly.findapet.discover.DiscoverViewModel
 import tech.pauly.findapet.discover.FilterActivity
 import tech.pauly.findapet.favorites.FavoritesViewModel
@@ -77,6 +78,7 @@ class MainActivity : BaseActivity() {
             it += eventBus.optionsMenu(SheltersViewModel::class).subscribe(this::optionsMenuEvent)
             it += eventBus.optionsMenu(FavoritesViewModel::class).subscribe(this::optionsMenuEvent)
             it += eventBus.optionsMenu(SettingsViewModel::class).subscribe(this::optionsMenuEvent)
+            it += eventBus.dialog(AnimalListItemViewModel::class).subscribe(this::dialogEvent)
         }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
