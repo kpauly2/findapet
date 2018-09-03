@@ -1,6 +1,11 @@
 package tech.pauly.findapet.favorites
 
-import com.nhaarman.mockito_kotlin.*
+import io.mockk.MockKAnnotations
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.mockk
+import io.mockk.verify
 import io.reactivex.Observable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -19,30 +24,51 @@ import tech.pauly.findapet.shared.events.ViewEventBus
 
 class FavoritesViewModelTest {
 
-    private val listAdapter: AnimalListAdapter = mock()
-    private val animalListItemFactory: AnimalListItemViewModel.Factory = mock()
-    private val dataStore: TransientDataStore = mock()
-    private val eventBus: ViewEventBus = mock()
-    private val favoriteRepository: FavoriteRepository = mock()
-    private val animalRepository: AnimalRepository = mock()
+    @RelaxedMockK
+    private lateinit var listAdapter: AnimalListAdapter
 
-    private var favorite1: LocalAnimal = mock {
-        on { id }.thenReturn(1)
-    }
-    private var favorite2: LocalAnimal = mock {
-        on { id }.thenReturn(2)
-    }
-    private var favorite3: LocalAnimal = mock {
-        on { id }.thenReturn(3)
-    }
-    private val favoriteVm1: AnimalListItemViewModel = mock()
-    private val favoriteVm2: AnimalListItemViewModel = mock()
-    private val favoriteVm3: AnimalListItemViewModel = mock()
+    @MockK
+    private lateinit var animalListItemFactory: AnimalListItemViewModel.Factory
+
+    @RelaxedMockK
+    private lateinit var dataStore: TransientDataStore
+
+    @RelaxedMockK
+    private lateinit var eventBus: ViewEventBus
+
+    @MockK
+    private lateinit var favoriteRepository: FavoriteRepository
+
+    @MockK
+    private lateinit var animalRepository: AnimalRepository
+
+    @MockK
+    private lateinit var favorite1: LocalAnimal
+
+    @MockK
+    private lateinit var favorite2: LocalAnimal
+
+    @MockK
+    private lateinit var favorite3: LocalAnimal
+
+    @MockK
+    private lateinit var favoriteVm1: AnimalListItemViewModel
+
+    @MockK
+    private lateinit var favoriteVm2: AnimalListItemViewModel
+
+    @MockK
+    private lateinit var favoriteVm3: AnimalListItemViewModel
+
     private lateinit var subject: FavoritesViewModel
 
     @Before
     fun setup() {
-        whenever(favoriteRepository.getFavoritedAnimals()).thenReturn(Observable.just(listOf(favorite1, favorite2)))
+        MockKAnnotations.init(this)
+        every { favorite1.id } returns 1
+        every { favorite2.id } returns 2
+        every { favorite3.id } returns 3
+        every { favoriteRepository.getFavoritedAnimals() } returns Observable.just(listOf(favorite1, favorite2))
 
         subject = FavoritesViewModel(listAdapter, animalListItemFactory, dataStore, eventBus, favoriteRepository, animalRepository)
     }
@@ -51,62 +77,72 @@ class FavoritesViewModelTest {
     fun updateToolbar_updatesToolbarTitleAndOptionsMenu() {
         subject.updateToolbar()
 
-        verify(dataStore) += DiscoverToolbarTitleUseCase(R.string.menu_favorites)
-        verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.EMPTY)
+        verify {
+            dataStore += DiscoverToolbarTitleUseCase(R.string.menu_favorites)
+            eventBus += OptionsMenuEvent(subject, OptionsMenuState.EMPTY)
+        }
     }
 
     @Test
     fun loadFavorites_clearItemsSetsRefreshingAndGetFavoritedAnimals() {
-        whenever(favoriteRepository.getFavoritedAnimals()).thenReturn(Observable.never())
+        every { favoriteRepository.getFavoritedAnimals() } returns Observable.never()
 
         subject.loadFavorites()
 
         assertThat(subject.refreshing.get()).isTrue()
-        verify(listAdapter).clearAnimalItems()
-        verify(favoriteRepository).getFavoritedAnimals()
+        verify {
+            listAdapter.clearAnimalItems()
+            favoriteRepository.getFavoritedAnimals()
+        }
     }
 
     @Test
     fun loadFavorites_getsFavoritedAnimals_showAllAnimalsAndFetchEachAnimalFromNetwork() {
-        whenever(animalListItemFactory.newInstance(favorite1)).thenReturn(favoriteVm1)
-        whenever(animalListItemFactory.newInstance(favorite2)).thenReturn(favoriteVm2)
-        whenever(animalRepository.fetchAnimal(any())).thenReturn(Observable.never())
+        every { animalListItemFactory.newInstance(favorite1) } returns favoriteVm1
+        every { animalListItemFactory.newInstance(favorite2) } returns favoriteVm2
+        every { animalRepository.fetchAnimal(any()) } returns Observable.never()
 
         subject.loadFavorites()
 
-        verify(listAdapter).addAnimalItem(favoriteVm1)
-        verify(listAdapter).addAnimalItem(favoriteVm2)
-        verify(animalRepository).fetchAnimal(1)
-        verify(animalRepository).fetchAnimal(2)
+        verify {
+            listAdapter.addAnimalItem(favoriteVm1)
+            listAdapter.addAnimalItem(favoriteVm2)
+            animalRepository.fetchAnimal(1)
+            animalRepository.fetchAnimal(2)
+        }
     }
 
     @Test
     fun loadFavorites_fetchAnimalsFromNetwork_showAllWarningsForUnauthorizedAnimals() {
-        val status: Status = mock {
-            on { code }.thenReturn(StatusCode.PFAPI_ERR_UNAUTHORIZED)
+        val status = mockk<Status> {
+            every { code } returns StatusCode.PFAPI_ERR_UNAUTHORIZED
         }
-        val header: Header = mock { header ->
-            on { header.status }.thenReturn(status)
+        val header = mockk<Header> {
+            every { this@mockk.status } returns status
         }
-        val errorResponse: SingleAnimalResponse = mock { response ->
-            on { response.header }.thenReturn(header)
+        val errorResponse = mockk<SingleAnimalResponse> {
+            every { this@mockk.header } returns header
         }
-        val successResponse: SingleAnimalResponse = mock { response ->
-            on { response.header }.thenReturn(mock())
-            on { response.animal }.thenReturn(mock())
+        val successResponse = mockk<SingleAnimalResponse> {
+            every { this@mockk.header } returns mockk(relaxed = true)
+            every { this@mockk.animal } returns mockk()
         }
-        whenever(animalListItemFactory.newInstance(favorite1)).thenReturn(favoriteVm1)
-        whenever(animalListItemFactory.newInstance(favorite2)).thenReturn(favoriteVm2)
-        whenever(animalListItemFactory.newInstance(favorite3)).thenReturn(favoriteVm3)
-        whenever(animalRepository.fetchAnimal(1)).thenReturn(Observable.just(SingleAnimalResponseWrapper(errorResponse, 1)))
-        whenever(animalRepository.fetchAnimal(2)).thenReturn(Observable.just(SingleAnimalResponseWrapper(successResponse, 2)))
-        whenever(animalRepository.fetchAnimal(3)).thenReturn(Observable.just(SingleAnimalResponseWrapper(errorResponse, 3)))
-        whenever(favoriteRepository.getFavoritedAnimals()).thenReturn(Observable.just(listOf(favorite1, favorite2, favorite3)))
+        every { animalListItemFactory.newInstance(favorite1) } returns favoriteVm1
+        every { animalListItemFactory.newInstance(favorite2) } returns favoriteVm2
+        every { animalListItemFactory.newInstance(favorite3) } returns favoriteVm3
+        every { animalRepository.fetchAnimal(1) } returns Observable.just(SingleAnimalResponseWrapper(errorResponse, 1))
+        every { animalRepository.fetchAnimal(2) } returns Observable.just(SingleAnimalResponseWrapper(successResponse, 2))
+        every { animalRepository.fetchAnimal(3) } returns Observable.just(SingleAnimalResponseWrapper(errorResponse, 3))
+        every { favoriteRepository.getFavoritedAnimals() } returns Observable.just(listOf(favorite1, favorite2, favorite3))
 
         subject.loadFavorites()
 
-        verify(listAdapter).markAnimalWarning(1)
-        verify(listAdapter, never()).markAnimalWarning(2)
-        verify(listAdapter).markAnimalWarning(3)
+        verify {
+            listAdapter.markAnimalWarning(1)
+            listAdapter.markAnimalWarning(3)
+        }
+        verify(exactly = 0) {
+            listAdapter.markAnimalWarning(2)
+        }
     }
 }
