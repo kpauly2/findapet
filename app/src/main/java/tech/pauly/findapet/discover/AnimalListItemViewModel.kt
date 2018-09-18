@@ -9,6 +9,7 @@ import tech.pauly.findapet.data.models.AnimalUrl
 import tech.pauly.findapet.data.models.Sex
 import tech.pauly.findapet.shared.BaseViewModel
 import tech.pauly.findapet.shared.ResourceProvider
+import tech.pauly.findapet.shared.SentencePlacement
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase.Tab
 import tech.pauly.findapet.shared.datastore.TransientDataStore
@@ -40,6 +41,7 @@ open class AnimalListItemViewModel(private val animal: Animal,
             age.set(resourceProvider.getString(it.age.formattedName))
             breeds.set(it.formattedBreedList)
             imageUrl.set(animal.primaryPhotoUrl)
+            warning.set(it.warning)
             sex = it.sex
         }
     }
@@ -55,17 +57,11 @@ open class AnimalListItemViewModel(private val animal: Animal,
             launchAnimalDetails(Tab.DETAILS)
             return
         }
-        val sexSubject = resourceProvider.getString(when (sex) {
-            Sex.MALE -> R.string.pronoun_male_subject
-            Sex.FEMALE -> R.string.pronoun_female_subject
-            else -> R.string.pronoun_missing
-        })
-        val sexObject = resourceProvider.getString(when (sex) {
-            Sex.MALE -> R.string.pronoun_male_object
-            Sex.FEMALE -> R.string.pronoun_female_object
-            else -> R.string.pronoun_missing
-        })
-        val bodyText = resourceProvider.getString(R.string.pet_warning_dialog_body, name.safeGet(), sexObject, sexSubject)
+        val bodyText = resourceProvider.getSexString(R.string.pet_warning_dialog_body,
+                sex,
+                name.safeGet(),
+                SentencePlacement.OBJECT,
+                SentencePlacement.SUBJECT)
         eventBus += DialogEvent(this,
                 R.string.pet_warning_dialog_title,
                 bodyText,

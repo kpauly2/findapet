@@ -2,6 +2,7 @@ package tech.pauly.findapet.data.models
 
 import android.support.annotation.StringRes
 import tech.pauly.findapet.R
+import tech.pauly.findapet.shared.SentencePlacement
 
 enum class Sex(val code: Int,
                @StringRes val formattedName: Int,
@@ -15,6 +16,25 @@ enum class Sex(val code: Int,
     companion object {
         fun fromString(name: String): Sex {
                 return Sex.values().single { it.serverName.equals(name, true) }
+        }
+    }
+
+    @StringRes
+    fun getGrammaticalForm(place: SentencePlacement): Int {
+        return when (this) {
+            Sex.MALE -> {
+                return when (place) {
+                    SentencePlacement.SUBJECT -> R.string.pronoun_male_subject
+                    SentencePlacement.OBJECT -> R.string.pronoun_male_object
+                }
+            }
+            Sex.FEMALE -> {
+                return when (place) {
+                    SentencePlacement.SUBJECT -> R.string.pronoun_female_subject
+                    SentencePlacement.OBJECT -> R.string.pronoun_female_object
+                }
+            }
+            else -> R.string.pronoun_missing
         }
     }
 }

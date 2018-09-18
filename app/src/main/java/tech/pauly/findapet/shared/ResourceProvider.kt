@@ -2,10 +2,11 @@ package tech.pauly.findapet.shared
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.support.annotation.PluralsRes
 import android.support.annotation.StringRes
 import com.squareup.picasso.Picasso
+import tech.pauly.findapet.R
+import tech.pauly.findapet.data.models.Sex
 import tech.pauly.findapet.dependencyinjection.ForApplication
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,7 +25,27 @@ open class ResourceProvider @Inject
 internal constructor(@ForApplication private val context: Context) {
 
     open fun getString(@StringRes stringId: Int, vararg formatArgs: Any): String {
-        return context.getString(stringId, *formatArgs)
+        return if (formatArgs.isEmpty()) {
+            context.getString(stringId)
+        } else {
+            context.getString(stringId, *formatArgs)
+        }
+    }
+
+    open fun getSexString(@StringRes stringId: Int, sex: Sex, vararg formatArgs: Any): String {
+        return formatArgs.map {
+            if (it is SentencePlacement) {
+                getString(sex.getGrammaticalForm(it))
+            } else {
+                it
+            }
+        }.let {
+            if (it.isEmpty()) {
+                context.getString(stringId)
+            } else {
+                context.getString(stringId, *it.toTypedArray())
+            }
+        }
     }
 
     open fun getQuantityString(@PluralsRes stringId: Int, quantity: Int): String {
@@ -43,14 +64,12 @@ internal constructor(@ForApplication private val context: Context) {
         return context.getFileStreamPath(filename).absolutePath
     }
 
-    open fun openBitmapFromFile(filename: String): Bitmap {
-        context.openFileInput(filename).use {
-            return BitmapFactory.decodeStream(it)
-        }
-    }
-
     open fun deleteFile(path: String) {
         val filename = path.substring(path.lastIndexOf('/') + 1)
         context.deleteFile(filename)
     }
+}
+
+enum class SentencePlacement {
+    SUBJECT, OBJECT
 }
