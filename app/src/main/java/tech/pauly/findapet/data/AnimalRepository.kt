@@ -2,10 +2,7 @@ package tech.pauly.findapet.data
 
 import io.reactivex.Observable
 import tech.pauly.findapet.BuildConfig
-import tech.pauly.findapet.data.models.AnimalListResponse
-import tech.pauly.findapet.data.models.FetchAnimalsRequest
-import tech.pauly.findapet.data.models.SingleAnimalResponseWrapper
-import tech.pauly.findapet.data.models.StatusCode
+import tech.pauly.findapet.data.models.*
 import javax.inject.Inject
 
 private const val ANIMAL_RETURN_COUNT = 20
@@ -38,9 +35,12 @@ constructor(private val animalService: AnimalService,
                 .toObservable()
     }
 
-    open fun fetchAnimal(id: Int): Observable<SingleAnimalResponseWrapper> {
-        return animalService.fetchAnimal(BuildConfig.API_KEY, id.toString())
-                .map { SingleAnimalResponseWrapper(it, id) }
+    open fun fetchAnimal(animal: Animal): Observable<AnimalResponseWrapper> {
+        return animalService.fetchAnimal(BuildConfig.API_KEY, animal.id.toString())
+                .map {
+                    val responseAnimal = it.animal ?: animal
+                    AnimalResponseWrapper(responseAnimal, it.header)
+                }
                 .compose(observableHelper.applySingleSchedulers())
                 .toObservable()
     }

@@ -14,6 +14,7 @@ import tech.pauly.findapet.data.models.Sex
 import tech.pauly.findapet.data.models.Shelter
 import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.ResourceProvider
+import tech.pauly.findapet.shared.SentencePlacement
 import tech.pauly.findapet.shared.datastore.AnimalDetailsUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.shared.events.ActivityEvent
@@ -54,6 +55,7 @@ class AnimalListItemViewModelTest {
             every { formattedBreedList } returns "breeds"
             every { primaryPhotoUrl } returns "photo.jpg"
             every { sex } returns Sex.MISSING
+            every { warning } returns true
         }
 
         resourceProvider.apply {
@@ -79,6 +81,7 @@ class AnimalListItemViewModelTest {
             assertThat(age.get()).isEqualTo("Adult")
             assertThat(breeds.get()).isEqualTo("breeds")
             assertThat(imageUrl.get()).isEqualTo("photo.jpg")
+            assertThat(warning.get()).isTrue()
         }
     }
 
@@ -113,9 +116,9 @@ class AnimalListItemViewModelTest {
     }
 
     @Test
-    fun showPetWarningDialog_malePet_firesDialogEventWithProperGrammar() {
+    fun showPetWarningDialog_firesDialogEvent() {
         every { animal.sex } returns Sex.MALE
-        every { resourceProvider.getString(R.string.pet_warning_dialog_body, "name", "him", "he") } returns "name's shelter does not allow for us to search for him directly, so we can\'t tell if he is still available for adoption, sorry!"
+        every { resourceProvider.getSexString(R.string.pet_warning_dialog_body, Sex.MALE, "name", SentencePlacement.OBJECT, SentencePlacement.SUBJECT) } returns "name's shelter does not allow for us to search for him directly, so we can\'t tell if he is still available for adoption, sorry!"
         createSubject()
         subject.warning.set(true)
         val slot = slot<DialogEvent>()
@@ -134,51 +137,9 @@ class AnimalListItemViewModelTest {
     }
 
     @Test
-    fun showPetWarningDialog_femalePet_firesDialogEventWithProperGrammar() {
-        every { animal.sex } returns Sex.FEMALE
-        every { resourceProvider.getString(R.string.pet_warning_dialog_body, "name", "her", "she") } returns "name's shelter does not allow for us to search for her directly, so we can\'t tell if she is still available for adoption, sorry!"
-        createSubject()
-        subject.warning.set(true)
-        val slot = slot<DialogEvent>()
-        every { eventBus += capture(slot) } answers { nothing }
-
-        subject.showPetWarningDialog(mockk())
-
-        slot.captured.apply {
-            assertThat(titleText).isEqualTo(R.string.pet_warning_dialog_title)
-            assertThat(bodyText).isEqualTo("name's shelter does not allow for us to search for her directly, so we can\'t tell if she is still available for adoption, sorry!")
-            assertThat(positiveButtonText).isEqualTo(R.string.pet_warning_dialog_contact)
-            assertThat(negativeButtonText).isEqualTo(R.string.dialog_cancel)
-            assertThat(imageUrl).isEqualTo("photo.jpg")
-            assertThat(primaryColor).isEqualTo(R.color.warning)
-        }
-    }
-
-    @Test
-    fun showPetWarningDialog_petUnknownGender_firesDialogEventWithProperGrammar() {
-        every { animal.sex } returns Sex.UNKNOWN
-        every { resourceProvider.getString(R.string.pet_warning_dialog_body, "name", "it", "it") } returns "name's shelter does not allow for us to search for it directly, so we can\'t tell if it is still available for adoption, sorry!"
-        createSubject()
-        subject.warning.set(true)
-        val slot = slot<DialogEvent>()
-        every { eventBus += capture(slot) } answers { nothing }
-
-        subject.showPetWarningDialog(mockk())
-
-        slot.captured.apply {
-            assertThat(titleText).isEqualTo(R.string.pet_warning_dialog_title)
-            assertThat(bodyText).isEqualTo("name's shelter does not allow for us to search for it directly, so we can\'t tell if it is still available for adoption, sorry!")
-            assertThat(positiveButtonText).isEqualTo(R.string.pet_warning_dialog_contact)
-            assertThat(negativeButtonText).isEqualTo(R.string.dialog_cancel)
-            assertThat(imageUrl).isEqualTo("photo.jpg")
-            assertThat(primaryColor).isEqualTo(R.color.warning)
-        }
-    }
-
-    @Test
     fun showPetWarningDialog_clickPositiveButton_launchAnimalDetailsToContactTab() {
-        every { animal.sex } returns Sex.UNKNOWN
-        every { resourceProvider.getString(R.string.pet_warning_dialog_body, "name", "it", "it") } returns "name's shelter does not allow for us to search for it directly, so we can\'t tell if it is still available for adoption, sorry!"
+        every { animal.sex } returns Sex.MALE
+        every { resourceProvider.getSexString(R.string.pet_warning_dialog_body, Sex.MALE, "name", SentencePlacement.OBJECT, SentencePlacement.SUBJECT) } returns "name's shelter does not allow for us to search for him directly, so we can\'t tell if he is still available for adoption, sorry!"
         createSubject()
         subject.warning.set(true)
         val slot = slot<DialogEvent>()

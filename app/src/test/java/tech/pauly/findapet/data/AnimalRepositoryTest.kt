@@ -1,6 +1,10 @@
 package tech.pauly.findapet.data
 
-import com.nhaarman.mockito_kotlin.*
+import io.mockk.MockKAnnotations
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import io.mockk.verify
 import io.reactivex.Single
 import io.reactivex.SingleTransformer
 import org.junit.Before
@@ -9,20 +13,30 @@ import tech.pauly.findapet.data.models.*
 
 class AnimalRepositoryTest {
 
-    private val animalService: AnimalService = mock()
-    private val observableHelper: ObservableHelper = mock()
+    @MockK
+    private lateinit var animalService: AnimalService
 
-    private var animalListResponse: AnimalListResponse = mock()
-    private var singleAnimalResponse: SingleAnimalResponse = mock()
-    private var header: Header = mock()
+    @MockK
+    private lateinit var observableHelper: ObservableHelper
+
+    @MockK
+    private lateinit var animalListResponse: AnimalListResponse
+
+    @MockK
+    private lateinit var singleAnimalResponse: SingleAnimalResponse
+
+    @MockK
+    private lateinit var header: Header
+
     private lateinit var subject: AnimalRepository
 
     @Before
     fun setup() {
-        whenever(animalService.fetchAnimals(any(), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(Single.just(animalListResponse))
-        whenever(observableHelper.applySingleSchedulers<Any>()).thenReturn(SingleTransformer { it })
-        whenever(animalListResponse.header).thenReturn(header)
-        whenever(singleAnimalResponse.header).thenReturn(header)
+        MockKAnnotations.init(this)
+        every { animalService.fetchAnimals(any(), any(), any(), any(), any(), any(), any(), any(), any()) } returns Single.just(animalListResponse)
+        every { observableHelper.applySingleSchedulers<Any>() } returns SingleTransformer { it }
+        every { animalListResponse.header } returns header
+        every { singleAnimalResponse.header } returns header
 
         subject = AnimalRepository(animalService, observableHelper)
     }
@@ -30,31 +44,37 @@ class AnimalRepositoryTest {
     @Test
     fun fetchAnimals_returnAnimalListNotNullOrEmpty_returnsAnimalListForCorrectAnimalTypeWithSchedulers() {
         val request = setupFilterRequest()
-        whenever(animalListResponse.animalList).thenReturn(listOf(mock()))
+        val status = mockk<Status> {
+            every { code } returns StatusCode.PFAPI_OK
+        }
+        every { header.status } returns status
+        every { animalListResponse.animalList } returns listOf(mockk())
 
         val observer = subject.fetchAnimals(request).test()
 
-        verify(animalService).fetchAnimals(eq("zipcode"),
-                any(),
-                eq("cat"),
-                eq(0),
-                eq(20),
-                eq("M"),
-                eq("Adult"),
-                eq("L"),
-                eq("Calico"))
         observer.assertValues(animalListResponse).assertComplete()
-        verify(observableHelper).applySingleSchedulers<Any>()
+        verify {
+            animalService.fetchAnimals("zipcode",
+                    any(),
+                    "cat",
+                    0,
+                    20,
+                    "M",
+                    "Adult",
+                    "L",
+                    "Calico")
+            observableHelper.applySingleSchedulers<Any>()
+        }
     }
 
     @Test
     fun fetchAnimals_statusCodeOK_returnsOnNext() {
         val request = setupFilterRequest()
-        whenever(animalListResponse.animalList).thenReturn(listOf(mock()))
-        val status: Status = mock {
-            on { code }.thenReturn(StatusCode.PFAPI_OK)
+        every { animalListResponse.animalList } returns listOf(mockk())
+        val status = mockk<Status> {
+            every { code } returns StatusCode.PFAPI_OK
         }
-        whenever(header.status).thenReturn(status)
+        every { header.status } returns status
 
         val observer = subject.fetchAnimals(request).test()
 
@@ -64,11 +84,11 @@ class AnimalRepositoryTest {
     @Test
     fun fetchAnimals_statusCodeNotOK_returnsPetfinderExceptionForStatusCode() {
         val request = setupFilterRequest()
-        whenever(animalListResponse.animalList).thenReturn(listOf(mock()))
-        val status: Status = mock {
-            on { code }.thenReturn(StatusCode.PFAPI_ERR_INTERNAL)
+        every { animalListResponse.animalList } returns listOf(mockk())
+        val status = mockk<Status> {
+            every { code } returns StatusCode.PFAPI_ERR_INTERNAL
         }
-        whenever(header.status).thenReturn(status)
+        every { header.status } returns status
 
         val observer = subject.fetchAnimals(request).test()
 
@@ -78,7 +98,11 @@ class AnimalRepositoryTest {
     @Test
     fun fetchAnimals_returnAnimalListNull_returnExceptionForNoAnimals() {
         val request = setupFilterRequest()
-        whenever(animalListResponse.animalList).thenReturn(null)
+        val status = mockk<Status> {
+            every { code } returns StatusCode.PFAPI_OK
+        }
+        every { header.status } returns status
+        every { animalListResponse.animalList } returns null
 
         val observer = subject.fetchAnimals(request).test()
 
@@ -88,7 +112,11 @@ class AnimalRepositoryTest {
     @Test
     fun fetchAnimals_returnAnimalListEmpty_returnExceptionForNoAnimals() {
         val request = setupFilterRequest()
-        whenever(animalListResponse.animalList).thenReturn(emptyList())
+        val status   = mockk<Status> {
+            every { code } returns StatusCode.PFAPI_OK
+        }
+        every { header.status } returns status
+        every { animalListResponse.animalList } returns emptyList()
 
         val observer = subject.fetchAnimals(request).test()
 
@@ -96,18 +124,30 @@ class AnimalRepositoryTest {
     }
 
     @Test
-    fun fetchAnimal_animalIdFound_returnAnimalInWrapper() {
-        whenever(animalService.fetchAnimal(any(), eq("10"))).thenReturn(Single.just(singleAnimalResponse))
-        val status: Status = mock {
-            on { code }.thenReturn(StatusCode.PFAPI_OK)
-        }
-        whenever(header.status).thenReturn(status)
+    fun fetchAnimal_animalIdFound_returnFetchedAnimalAndHeader() {
+        val localAnimal = mockk<LocalAnimal> { every { id } returns 10 }
+        val internetAnimal = mockk<InternetAnimal> { every { id } returns 10 }
+        every { singleAnimalResponse.animal } returns internetAnimal
+        every { animalService.fetchAnimal(any(), "10") } returns Single.just(singleAnimalResponse)
 
-        val observer = subject.fetchAnimal(10).test()
+        val observer = subject.fetchAnimal(localAnimal).test()
 
-        observer.assertValues(SingleAnimalResponseWrapper(singleAnimalResponse, 10))
+        observer.assertValues(AnimalResponseWrapper(internetAnimal, header))
                 .assertComplete()
-        verify(observableHelper).applySingleSchedulers<Any>()
+        verify { observableHelper.applySingleSchedulers<Any>() }
+    }
+
+    @Test
+    fun fetchAnimal_animalInResponseIsNull_returnOriginalAnimalAndHeader() {
+        val localAnimal = mockk<LocalAnimal> { every { id } returns 10 }
+        every { singleAnimalResponse.animal } returns null
+        every { animalService.fetchAnimal(any(), "10") } returns Single.just(singleAnimalResponse)
+
+        val observer = subject.fetchAnimal(localAnimal).test()
+
+        observer.assertValues(AnimalResponseWrapper(localAnimal, header))
+                .assertComplete()
+        verify { observableHelper.applySingleSchedulers<Any>() }
     }
 
     private fun setupFilterRequest(): FetchAnimalsRequest {

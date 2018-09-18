@@ -68,6 +68,9 @@ sealed class Animal {
     @field:Element(required = false)
     open var description: String? = null
 
+    @Ignore
+    open var warning: Boolean = false
+
     abstract val formattedBreedList: String
     abstract val primaryPhotoUrl: AnimalUrl?
     abstract val photoUrlList: List<AnimalUrl>?

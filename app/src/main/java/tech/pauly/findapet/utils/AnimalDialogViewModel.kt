@@ -2,6 +2,7 @@
 
 package tech.pauly.findapet.utils
 
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.view.View
@@ -17,6 +18,7 @@ class AnimalDialogViewModel(private val event: DialogEvent) {
     val bodyText = ObservableString("")
     val positiveButtonText = ObservableInt(R.string.unknown)
     val negativeButtonText = ObservableInt(R.string.unknown)
+    val negativeButtonVisibility = ObservableBoolean(true)
     val imageUrl = ObservableField<AnimalUrl>("")
 
     val dismissSubject = PublishSubject.create<Unit>()
@@ -26,8 +28,13 @@ class AnimalDialogViewModel(private val event: DialogEvent) {
         titleText.set(event.titleText)
         bodyText.set(event.bodyText)
         positiveButtonText.set(event.positiveButtonText)
-        negativeButtonText.set(event.negativeButtonText)
         imageUrl.set(event.imageUrl)
+
+        if (event.negativeButtonText != null) {
+            negativeButtonText.set(event.negativeButtonText)
+        } else {
+            negativeButtonVisibility.set(false)
+        }
     }
 
     fun clickPositiveButton(v: View) {
@@ -40,7 +47,9 @@ class AnimalDialogViewModel(private val event: DialogEvent) {
         dismiss()
     }
 
-    fun dismiss(v: View? = null) {
+    fun dismiss(fromBackground: Boolean = false) {
+        if (fromBackground && event.blockBackgroundTouches)
+            return
         dismissSubject.onNext(Unit)
     }
 }

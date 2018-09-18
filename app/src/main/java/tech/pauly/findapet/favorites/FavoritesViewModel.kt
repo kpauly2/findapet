@@ -7,16 +7,22 @@ import android.databinding.ObservableInt
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.AnimalRepository
 import tech.pauly.findapet.data.FavoriteRepository
-import tech.pauly.findapet.data.models.LocalAnimal
+import tech.pauly.findapet.data.models.Animal
+import tech.pauly.findapet.data.models.AnimalResponseWrapper
+import tech.pauly.findapet.data.models.Option
 import tech.pauly.findapet.data.models.StatusCode
 import tech.pauly.findapet.discover.AnimalListAdapter
 import tech.pauly.findapet.discover.AnimalListItemViewModel
 import tech.pauly.findapet.shared.BaseViewModel
+import tech.pauly.findapet.shared.ResourceProvider
+import tech.pauly.findapet.shared.SentencePlacement
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
+import tech.pauly.findapet.shared.events.DialogEvent
 import tech.pauly.findapet.shared.events.OptionsMenuEvent
 import tech.pauly.findapet.shared.events.OptionsMenuState
 import tech.pauly.findapet.shared.events.ViewEventBus
+import tech.pauly.findapet.utils.Optional
 import javax.inject.Inject
 
 class FavoritesViewModel @Inject
@@ -25,10 +31,12 @@ internal constructor(val listAdapter: AnimalListAdapter,
                      private val dataStore: TransientDataStore,
                      private val eventBus: ViewEventBus,
                      private val favoriteRepository: FavoriteRepository,
-                     private val animalRepository: AnimalRepository) : BaseViewModel() {
+                     private val animalRepository: AnimalRepository,
+                     private val resourceProvider: ResourceProvider) : BaseViewModel() {
 
     var columnCount = ObservableInt(2)
     var refreshing = ObservableBoolean(false)
+    private var animalAdoptedList = ArrayList<Animal>()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun updateToolbar() {
@@ -42,25 +50,65 @@ internal constructor(val listAdapter: AnimalListAdapter,
         listAdapter.clearAnimalItems()
         favoriteRepository.getFavoritedAnimals()
                 .flatMapIterable { it }
-                .flatMap {
-                    showAnimal(it)
-                    animalRepository.fetchAnimal(it.id)
-                }
-                .subscribe({ responseWrapper ->
-                    responseWrapper.response.header.status?.code?.let {
-                        animalFetchFailure(it, responseWrapper.animalId)
+                .flatMap(animalRepository::fetchAnimal)
+                .map(this::parseResponseAndShowError)
+                .subscribe({ optionalAnimal ->
+                    if (optionalAnimal is Optional.Some) {
+                        showAnimal(optionalAnimal.element)
                     }
-                }, Throwable::printStackTrace) { refreshing.set(false) }
+                }, Throwable::printStackTrace) {
+                    refreshing.set(false)
+                    showNextAdoptedAnimal()
+                }
                 .onLifecycle()
     }
 
-    private fun showAnimal(animal: LocalAnimal) {
+    private fun parseResponseAndShowError(responseWrapper: AnimalResponseWrapper): Optional<Animal> {
+        val statusCode = responseWrapper.header.status?.code ?: StatusCode.PFAPI_OK
+        val animal = responseWrapper.animal
+        return when (statusCode) {
+            StatusCode.PFAPI_ERR_UNAUTHORIZED -> {
+                Optional.Some(animal.apply { warning = true })
+            }
+            StatusCode.PFAPI_ERR_NOENT -> {
+                animalAdoptedList.add(animal)
+                Optional.None
+            }
+            else -> Optional.Some(animal)
+        }
+    }
+
+    private fun showAnimal(animal: Animal) {
         listAdapter.addAnimalItem(animalListItemFactory.newInstance(animal))
     }
 
-    private fun animalFetchFailure(statusCode: StatusCode, animalId: Int) {
-        if (statusCode == StatusCode.PFAPI_ERR_UNAUTHORIZED) {
-            listAdapter.markAnimalWarning(animalId)
+    private fun showAnimalAdoptedDialog(animal: Animal) {
+        val bodyText = resourceProvider.getSexString(R.string.pet_adopted_dialog_body,
+                animal.sex,
+                animal.name,
+                SentencePlacement.SUBJECT)
+        eventBus += DialogEvent(this,
+                R.string.pet_adopted_dialog_title,
+                bodyText,
+                R.string.pet_adopted_remove_button,
+                null,
+                { clickPositiveButton(animal) },
+                null,
+                animal.primaryPhotoUrl,
+                blockBackgroundTouches = true)
+    }
+
+    private fun clickPositiveButton(animal: Animal) {
+        favoriteRepository.unfavoriteAnimal(animal)
+                .subscribe({}, Throwable::printStackTrace)
+                .onLifecycle()
+        showNextAdoptedAnimal()
+    }
+
+    private fun showNextAdoptedAnimal() {
+        animalAdoptedList.getOrNull(0)?.let {
+            showAnimalAdoptedDialog(it)
+            animalAdoptedList.removeAt(0)
         }
     }
 }

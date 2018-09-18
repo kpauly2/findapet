@@ -79,6 +79,7 @@ class MainActivity : BaseActivity() {
             it += eventBus.optionsMenu(FavoritesViewModel::class).subscribe(this::optionsMenuEvent)
             it += eventBus.optionsMenu(SettingsViewModel::class).subscribe(this::optionsMenuEvent)
             it += eventBus.dialog(AnimalListItemViewModel::class).subscribe(this::dialogEvent)
+            it += eventBus.dialog(FavoritesViewModel::class).subscribe(this::dialogEvent)
         }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
