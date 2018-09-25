@@ -3,10 +3,11 @@ package tech.pauly.findapet.shared
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
+import android.databinding.BaseObservable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-open class BaseViewModel : LifecycleObserver {
+open class BaseViewModel : BaseObservable(), BaseLifecycleViewModel  {
 
     private val lifecycleSubscriptions = CompositeDisposable()
 

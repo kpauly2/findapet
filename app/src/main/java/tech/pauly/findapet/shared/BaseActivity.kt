@@ -19,22 +19,25 @@ import tech.pauly.findapet.utils.AnimalDialogFragment
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
 
-    private val lifecycleSubscriptions = CompositeDisposable()
-    private lateinit var permissionHelper: PermissionHelper
-
     protected var currentMenuState = OptionsMenuState.EMPTY
+    protected open val viewEvents: CompositeDisposable?
+        get() = null
+
+    private val lifecycleSubscriptions = CompositeDisposable()
+    private val viewModelLifecycleObservers = ArrayList<BaseLifecycleViewModel>()
+    private lateinit var permissionHelper: PermissionHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         permissionHelper = PetApplication.component.permissionHelper()
     }
 
-    public override fun onResume() {
+    override fun onResume() {
         subscribeToEventBus()
         super.onResume()
     }
 
-    public override fun onPause() {
+    override fun onPause() {
         lifecycleSubscriptions.clear()
         super.onPause()
     }
@@ -42,6 +45,12 @@ open class BaseActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         permissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onBackPressed() {
+        if (viewModelLifecycleObservers.map { it.onBackPressed() }.find { it } == true)
+            return
+        super.onBackPressed()
     }
 
     protected fun fragmentEvent(event: FragmentEvent) {
@@ -55,14 +64,10 @@ open class BaseActivity : AppCompatActivity() {
         permissionHelper.requestPermission(this, permissionEvent)
     }
 
-
     protected fun optionsMenuEvent(event: OptionsMenuEvent) {
         currentMenuState = event.state
         invalidateOptionsMenu()
     }
-
-    protected open val viewEvents: CompositeDisposable?
-        get() = null
 
     protected fun activityEvent(event: ActivityEvent) {
         event.customIntent?.let {
@@ -93,8 +98,13 @@ open class BaseActivity : AppCompatActivity() {
         AnimalDialogFragment().init(event).show(supportFragmentManager, "dialog")
     }
 
-    protected fun subscribeOnLifecycle(subscription: Disposable) {
-        lifecycleSubscriptions.add(subscription)
+    protected fun Disposable.onLifecycle() {
+        lifecycleSubscriptions.add(this)
+    }
+
+    protected fun addViewModelLifecycleObserver(viewModel: BaseLifecycleViewModel) {
+        viewModelLifecycleObservers += viewModel
+        lifecycle.addObserver(viewModel)
     }
 
     private fun subscribeToEventBus() {
@@ -102,9 +112,5 @@ open class BaseActivity : AppCompatActivity() {
             clear()
             viewEvents?.let { add(it) }
         }
-    }
-
-    protected fun Disposable.onLifecycle() {
-        lifecycleSubscriptions.add(this)
     }
 }

@@ -63,9 +63,7 @@ constructor(private val observableHelper: ObservableHelper,
 
     private fun calculateDistanceBetween(userAddress: Address, contactInfo: Shelter?): Int? {
         val distance = -1
-        if (contactInfo == null) {
-            return distance
-        }
+        contactInfo ?: return distance
         return try {
             val petAddress = locationWrapper.getAddressFromName(contactInfo.geocodingAddress)
             locationWrapper.locationBetweenAddresses(userAddress, petAddress)

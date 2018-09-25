@@ -97,7 +97,6 @@ dependencies {
 
     implementation deps.kotlin_stdlib
     implementation deps.kotlin_reflect
-    kapt deps.databinding
 
     implementation deps.appcompat
     implementation deps.design

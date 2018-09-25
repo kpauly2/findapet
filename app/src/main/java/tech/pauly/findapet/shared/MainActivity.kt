@@ -44,7 +44,7 @@ class MainActivity : BaseActivity() {
         Fabric.with(this, Crashlytics())
 
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-        lifecycle.addObserver(viewModel)
+        addViewModelLifecycleObserver(viewModel)
         binding.viewModel = viewModel
 
         setupDrawer()

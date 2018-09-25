@@ -10,6 +10,8 @@ import tech.pauly.findapet.shared.events.PermissionEvent
 
 abstract class BaseFragment : Fragment() {
 
+    private val viewModelLifecycleObservers = ArrayList<BaseLifecycleViewModel>()
+
     private val lifecycleSubscriptions = CompositeDisposable()
     private lateinit var permissionHelper: PermissionHelper
 
@@ -39,7 +41,12 @@ abstract class BaseFragment : Fragment() {
         startActivity(Intent(context, event.startActivity?.java))
     }
 
-    fun permissionEvent(permissionEvent: PermissionEvent) {
+    protected fun addViewModelLifecycleObserver(viewModel: BaseLifecycleViewModel) {
+        viewModelLifecycleObservers += viewModel
+        lifecycle.addObserver(viewModel)
+    }
+
+    protected fun permissionEvent(permissionEvent: PermissionEvent) {
         permissionHelper.requestPermission(activity!!, permissionEvent)
     }
 

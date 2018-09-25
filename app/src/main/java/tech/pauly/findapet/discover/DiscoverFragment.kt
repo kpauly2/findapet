@@ -35,8 +35,8 @@ class DiscoverFragment : BaseFragment() {
         val binding = DataBindingUtil.inflate<FragmentDiscoverBinding>(inflater, R.layout.fragment_discover, container, false)
         binding.viewModel = viewModel
         binding.errorViewModel = errorViewModel
-        lifecycle.addObserver(viewModel)
-        lifecycle.addObserver(errorViewModel)
+        addViewModelLifecycleObserver(viewModel)
+        addViewModelLifecycleObserver(errorViewModel)
         return binding.root
     }
 

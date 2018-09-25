@@ -4,7 +4,6 @@ import android.location.Address
 import android.location.Criteria
 import com.nhaarman.mockito_kotlin.*
 import io.reactivex.ObservableTransformer
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import tech.pauly.findapet.data.ObservableHelper

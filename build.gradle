@@ -8,7 +8,7 @@ buildscript {
             "version_name": "1.0.0",
 
             "kotlin": "1.2.60",
-            "android_gradle_plugin": "3.1.4",
+            "android_gradle_plugin": "3.2.0",
             "support_lib": "27.1.1",
             "constraint_layout": "1.1.2",
             "arch_components": "1.1.1",

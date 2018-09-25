@@ -40,9 +40,7 @@ fun setupBottomNavigationView(bottomNavigationView: BottomNavigationView,
 
 @BindingAdapter(value = ["imageUrl", "cornerRadius"])
 fun loadImageIntoView(view: ImageView, url: String?, cornerRadius: Int) {
-    if (url == null) {
-        return
-    }
+    url ?: return
     val transformation = RoundedCornersTransformation(view.context.dp2px(cornerRadius.toFloat()), 0)
     Picasso.get()
             .load(url.fullUrl)

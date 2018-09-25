@@ -35,8 +35,8 @@ class AnimalDetailsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView<ActivityAnimalDetailsBinding>(this, R.layout.activity_animal_details)
-        lifecycle.addObserver(viewModel)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_animal_details)
+        addViewModelLifecycleObserver(viewModel)
         binding.viewModel = viewModel
         detailsPagerAdapter.viewModel = viewModel
         animal_images_view_pager.adapter = imagesPagerAdapter

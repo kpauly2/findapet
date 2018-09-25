@@ -28,7 +28,7 @@ class SheltersFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentSheltersBinding>(inflater, R.layout.fragment_shelters, container, false)
-        lifecycle.addObserver(viewModel)
+        addViewModelLifecycleObserver(viewModel)
         lifecycle.addObserver(mapWrapper)
         mapWrapper.setupMap(binding.mapView)
         binding.viewModel = viewModel
