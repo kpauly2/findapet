@@ -9,7 +9,6 @@ import tech.pauly.findapet.data.AnimalRepository
 import tech.pauly.findapet.data.FavoriteRepository
 import tech.pauly.findapet.data.models.Animal
 import tech.pauly.findapet.data.models.AnimalResponseWrapper
-import tech.pauly.findapet.data.models.Option
 import tech.pauly.findapet.data.models.StatusCode
 import tech.pauly.findapet.discover.AnimalListAdapter
 import tech.pauly.findapet.discover.AnimalListItemViewModel
@@ -52,14 +51,7 @@ internal constructor(val listAdapter: AnimalListAdapter,
                 .flatMapIterable { it }
                 .flatMap(animalRepository::fetchAnimal)
                 .map(this::parseResponseAndShowError)
-                .subscribe({ optionalAnimal ->
-                    if (optionalAnimal is Optional.Some) {
-                        showAnimal(optionalAnimal.element)
-                    }
-                }, Throwable::printStackTrace) {
-                    refreshing.set(false)
-                    showNextAdoptedAnimal()
-                }
+                .subscribe(this::showAnimal, Throwable::printStackTrace, this::finalizeLoad)
                 .onLifecycle()
     }
 
@@ -78,8 +70,10 @@ internal constructor(val listAdapter: AnimalListAdapter,
         }
     }
 
-    private fun showAnimal(animal: Animal) {
-        listAdapter.addAnimalItem(animalListItemFactory.newInstance(animal))
+    private fun showAnimal(optionalAnimal: Optional<Animal>) {
+        if (optionalAnimal is Optional.Some) {
+            listAdapter.addAnimalItem(animalListItemFactory.newInstance(optionalAnimal.element))
+        }
     }
 
     private fun showAnimalAdoptedDialog(animal: Animal) {
@@ -102,6 +96,11 @@ internal constructor(val listAdapter: AnimalListAdapter,
         favoriteRepository.unfavoriteAnimal(animal)
                 .subscribe({}, Throwable::printStackTrace)
                 .onLifecycle()
+        showNextAdoptedAnimal()
+    }
+
+    private fun finalizeLoad() {
+        refreshing.set(false)
         showNextAdoptedAnimal()
     }
 

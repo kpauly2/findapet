@@ -1,13 +1,13 @@
 buildscript {
 
     ext.versions = [
-            "compile_sdk": 27,
+            "compile_sdk": 28,
             "min_sdk": 23,
-            "target_sdk": 27,
+            "target_sdk": 28,
             "version_code": 100,
             "version_name": "1.0.0",
 
-            "kotlin": "1.2.60",
+            "kotlin": "1.2.61",
             "android_gradle_plugin": "3.2.0",
             "support_lib": "27.1.1",
             "constraint_layout": "1.1.2",

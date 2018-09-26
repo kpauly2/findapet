@@ -32,14 +32,14 @@ open class BaseActivity : AppCompatActivity() {
         permissionHelper = PetApplication.component.permissionHelper()
     }
 
-    override fun onResume() {
+    override fun onStart() {
         subscribeToEventBus()
-        super.onResume()
+        super.onStart()
     }
 
-    override fun onPause() {
+    override fun onStop() {
         lifecycleSubscriptions.clear()
-        super.onPause()
+        super.onStop()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

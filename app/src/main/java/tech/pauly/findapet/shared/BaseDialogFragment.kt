@@ -1,19 +1,16 @@
 package tech.pauly.findapet.shared
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
-import android.databinding.BaseObservable
+import android.support.v4.app.DialogFragment
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-open class BaseViewModel : BaseObservable(), BaseLifecycleViewModel  {
+abstract class BaseDialogFragment : DialogFragment() {
 
     private val lifecycleSubscriptions = CompositeDisposable()
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    private fun disposeSubscriptions() {
+    override fun onStop() {
         lifecycleSubscriptions.clear()
+        super.onStop()
     }
 
     protected fun Disposable.onLifecycle() {

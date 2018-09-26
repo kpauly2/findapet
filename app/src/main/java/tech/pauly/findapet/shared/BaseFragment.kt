@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import tech.pauly.findapet.dependencyinjection.PetApplication
 import tech.pauly.findapet.shared.events.ActivityEvent
 import tech.pauly.findapet.shared.events.PermissionEvent
@@ -20,14 +21,14 @@ abstract class BaseFragment : Fragment() {
         permissionHelper = PetApplication.component.permissionHelper()
     }
 
-    override fun onResume() {
+    override fun onStart() {
         subscribeToEventBus()
-        super.onResume()
+        super.onStart()
     }
 
-    override fun onPause() {
+    override fun onStop() {
         lifecycleSubscriptions.clear()
-        super.onPause()
+        super.onStop()
     }
 
     protected open val viewEvents: CompositeDisposable?
@@ -48,6 +49,10 @@ abstract class BaseFragment : Fragment() {
 
     protected fun permissionEvent(permissionEvent: PermissionEvent) {
         permissionHelper.requestPermission(activity!!, permissionEvent)
+    }
+
+    protected fun Disposable.onLifecycle() {
+        lifecycleSubscriptions.add(this)
     }
 
     private fun subscribeToEventBus() {

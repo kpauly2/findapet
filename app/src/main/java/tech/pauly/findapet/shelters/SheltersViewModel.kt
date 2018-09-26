@@ -63,7 +63,7 @@ constructor(private val dataStore: TransientDataStore,
                 .onLifecycle()
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun subscribeToMapEvents() {
         mapWrapper.shelterClickSubject
                 .subscribe(this::showShelterDetails, Throwable::printStackTrace)

@@ -1,9 +1,15 @@
 package tech.pauly.findapet.utils
 
+import android.content.Context
 import android.databinding.ObservableField
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.support.annotation.DrawableRes
 import android.view.View
 import android.view.animation.Animation
 import android.widget.ToggleButton
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 
 typealias ObservableString = ObservableField<String>
 fun ObservableString.safeGet(): String {
@@ -36,6 +42,17 @@ fun Animation.addAnimationListener(animationRepeat: ((Animation?) -> Unit)? = nu
         }
     })
     return this
+}
+
+fun Context.getBitmapForDrawableId(@DrawableRes drawableId: Int): BitmapDescriptor {
+    val drawable = this.getDrawable(drawableId)
+    drawable ?: throw IllegalArgumentException("drawable $drawableId missing")
+    val canvas = Canvas()
+    val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+    canvas.setBitmap(bitmap)
+    drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+    drawable.draw(canvas)
+    return BitmapDescriptorFactory.fromBitmap(bitmap)
 }
 
 sealed class Optional<out T> {

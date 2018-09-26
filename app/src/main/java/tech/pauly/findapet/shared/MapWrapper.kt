@@ -1,13 +1,9 @@
 package tech.pauly.findapet.shared
 
-import android.annotation.SuppressLint
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.support.annotation.DrawableRes
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -18,6 +14,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import tech.pauly.findapet.R
 import tech.pauly.findapet.dependencyinjection.ForApplication
+import tech.pauly.findapet.utils.getBitmapForDrawableId
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -126,14 +123,4 @@ constructor(@ForApplication val context: Context) : OnMapReadyCallback, Lifecycl
     fun onDestroy() {
         mapView.onDestroy()
     }
-}
-
-private fun Context.getBitmapForDrawableId(@DrawableRes drawableId: Int): BitmapDescriptor {
-    val drawable = this.getDrawable(drawableId)
-    val canvas = Canvas()
-    val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-    canvas.setBitmap(bitmap)
-    drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-    drawable.draw(canvas)
-    return BitmapDescriptorFactory.fromBitmap(bitmap)
 }
