@@ -105,7 +105,8 @@ class BreedViewModelTest {
     }
 
     @Test
-    fun beginSearch_getsBreedListForAnimalType() {
+    fun beginSearch_getsBreedListForAnimalTypeAndResetBreedSearchText() {
+        subject.breedSearchText.set("Calico")
         every { breedRepository.getBreedList(any()) } returns Single.never()
         setupDataStoreWithUseCase()
         val observer = subject.openBreedSubject.test()
@@ -113,6 +114,7 @@ class BreedViewModelTest {
         subject.beginSearch(mockk())
 
         observer.assertValue(true)
+        assertThat(subject.breedSearchText.get()).isEqualTo("")
         verify { breedRepository.getBreedList(AnimalType.CAT) }
     }
 

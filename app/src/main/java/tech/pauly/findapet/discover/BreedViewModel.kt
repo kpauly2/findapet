@@ -13,9 +13,7 @@ import tech.pauly.findapet.shared.datastore.FilterAnimalTypeUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
 import tech.pauly.findapet.utils.ObservableString
 import tech.pauly.findapet.utils.isToggleChecked
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 class BreedViewModel @Inject
 internal constructor(private val breedRepository: BreedRepository,
@@ -61,6 +59,7 @@ internal constructor(private val breedRepository: BreedRepository,
     fun beginSearch(v: View) {
         searching = true
         openBreedSubject.onNext(true)
+        breedSearchText.set("")
         dataStore[FilterAnimalTypeUseCase::class]?.let(this::updateBreedList)
     }
 
