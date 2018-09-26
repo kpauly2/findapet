@@ -9,6 +9,9 @@ import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
+import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import tech.pauly.findapet.R
@@ -27,6 +30,7 @@ open class BaseActivity : AppCompatActivity() {
     private val viewModelLifecycleObservers = ArrayList<BaseLifecycleViewModel>()
     private lateinit var permissionHelper: PermissionHelper
 
+    //region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         permissionHelper = PetApplication.component.permissionHelper()
@@ -46,13 +50,22 @@ open class BaseActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         permissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
+    //endregion
 
+    //region LifecycleObservers
     override fun onBackPressed() {
         if (viewModelLifecycleObservers.map { it.onBackPressed() }.find { it } == true)
             return
         super.onBackPressed()
     }
 
+    protected fun addViewModelLifecycleObserver(viewModel: BaseLifecycleViewModel) {
+        viewModelLifecycleObservers += viewModel
+        lifecycle.addObserver(viewModel)
+    }
+    //endregion
+
+    //region EventBus
     protected fun fragmentEvent(event: FragmentEvent) {
         val newFragment = Fragment.instantiate(this, event.fragment.qualifiedName)
         supportFragmentManager.beginTransaction()
@@ -98,19 +111,32 @@ open class BaseActivity : AppCompatActivity() {
         AnimalDialogFragment().init(event).show(supportFragmentManager, "dialog")
     }
 
-    protected fun Disposable.onLifecycle() {
-        lifecycleSubscriptions.add(this)
-    }
-
-    protected fun addViewModelLifecycleObserver(viewModel: BaseLifecycleViewModel) {
-        viewModelLifecycleObservers += viewModel
-        lifecycle.addObserver(viewModel)
-    }
-
     private fun subscribeToEventBus() {
         lifecycleSubscriptions.run {
             clear()
             viewEvents?.let { add(it) }
         }
     }
+    //endregion
+
+    //region Extensions
+    protected fun Disposable.onLifecycle() {
+        lifecycleSubscriptions.add(this)
+    }
+
+    protected inline fun <T> Observable<T>.quickSubscribe(crossinline onNext: (T) -> Unit) {
+        this.subscribe({ onNext(it) }, Throwable::printStackTrace)
+                .onLifecycle()
+    }
+
+    protected inline fun <T> Single<T>.quickSubscribe(crossinline onNext: (T) -> Unit) {
+        this.subscribe({ onNext(it) }, Throwable::printStackTrace)
+                .onLifecycle()
+    }
+
+    protected inline fun Completable.quickSubscribe(crossinline onComplete: () -> Unit) {
+        this.subscribe({ onComplete() }, Throwable::printStackTrace)
+                .onLifecycle()
+    }
+    //endregion
 }

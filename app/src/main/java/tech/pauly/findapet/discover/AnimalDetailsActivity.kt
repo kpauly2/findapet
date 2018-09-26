@@ -83,14 +83,14 @@ class AnimalDetailsActivity : BaseActivity() {
     }
 
     private fun subscribeToImagesEvents() {
-        viewModel.animalImagesSubject.subscribe({
+        viewModel.animalImagesSubject.quickSubscribe {
             imagesPagerAdapter.setAnimalImages(it)
-        }, Throwable::printStackTrace).onLifecycle()
+        }
     }
 
     private fun subscribeToTabEvents() {
-        viewModel.tabSwitchSubject.subscribe({
+        viewModel.tabSwitchSubject.quickSubscribe {
             binding.animalDetailsViewPager.currentItem = it
-        }, Throwable::printStackTrace).onLifecycle()
+        }
     }
 }

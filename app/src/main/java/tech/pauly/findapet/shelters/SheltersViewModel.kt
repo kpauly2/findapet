@@ -3,7 +3,6 @@ package tech.pauly.findapet.shelters
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
 import android.location.Address
 import com.google.android.gms.maps.model.LatLng
 import io.reactivex.Observable
@@ -53,24 +52,19 @@ constructor(private val dataStore: TransientDataStore,
                     mapWrapper.moveCamera(latLng, 13f)
                     shelterRepository.fetchShelters(it.postalCode)
                 }
-                .subscribe({
-                    it.shelterList
+                .quickSubscribe { response ->
+                    response.shelterList
                             ?.also { this.shelterList = it }
                             ?.map { LatLng(it.latitude!!, it.longitude!!) }
                             ?.also(mapWrapper::zoomToFitPoints)
                             ?.forEach(mapWrapper::addShelterMarker)
-                }, Throwable::printStackTrace)
-                .onLifecycle()
+                }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun subscribeToMapEvents() {
-        mapWrapper.shelterClickSubject
-                .subscribe(this::showShelterDetails, Throwable::printStackTrace)
-                .onLifecycle()
-        mapWrapper.mapClickSubject
-                .subscribe(this::hideShelterDetails, Throwable::printStackTrace)
-                .onLifecycle()
+        mapWrapper.shelterClickSubject.quickSubscribe(this::showShelterDetails)
+        mapWrapper.mapClickSubject.quickSubscribe(this::hideShelterDetails)
     }
 
     private fun showShelterDetails(latLng: LatLng) {

@@ -93,9 +93,7 @@ internal constructor(val listAdapter: AnimalListAdapter,
     }
 
     private fun clickPositiveButton(animal: Animal) {
-        favoriteRepository.unfavoriteAnimal(animal)
-                .subscribe({}, Throwable::printStackTrace)
-                .onLifecycle()
+        favoriteRepository.unfavoriteAnimal(animal).quickSubscribe { }
         showNextAdoptedAnimal()
     }
 

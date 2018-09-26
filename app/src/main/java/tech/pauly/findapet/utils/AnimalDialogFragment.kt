@@ -17,9 +17,7 @@ class AnimalDialogFragment : BaseDialogFragment() {
 
     fun init(event: DialogEvent): AnimalDialogFragment {
         viewModel = AnimalDialogViewModel(event)
-        viewModel.dismissSubject
-                .subscribe({ dismiss() }, Throwable::printStackTrace)
-                .onLifecycle()
+        viewModel.dismissSubject.quickSubscribe { dismiss() }
         return this
     }
 

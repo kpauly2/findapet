@@ -93,17 +93,16 @@ class MainActivity : BaseActivity() {
 
     private fun subscribeToDrawerChange() {
         viewModel.drawerSubject
-                .subscribe({ drawer_layout.closeDrawers() }, Throwable::printStackTrace)
-                .onLifecycle()
+                .quickSubscribe { drawer_layout.closeDrawers() }
     }
 
     private fun subscribeToExpandingLayoutChange() {
-        viewModel.expandingLayoutSubject.subscribe({ event ->
+        viewModel.expandingLayoutSubject.quickSubscribe { event ->
             when (event) {
                 MainViewModel.ExpandingLayoutEvent.TOGGLE -> expanding_layout.tapToggle()
                 else -> expanding_layout.collapse()
             }
-        }, Throwable::printStackTrace).onLifecycle()
+        }
     }
 
     private fun setupDrawer() {

@@ -22,10 +22,9 @@ constructor(private val dataStore: TransientDataStore) : BaseViewModel() {
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun subscribeToErrorEvents() {
         dataStore.observeAndGetUseCase(DiscoverErrorUseCase::class)
-                .subscribe({
+                .quickSubscribe {
                     if (it.statusCode == null) hideError() else showError(it.statusCode)
-                }, Throwable::printStackTrace)
-                .onLifecycle()
+                }
     }
 
     private fun showError(statusCode: StatusCode) {

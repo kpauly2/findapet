@@ -33,7 +33,6 @@ buildscript {
     ext.deps = [
             "kotlin_stdlib": "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin",
             "kotlin_reflect": "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
-            "databinding": "com.android.databinding:compiler:$versions.android_gradle_plugin",
             "appcompat": "com.android.support:appcompat-v7:$versions.support_lib",
             "design": "com.android.support:design:$versions.support_lib",
             "recycler_view": "com.android.support:recyclerview-v7:$versions.support_lib",

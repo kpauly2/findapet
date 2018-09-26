@@ -52,9 +52,9 @@ class FilterActivity : BaseActivity() {
     }
 
     private fun handleSearch() {
-        breedViewModel.openBreedSubject.subscribe({ open ->
+        breedViewModel.openBreedSubject.quickSubscribe { open ->
             if (open) showBreed() else hideBreed()
-        }, Throwable::printStackTrace).onLifecycle()
+        }
     }
 
     override val viewEvents: CompositeDisposable?

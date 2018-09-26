@@ -30,8 +30,7 @@ internal constructor(private val filterRepository: FilterRepository,
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun loadCurrentFilter() {
         filterRepository.currentFilter
-                .subscribe(this::populateScreenForFilter, Throwable::printStackTrace)
-                .onLifecycle()
+                .quickSubscribe(this::populateScreenForFilter)
     }
 
     fun checkToggle(view: View, choice: Any) {
@@ -51,8 +50,7 @@ internal constructor(private val filterRepository: FilterRepository,
             breedViewModel.selectedBreed?.let { breed = it }
         }
         filterRepository.insertFilter(filter)
-                .subscribe(this::finish, Throwable::printStackTrace)
-                .onLifecycle()
+                .quickSubscribe(this::finish)
     }
 
     private fun finish() {

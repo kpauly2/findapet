@@ -10,6 +10,8 @@ import android.view.animation.Animation
 import android.widget.ToggleButton
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import io.reactivex.Observable
+import io.reactivex.Single
 
 typealias ObservableString = ObservableField<String>
 fun ObservableString.safeGet(): String {

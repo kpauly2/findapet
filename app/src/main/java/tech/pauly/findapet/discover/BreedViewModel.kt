@@ -38,20 +38,17 @@ internal constructor(private val breedRepository: BreedRepository,
     }
 
     override fun onBackPressed(): Boolean {
-        return if (searching) {
-            closeBreedSearch()
-            false
-        } else {
-            true
+        return when {
+            searching -> { closeBreedSearch(); false }
+            else -> true
         }
     }
 
     @Bindable
     fun getDisplayBreed(): String {
-        return if (selectedBreed.isNullOrBlank()) {
-            resourceProvider.getString(R.string.filter_breed_hint)
-        } else {
-            selectedBreed!!
+        return when {
+            selectedBreed.isNullOrBlank() -> resourceProvider.getString(R.string.filter_breed_hint)
+            else -> selectedBreed!!
         }
     }
 
@@ -84,8 +81,7 @@ internal constructor(private val breedRepository: BreedRepository,
 
     private fun updateBreedList(useCase: FilterAnimalTypeUseCase) {
         breedRepository.getBreedList(useCase.animalType)
-                .subscribe(this::populateBreedList, Throwable::printStackTrace)
-                .onLifecycle()
+                .quickSubscribe(this::populateBreedList)
     }
 
     private fun populateBreedList(response: BreedListResponse) {
