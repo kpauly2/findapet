@@ -62,6 +62,7 @@ open class BaseActivity : AppCompatActivity() {
     protected fun addViewModelLifecycleObserver(viewModel: BaseLifecycleViewModel) {
         viewModelLifecycleObservers += viewModel
         lifecycle.addObserver(viewModel)
+        viewModel.observeLifecycle(lifecycle)
     }
     //endregion
 

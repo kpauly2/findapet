@@ -11,13 +11,14 @@ import io.reactivex.disposables.Disposable
 import tech.pauly.findapet.dependencyinjection.PetApplication
 import tech.pauly.findapet.shared.events.ActivityEvent
 import tech.pauly.findapet.shared.events.PermissionEvent
+import tech.pauly.findapet.utils.getViewModel
 
 abstract class BaseFragment : Fragment() {
 
     protected open val viewEvents: CompositeDisposable?
         get() = null
 
-    private val viewModelLifecycleObservers = ArrayList<BaseLifecycleViewModel>()
+    protected val viewModelLifecycleObservers = ArrayList<BaseLifecycleViewModel>()
     private val lifecycleSubscriptions = CompositeDisposable()
     private var permissionHelper: PermissionHelper? = null
 
@@ -39,6 +40,7 @@ abstract class BaseFragment : Fragment() {
     //endregion
 
     //region LifecycleObservers
+    @Deprecated("use constructViewModel instead")
     protected fun addViewModelLifecycleObserver(viewModel: BaseLifecycleViewModel) {
         viewModelLifecycleObservers += viewModel
         lifecycle.addObserver(viewModel)
@@ -66,6 +68,13 @@ abstract class BaseFragment : Fragment() {
     //endregion
 
     //region Extensions
+    protected inline fun <reified T : BaseViewModel> constructViewModel(): T {
+        return getViewModel<T>().also { viewModel: T ->
+            viewModelLifecycleObservers += viewModel
+            lifecycle.addObserver(viewModel)
+        }
+    }
+
     protected fun Disposable.onLifecycle() {
         lifecycleSubscriptions.add(this)
     }

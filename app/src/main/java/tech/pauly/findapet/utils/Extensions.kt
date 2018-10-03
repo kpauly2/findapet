@@ -1,17 +1,19 @@
 package tech.pauly.findapet.utils
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.ObservableField
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.support.annotation.DrawableRes
+import android.support.v4.app.Fragment
 import android.view.View
 import android.view.animation.Animation
 import android.widget.ToggleButton
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import io.reactivex.Observable
-import io.reactivex.Single
+import tech.pauly.findapet.dependencyinjection.PetApplication
+import tech.pauly.findapet.shared.BaseViewModel
 
 typealias ObservableString = ObservableField<String>
 fun ObservableString.safeGet(): String {
@@ -55,6 +57,10 @@ fun Context.getBitmapForDrawableId(@DrawableRes drawableId: Int): BitmapDescript
     drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
     drawable.draw(canvas)
     return BitmapDescriptorFactory.fromBitmap(bitmap)
+}
+
+inline fun <reified T : BaseViewModel> Fragment.getViewModel(): T {
+    return ViewModelProviders.of(this, PetApplication.component.viewModelFactory)[T::class.java]
 }
 
 sealed class Optional<out T> {

@@ -17,21 +17,20 @@ import tech.pauly.findapet.shared.ResourceProvider
 import tech.pauly.findapet.shared.SentencePlacement
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
+import tech.pauly.findapet.shared.disposeOnStop
 import tech.pauly.findapet.shared.events.DialogEvent
 import tech.pauly.findapet.shared.events.OptionsMenuEvent
 import tech.pauly.findapet.shared.events.OptionsMenuState
 import tech.pauly.findapet.shared.events.ViewEventBus
 import tech.pauly.findapet.utils.Optional
-import javax.inject.Inject
 
-class FavoritesViewModel @Inject
-internal constructor(val listAdapter: AnimalListAdapter,
-                     private val animalListItemFactory: AnimalListItemViewModel.Factory,
-                     private val dataStore: TransientDataStore,
-                     private val eventBus: ViewEventBus,
-                     private val favoriteRepository: FavoriteRepository,
-                     private val animalRepository: AnimalRepository,
-                     private val resourceProvider: ResourceProvider) : BaseViewModel() {
+class FavoritesViewModel(val listAdapter: AnimalListAdapter,
+                         private val animalListItemFactory: AnimalListItemViewModel.Factory,
+                         private val dataStore: TransientDataStore,
+                         private val eventBus: ViewEventBus,
+                         private val favoriteRepository: FavoriteRepository,
+                         private val animalRepository: AnimalRepository,
+                         private val resourceProvider: ResourceProvider) : BaseViewModel() {
 
     var columnCount = ObservableInt(2)
     var refreshing = ObservableBoolean(false)
@@ -52,11 +51,12 @@ internal constructor(val listAdapter: AnimalListAdapter,
                 .flatMap(animalRepository::fetchAnimal)
                 .map(this::parseResponseAndShowError)
                 .subscribe(this::showAnimal, Throwable::printStackTrace, this::finalizeLoad)
-                .onLifecycle()
+                .disposeOnStop(disposeBag)
     }
 
     private fun parseResponseAndShowError(responseWrapper: AnimalResponseWrapper): Optional<Animal> {
-        val statusCode = responseWrapper.header.status?.code ?: StatusCode.PFAPI_OK
+        val statusCode = responseWrapper.header.status?.code
+                ?: StatusCode.PFAPI_OK
         val animal = responseWrapper.animal
         return when (statusCode) {
             StatusCode.PFAPI_ERR_UNAUTHORIZED -> {

@@ -106,7 +106,7 @@ constructor(val listAdapter: AnimalListAdapter,
                 currentFilter, BiFunction { location, filter -> FetchAnimalsRequest(animalType, lastOffset, location.postalCode, filter) })
                 .flatMap(animalRepository::fetchAnimals)
                 .subscribe(this::setAnimalList, this::showError)
-                .onLifecycle()
+                .disposeOnStop(disposeBag)
     }
 
     @Suppress("UNUSED_PARAMETER")

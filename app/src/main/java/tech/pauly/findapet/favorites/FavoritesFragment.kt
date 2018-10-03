@@ -21,8 +21,7 @@ class FavoritesFragment : BaseFragment() {
     @Inject
     lateinit var eventBus: ViewEventBus
 
-    @Inject
-    lateinit var viewModel: FavoritesViewModel
+    private val viewModel: FavoritesViewModel = constructViewModel()
 
     override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
@@ -32,7 +31,6 @@ class FavoritesFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentFavoritesBinding>(inflater, R.layout.fragment_favorites, container, false)
         binding.viewModel = viewModel
-        addViewModelLifecycleObserver(viewModel)
         return binding.root
     }
 
