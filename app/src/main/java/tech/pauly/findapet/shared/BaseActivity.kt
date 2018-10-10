@@ -9,6 +9,9 @@ import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
+import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import tech.pauly.findapet.R
@@ -19,31 +22,50 @@ import tech.pauly.findapet.utils.AnimalDialogFragment
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
 
+    protected var currentMenuState = OptionsMenuState.EMPTY
+    protected open val viewEvents: CompositeDisposable?
+        get() = null
+
     private val lifecycleSubscriptions = CompositeDisposable()
+    private val viewModelLifecycleObservers = ArrayList<BaseLifecycleViewModel>()
     private lateinit var permissionHelper: PermissionHelper
 
-    protected var currentMenuState = OptionsMenuState.EMPTY
-
+    //region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         permissionHelper = PetApplication.component.permissionHelper()
     }
 
-    public override fun onResume() {
+    override fun onStart() {
         subscribeToEventBus()
-        super.onResume()
+        super.onStart()
     }
 
-    public override fun onPause() {
+    override fun onStop() {
         lifecycleSubscriptions.clear()
-        super.onPause()
+        super.onStop()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         permissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
+    //endregion
 
+    //region LifecycleObservers
+    override fun onBackPressed() {
+        if (viewModelLifecycleObservers.map { it.onBackPressed() }.find { it } == true)
+            return
+        super.onBackPressed()
+    }
+
+    protected fun addViewModelLifecycleObserver(viewModel: BaseLifecycleViewModel) {
+        viewModelLifecycleObservers += viewModel
+        lifecycle.addObserver(viewModel)
+    }
+    //endregion
+
+    //region EventBus
     protected fun fragmentEvent(event: FragmentEvent) {
         val newFragment = Fragment.instantiate(this, event.fragment.qualifiedName)
         supportFragmentManager.beginTransaction()
@@ -55,14 +77,10 @@ open class BaseActivity : AppCompatActivity() {
         permissionHelper.requestPermission(this, permissionEvent)
     }
 
-
     protected fun optionsMenuEvent(event: OptionsMenuEvent) {
         currentMenuState = event.state
         invalidateOptionsMenu()
     }
-
-    protected open val viewEvents: CompositeDisposable?
-        get() = null
 
     protected fun activityEvent(event: ActivityEvent) {
         event.customIntent?.let {
@@ -93,18 +111,32 @@ open class BaseActivity : AppCompatActivity() {
         AnimalDialogFragment().init(event).show(supportFragmentManager, "dialog")
     }
 
-    protected fun subscribeOnLifecycle(subscription: Disposable) {
-        lifecycleSubscriptions.add(subscription)
-    }
-
     private fun subscribeToEventBus() {
         lifecycleSubscriptions.run {
             clear()
             viewEvents?.let { add(it) }
         }
     }
+    //endregion
 
+    //region Extensions
     protected fun Disposable.onLifecycle() {
         lifecycleSubscriptions.add(this)
     }
+
+    protected inline fun <T> Observable<T>.quickSubscribe(crossinline onNext: (T) -> Unit) {
+        this.subscribe({ onNext(it) }, Throwable::printStackTrace)
+                .onLifecycle()
+    }
+
+    protected inline fun <T> Single<T>.quickSubscribe(crossinline onNext: (T) -> Unit) {
+        this.subscribe({ onNext(it) }, Throwable::printStackTrace)
+                .onLifecycle()
+    }
+
+    protected inline fun Completable.quickSubscribe(crossinline onComplete: () -> Unit) {
+        this.subscribe({ onComplete() }, Throwable::printStackTrace)
+                .onLifecycle()
+    }
+    //endregion
 }

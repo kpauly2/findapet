@@ -19,13 +19,12 @@ constructor(private val dataStore: TransientDataStore) : BaseViewModel() {
     var errorBody1 = ObservableInt(R.string.missing)
     var errorBody2 = ObservableInt(R.string.missing)
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun subscribeToErrorEvents() {
         dataStore.observeAndGetUseCase(DiscoverErrorUseCase::class)
-                .subscribe({
+                .quickSubscribe {
                     if (it.statusCode == null) hideError() else showError(it.statusCode)
-                }, Throwable::printStackTrace)
-                .onLifecycle()
+                }
     }
 
     private fun showError(statusCode: StatusCode) {

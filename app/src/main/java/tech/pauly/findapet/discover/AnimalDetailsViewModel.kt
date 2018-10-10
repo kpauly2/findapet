@@ -16,6 +16,7 @@ import tech.pauly.findapet.data.ShelterRepository
 import tech.pauly.findapet.data.models.Animal
 import tech.pauly.findapet.data.models.Option
 import tech.pauly.findapet.data.models.AnimalUrl
+import tech.pauly.findapet.data.models.Shelter
 import tech.pauly.findapet.shared.BaseViewModel
 import tech.pauly.findapet.shared.LocationHelper
 import tech.pauly.findapet.shared.ResourceProvider
@@ -86,8 +87,7 @@ internal constructor(private val dataStore: TransientDataStore,
     fun checkFavorite() {
         animal?.let {
             favoriteRepository.isAnimalFavorited(it.id)
-                    .subscribe({ showFavoriteInOptions(it) }, Throwable::printStackTrace)
-                    .onLifecycle()
+                    .quickSubscribe(this::showFavoriteInOptions)
         }
     }
 
@@ -143,8 +143,7 @@ internal constructor(private val dataStore: TransientDataStore,
             } else {
                 favoriteRepository.unfavoriteAnimal(it)
             }
-            update.subscribe({ showFavoriteSnackbar(favorite) }, Throwable::printStackTrace)
-                    .onLifecycle()
+            update.quickSubscribe { showFavoriteSnackbar(favorite) }
         }
     }
 
@@ -176,23 +175,29 @@ internal constructor(private val dataStore: TransientDataStore,
     private fun updateShelter(animal: Animal) {
         shelterRepository.fetchShelter(animal)
                 .flatMap {
-                    this.partialContact.set(it.name == null)
-                    contactName.set(it.name)
-                    contactAddress.set(it.formattedAddress)
-                    contactPhoneVisibility.set(it.phone != null)
-                    contactPhone.set(it.phone)
-                    contactEmailVisibility.set(it.email != null)
-                    contactEmail.set(it.email)
-                    if (it.latitude != null && it.longitude != null) {
-                        latLng = LatLng(it.latitude!!, it.longitude!!)
-                    }
+                    setContactFields(it)
                     locationHelper.getCurrentDistanceToContactInfo(it)
-                }.subscribe({
-                    contactDistance.set(when (it) {
-                        -1 -> resourceProvider.getString(R.string.empty_string)
-                        0 -> resourceProvider.getString(R.string.distance_less_than_one)
-                        else -> resourceProvider.getQuantityString(R.plurals.distance, it)
-                    })
-                }, Throwable::printStackTrace)
+                }.quickSubscribe(this::setDistanceText)
+    }
+
+    private fun setContactFields(it: Shelter) {
+        partialContact.set(it.name == null)
+        contactName.set(it.name)
+        contactAddress.set(it.formattedAddress)
+        contactPhoneVisibility.set(it.phone != null)
+        contactPhone.set(it.phone)
+        contactEmailVisibility.set(it.email != null)
+        contactEmail.set(it.email)
+        if (it.latitude != null && it.longitude != null) {
+            latLng = LatLng(it.latitude!!, it.longitude!!)
+        }
+    }
+
+    private fun setDistanceText(it: Int) {
+        contactDistance.set(when (it) {
+            -1 -> resourceProvider.getString(R.string.empty_string)
+            0 -> resourceProvider.getString(R.string.distance_less_than_one)
+            else -> resourceProvider.getQuantityString(R.plurals.distance, it)
+        })
     }
 }

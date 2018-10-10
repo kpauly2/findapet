@@ -68,7 +68,8 @@ constructor(val listAdapter: AnimalListAdapter,
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
-        if (firstLoad || dataStore[FilterUpdatedUseCase::class] != null) {
+        val filterUpdated = dataStore[FilterUpdatedUseCase::class] != null
+        if (firstLoad || filterUpdated) {
             firstLoad = false
             requestPermissionToLoad()
         }

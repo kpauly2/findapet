@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="tech.pauly.findapet.discover.FilterViewModel" />
+            type="tech.pauly.findapet.discover.BreedViewModel" />
     </data>
 
     <FrameLayout
@@ -21,7 +21,7 @@
             android:background="@drawable/selector_radio_button_background"
             android:layout_height="46dp"
             android:checked="@{viewModel.selectedBreed.equals(breed)}"
-            android:onClick="@{(v) -> viewModel.checkToggle(v, breed)}"
+            android:onClick="@{(v) -> viewModel.selectBreed(v, breed)}"
             android:paddingEnd="@dimen/standard_margin"
             android:paddingStart="@dimen/standard_margin"
             android:gravity="start|center_vertical"

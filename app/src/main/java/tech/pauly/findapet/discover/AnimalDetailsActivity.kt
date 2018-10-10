@@ -35,8 +35,8 @@ class AnimalDetailsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView<ActivityAnimalDetailsBinding>(this, R.layout.activity_animal_details)
-        lifecycle.addObserver(viewModel)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_animal_details)
+        addViewModelLifecycleObserver(viewModel)
         binding.viewModel = viewModel
         detailsPagerAdapter.viewModel = viewModel
         animal_images_view_pager.adapter = imagesPagerAdapter
@@ -83,14 +83,14 @@ class AnimalDetailsActivity : BaseActivity() {
     }
 
     private fun subscribeToImagesEvents() {
-        viewModel.animalImagesSubject.subscribe({
+        viewModel.animalImagesSubject.quickSubscribe {
             imagesPagerAdapter.setAnimalImages(it)
-        }, Throwable::printStackTrace).onLifecycle()
+        }
     }
 
     private fun subscribeToTabEvents() {
-        viewModel.tabSwitchSubject.subscribe({
+        viewModel.tabSwitchSubject.quickSubscribe {
             binding.animalDetailsViewPager.currentItem = it
-        }, Throwable::printStackTrace).onLifecycle()
+        }
     }
 }

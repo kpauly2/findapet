@@ -47,11 +47,10 @@ constructor(private val eventBus: ViewEventBus,
         firstLaunch = true
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun subscribeToDataStore() {
         dataStore.observeAndGetUseCase(DiscoverToolbarTitleUseCase::class)
-                .subscribe({ useCase -> toolbarTitle.set(useCase.title) }, Throwable::printStackTrace)
-                .onLifecycle()
+                .quickSubscribe { useCase -> toolbarTitle.set(useCase.title) }
         if (firstLaunch) {
             clickAnimalType(AnimalType.CAT)
             firstLaunch = false

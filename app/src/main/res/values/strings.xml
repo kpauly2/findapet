@@ -57,6 +57,7 @@
     <string name="age_header">AGE</string>
     <string name="size_header">SIZE</string>
     <string name="filter_breed_hint">Filter breed</string>
+    <string name="filter_breed_edit_text_hint">Enter breed name</string>
     <string name="breed_title">Breeds</string>
     <string name="breed_search_button">choose breed</string>
     <string name="no_animals_title">No Animals!</string>
@@ -90,7 +91,7 @@
     <string name="hardcode_location">Hardcode location to 48335</string>
     <string name="animal_warning_description">animal warning</string>
     <string name="pet_warning_dialog_title">Info Missing!</string>
-    <string name="pet_warning_dialog_body">%s\'s shelter does not allow for us to search for %s directly, so we can\'t tell if %s is still available for adoption, sorry!</string>
+    <string name="pet_warning_dialog_body">%1$s\'s shelter does not allow for us to search for %2$s directly, so we can\'t tell if %3$s is still available for adoption, sorry!</string>
     <string name="pet_warning_dialog_contact">CONTACT SHELTER</string>
     <string name="dialog_cancel">CANCEL</string>
     <string name="pronoun_male_subject">he</string>
@@ -99,6 +100,7 @@
     <string name="pronoun_female_object">her</string>
     <string name="pronoun_missing">it</string>
     <string name="pet_adopted_dialog_title">Pet Adopted!</string>
-    <string name="pet_adopted_dialog_body">We can\'t find anything about %s in the Petfinder records. This most often means that %s has found a forever home!</string>
+    <string name="pet_adopted_dialog_body">We can\'t find anything about %1$s in the Petfinder records. This most often means that %2$s has found a forever home!</string>
     <string name="pet_adopted_remove_button">REMOVE FROM FAVORITES</string>
+    <string name="close">close</string>
 </resources>

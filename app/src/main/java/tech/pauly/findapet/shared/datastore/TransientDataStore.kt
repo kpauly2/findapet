@@ -74,4 +74,4 @@ open class TransientDataStore @Inject constructor() {
 
 interface UseCase
 
-open class FilterUpdatedUseCase : UseCase
+data class FilterUpdatedUseCase(private val id: Int = 0) : UseCase

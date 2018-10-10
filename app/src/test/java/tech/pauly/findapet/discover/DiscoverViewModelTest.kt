@@ -2,16 +2,14 @@ package tech.pauly.findapet.discover
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.location.Address
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.check
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
+import io.mockk.*
+import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import io.reactivex.Observable
 import io.reactivex.Single
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.*
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.AnimalRepository
 import tech.pauly.findapet.data.FilterRepository
@@ -24,60 +22,83 @@ import tech.pauly.findapet.shared.datastore.DiscoverAnimalTypeUseCase
 import tech.pauly.findapet.shared.datastore.DiscoverToolbarTitleUseCase
 import tech.pauly.findapet.shared.datastore.FilterUpdatedUseCase
 import tech.pauly.findapet.shared.datastore.TransientDataStore
-import tech.pauly.findapet.shared.events.OptionsMenuEvent
-import tech.pauly.findapet.shared.events.OptionsMenuState
-import tech.pauly.findapet.shared.events.PermissionEvent
-import tech.pauly.findapet.shared.events.ViewEventBus
+import tech.pauly.findapet.shared.events.*
 import java.util.*
 
 class DiscoverViewModelTest {
 
-    private val listAdapter: AnimalListAdapter = mock()
-    private val animalListItemFactory: AnimalListItemViewModel.Factory = mock()
-    private val animalRepository: AnimalRepository = mock()
-    private val dataStore: TransientDataStore = mock()
-    private val permissionHelper: PermissionHelper = mock()
-    private val eventBus: ViewEventBus = mock()
-    private val locationHelper: LocationHelper = mock()
-    private val animalListResponse: AnimalListResponse = mock()
-    private val resourceProvider: ResourceProvider = mock {
-        on { getString(R.string.male) }.thenReturn("Male")
-        on { getString(R.string.adult) }.thenReturn("Adult")
-        on { getString(R.string.large) }.thenReturn("Large")
-        on { getString(R.string.chip_near_location, "zipcode") }.thenReturn("Near zipcode")
-        on { getString(R.string.chip_near_location, "zipcode2") }.thenReturn("Near zipcode2")
-    }
-    private val filterRepository: FilterRepository = mock()
+    @RelaxedMockK
+    private lateinit var listAdapter: AnimalListAdapter
 
-    private val fetchAnimalsRequest: FetchAnimalsRequest = mock()
-    private val filter: Filter = mock {
-        on { sex }.thenReturn(Sex.MISSING)
-        on { age }.thenReturn(Age.MISSING)
-        on { size }.thenReturn(AnimalSize.MISSING)
-        on { breed }.thenReturn("")
-    }
+    @RelaxedMockK
+    private lateinit var animalListItemFactory: AnimalListItemViewModel.Factory
+
+    @MockK
+    private lateinit var animalRepository: AnimalRepository
+
+    @RelaxedMockK
+    private lateinit var dataStore: TransientDataStore
+
+    @MockK
+    private lateinit var permissionHelper: PermissionHelper
+
+    @RelaxedMockK
+    private lateinit var eventBus: ViewEventBus
+
+    @RelaxedMockK
+    private lateinit var locationHelper: LocationHelper
+
+    @RelaxedMockK
+    private lateinit var animalListResponse: AnimalListResponse
+
+    @MockK
+    private lateinit var resourceProvider: ResourceProvider
+
+    @MockK
+    private lateinit var filterRepository: FilterRepository
+
+    @MockK
+    private lateinit var fetchAnimalsRequest: FetchAnimalsRequest
+
+    @MockK
+    private lateinit var filter: Filter
+
     private lateinit var subject: DiscoverViewModel
 
     @Before
     fun setup() {
-        val useCase: DiscoverAnimalTypeUseCase = mock {
-            on { animalType }.thenReturn(AnimalType.CAT)
+        MockKAnnotations.init(this)
+        resourceProvider.apply {
+            every { getString(R.string.male) } returns "Male"
+            every { getString(R.string.adult) } returns "Adult"
+            every { getString(R.string.large) } returns "Large"
+            every { getString(R.string.chip_near_location, "zipcode") } returns "Near zipcode"
+            every { getString(R.string.chip_near_location, "zipcode2") } returns "Near zipcode2"
         }
-        whenever(dataStore[DiscoverAnimalTypeUseCase::class]).thenReturn(useCase)
-        whenever(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(true)
-        whenever(animalRepository.fetchAnimals(any())).thenReturn(Observable.just(animalListResponse))
-        val address: Address = mock {
-            on { postalCode }.thenReturn("zipcode")
+        filter.apply {
+            every { sex } returns Sex.MISSING
+            every { age } returns Age.MISSING
+            every { size } returns AnimalSize.MISSING
+            every { breed } returns ""
         }
-        whenever(locationHelper.fetchCurrentLocation()).thenReturn(Observable.just(address))
-        fetchAnimalsRequest.also {
-            whenever(it.animalType).thenReturn(AnimalType.CAT)
-            whenever(it. location).thenReturn("zipcode")
-            whenever(it.lastOffset).thenReturn(0)
-            whenever(it.filter).thenReturn(filter)
+        val useCase = mockk<DiscoverAnimalTypeUseCase> {
+            every { animalType } returns AnimalType.CAT
         }
-        whenever(filterRepository.currentFilterAndNoFilterIfEmpty).thenReturn(Single.just(filter))
-        whenever(dataStore[FilterUpdatedUseCase::class]).thenReturn(null)
+        every { dataStore[DiscoverAnimalTypeUseCase::class] } returns useCase
+        every { permissionHelper.hasPermissions(ACCESS_FINE_LOCATION) } returns true
+        every { animalRepository.fetchAnimals(any()) } returns Observable.just(animalListResponse)
+        val currLocation = mockk<Address> {
+            every { postalCode } returns "zipcode"
+        }
+        every { locationHelper.fetchCurrentLocation() } returns Observable.just(currLocation)
+        fetchAnimalsRequest.apply {
+            every { animalType } returns AnimalType.CAT
+            every { location } returns "zipcode"
+            every { lastOffset } returns 0
+            every { filter } returns this@DiscoverViewModelTest.filter
+        }
+        every { filterRepository.currentFilterAndNoFilterIfEmpty } returns Single.just(filter)
+        every { dataStore[FilterUpdatedUseCase::class] } returns null
 
         subject = DiscoverViewModel(listAdapter, animalListItemFactory, animalRepository, dataStore, permissionHelper, eventBus, locationHelper, resourceProvider, filterRepository)
     }
@@ -86,45 +107,54 @@ class DiscoverViewModelTest {
     fun updateToolbar_updatesToolbarTitleAndOptionsMenu() {
         subject.updateToolbar()
 
-        verify(dataStore) += DiscoverToolbarTitleUseCase(AnimalType.CAT.toolbarName)
-        verify(eventBus) += OptionsMenuEvent(subject, OptionsMenuState.DISCOVER)
+        verify {
+            dataStore += DiscoverToolbarTitleUseCase(AnimalType.CAT.toolbarName)
+            eventBus += OptionsMenuEvent(subject, OptionsMenuState.DISCOVER)
+        }
     }
 
     @Test
     fun onResume_firstLoad_loadList() {
         subject.onResume()
 
-        verify(animalRepository).fetchAnimals(any())
+        verify {
+            animalRepository.fetchAnimals(any())
+        }
     }
 
     @Test
     fun onResume_notFirstLoadButFilterUpdated_loadList() {
         subject.onResume()
-        clearInvocations<AnimalRepository>(animalRepository)
-        whenever(dataStore[FilterUpdatedUseCase::class]).thenReturn(mock())
+        every { dataStore[FilterUpdatedUseCase::class] } returns mockk()
 
         subject.onResume()
 
-        verify(animalRepository).fetchAnimals(any())
+        verify {
+            animalRepository.fetchAnimals(any())
+        }
     }
 
     @Test
     fun onResume_notFirstLoadAndFilterNotUpdated_doNothing() {
         subject.onResume()
-        clearInvocations<AnimalRepository>(animalRepository)
+        clearMocks(animalRepository)
 
         subject.onResume()
 
-        verify(animalRepository, never()).fetchAnimals(any())
+        verify(exactly = 0) {
+            animalRepository.fetchAnimals(any())
+        }
     }
 
     @Test
     fun requestPermissionToLoad_locationPermissionNotGranted_requestPermission() {
-        whenever(permissionHelper.hasPermissions(ACCESS_FINE_LOCATION)).thenReturn(false)
+        every { permissionHelper.hasPermissions(ACCESS_FINE_LOCATION) } returns false
+        val slot = slot<BaseViewEvent>()
+        every { eventBus += capture(slot) } answers { nothing }
 
         subject.requestPermissionToLoad()
 
-        verify(eventBus) += check {
+        slot.captured.also {
             assertThat((it as PermissionEvent).requestCode).isEqualTo(100)
             assertThat(it.permissions[0]).isEqualTo(ACCESS_FINE_LOCATION)
         }
@@ -132,38 +162,42 @@ class DiscoverViewModelTest {
 
     @Test
     fun requestPermissionToLoad_locationPermissionGranted_usesAnimalTypeFromDataStoreAndClearsListAndStartsRefreshing() {
-        whenever(animalRepository.fetchAnimals(any())).thenReturn(Observable.never())
+        val slot = slot<FetchAnimalsRequest>()
+        every { animalRepository.fetchAnimals(capture(slot)) } returns Observable.never()
 
         subject.requestPermissionToLoad()
 
-        verify(animalRepository).fetchAnimals(check {
+        assertThat(subject.refreshing.get()).isTrue()
+        slot.captured.also {
             assertThat(it.location).isEqualTo("zipcode")
             assertThat(it.animalType).isEqualTo(AnimalType.CAT)
             assertThat(it.lastOffset).isEqualTo(0)
-        })
-        verify(dataStore) += DiscoverErrorUseCase(null)
-        verify(listAdapter).clearAnimalItems()
-        assertThat(subject.refreshing.get()).isTrue()
+        }
+        verify {
+            dataStore += DiscoverErrorUseCase(null)
+            listAdapter.clearAnimalItems()
+        }
     }
 
     @Test
     fun requestPermissionToLoad_getCurrentLocation_fetchesLocationAndSetsLocationChip() {
-        whenever(animalRepository.fetchAnimals(any())).thenReturn(Observable.never())
+        every { animalRepository.fetchAnimals(any()) } returns Observable.never()
 
         subject.requestPermissionToLoad()
 
-        verify(locationHelper).fetchCurrentLocation()
         assertThat(subject.locationChip.get()).isNotNull()
         assertThat(subject.locationChip.get()!!.text).isEqualTo("Near zipcode")
+        verify { locationHelper.fetchCurrentLocation() }
     }
 
     @Test
     fun requestPermissionToLoad_getCurrentLocationASecondTime_resetsLocationChip() {
-        whenever(animalRepository.fetchAnimals(any())).thenReturn(Observable.never())
+        every { animalRepository.fetchAnimals(any()) } returns Observable.never()
         subject.requestPermissionToLoad()
-        val newAddress: Address = mock()
-        whenever(newAddress.postalCode).thenReturn("zipcode2")
-        whenever(locationHelper.fetchCurrentLocation()).thenReturn(Observable.just(newAddress))
+        val currLocation = mockk<Address> {
+            every { postalCode } returns "zipcode2"
+        }
+        every { locationHelper.fetchCurrentLocation() } returns Observable.just(currLocation)
 
         subject.requestPermissionToLoad()
 
@@ -173,7 +207,7 @@ class DiscoverViewModelTest {
 
     @Test
     fun requestPermissionToLoad_getCurrentFilterAndFilterIsEmpty_doNotAddChips() {
-        whenever(animalRepository.fetchAnimals(any())).thenReturn(Observable.never())
+        every { animalRepository.fetchAnimals(any()) } returns Observable.never()
 
         subject.requestPermissionToLoad()
 
@@ -182,7 +216,7 @@ class DiscoverViewModelTest {
 
     @Test
     fun requestPermissionToLoad_getCurrentFilterAndSexIsNotMissing_addChip() {
-        whenever(filter.sex).thenReturn(Sex.MALE)
+        every { filter.sex } returns Sex.MALE
 
         subject.requestPermissionToLoad()
 
@@ -192,7 +226,7 @@ class DiscoverViewModelTest {
 
     @Test
     fun requestPermissionToLoad_getCurrentFilterAndAgeIsNotMissing_addChip() {
-        whenever(filter.age).thenReturn(Age.ADULT)
+        every { filter.age } returns Age.ADULT
 
         subject.requestPermissionToLoad()
 
@@ -202,7 +236,7 @@ class DiscoverViewModelTest {
 
     @Test
     fun requestPermissionToLoad_getCurrentFilterAndSizeIsNotMissing_addChip() {
-        whenever(filter.size).thenReturn(AnimalSize.LARGE)
+        every { filter.size } returns AnimalSize.LARGE
 
         subject.requestPermissionToLoad()
 
@@ -212,7 +246,7 @@ class DiscoverViewModelTest {
 
     @Test
     fun requestPermissionToLoad_getCurrentFilterAndBreedIsNotMissing_addChip() {
-        whenever(filter.breed).thenReturn("Calico")
+        every { filter.breed } returns "Calico"
 
         subject.requestPermissionToLoad()
 
@@ -222,62 +256,74 @@ class DiscoverViewModelTest {
 
     @Test
     fun requestPermissionToLoad_fetchAnimalsOnNext_sendAnimalListToAdapterAndStopsRefreshingAndNoErrors() {
-        val animal: InternetAnimal = mock()
+        val animal: InternetAnimal = mockk()
         val animalList = listOf(animal)
-        whenever(animalListResponse.animalList).thenReturn(animalList)
+        every { animalListResponse.animalList } returns animalList
+        every { animalListResponse.lastOffset } returns 0
+        val slot = slot<ArrayList<AnimalListItemViewModel>>()
+        val viewModel = mockk<AnimalListItemViewModel>()
+        every { animalListItemFactory.newInstance(animal) } returns viewModel
+        every { listAdapter.animalItems = capture(slot) } answers { nothing }
 
         subject.requestPermissionToLoad()
 
-        verify(animalListItemFactory).newInstance(animal)
         assertThat(subject.refreshing.get()).isFalse()
-        verify(listAdapter).animalItems = animalList.map { animalListItemFactory.newInstance(it) } as ArrayList<AnimalListItemViewModel>
-        verify(dataStore, times(2)) += DiscoverErrorUseCase(null)
+        assertThat(slot.captured[0]).isEqualTo(viewModel)
+        verify {
+            animalListItemFactory.newInstance(animal)
+        }
+        verify(exactly = 2) {
+            dataStore += DiscoverErrorUseCase(null)
+        }
     }
 
     @Test
     fun requestPermissionToLoad_fetchAnimalsOnError_sendsErrorToDataStore() {
-        whenever(animalRepository.fetchAnimals(any())).thenReturn(Observable.error(PetfinderException(StatusCode.ERR_NO_ANIMALS)))
+        every { animalRepository.fetchAnimals(any()) } returns Observable.error(PetfinderException(StatusCode.ERR_NO_ANIMALS))
 
         subject.requestPermissionToLoad()
 
         assertThat(subject.refreshing.get()).isFalse()
-        verify(dataStore) += DiscoverErrorUseCase(StatusCode.ERR_NO_ANIMALS)
+        verify {
+            dataStore += DiscoverErrorUseCase(StatusCode.ERR_NO_ANIMALS)
+        }
     }
 
     @Test
     fun loadMoreAnimals_fetchAnimalsAtCurrentOffsetFetchesLocation() {
-        val animal: InternetAnimal = mock()
-        whenever(animalListResponse.lastOffset).thenReturn(10)
-        whenever(animalListResponse.animalList).thenReturn(listOf(animal))
+        every { animalListItemFactory.newInstance(any()) } returns mockk()
+        val animal: InternetAnimal = mockk()
+        every { animalListResponse.lastOffset } returns 10
+        every { animalListResponse.animalList } returns listOf(animal)
         subject.requestPermissionToLoad()
-        verify(animalRepository).fetchAnimals(check { })
-        clearInvocations<AnimalRepository>(animalRepository)
-        clearInvocations<LocationHelper>(locationHelper)
+        verify { animalRepository.fetchAnimals(any()) }
+        val slot = slot<FetchAnimalsRequest>()
+        every { animalRepository.fetchAnimals(capture(slot)) } returns Observable.never()
 
         subject.loadMoreAnimals()
 
-        verify(animalRepository).fetchAnimals(check {
-            assertThat(it.lastOffset).isEqualTo(10)
-        })
-        verify(locationHelper).fetchCurrentLocation()
+        assertThat(slot.captured.lastOffset).isEqualTo(10)
+        verify {
+            locationHelper.fetchCurrentLocation()
+        }
     }
 
     @Test
     fun loadMoreAnimals_getsSameAnimalsAgain_loadMoreAnimalsDoesNotFetchAgain() {
-        val animal: InternetAnimal = mock {
-            on { id }.thenReturn(10)
+        every { animalListResponse.lastOffset } returns 10
+        val internalAnimal = mockk<InternetAnimal> {
+            every { id } returns 10
         }
-        val animalViewModel: AnimalListItemViewModel = mock {
-            on { id }.thenReturn(10)
+        every { animalListResponse.animalList } returns listOf(internalAnimal)
+        val viewModel = mockk<AnimalListItemViewModel> {
+            every { id } returns 10
         }
-        whenever(animalListResponse.lastOffset).thenReturn(10)
-        whenever(animalListResponse.animalList).thenReturn(listOf(animal))
-        whenever(listAdapter.animalItems).thenReturn(arrayListOf(animalViewModel))
+        every { listAdapter.animalItems } returns arrayListOf(viewModel)
         subject.requestPermissionToLoad()
-        clearInvocations<AnimalRepository>(animalRepository)
+        clearMocks(animalRepository)
 
         subject.loadMoreAnimals()
 
-        verify(animalRepository, never()).fetchAnimals(any())
+        verify(exactly = 0) { animalRepository.fetchAnimals(any()) }
     }
 }

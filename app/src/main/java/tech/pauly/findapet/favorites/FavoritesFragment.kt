@@ -12,7 +12,6 @@ import io.reactivex.rxkotlin.plusAssign
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.FragmentFavoritesBinding
 import tech.pauly.findapet.discover.AnimalListItemViewModel
-import tech.pauly.findapet.discover.DiscoverViewModel
 import tech.pauly.findapet.shared.BaseFragment
 import tech.pauly.findapet.shared.events.ViewEventBus
 import javax.inject.Inject
@@ -33,7 +32,7 @@ class FavoritesFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentFavoritesBinding>(inflater, R.layout.fragment_favorites, container, false)
         binding.viewModel = viewModel
-        lifecycle.addObserver(viewModel)
+        addViewModelLifecycleObserver(viewModel)
         return binding.root
     }
 
