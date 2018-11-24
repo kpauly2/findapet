@@ -63,8 +63,8 @@ class SettingsViewModelTest {
                     SettingsTitleViewModel(R.string.give_back),
                     SettingsEmailViewModel(R.string.feedback, eventBus),
                     SettingsTitleViewModel(R.string.references),
-                    SettingsLinkOutViewModel(R.string.thanks, "https://kpauly2-ford.github.io/findapet/pages/attributions.html", eventBus),
-                    SettingsLinkOutViewModel(R.string.licenses, "https://kpauly2-ford.github.io/findapet/pages/licenses.html", eventBus))
+                    SettingsLinkOutViewModel(R.string.thanks, "https://kpauly2.github.io/findapet/pages/attributions.html", eventBus),
+                    SettingsLinkOutViewModel(R.string.licenses, "https://kpauly2.github.io/findapet/pages/licenses.html", eventBus))
         }
     }
 }

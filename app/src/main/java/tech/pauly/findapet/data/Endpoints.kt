@@ -15,9 +15,9 @@ object PetfinderEndpoints {
 }
 
 object SettingsEndpoints {
-    const val sourceCode = "https://github.com/kpauly2-ford/findapet"
+    const val sourceCode = "https://github.com/kpauly2/findapet"
     const val personalSite = "https://www.pauly.tech"
     const val personalEmail = "kevin@pauly.tech"
-    const val thanksAndReferences = "https://kpauly2-ford.github.io/findapet/pages/attributions.html"
-    const val licenses = "https://kpauly2-ford.github.io/findapet/pages/licenses.html"
+    const val thanksAndReferences = "https://kpauly2.github.io/findapet/pages/attributions.html"
+    const val licenses = "https://kpauly2.github.io/findapet/pages/licenses.html"
 }
