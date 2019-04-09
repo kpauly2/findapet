@@ -7,11 +7,11 @@ buildscript {
             "version_code": 100,
             "version_name": "1.0.0",
 
-            "kotlin": "1.2.61",
-            "android_gradle_plugin": "3.2.0",
-            "support_lib": "27.1.1",
+            "kotlin": "1.3.21",
+            "android_gradle_plugin": "3.2.1",
+            "support_lib": "1.0.0",
             "constraint_layout": "1.1.2",
-            "arch_components": "1.1.1",
+            "arch_components": "2.0.0",
             "dagger": "2.14.1",
             "rx_java": "2.1.13",
             "rx_android": "2.0.2",
@@ -27,46 +27,56 @@ buildscript {
             "assertj": "1.1.1",
             "mockito": "2.11.0",
             "mockito_kotlin": "1.5.0",
-            "mockk": "1.8.6"
+            "mockk": "1.9",
+            "room": "2.1.0-alpha06"
     ]
-
     ext.deps = [
             "kotlin_stdlib": "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin",
             "kotlin_reflect": "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
-            "appcompat": "com.android.support:appcompat-v7:$versions.support_lib",
-            "design": "com.android.support:design:$versions.support_lib",
-            "recycler_view": "com.android.support:recyclerview-v7:$versions.support_lib",
-            "card_view": "com.android.support:cardview-v7:$versions.support_lib",
-            "constraint_layout": "com.android.support.constraint:constraint-layout:$versions.constraint_layout",
-            "lifecycle": "android.arch.lifecycle:extensions:$versions.arch_components",
-            "room_runtime": "android.arch.persistence.room:runtime:$versions.arch_components",
-            "room_compiler": "android.arch.persistence.room:compiler:$versions.arch_components",
-            "room_rx": "android.arch.persistence.room:rxjava2:$versions.arch_components",
+
+            "lifecycle": "androidx.lifecycle:lifecycle-extensions:$versions.arch_components",
+            "room_runtime": "androidx.room:room-runtime:$versions.room",
+            "room_compiler": "androidx.room:room-compiler:$versions.room",
+            "room_ktx": "androidx.room:room-ktx:$versions.room",
+            "room_rx": "androidx.room:room-rxjava2:$versions.room",
+            "room_testing": "androidx.room:room-testing:$versions.room",
+
+            "design": "com.google.android.material:material:$versions.support_lib",
+            "appcompat": "androidx.appcompat:appcompat:$versions.support_lib",
+            "recycler_view": "androidx.recyclerview:recyclerview:$versions.support_lib",
+            "card_view": "androidx.cardview:cardview:$versions.support_lib",
+            "constraint_layout": "androidx.constraintlayout:constraintlayout:$versions.constraint_layout",
+
             "dagger": "com.google.dagger:dagger:$versions.dagger",
             "dagger_compiler": "com.google.dagger:dagger-compiler:$versions.dagger",
-            "dagger_android": "com.google.dagger:dagger-android-support:$versions.dagger",
-            "dagger_android_processor": "com.google.dagger:dagger-android-processor:$versions.dagger",
+
             "rx_java": "io.reactivex.rxjava2:rxjava:$versions.rx_java",
             "rx_android": "io.reactivex.rxjava2:rxandroid:$versions.rx_android",
             "rx_kotlin": "io.reactivex.rxjava2:rxkotlin:$versions.rx_kotlin",
+
             "retrofit": "com.squareup.retrofit2:retrofit:$versions.retrofit",
             "retrofit_simplexml": "com.squareup.retrofit2:converter-simplexml:$versions.retrofit",
             "retrofit_rx": "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit",
             "retrofit_logging": "com.squareup.okhttp3:logging-interceptor:$versions.retrofit_logging",
+
             "play_services_maps": "com.google.android.gms:play-services-maps:$versions.play_services",
             "play_services_location": "com.google.android.gms:play-services-location:$versions.play_services",
+
             "picasso": "com.squareup.picasso:picasso:$versions.picasso",
             "picasso_transformations": "jp.wasabeef:picasso-transformations:$versions.picasso_transformations",
+
             "leak_canary": "com.squareup.leakcanary:leakcanary-android:$versions.leak_canary",
             "leak_canary_noop": "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leak_canary",
+
             "crashlytics": "com.crashlytics.sdk.android:crashlytics:$versions.crashlytics",
+
             "junit": "junit:junit:$versions.junit",
             "assertj": "com.squareup.assertj:assertj-android:$versions.assertj",
             "mockito": "org.mockito:mockito-core:$versions.mockito",
             "mockito_kotlin": "com.nhaarman:mockito-kotlin:$versions.mockito_kotlin",
-            "mockk": "io.mockk:mockk:$versions.mockk",
-            "room_testing": "android.arch.persistence.room:testing:$versions.arch_components"
+            "mockk": "io.mockk:mockk:$versions.mockk"
     ]
+
 
     repositories {
         google()

@@ -107,12 +107,11 @@ dependencies {
     implementation deps.lifecycle
     implementation deps.room_runtime
     kapt deps.room_compiler
+    implementation deps.room_ktx
     implementation deps.room_rx
 
     implementation deps.dagger
     kapt deps.dagger_compiler
-    implementation deps.dagger_android
-    kapt deps.dagger_android_processor
 
     implementation deps.rx_java
     implementation deps.rx_android
