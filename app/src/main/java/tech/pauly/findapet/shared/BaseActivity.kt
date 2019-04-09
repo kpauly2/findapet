@@ -3,12 +3,12 @@ package tech.pauly.findapet.shared
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -101,7 +101,7 @@ open class BaseActivity : AppCompatActivity() {
     protected fun snackbarEvent(event: SnackbarEvent) {
         Snackbar.make(findViewById<View>(android.R.id.content), event.text, Snackbar.LENGTH_SHORT).also { snackbar ->
             snackbar.view.setBackgroundColor(getColor(R.color.purpleStandardDark))
-            val textView = snackbar.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
+            val textView = snackbar.view.findViewById<TextView>(R.id.snackbar_text)
             textView?.setTextColor(getColor(R.color.white))
             textView?.typeface = ResourcesCompat.getFont(this, R.font.quicksand_medium)
         }.show()

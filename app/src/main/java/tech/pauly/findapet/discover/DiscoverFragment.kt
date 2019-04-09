@@ -1,16 +1,16 @@
 package tech.pauly.findapet.discover
 
 import android.content.Context
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dagger.android.support.AndroidSupportInjection
+import androidx.databinding.DataBindingUtil
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.FragmentDiscoverBinding
+import tech.pauly.findapet.dependencyinjection.PetApplication
 import tech.pauly.findapet.shared.BaseFragment
 import tech.pauly.findapet.shared.events.ViewEventBus
 import javax.inject.Inject
@@ -27,7 +27,7 @@ class DiscoverFragment : BaseFragment() {
     lateinit var eventBus: ViewEventBus
 
     override fun onAttach(context: Context?) {
-        AndroidSupportInjection.inject(this)
+        PetApplication.component.inject(this)
         super.onAttach(context)
     }
 

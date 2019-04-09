@@ -1,9 +1,8 @@
 package tech.pauly.findapet.utils
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
 
 // Big thanks to nesquena and rogerhu for this article
 // https://github.com/codepath/android_guides/wiki/Endless-Scrolling-with-AdapterViews-and-RecyclerView
@@ -28,7 +27,7 @@ abstract class EndlessRecyclerViewScrollListener(private val layoutManager: Grid
     // This happens many times a second during a scroll, so be wary of the code you place here.
     // We are given a few useful parameters to help us work out if we need to load some more data,
     // but first we check if we are waiting for the previous load to finish.
-    override fun onScrolled(view: RecyclerView?, dx: Int, dy: Int) {
+    override fun onScrolled(view: RecyclerView, dx: Int, dy: Int) {
         val lastVisibleItemPosition: Int = layoutManager.findLastVisibleItemPosition()
         val totalItemCount = layoutManager.itemCount
 

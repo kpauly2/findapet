@@ -1,17 +1,18 @@
 package tech.pauly.findapet.discover
 
 import android.content.Context
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import dagger.android.AndroidInjection
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.databinding.DataBindingUtil
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.activity_filter.*
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.ActivityFilterBinding
+import tech.pauly.findapet.dependencyinjection.PetApplication
 import tech.pauly.findapet.shared.BaseActivity
 import tech.pauly.findapet.shared.events.ViewEventBus
 import tech.pauly.findapet.utils.addAnimationListener
@@ -29,7 +30,7 @@ class FilterActivity : BaseActivity() {
     private lateinit var breedViewModel: BreedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        PetApplication.component.inject(this)
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityFilterBinding>(this, R.layout.activity_filter)
         addViewModelLifecycleObserver(viewModel)

@@ -1,6 +1,6 @@
 package tech.pauly.findapet.data
 
-import android.arch.persistence.room.EmptyResultSetException
+import androidx.room.EmptyResultSetException
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single

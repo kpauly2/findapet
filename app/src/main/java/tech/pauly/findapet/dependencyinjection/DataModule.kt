@@ -1,6 +1,6 @@
 package tech.pauly.findapet.dependencyinjection
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.content.Context
 import dagger.Module
 import dagger.Provides

@@ -1,8 +1,8 @@
 package tech.pauly.findapet.discover
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.OnLifecycleEvent
-import android.databinding.ObservableField
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.databinding.ObservableField
 import android.view.View
 import tech.pauly.findapet.data.FilterRepository
 import tech.pauly.findapet.data.models.Age

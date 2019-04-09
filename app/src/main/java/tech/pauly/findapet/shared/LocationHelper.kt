@@ -7,7 +7,6 @@ import android.location.Criteria
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
-import android.support.annotation.VisibleForTesting
 import com.google.android.gms.location.LocationServices
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject

@@ -2,11 +2,11 @@ package tech.pauly.findapet.utils
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.LinearLayout
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import tech.pauly.findapet.R
 
 private const val DEFAULT_DURATION = 500

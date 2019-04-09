@@ -2,8 +2,8 @@ package tech.pauly.findapet.shared
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.support.annotation.PluralsRes
-import android.support.annotation.StringRes
+import androidx.annotation.PluralsRes
+import androidx.annotation.StringRes
 import com.squareup.picasso.Picasso
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.models.Sex

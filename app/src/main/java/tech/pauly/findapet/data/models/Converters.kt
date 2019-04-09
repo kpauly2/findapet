@@ -1,6 +1,6 @@
 package tech.pauly.findapet.data.models
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 
 class Converters {
     @TypeConverter

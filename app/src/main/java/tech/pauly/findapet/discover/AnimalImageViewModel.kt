@@ -1,6 +1,6 @@
 package tech.pauly.findapet.discover
 
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import tech.pauly.findapet.data.models.AnimalUrl
 
 import tech.pauly.findapet.shared.BaseViewModel

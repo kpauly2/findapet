@@ -1,6 +1,6 @@
 package tech.pauly.findapet.shared.events
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.models.AnimalUrl
 

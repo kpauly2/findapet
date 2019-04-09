@@ -1,11 +1,11 @@
 package tech.pauly.findapet.discover
 
 import android.content.Context
-import android.databinding.ViewDataBinding
-import android.support.v4.view.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
+import androidx.viewpager.widget.PagerAdapter
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.ViewAnimalDetailsDetailsBinding
 import tech.pauly.findapet.databinding.ViewAnimalDetailsLocationBinding

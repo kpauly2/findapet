@@ -1,6 +1,6 @@
 package tech.pauly.findapet.shared.events
 
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
 import kotlin.reflect.KClass
 
 open class FragmentEvent(private val emitter: Any,

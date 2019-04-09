@@ -1,16 +1,16 @@
 package tech.pauly.findapet.discover
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.content.res.ResourcesCompat
 import android.view.Menu
 import android.view.MenuItem
-import dagger.android.AndroidInjection
+import androidx.core.content.res.ResourcesCompat
+import androidx.databinding.DataBindingUtil
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.activity_animal_details.*
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.ActivityAnimalDetailsBinding
+import tech.pauly.findapet.dependencyinjection.PetApplication
 import tech.pauly.findapet.shared.BaseActivity
 import tech.pauly.findapet.shared.events.OptionsMenuState
 import tech.pauly.findapet.shared.events.ViewEventBus
@@ -33,7 +33,7 @@ class AnimalDetailsActivity : BaseActivity() {
     private lateinit var binding: ActivityAnimalDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        PetApplication.component.inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_animal_details)
         addViewModelLifecycleObserver(viewModel)

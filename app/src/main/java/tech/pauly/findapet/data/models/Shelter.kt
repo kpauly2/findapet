@@ -1,7 +1,7 @@
 package tech.pauly.findapet.data.models
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 

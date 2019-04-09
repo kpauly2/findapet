@@ -1,9 +1,9 @@
 package tech.pauly.findapet.discover
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.OnLifecycleEvent
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableInt
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableInt
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.models.StatusCode
 import tech.pauly.findapet.shared.BaseViewModel

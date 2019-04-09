@@ -1,9 +1,9 @@
 package tech.pauly.findapet.shared
 
+import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.support.v4.app.SupportActivity
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import tech.pauly.findapet.dependencyinjection.ForApplication
 import tech.pauly.findapet.shared.events.PermissionEvent
 import tech.pauly.findapet.utils.BindingAdapters
@@ -17,7 +17,7 @@ constructor(@param:ForApplication private val context: Context) {
 
     val requestMap = HashMap<Int, PermissionEvent>()
 
-    open fun requestPermission(activity: SupportActivity, permissionEvent: PermissionEvent) {
+    open fun requestPermission(activity: Activity, permissionEvent: PermissionEvent) {
         requestMap[permissionEvent.requestCode] = permissionEvent
         activity.requestPermissions(permissionEvent.permissions, permissionEvent.requestCode)
     }

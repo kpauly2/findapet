@@ -8,7 +8,7 @@
             name="viewModel"
             type="tech.pauly.findapet.settings.SettingsViewModel" />
 
-        <import type="android.support.v7.widget.RecyclerView" />
+        <import type="androidx.recyclerview.widget.RecyclerView" />
     </data>
 
     <FrameLayout
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/settings_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -14,7 +14,7 @@
         <import type="android.view.View" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/animal_item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -156,5 +156,5 @@
             app:layout_constraintTop_toBottomOf="@+id/description_title"
             tools:text="1) I am the shy kind; it may take me a bit of time for me to settle in   2) I like to be pet, but I am pretty" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

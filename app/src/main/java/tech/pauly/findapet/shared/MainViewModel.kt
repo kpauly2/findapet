@@ -1,9 +1,9 @@
 package tech.pauly.findapet.shared
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.OnLifecycleEvent
-import android.databinding.ObservableField
-import android.databinding.ObservableInt
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import android.view.View
 import android.widget.ToggleButton
 

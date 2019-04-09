@@ -1,7 +1,6 @@
 package tech.pauly.findapet.shared
 
 import android.content.Context
-import android.support.v4.app.SupportActivity
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import org.assertj.core.api.Assertions.assertThat
@@ -11,7 +10,6 @@ import org.junit.Test
 import org.mockito.Mockito.verify
 import tech.pauly.findapet.shared.events.PermissionEvent
 import tech.pauly.findapet.shared.events.PermissionListener
-import java.security.acl.Permission
 import java.util.*
 
 class PermissionHelperTest {

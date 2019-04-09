@@ -1,7 +1,7 @@
 package tech.pauly.findapet.discover
 
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import android.view.View
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.models.Animal

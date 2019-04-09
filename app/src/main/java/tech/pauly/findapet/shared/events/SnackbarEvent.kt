@@ -1,6 +1,6 @@
 package tech.pauly.findapet.shared.events
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 
 open class SnackbarEvent(private val emitter: Any,
                          @StringRes val text: Int) : BaseViewEvent(emitter::class) {

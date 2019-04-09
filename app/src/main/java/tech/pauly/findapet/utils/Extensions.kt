@@ -1,17 +1,15 @@
 package tech.pauly.findapet.utils
 
 import android.content.Context
-import android.databinding.ObservableField
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.support.annotation.DrawableRes
 import android.view.View
 import android.view.animation.Animation
 import android.widget.ToggleButton
+import androidx.annotation.DrawableRes
+import androidx.databinding.ObservableField
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import io.reactivex.Observable
-import io.reactivex.Single
 
 typealias ObservableString = ObservableField<String>
 fun ObservableString.safeGet(): String {

@@ -1,9 +1,9 @@
 package tech.pauly.findapet.discover
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.OnLifecycleEvent
-import android.databinding.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.databinding.*
 import android.location.Address
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable

@@ -1,6 +1,6 @@
 package tech.pauly.findapet.data
 
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import io.reactivex.Completable
 import io.reactivex.Single
 import tech.pauly.findapet.data.models.Filter

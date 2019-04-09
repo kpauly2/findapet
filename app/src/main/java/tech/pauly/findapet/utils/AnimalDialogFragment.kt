@@ -1,11 +1,11 @@
 package tech.pauly.findapet.utils
 
 import android.app.Dialog
-import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.DialogAnimalBinding
 import tech.pauly.findapet.shared.BaseDialogFragment

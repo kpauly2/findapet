@@ -1,9 +1,9 @@
 package tech.pauly.findapet.data.models;
 
-import android.support.annotation.Nullable;
-
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
+
+import androidx.annotation.Nullable;
 
 @Root(name = "petfinder", strict = false)
 public class SingleShelterResponse {

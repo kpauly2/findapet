@@ -1,8 +1,8 @@
 package tech.pauly.findapet.shared
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.OnLifecycleEvent
-import android.databinding.BaseObservable
+import androidx.databinding.BaseObservable
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single

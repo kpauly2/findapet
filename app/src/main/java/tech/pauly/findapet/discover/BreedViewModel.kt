@@ -1,9 +1,9 @@
 package tech.pauly.findapet.discover
 
-import android.databinding.Bindable
+import androidx.databinding.Bindable
 import android.view.View
-import com.android.databinding.library.baseAdapters.BR
 import io.reactivex.subjects.PublishSubject
+import tech.pauly.findapet.BR
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.BreedRepository
 import tech.pauly.findapet.data.models.BreedListResponse

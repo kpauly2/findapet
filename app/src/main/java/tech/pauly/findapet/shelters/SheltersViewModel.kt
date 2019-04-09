@@ -1,8 +1,8 @@
 package tech.pauly.findapet.shelters
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.OnLifecycleEvent
-import android.databinding.ObservableBoolean
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.databinding.ObservableBoolean
 import android.location.Address
 import com.google.android.gms.maps.model.LatLng
 import io.reactivex.Observable

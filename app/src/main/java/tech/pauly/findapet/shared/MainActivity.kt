@@ -1,18 +1,18 @@
 package tech.pauly.findapet.shared
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.databinding.DataBindingUtil
 import com.crashlytics.android.Crashlytics
-import dagger.android.AndroidInjection
 import io.fabric.sdk.android.Fabric
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.activity_main.*
 import tech.pauly.findapet.R
 import tech.pauly.findapet.databinding.ActivityMainBinding
+import tech.pauly.findapet.dependencyinjection.PetApplication
 import tech.pauly.findapet.discover.AnimalListItemViewModel
 import tech.pauly.findapet.discover.DiscoverViewModel
 import tech.pauly.findapet.discover.FilterActivity
@@ -38,7 +38,7 @@ class MainActivity : BaseActivity() {
     internal lateinit var dataStore: TransientDataStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        PetApplication.component.inject(this)
         super.onCreate(savedInstanceState)
 
         Fabric.with(this, Crashlytics())

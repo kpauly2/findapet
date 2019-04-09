@@ -1,8 +1,8 @@
 package tech.pauly.findapet.settings
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import tech.pauly.findapet.databinding.ItemSettingsBasicBinding
 import tech.pauly.findapet.databinding.ItemSettingsTitleBinding
 import javax.inject.Inject

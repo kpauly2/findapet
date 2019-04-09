@@ -1,9 +1,9 @@
 package tech.pauly.findapet.favorites
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.OnLifecycleEvent
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableInt
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableInt
+import androidx.lifecycle.Lifecycle
 import tech.pauly.findapet.R
 import tech.pauly.findapet.data.AnimalRepository
 import tech.pauly.findapet.data.FavoriteRepository

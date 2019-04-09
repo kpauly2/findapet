@@ -1,6 +1,6 @@
 package tech.pauly.findapet.data.models
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import tech.pauly.findapet.R
 
 enum class Age (val code: Int,

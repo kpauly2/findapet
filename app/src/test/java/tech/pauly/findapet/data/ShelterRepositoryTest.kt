@@ -1,6 +1,6 @@
 package tech.pauly.findapet.data
 
-import android.arch.persistence.room.EmptyResultSetException
+import androidx.room.EmptyResultSetException
 import com.nhaarman.mockito_kotlin.*
 import io.reactivex.CompletableTransformer
 import io.reactivex.Single
