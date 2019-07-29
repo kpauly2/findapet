@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purpleLightest">#FAFAFF</color>
+    <color name="purpleVeryLight">#E7E8FB</color>
+    <color name="purpleLight">#B6B8FD</color>
+    <color name="purpleStandard">#989BFE</color>
+    <color name="purpleStandardDark">#797CDB</color>
+    <color name="purpleDark">#5558A1</color>
+
+    <color name="textStandard">#424242</color>
+    <color name="textDark">#303030</color>
+    <color name="textLight">#616161</color>
+    <color name="textVeryLight">#757575</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="semitransparent">#1A000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="offWhite">#E0E0E0</color>
+    <color name="warning">#FACE38</color>
+</resources>

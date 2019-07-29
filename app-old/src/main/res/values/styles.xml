@@ -1,0 +1,75 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/purpleStandard</item>
+        <item name="colorPrimaryDark">@color/purpleStandardDark</item>
+        <item name="colorAccent">@color/purpleVeryLight</item>
+    </style>
+
+    <style name="LauncherTheme" parent="AppTheme">
+        <item name="android:background">@drawable/background_launcher</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="LightToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/purpleStandard</item>
+        <item name="colorControlHighlight">@color/purpleVeryLight</item>
+    </style>
+
+    <style name="NavMenuButton" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textAppearance">@style/FontStrongBody</item>
+    </style>
+
+    <style name="FontLargeHeader" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/quicksand_medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="FontExtraLargeHeader" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/quicksand_bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="FontStrongBody" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/quicksand_medium</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="FontBody" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/quicksand_regular</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="FontSmall" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/quicksand_regular</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="FontVerySmall" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/quicksand_light</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="FontHeader" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/quicksand_regular</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="FontStrongHeader" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/quicksand_bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="FontMaxHeader" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/quicksand_medium</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="FontStrongTiny" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/quicksand_bold</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+</resources>

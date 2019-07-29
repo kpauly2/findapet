@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="tech.pauly.old.discover.AnimalDetailsViewModel" />
+
+        <import type="tech.pauly.old.utils.BindingAdapters" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/animal_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/location_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:text="@{viewModel.contactName}"
+            android:textAllCaps="true"
+            android:textAppearance="@style/FontStrongHeader"
+            android:textColor="@color/purpleStandard"
+            android:visibility="@{viewModel.partialContact ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="MICHIGAN HUMANE SOCIETY" />
+
+        <TextView
+            android:id="@+id/location_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_radio_button_background"
+            android:drawablePadding="@dimen/standard_margin"
+            android:drawableStart="@drawable/ic_directions"
+            android:onClick="@{viewModel::clickAddress}"
+            android:padding="@dimen/standard_margin"
+            android:text="@{viewModel.contactAddress}"
+            android:textAppearance="@style/FontBody"
+            android:textColor="@color/textStandard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/location_title"
+            tools:text="14198 Farmington Rd\nFarmington Hills, MI 48335" />
+
+        <TextView
+            android:id="@+id/location_distance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/standard_margin"
+            android:text="@{viewModel.contactDistance}"
+            android:textAppearance="@style/FontStrongTiny"
+            android:textColor="@color/purpleStandard"
+            app:layout_constraintBottom_toBottomOf="@+id/location_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/location_address"
+            tools:text="5 miles" />
+
+        <View
+            android:id="@+id/divider_location"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/offWhite"
+            android:paddingEnd="@dimen/standard_margin"
+            android:paddingStart="@dimen/standard_margin"
+            android:visibility="@{viewModel.contactPhoneVisibility ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@+id/location_address" />
+
+        <TextView
+            android:id="@+id/location_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_radio_button_background"
+            android:drawablePadding="@dimen/standard_margin"
+            android:drawableStart="@drawable/ic_phone"
+            android:onClick="@{viewModel::clickPhone}"
+            android:padding="@dimen/standard_margin"
+            android:text="@{viewModel.contactPhone}"
+            android:textAppearance="@style/FontBody"
+            android:textColor="@color/textStandard"
+            android:visibility="@{viewModel.contactPhoneVisibility ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_location"
+            tools:text="(248) 555 1924" />
+
+        <View
+            android:id="@+id/divider_phone"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/offWhite"
+            android:paddingEnd="@dimen/standard_margin"
+            android:paddingStart="@dimen/standard_margin"
+            android:visibility="@{viewModel.contactEmailVisibility ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@+id/location_phone" />
+
+        <TextView
+            android:id="@+id/location_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_radio_button_background"
+            android:drawablePadding="@dimen/standard_margin"
+            android:drawableStart="@drawable/ic_email"
+            android:onClick="@{viewModel::clickEmail}"
+            android:padding="@dimen/standard_margin"
+            android:text="@{viewModel.contactEmail}"
+            android:textAppearance="@style/FontBody"
+            android:textColor="@color/textStandard"
+            android:visibility="@{viewModel.contactEmailVisibility ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_phone"
+            tools:text="poodlez123@gmail.com" />
+
+        <View
+            android:id="@+id/divider_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/offWhite"
+            android:paddingEnd="@dimen/standard_margin"
+            android:paddingStart="@dimen/standard_margin"
+            android:visibility="@{viewModel.partialContact ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@+id/location_email" />
+
+        <TextView
+            android:id="@+id/location_notes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/standard_margin"
+            android:text="@string/partial_shelter_note"
+            android:textAppearance="@style/FontVerySmall"
+            android:textColor="@color/textStandard"
+            android:visibility="@{viewModel.partialContact ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_bottom" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

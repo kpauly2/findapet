@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="tech.pauly.old.favorites.FavoritesViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_favorites"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/favorites_swipe_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:elevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:refreshing="@{viewModel.refreshing}"
+            app:swipeRefreshListener="@{viewModel::loadFavorites}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favorite_list_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:adapter="@{viewModel.listAdapter}"
+                app:recyclerViewGridSpan="@{viewModel.columnCount}" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

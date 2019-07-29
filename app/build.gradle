@@ -1,28 +1,14 @@
-import com.android.ddmlib.DdmPreferences
-
-import java.security.InvalidParameterException
-
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android-extensions'
-
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
-
 android {
     compileSdkVersion versions.compile_sdk
     defaultConfig {
         applicationId "tech.pauly.findapet"
         minSdkVersion versions.min_sdk
         targetSdkVersion versions.target_sdk
-        versionCode versions.version_cdoe
+        versionCode versions.version_code
         versionName versions.version_name
-        DdmPreferences.setTimeOut(60000)
-        testInstrumentationRunner "tech.pauly.findapet.EspressoTestRunner"
-        testInstrumentationRunnerArguments disableAnalytics: 'true'
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -30,65 +16,15 @@ android {
             }
         }
     }
+
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
         }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-
-        applicationVariants.all { variant ->
-            String environment = project.property("findapet.environment")
-            if (environment != "prod" && environment != "espresso") {
-                throw new InvalidParameterException("Invalid environment property '${environment}'\n" +
-                        "Valid environments are prod and espresso.")
-            }
-            buildConfigField "String", "ENVIRONMENT", "\"${environment}\""
-
-            String apiKey = project.property("findapet.petfinder.apikey")
-            buildConfigField "String", "API_KEY", "\"${apiKey}\""
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    dataBinding {
-        enabled = true
-    }
-
-    aaptOptions {
-        cruncherEnabled false
-    }
-
-    sourceSets {
-        androidTest {
-            setRoot "src/androidTest"
-            res.srcDir "src/androidTest/res"
-        }
-    }
-
-    testOptions {
-        animationsDisabled = true
-        unitTests.returnDefaultValues = true
-    }
-}
-
-project.afterEvaluate {
-    def allTasks = getGradle().getStartParameter().getTaskRequests().toString()
-    if (allTasks.contains("AndroidTest")
-            && !allTasks.contains("generate")
-            && project.property("findapet.environment") != "espresso") {
-        throw new InvalidParameterException("You're trying to run espresso tests but haven't set your environment to espresso.")
-    }
-    if (!allTasks.contains("AndroidTest")
-            && allTasks.toString() != "[]"
-            && project.property("findapet.environment") == "espresso") {
-        throw new InvalidParameterException("You're trying to run the app but you've set your environment to espresso.")
     }
 }
 
@@ -96,7 +32,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation deps.kotlin_stdlib
-    implementation deps.kotlin_reflect
 
     implementation deps.appcompat
     implementation deps.design
@@ -104,39 +39,5 @@ dependencies {
     implementation deps.card_view
     implementation deps.constraint_layout
 
-    implementation deps.lifecycle
-    implementation deps.room_runtime
-    kapt deps.room_compiler
-    implementation deps.room_ktx
-    implementation deps.room_rx
-
-    implementation deps.dagger
-    kapt deps.dagger_compiler
-
-    implementation deps.rx_java
-    implementation deps.rx_android
-    implementation deps.rx_kotlin
-
-    implementation deps.retrofit
-    implementation deps.retrofit_simplexml
-    implementation deps.retrofit_rx
-    implementation deps.retrofit_logging
-
-    implementation deps.play_services_maps
-    implementation deps.play_services_location
-
-    implementation deps.picasso
-    implementation deps.picasso_transformations
-
-    debugImplementation deps.leak_canary
-    releaseImplementation deps.leak_canary_noop
-
-    implementation(deps.crashlytics) { transitive = true }
-
     testImplementation deps.junit
-    testImplementation deps.assertj
-    testImplementation deps.mockito
-    testImplementation deps.mockito_kotlin
-    testImplementation deps.mockk
-    testImplementation deps.room_testing
 }

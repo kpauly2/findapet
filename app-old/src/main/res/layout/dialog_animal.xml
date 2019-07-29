@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="tech.pauly.old.utils.AnimalDialogViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dialog_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/semitransparent"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> viewModel.dismiss(true)}">
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_title_background"
+            android:focusable="true"
+            android:padding="@dimen/standard_margin"
+            android:text="@{viewModel.titleText}"
+            android:textAppearance="@style/FontStrongHeader"
+            android:textColor="@color/white"
+            app:backgroundColorFilter="@{viewModel.primaryColor}"
+            app:layout_constraintBottom_toTopOf="@id/body_text"
+            app:layout_constraintEnd_toEndOf="@id/body_text"
+            app:layout_constraintStart_toStartOf="@id/body_text"
+            tools:text="Info Missing!" />
+
+        <ImageView
+            android:id="@+id/pet_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/pet_image"
+            android:focusable="true"
+            app:cornerRadius="@{40}"
+            app:imageUrl="@{viewModel.imageUrl}"
+            app:layout_constraintBottom_toTopOf="@id/title_text"
+            app:layout_constraintEnd_toEndOf="@id/body_text"
+            app:layout_constraintTop_toTopOf="@id/title_text" />
+
+        <TextView
+            android:id="@+id/body_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:focusable="true"
+            android:padding="@dimen/standard_margin"
+            android:text="@{viewModel.bodyText}"
+            android:textAppearance="@style/FontBody"
+            android:textColor="@color/textStandard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/end_border_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_border_guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/pet_warning_dialog_body" />
+
+        <Button
+            android:id="@+id/positive_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/transparent_button_background"
+            android:onClick="@{viewModel::clickPositiveButton}"
+            android:paddingBottom="@dimen/standard_margin"
+            android:paddingEnd="@dimen/standard_margin"
+            android:paddingStart="@dimen/half_margin"
+            android:paddingTop="@dimen/standard_margin"
+            android:text="@{viewModel.positiveButtonText}"
+            android:textAppearance="@style/FontStrongBody"
+            android:textColor="@{context.getColor(viewModel.primaryColor)}"
+            app:layout_constraintEnd_toEndOf="@id/body_text"
+            app:layout_constraintTop_toBottomOf="@id/body_text"
+            tools:text="CONTACT SHELTER" />
+
+        <Button
+            android:id="@+id/negative_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/transparent_button_background"
+            android:onClick="@{viewModel::clickNegativeButton}"
+            android:paddingBottom="@dimen/standard_margin"
+            android:paddingEnd="@dimen/half_margin"
+            android:paddingStart="@dimen/standard_margin"
+            android:paddingTop="@dimen/standard_margin"
+            android:text="@{viewModel.negativeButtonText}"
+            android:textAppearance="@style/FontStrongBody"
+            android:textColor="@{context.getColor(viewModel.primaryColor)}"
+            android:visibility="@{viewModel.negativeButtonVisibility ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toStartOf="@id/positive_button"
+            app:layout_constraintTop_toBottomOf="@id/body_text"
+            tools:text="CANCEL" />
+
+        <View
+            android:id="@+id/buttons_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/dialog_body_background"
+            app:layout_constraintBottom_toBottomOf="@id/positive_button"
+            app:layout_constraintEnd_toEndOf="@id/body_text"
+            app:layout_constraintStart_toStartOf="@id/body_text"
+            app:layout_constraintTop_toBottomOf="@id/body_text" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start_border_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end_border_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".95" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

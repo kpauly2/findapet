@@ -1,0 +1,204 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "7d6918331b62aa2adb972c61b4bddf5a",
+    "entities": [
+      {
+        "tableName": "LocalAnimal",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`shelterId` TEXT NOT NULL, `name` TEXT NOT NULL, `_type` TEXT NOT NULL, `mix` TEXT NOT NULL, `_age` TEXT NOT NULL, `_sex` TEXT NOT NULL, `_size` TEXT NOT NULL, `_options` TEXT NOT NULL, `photoList` TEXT, `_formattedBreedList` TEXT NOT NULL, `dbId` INTEGER PRIMARY KEY AUTOINCREMENT, `id` INTEGER NOT NULL, `shelterPetId` TEXT, `description` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "shelterId",
+            "columnName": "shelterId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "_type",
+            "columnName": "_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mix",
+            "columnName": "mix",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "_age",
+            "columnName": "_age",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "_sex",
+            "columnName": "_sex",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "_size",
+            "columnName": "_size",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "_options",
+            "columnName": "_options",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "photoList",
+            "columnName": "photoList",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "_formattedBreedList",
+            "columnName": "_formattedBreedList",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dbId",
+            "columnName": "dbId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shelterPetId",
+            "columnName": "shelterPetId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "dbId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Shelter",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `zip` TEXT, `country` TEXT, `latitude` REAL, `longitude` REAL, `phone` TEXT, `fax` TEXT, `email` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address1",
+            "columnName": "address1",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address2",
+            "columnName": "address2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "zip",
+            "columnName": "zip",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "latitude",
+            "columnName": "latitude",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "longitude",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fax",
+            "columnName": "fax",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7d6918331b62aa2adb972c61b4bddf5a\")"
+    ]
+  }
+}

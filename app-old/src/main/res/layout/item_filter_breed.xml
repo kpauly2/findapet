@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="breed"
+            type="String" />
+
+        <variable
+            name="viewModel"
+            type="tech.pauly.old.discover.BreedViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:background="@drawable/selector_radio_button_background"
+            android:layout_height="46dp"
+            android:checked="@{viewModel.selectedBreed.equals(breed)}"
+            android:onClick="@{(v) -> viewModel.selectBreed(v, breed)}"
+            android:paddingEnd="@dimen/standard_margin"
+            android:paddingStart="@dimen/standard_margin"
+            android:gravity="start|center_vertical"
+            android:drawableStart="@drawable/selector_radio_button"
+            android:drawablePadding="@dimen/standard_margin"
+            android:text="@{breed}"
+            android:textColor="@color/textStandard"
+            android:textAllCaps="false"
+            android:textAppearance="@style/FontBody"
+            android:textOff="@{breed}"
+            android:textOn="@{breed}" />
+    </FrameLayout>
+</layout>
