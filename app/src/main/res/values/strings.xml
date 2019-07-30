@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Findapet</string>
+    <string name="app_name">Find-a-Pet</string>
+    <string name="title_pets">Pets</string>
+    <string name="title_shelters">Shelters</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_settings">Settings</string>
 </resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/petsFragment">
+    <fragment
+        android:id="@+id/petsFragment"
+        android:name="tech.pauly.findapet.pets.PetsFragment"
+        android:label="title_pets"
+        tools:layout="@layout/fragment_pets" />
+    <fragment
+        android:id="@+id/sheltersFragment"
+        android:name="tech.pauly.findapet.shelters.SheltersFragment"
+        android:label="title_shelters"
+        tools:layout="@layout/fragment_shelters" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="tech.pauly.findapet.favorites.FavoritesFragment"
+        android:label="title_favorites"
+        tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="tech.pauly.findapet.settings.SettingsFragment"
+        android:label="title_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

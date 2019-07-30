@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Note: This Manifest sole reason for existence is to avoid a compile error, which occurs because the uiautomator dependency requires --><!-- a minSdkVersion of 18, whereas our app supports a minSdkVersion of 16. http://stackoverflow.com/a/34921565                          -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application android:networkSecurityConfig="@xml/network_security_config" />
+</manifest>

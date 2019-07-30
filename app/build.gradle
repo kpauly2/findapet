@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion versions.compile_sdk
     defaultConfig {
@@ -25,7 +27,17 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        applicationVariants.all { variant ->
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+            buildConfigField "String", "API_KEY", "\"${properties.getProperty("findapet.petfinder.apikey")}\""
+            buildConfigField "String", "SECRET", "\"${properties.getProperty("findapet.petfinder.secret")}\""
+        }
     }
+}
+
+androidExtensions {
+    experimental = true
 }
 
 dependencies {
@@ -38,6 +50,30 @@ dependencies {
     implementation deps.recycler_view
     implementation deps.card_view
     implementation deps.constraint_layout
+    implementation deps.navigation
+    implementation deps.navigation_ui
+
+    implementation deps.lifecycle
+    implementation deps.room_runtime
+    kapt deps.room_compiler
+    implementation deps.room_ktx
+
+    implementation deps.retrofit
+    implementation deps.retrofit_logging
+    implementation deps.retrofit_coroutines
+
+    implementation deps.moshi
+    kapt deps.moshi_codegen
+    implementation deps.retrofit_moshi
+    implementation deps.moshi_adapters
+
+    implementation deps.koin
+
+    kapt deps.velocidapter
+    implementation deps.velocidapter_android
+
+    implementation deps.glide
+    kapt deps.glide_compiler
 
     testImplementation deps.junit
 }
